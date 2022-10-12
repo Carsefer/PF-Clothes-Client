@@ -5,7 +5,8 @@ import { GET_PRODUCTS,
          GET_MARKS,
          ORDER_PRODUCTS_BY_NAME,
          ORDER_PRODUCTS_BY_SCORE,
-         LOGIN_USER } from "../action-types";
+         LOGIN_USER,
+         CREATER_USER } from "../action-types";
 
 export const getProducts = () => {
     return async function (dispatch) {
@@ -72,4 +73,13 @@ export const loginUser = (userInfo) => {
             payload: userInfo
         })
     }
+}
+
+export const createrUser = () => {
+    return async (dispatch) => {
+        const res = await axios.post(`/register`);
+        return dispatch({ 
+            type: CREATER_USER, 
+            payload: res.data });
+      };
 }
