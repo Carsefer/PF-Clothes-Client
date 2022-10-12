@@ -4,3 +4,4 @@ export const GET_SIZES = "GET_SIZES";
 export const GET_MARKS = "GET_MARKS";
 export const ORDER_PRODUCTS_BY_SCORE = "ORDER_PRODUCTS_BY_SCORE";
 export const ORDER_PRODUCTS_BY_NAME = "ORDER_PRODUCTS_BY_NAME";
+export const LOGIN_USER = "LOGIN_USER";

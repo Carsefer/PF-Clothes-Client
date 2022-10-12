@@ -4,7 +4,8 @@ import { GET_PRODUCTS,
          GET_SIZES,
          GET_MARKS,
          ORDER_PRODUCTS_BY_NAME,
-         ORDER_PRODUCTS_BY_SCORE } from "../action-types";
+         ORDER_PRODUCTS_BY_SCORE,
+         LOGIN_USER } from "../action-types";
 
 export const getProducts = () => {
     return async function (dispatch) {
@@ -60,6 +61,15 @@ export const orderProductsByScore = (orden) => {
         dispatch({
             type: ORDER_PRODUCTS_BY_SCORE,
             payload: orden
+        })
+    }
+}
+
+export const loginUser = (userInfo) => {
+    return async function (dispatch) {
+        dispatch({
+            type: LOGIN_USER,
+            payload: userInfo
         })
     }
 }
