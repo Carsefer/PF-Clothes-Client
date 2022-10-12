@@ -67,7 +67,7 @@ export const orderProductsByScore = (orden) => {
 //formulario de registro
 export const post_create_user = () => {
  return async (dispatch) => {
-    const res = await axios.post (`http://localhost:3001/createUser`);
+    const res = await axios.post (`http://localhost:3001/register`);
     return dispatch ({type: CREATE_USER, payload:res.data})
  };
 };
