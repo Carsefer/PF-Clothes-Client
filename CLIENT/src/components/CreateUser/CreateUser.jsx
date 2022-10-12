@@ -17,7 +17,7 @@ const CreateUser = () => {
         profilePicture: "",
     });
 
-cosnt [errors, setErrors] = useState ({});
+const [errors, setErrors] = useState ({});
 
 const validate = (input) => {
     let errors ={};
