@@ -3,13 +3,15 @@ import { GET_PRODUCTS,
          GET_SIZES,
          GET_MARKS,
          ORDER_PRODUCTS_BY_NAME,
-         ORDER_PRODUCTS_BY_SCORE } from "../action-types"
+         ORDER_PRODUCTS_BY_SCORE,
+         CREATE_USER } from "../action-types"
 
 const initialState = {
     products: [],
     productDetail: {},
     sizes: [],
-    marks: []
+    marks: [],
+    
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -58,8 +60,14 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 products: orderedProductsByScore
             }
+
+        case CREATE_USER:
+            return {
+                ...state,
+            };
         default: return state
     }
+
 }
 
 export default rootReducer

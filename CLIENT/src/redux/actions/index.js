@@ -4,7 +4,8 @@ import { GET_PRODUCTS,
          GET_SIZES,
          GET_MARKS,
          ORDER_PRODUCTS_BY_NAME,
-         ORDER_PRODUCTS_BY_SCORE } from "../action-types";
+         ORDER_PRODUCTS_BY_SCORE,
+         CREATE_USER } from "../action-types";
 
 export const getProducts = () => {
     return async function (dispatch) {
@@ -63,3 +64,10 @@ export const orderProductsByScore = (orden) => {
         })
     }
 }
+//formulario de registro
+export const post_create_user = () => {
+ return async (dispatch) => {
+    const res = await axios.post (`http://localhost:3001/createUser`);
+    return dispatch ({type: CREATE_USER, payload:res.data})
+ };
+};
