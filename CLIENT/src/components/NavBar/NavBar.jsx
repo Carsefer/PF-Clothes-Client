@@ -6,11 +6,10 @@ const NavBar = () => {
         <nav>
             <img src="#" alt="logo" />
             <div>
-                <Link to="/Home/Login">
+                <Link to="/home/login">
                     <button>Iniciar Sesión</button>
                 </Link>
-                |
-                <Link to="/Home/SignUp">
+                <Link to="/home/signup">
                     <button>Registrarse</button>
                 </Link>
             </div>
