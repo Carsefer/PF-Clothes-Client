@@ -6,7 +6,10 @@ import { GET_PRODUCTS,
          ORDER_PRODUCTS_BY_NAME,
          ORDER_PRODUCTS_BY_SCORE,
          FILTER_PRODUCTS,
-         LOGIN_USER } from "../action-types";
+         LOGIN_USER,
+         CREATER_USER,
+         CREATE_PUBLICATION, } from "../action-types";
+
 
 export const getProducts = () => {
     return async function (dispatch) {
@@ -134,3 +137,22 @@ export const loginUser = (userInfo) => {
         })
     }
 }
+
+export const createUser = () => {
+    return async (dispatch) => {
+        const res = await axios.post(`/register`);
+        return dispatch({ 
+            type: CREATER_USER, 
+            payload: res.data });
+      };
+}
+
+export const createPublication = () => {
+    return async (dispatch) => {
+        const res = await axios.post(`/publication`);
+        return dispatch({ 
+            type: CREATE_PUBLICATION, 
+            payload: res.data });
+      };
+}
+
