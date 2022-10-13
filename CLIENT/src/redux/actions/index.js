@@ -6,7 +6,8 @@ import { GET_PRODUCTS,
          ORDER_PRODUCTS_BY_NAME,
          ORDER_PRODUCTS_BY_SCORE,
          LOGIN_USER,
-         CREATER_USER } from "../action-types";
+         CREATER_USER,
+         CREATE_PUBLICATION, } from "../action-types";
 
 export const getProducts = () => {
     return async function (dispatch) {
@@ -83,3 +84,13 @@ export const createrUser = () => {
             payload: res.data });
       };
 }
+
+export const createPublication = () => {
+    return async (dispatch) => {
+        const res = await axios.post(`/publication`);
+        return dispatch({ 
+            type: CREATE_PUBLICATION, 
+            payload: res.data });
+      };
+}
+
