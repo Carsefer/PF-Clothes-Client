@@ -4,7 +4,9 @@ import { GET_PRODUCTS,
          GET_MARKS,
          ORDER_PRODUCTS_BY_NAME,
          ORDER_PRODUCTS_BY_SCORE,
-         FILTER_PRODUCTS } from "../action-types"
+         FILTER_PRODUCTS,
+         CREATER_USER, 
+         CREATE_PUBLICATION} from "../action-types"
 
 const initialState = {
     products: [],
@@ -64,6 +66,14 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 products: action.payload
             }
+        case CREATER_USER:
+            return{
+                ...state,
+            }
+            case CREATE_PUBLICATION:
+                return{
+                    ...state,
+                }
         default: return state
     }
 }
