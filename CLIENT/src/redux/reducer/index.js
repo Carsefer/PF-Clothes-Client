@@ -3,7 +3,13 @@ import { GET_PRODUCTS,
          GET_SIZES,
          GET_MARKS,
          ORDER_PRODUCTS_BY_NAME,
-         ORDER_PRODUCTS_BY_SCORE } from "../action-types"
+         ORDER_PRODUCTS_BY_SCORE,
+         FILTER_PRODUCTS_BY_SIZE,
+         FILTER_PRODUCTS_BY_MARK,
+         FILTER_PRODUCTS_BY_DEMOGRAPHY,
+         FILTER_PRODUCTS_BY_LOCATION,
+         FILTER_PRODUCTS_BY_TYPE,
+         FILTER_PRODUCTS_BY_PRICE } from "../action-types"
 
 const initialState = {
     products: [],
@@ -57,6 +63,36 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 products: orderedProductsByScore
+            }
+        case FILTER_PRODUCTS_BY_SIZE:
+            return {
+                ...state,
+                products: action.payload
+            }
+        case FILTER_PRODUCTS_BY_MARK:
+            return {
+                ...state,
+                products: action.payload
+            }
+        case FILTER_PRODUCTS_BY_DEMOGRAPHY:
+            return {
+                ...state,
+                products: action.payload
+            }
+        case FILTER_PRODUCTS_BY_LOCATION:
+            return {
+                ...state,
+                products: action.payload
+            }
+        case FILTER_PRODUCTS_BY_TYPE:
+            return {
+                ...state,
+                products: action.payload
+            }
+        case FILTER_PRODUCTS_BY_PRICE:
+            return {
+                ...state,
+                products: action.payload
             }
         default: return state
     }
