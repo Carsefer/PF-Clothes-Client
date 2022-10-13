@@ -75,7 +75,7 @@ export const loginUser = (userInfo) => {
     }
 }
 
-export const createrUser = () => {
+export const createUser = () => {
     return async (dispatch) => {
         const res = await axios.post(`/register`);
         return dispatch({ 

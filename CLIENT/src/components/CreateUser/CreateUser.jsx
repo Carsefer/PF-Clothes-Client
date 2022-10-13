@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {  useDispatch } from "react-redux";
-import { post_create_user } from "../../redux/actions";
+import { createUser, CreateUser } from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
 
 
@@ -33,7 +33,7 @@ const validate = (input) => {
 };
 const handleSubmit = (e) => {
     e.preventDefault();
-     dispatch(post_create_user(form));
+     dispatch(createUser(form));
      alert("User created!");
      navigate("/");
   };
