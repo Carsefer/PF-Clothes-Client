@@ -55,7 +55,7 @@ const handleChange = (e) => {
 
 return (
     <div>
-        <h1>Register User</h1>
+        <h1>Create Publication</h1>
       {/* formulario */}
      <form onSubmit={(e) => handleSubmit(e)}>
       {/* input nombre */}
