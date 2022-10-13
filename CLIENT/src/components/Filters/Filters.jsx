@@ -54,7 +54,7 @@ const Filters = () => {
                 }
             </select>
             <select onChange={(e) => handleSelect(e)}>
-                <option value="">Filtrar por Demografía</option>
+                <option value="">Filtrar por Genero</option>
                 {
                     demographies.length ? demographies.map(demo => {
                         return (
@@ -69,16 +69,6 @@ const Filters = () => {
                     types.length ? types.map(type => {
                         return (
                             <option value={`type-${type}`}>{type}</option>
-                        )
-                    }) : <option value=""></option>
-                }
-            </select>
-            <select onChange={(e) => handleSelect(e)}>
-                <option value="">Filtrar por Demografía</option>
-                {
-                    demographies.length ? demographies.map(demo => {
-                        return (
-                            <option value={`demography-${demo}`}>{demo}</option>
                         )
                     }) : <option value=""></option>
                 }
