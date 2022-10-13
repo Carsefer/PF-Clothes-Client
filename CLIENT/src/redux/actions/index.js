@@ -5,12 +5,7 @@ import { GET_PRODUCTS,
          GET_MARKS,
          ORDER_PRODUCTS_BY_NAME,
          ORDER_PRODUCTS_BY_SCORE,
-         FILTER_PRODUCTS_BY_SIZE,
-         FILTER_PRODUCTS_BY_MARK,
-         FILTER_PRODUCTS_BY_DEMOGRAPHY,
-         FILTER_PRODUCTS_BY_LOCATION,
-         FILTER_PRODUCTS_BY_TYPE,
-         FILTER_PRODUCTS_BY_PRICE,
+         FILTER_PRODUCTS,
          LOGIN_USER } from "../action-types";
 
 export const getProducts = () => {
@@ -71,17 +66,17 @@ export const orderProductsByScore = (orden) => {
     }
 }
 
-export const filterProductsBySize = (size) => {
+export const filterProducts = ({ type, value }) => {
     return async function (dispatch) {
-        const filteredProductsBySize = await axios.get("http://localhost:3001/productSizes" + size)
+        const filteredProducts = await axios.get(`http://localhost:3001/products/filter/${type}?value=${value}`)
         dispatch({
-            type: FILTER_PRODUCTS_BY_SIZE,
-            payload: filteredProductsBySize.data
+            type: FILTER_PRODUCTS,
+            payload: filteredProducts.data
         })
     }
 }
 
-export const filterProductsByMark = (mark) => {
+/* export const filterProductsByMark = (mark) => {
     return async function (dispatch) {
         const filteredProductsByMark = await axios.get("http://localhost:3001/productMarks" + mark)
         dispatch({
@@ -129,7 +124,7 @@ export const filterProductsByPrice = (price) => {
             payload: filteredProductsByPrice.data
         })
     }
-}
+} */
 
 export const loginUser = (userInfo) => {
     return async function (dispatch) {
