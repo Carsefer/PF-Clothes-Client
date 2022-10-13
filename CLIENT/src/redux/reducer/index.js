@@ -70,8 +70,8 @@ const rootReducer = (state = initialState, action) => {
             return{
                 ...state,
             }
-            case CREATE_PUBLICATION:
-                return{
+        case CREATE_PUBLICATION:
+             return{
                     ...state,
                 }
         default: return state
