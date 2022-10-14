@@ -4,6 +4,7 @@ import { GET_PRODUCTS,
          GET_MARKS,
          ORDER_PRODUCTS_BY_NAME,
          ORDER_PRODUCTS_BY_SCORE,
+         FILTER_PRODUCTS,
          CREATER_USER, 
          CREATE_PUBLICATION} from "../action-types"
 
@@ -60,12 +61,17 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 products: orderedProductsByScore
             }
+        case FILTER_PRODUCTS:
+            return {
+                ...state,
+                products: action.payload
+            }
         case CREATER_USER:
             return{
                 ...state,
             }
-            case CREATE_PUBLICATION:
-                return{
+        case CREATE_PUBLICATION:
+             return{
                     ...state,
                 }
         default: return state
