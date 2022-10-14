@@ -6,6 +6,8 @@ import { getProducts } from "../../redux/actions";
 import { Link } from "react-router-dom";
 import Card from "../Card/Card";
 import NavBar from "../NavBar/NavBar";
+import Filters from "../Filters/Filters";
+import SearchBar from "../Searchbar/SearchBar";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -22,6 +24,8 @@ export default function Home() {
       <Link to="/">
         <h1>Home</h1>
       </Link>
+      <Filters/>
+      <SearchBar/>
       <div className="productos">        
         {/* queda comentado lo que usaremos cuando esté hecha la ruta que trear productos*/
         /* {allProducts?.map(p => 

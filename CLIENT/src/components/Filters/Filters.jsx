@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux"
 import { getSizes, 
-         getMarks,
+         getMark,
          filterProducts } from '../../redux/actions';
 
 const Filters = () => {
@@ -10,7 +10,7 @@ const Filters = () => {
 
     useEffect(() => {
         dispatch(getSizes())
-        dispatch(getMarks())
+        dispatch(getMark())
     }, [dispatch])
 
     const sizes = useSelector(state => state.sizes)
