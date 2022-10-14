@@ -109,7 +109,7 @@ return (
        {errors.password && <p >{errors.password}</p>}
 
       {/* input telephone_number */}
-      <h4 >telephone_number</h4>
+      
           <input
             type="number"
             placeholder="telephone Number"
@@ -145,7 +145,7 @@ return (
             
           />
          {errors.storeName && <p >{errors.storeName}</p>}
-         <button>Send</button>
+         <button>Registrate</button>
      </form>
 
 
