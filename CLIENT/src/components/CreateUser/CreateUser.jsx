@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import {  useDispatch } from "react-redux";
-import { createUser, CreateUser } from "../../redux/actions";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { createUser } from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
 
 

@@ -1,6 +1,6 @@
 import React from "react";
 import "./Home.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../redux/actions";
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ import NavBar from "../NavBar/NavBar";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const allProducts = useSelector((state) => state.products);
+  const allProducts = useSelector(state => state.products);
 
   useEffect(() => {
     dispatch(getProducts());
@@ -24,7 +24,7 @@ export default function Home() {
       </Link>
       <div className="productos">        
         {/* queda comentado lo que usaremos cuando esté hecha la ruta que trear productos*/
-        /* {currentProducts?.map(p => 
+        /* {allProducts?.map(p => 
         <Card
         key={p.id}
         id={p.id}

@@ -4,8 +4,8 @@ import { Link } from "react-router-dom"
 const NavBar = () => {
     return (
         <nav>
-            <img src="#" alt="logo" />
             <div>
+                <img src="#" alt="logo" />
                 <Link to="/home/login">
                     <button>Iniciar Sesión</button>
                 </Link>
