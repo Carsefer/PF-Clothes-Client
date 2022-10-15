@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+  padding-top: 110px;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+}
