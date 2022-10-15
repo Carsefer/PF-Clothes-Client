@@ -36,9 +36,6 @@ export default function Home() {
         price={p.price}
         />
         )}
-        {/* <Card />
-        <Card />
-        <Card /> */}
       </div>
     </div>
   );
