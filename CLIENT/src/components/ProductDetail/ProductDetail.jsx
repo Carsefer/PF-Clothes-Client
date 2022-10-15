@@ -17,12 +17,12 @@ const ProductDetail = () => {
     <div>
       <img src={detail.image} alt="img not found" />
       <h1>{detail.name}</h1>
-      <h2>{detail.price}</h2>
-      <p>{detail.size}</p>
-      <p>{detail.brand}</p>
-      <p>{detail.materials}</p>
-      <p>{detail.color}</p>
-      <p>{detail.stock}</p>
+      <h2>${detail.price}</h2>
+      <p>Talle: {detail.size}</p>
+      <p>Marca: {detail.brand}</p>
+      <p>Color: {detail.color}</p>
+      <p>Material: {detail.materials}</p>
+      <p>Quedan {detail.stock} unidades disponibles</p>
     </div>
   );
 };
