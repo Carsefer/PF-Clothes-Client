@@ -4,7 +4,7 @@ import { useState } from "react";
 export default function SearchBar() {
     const [texto, setTexto] = useState("");
 
-    const handdleChange = (evento) => {
+    const handleChange = (evento) => {
         setTexto(evento.target.value)
     }
 
@@ -14,8 +14,8 @@ export default function SearchBar() {
             <input 
                 id="barra"
                 type={"text"}
-                placeholder="Buscar Producots, Tiendas..."
-                onChange={(evento) => handdleChange(evento)}
+                placeholder="Buscar Productos, Tiendas..."
+                onChange={(evento) => handleChange(evento)}
             />
 
             <input id="buscar" type="submit" value="Buscar" />

@@ -19,13 +19,13 @@ export const getProducts = () => {
         })
     }
 }
-
+// NO EXISTE ESTA RUTA EN EL BACK
 export const getProductDetail = (id) => {
     return async function (dispatch) {
-        const detail = await axios.get(`http://localhost:3001/products/${id}`)
+        const detail = await axios.get(`http://localhost:3001/product/all`)
         dispatch({
             type: GET_PRODUCT_DETAIL,
-            payload: detail.data
+            payload: detail.data.filter(d =>d.id === id)
         })
     }
 }
