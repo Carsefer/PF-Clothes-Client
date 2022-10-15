@@ -1,157 +1,119 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createUser } from "../../redux/actions";
+import { Formik } from "formik";
 import { useNavigate } from "react-router-dom";
-
+import "./CreateUser.css";
 
 const CreateUser = () => {
-    const dispatch = useDispatch ();
-    const navigate = useNavigate ();
-    const [form, setForm] = useState ({
-        name: "", 
-        surname: "",
-        email: "",
-        password: "",
-        telephoneNumber: "",
-        storeName: "",
-        profilePicture: "",
-    });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-const [errors, setErrors] = useState ({});
+  return (
+    <div className="container">
+      <h1>Register User</h1>
+      <Formik
+        initialValues={{
+          name: "",
+          lastname: "",
+          email: "",
+          password: "",
+          passwords: "",
+          phone: "",
+        }}
+      >
+        {({
+          handleSubmit,
+          errors,
+          values,
+          touched,
+          handleChange,
+          handleBlur,
+        }) => (
+          <form className="form">
+            <div className="entry">
+              <div className="column">
+                <input
+                  type="text"
+                  id="name"
+                  placeholder="Name"
+                  name="name"
+                  className="form1"
+                  value={values.name}
+                  onChange={handleChange}
+                />
 
-const validate = (input) => {
-    let errors ={};
+                <input
+                  type="text"
+                  id="lastname"
+                  placeholder="Last Name"
+                  name="lastname"
+                  className="form1"
+                  value={values.lastname}
+                  onChange={handleChange}
+                />
 
-    if (!input.name.length) errors.name = "Name required";
-    if (!input.surname.length) errors.surname = "Surname required";
-    if (!input.email.length) errors.email = "E-mail required";
-    if (!input.storeName.length) errors.storeName = "Store_name required";
-    if (!input.password.length) errors.password = "password required";
-    if (!input.telephoneNumber.length) errors.telephoneNumber = "Telephone_number required";
-    
-    return errors;
-};
-const handleSubmit = (e) => {
-    e.preventDefault();
-     dispatch(createUser(form));
-     alert("User created!");
-     navigate("/");
-  };
-
-const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-    setErrors(
-        validate({
-          ...form,
-          [e.target.name]: e.target.value,
-        })
-      );
-};
-
-return (
-    <div>
-        <h1>Register User</h1>
-      {/* formulario */}
-     <form onSubmit={(e) => handleSubmit(e)}>
-      {/* input nombre */}
-      <input
-       type="text"
-       placeholder="Name"
-       name="name"
-       value={form.name}
-       onChange={handleChange}
-       required
-       autoComplete="off"
-      
-      />
-       {errors.name && <p>{errors.name}</p>}
-
-      {/* input surname */}
-      <input
-       type="text"
-       placeholder="Surname"
-       name="Surname"
-       value={form.surname}
-       onChange={handleChange}
-       required
-       autoComplete="off"
-      
-      />
-       {errors.surname && <p >{errors.surname}</p>}
-
-      {/* inpunt email */}
-      <input
-       type="text"
-       placeholder="Email"
-       name="Email"
-       value={form.email}
-       onChange={handleChange}
-       required
-       autoComplete="off"
-      
-      />
-       {errors.email && <p >{errors.email}</p>}
-
-      {/* inpunt password */}
-      <input
-       type="password"
-       placeholder="password"
-       name="password"
-       value={form.password}
-       onChange={handleChange}
-       required
-       autoComplete="off"
-      
-      />
-       {errors.password && <p >{errors.password}</p>}
-
-      {/* input telephone_number */}
-      
-          <input
-            type="number"
-            placeholder="telephone Number"
-            name="telephone Number"
-            value={form.telephoneNumber}
-            onChange={handleChange}
-            required
-          />
-           {errors.telephoneNumber && <p >{errors.telephoneNumber}</p>}
-
-
-         {/* input profilePicture */}
-         <input
-            type="text"
-            placeholder="URL image"
-            name="profile picture"
-            value={form.profilePicture}
-            onChange={handleChange}
-            required
-            autoComplete="off"
-            
-          />
-
-            {/* input storeName */}
-         <input
-            type="text"
-            placeholder="Store Name"
-            name="Store Name"
-            value={form.storeName}
-            onChange={handleChange}
-            required
-            autoComplete="off"
-            
-          />
-         {errors.storeName && <p >{errors.storeName}</p>}
-         <button>Registrate</button>
-     </form>
-
-
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="Email"
+                  name="email"
+                  className="form1"
+                  value={values.email}
+                  onChange={handleChange}
+                />
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="Password"
+                  name="password"
+                  className="form1"
+                  value={values.password}
+                  onChange={handleChange}
+                />
+                <input
+                  type="password"
+                  id="repassword"
+                  placeholder="Retype Password"
+                  name="passwords"
+                  className="form1"
+                  value={values.passwords}
+                  onChange={handleChange}
+                />
+                <input
+                  type="text"
+                  id="phone"
+                  placeholder="Enter a number phone"
+                  name="phone"
+                  className="form1"
+                  value={values.phone}
+                  onChange={handleChange}
+                />
+                <div>
+                  {!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
+                    values.email
+                  ) ||
+                  !values.password ||
+                  values.passwords !== values.password ? (
+                    <div>
+                      <button className="btnDisabled2" disabled>
+                        Sign up
+                      </button>
+                    </div>
+                  ) : (
+                    <div>
+                      <button type="submit" className="submit2">
+                        Sign up
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </form>
+        )}
+      </Formik>
     </div>
-)
-
-
-}
- export default CreateUser;
+  );
+};
+export default CreateUser;
