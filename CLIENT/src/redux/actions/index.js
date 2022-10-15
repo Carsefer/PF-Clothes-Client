@@ -7,15 +7,15 @@ import { GET_PRODUCTS,
          ORDER_PRODUCTS_BY_SCORE,
          FILTER_PRODUCTS,
          LOGIN_USER,
-         CREATER_USER,
+         CREATE_USER,
          CREATE_PUBLICATION, } from "../action-types";
 
 export const getProducts = () => {
     return async function (dispatch) {
-        const products = await axios.get("http://localhost:3001/products")
+        const products = await axios.get("http://localhost:3001/product/all")
         dispatch({
             type: GET_PRODUCTS,
-            payload: products
+            payload: products.data
         })
     }
 }
@@ -141,7 +141,7 @@ export const createUser = () => {
     return async (dispatch) => {
         const res = await axios.post(`/register`);
         return dispatch({ 
-            type: CREATER_USER, 
+            type: CREATE_USER, 
             payload: res.data });
       };
 }

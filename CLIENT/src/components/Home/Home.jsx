@@ -27,19 +27,18 @@ export default function Home() {
       <Filters/>
       <SearchBar/>
       <div className="productos">        
-        {/* queda comentado lo que usaremos cuando esté hecha la ruta que trear productos*/
-        /* {allProducts?.map(p => 
+        {allProducts?.map(p => 
         <Card
         key={p.id}
         id={p.id}
         img={p.img}
-        title={p.title}
+        title={p.name}
         price={p.price}
         />
-        )} */}
+        )}
+        {/* <Card />
         <Card />
-        <Card />
-        <Card />
+        <Card /> */}
       </div>
     </div>
   );
