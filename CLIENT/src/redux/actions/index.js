@@ -1,31 +1,42 @@
 import axios from "axios";
 import { GET_PRODUCTS,
          GET_PRODUCT_DETAIL,
+         SEARCH_PRODUCT,
          GET_SIZES,
          GET_MARKS,
          ORDER_PRODUCTS_BY_NAME,
          ORDER_PRODUCTS_BY_SCORE,
          FILTER_PRODUCTS,
          LOGIN_USER,
-         CREATER_USER,
+         CREATE_USER,
          CREATE_PUBLICATION, } from "../action-types";
 
 export const getProducts = () => {
     return async function (dispatch) {
-        const products = await axios.get("http://localhost:3001/products")
+        const products = await axios.get("http://localhost:3001/product/all")
         dispatch({
             type: GET_PRODUCTS,
-            payload: products
+            payload: products.data
         })
     }
 }
 
-export const getProductDetail = (id) => {
+export const getProductDetail = id => {
     return async function (dispatch) {
-        const detail = await axios.get(`http://localhost:3001/products/${id}`)
+        const detail = await axios.get(`http://localhost:3001/product/all`)
         dispatch({
             type: GET_PRODUCT_DETAIL,
-            payload: detail.data
+            payload: detail.data.filter(d =>d.id === id)
+        })
+    }
+}
+
+export const searchProduct = name => {
+    return async function(dispatch) {
+        const json = await axios.get(`http://localhost:3001/product/?search=${name}`)
+        dispatch({
+            type: SEARCH_PRODUCT,
+            payload: json.data
         })
     }
 }
@@ -141,7 +152,7 @@ export const createUser = () => {
     return async (dispatch) => {
         const res = await axios.post(`/register`);
         return dispatch({ 
-            type: CREATER_USER, 
+            type: CREATE_USER, 
             payload: res.data });
       };
 }

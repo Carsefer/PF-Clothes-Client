@@ -1,15 +1,17 @@
 import { GET_PRODUCTS,
          GET_PRODUCT_DETAIL,
+         SEARCH_PRODUCT,
          GET_SIZES,
          GET_MARKS,
          ORDER_PRODUCTS_BY_NAME,
          ORDER_PRODUCTS_BY_SCORE,
          FILTER_PRODUCTS,
-         CREATER_USER, 
+         CREATE_USER, 
          CREATE_PUBLICATION} from "../action-types"
 
 const initialState = {
     products: [],
+    productsAux: [],
     productDetail: {},
     sizes: [],
     marks: []
@@ -20,12 +22,18 @@ const rootReducer = (state = initialState, action) => {
         case GET_PRODUCTS:
             return {
                 ...state,
-                products: action.payload
+                products: action.payload,
+                productsAux: action.payload
             }
         case GET_PRODUCT_DETAIL:
             return {
                 ...state,
                 productDetail: action.payload
+            }
+        case SEARCH_PRODUCT:
+            return {
+                ...state,
+                products: action.payload
             }
         case GET_SIZES:
             return {
@@ -66,7 +74,7 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 products: action.payload
             }
-        case CREATER_USER:
+        case CREATE_USER:
             return{
                 ...state,
             }
