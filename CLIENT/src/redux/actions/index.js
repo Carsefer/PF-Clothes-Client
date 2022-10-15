@@ -1,6 +1,7 @@
 import axios from "axios";
 import { GET_PRODUCTS,
          GET_PRODUCT_DETAIL,
+         SEARCH_PRODUCT,
          GET_SIZES,
          GET_MARKS,
          ORDER_PRODUCTS_BY_NAME,
@@ -19,13 +20,23 @@ export const getProducts = () => {
         })
     }
 }
-// NO EXISTE ESTA RUTA EN EL BACK
-export const getProductDetail = (id) => {
+
+export const getProductDetail = id => {
     return async function (dispatch) {
         const detail = await axios.get(`http://localhost:3001/product/all`)
         dispatch({
             type: GET_PRODUCT_DETAIL,
             payload: detail.data.filter(d =>d.id === id)
+        })
+    }
+}
+
+export const searchProduct = name => {
+    return async function(dispatch) {
+        const json = await axios.get(`http://localhost:3001/product/?search=${name}`)
+        dispatch({
+            type: SEARCH_PRODUCT,
+            payload: json.data
         })
     }
 }
