@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   GET_PRODUCTS,
   GET_PRODUCT_DETAIL,
+  EMPTY_DETAIL,
   SEARCH_PRODUCT,
   GET_SIZES,
   GET_MARKS,
@@ -32,6 +33,12 @@ export const getProductDetail = (id) => {
     });
   };
 };
+
+export const emptyDetail = () => {
+  return {
+    type: EMPTY_DETAIL
+  }
+}
 
 export const searchProduct = (name) => {
   return async function (dispatch) {

@@ -1,5 +1,6 @@
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_PRODUCT_DETAIL = "GET_PRODUCT_DETAIL";
+export const EMPTY_DETAIL = "EMPTY_DETAIL";
 export const GET_SIZES = "GET_SIZES";
 export const GET_MARKS = "GET_MARKS";
 export const ORDER_PRODUCTS_BY_SCORE = "ORDER_PRODUCTS_BY_SCORE";
