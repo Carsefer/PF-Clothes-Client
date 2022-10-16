@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createUser } from "../../redux/actions";
 import { Formik } from "formik";
-import { useNavigate } from "react-router-dom";
+
+import { useNavigate, Link } from "react-router-dom";
 import "./CreateUser.css";
 
 const CreateUser = () => {
@@ -11,7 +12,7 @@ const CreateUser = () => {
 
   return (
     <div className="container">
-      <h1>Register User</h1>
+      <h1 className="subtitle ">Register User</h1>
       <Formik
         initialValues={{
           name: "",
@@ -113,6 +114,13 @@ const CreateUser = () => {
           </form>
         )}
       </Formik>
+      <p className="footer">
+        Have an account ?{" "}
+        <Link className="lognin" to="/login">
+          Log in
+        </Link>{" "}
+        instead.
+      </p>
     </div>
   );
 };
