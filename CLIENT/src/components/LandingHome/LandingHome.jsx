@@ -7,7 +7,7 @@ export default function LandingHome() {
   return (
     <div>
       <Container>
-        <h1 className="">Welcome to Express Clothes</h1>
+        <h1>Welcome to Express Clothes</h1>
         <h4>Buy or increase your store selling Clothes</h4>
         <div className="d-grid gap-2 d-md-flex justify-content-md-start">
           <Link to="/home">
@@ -21,7 +21,7 @@ export default function LandingHome() {
             </button>
           </Link>
         </div>
-        <LandingDetail />
+        {/* <LandingDetail /> */}
       </Container>
       <Footer />
     </div>

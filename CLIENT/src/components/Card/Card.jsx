@@ -6,7 +6,7 @@ const Card = ({ img, title, price, id }) => {
     <div className="container">
       <Link to={`/home/product/${id}`}>
         <img
-          className="w-25 p-3"
+          /* className="w-25 p-3" */
           src={img}
           alt="img not found"
         />
