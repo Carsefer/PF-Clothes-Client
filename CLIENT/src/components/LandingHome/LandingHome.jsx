@@ -1,10 +1,12 @@
 import React from "react";
 import Footer from "../Footer/Footer";
 import { Link } from "react-router-dom";
+import LandingDetail from "../LandingDetail/LandingDetail";
+import { Container } from "react-bootstrap";
 export default function LandingHome() {
   return (
     <div>
-      <div className="container">
+      <Container>
         <h1 className="">Welcome to Express Clothes</h1>
         <h4>Buy or increase your store selling Clothes</h4>
         <div className="d-grid gap-2 d-md-flex justify-content-md-start">
@@ -19,7 +21,8 @@ export default function LandingHome() {
             </button>
           </Link>
         </div>
-      </div>
+        <LandingDetail />
+      </Container>
       <Footer />
     </div>
   );
