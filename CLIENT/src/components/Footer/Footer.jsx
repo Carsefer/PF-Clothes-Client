@@ -4,7 +4,7 @@ import "./Footer.css";
 
 const Footer = () => {
   return (
-    <footer className="footer1">
+    <footer className="footer">
       <span>Created by: </span>
       <div>
         <a className="text" href="https://www.linkedin.com/in/fiorella-parmetler-63632424a/" target="_blank">
