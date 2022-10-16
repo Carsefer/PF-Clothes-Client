@@ -13,15 +13,15 @@ export default function Home() {
   const dispatch = useDispatch();
   const allProducts = useSelector(state => state.products);
   const results = useSelector(state => state.productsStatus);
-  
+
   useEffect(() => {
     dispatch(getProducts());
     dispatch(emptyDetail());
-  }, [dispatch]);  
-  
+  }, [dispatch]);
+
   return (
     <div>
-      <NavBar/>
+      <NavBar />
       <Link to="/">
         <h1>Home</h1>
       </Link>
@@ -33,7 +33,7 @@ export default function Home() {
             key={p.id}
             id={p.id}
             img={p.image}
-            title={p.name}
+            title={p.name[0].toUpperCase() + p.name.substring(1)}
             price={p.price}
           />
         )) : <div>
