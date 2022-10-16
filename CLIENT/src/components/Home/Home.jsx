@@ -19,15 +19,15 @@ export default function Home() {
 
   
   return (
-    <div className="home">
+    <div>
       <NavBar/>
       <Link to="/">
         <h1>Home</h1>
       </Link>
       <Filters/>
       <SearchBar/>
-      <div className="productos">        
-        {allProducts?.map(p => 
+      <div >        
+        {/* {allProducts?.map(p => 
         <Card
         key={p.id}
         id={p.id}
@@ -35,7 +35,16 @@ export default function Home() {
         title={p.name}
         price={p.price}
         />
-        )}
+        )} */}
+        {allProducts?.map((p) => (
+          <Card
+            key={p.id}
+            id={p.id}
+            img={p.image}
+            title={p.name}
+            price={p.price}
+          />
+        ))}
       </div>
     </div>
   );
