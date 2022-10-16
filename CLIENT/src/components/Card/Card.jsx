@@ -10,12 +10,12 @@ const Card = ({ img, title, price, id }) => {
           <img
             className="ProductIMG"
             /*className="w-25 p-3"*/
-            src="https://arturocalle.vtexassets.com/arquivos/ids/473103/HOMBRE-CAMISA-10122546-AZUL-780_1.jpg?v=637950736212900000"
+            src={img}
             alt="shirt"
           />
         </div>
-        <h3>Tittle</h3>
-        <h3>Price</h3>
+        <h3>{title}</h3>
+        <h3>{price}</h3>
       </Link>
     </div>
   );
