@@ -2,7 +2,7 @@ import React from "react";
 import "./Home.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../../redux/actions";
+import { getProducts, emptyDetail } from "../../redux/actions";
 import { Link } from "react-router-dom";
 import Card from "../Card/Card";
 import NavBar from "../NavBar/NavBar";
@@ -15,6 +15,7 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getProducts());
+    dispatch(emptyDetail());
   }, [dispatch]);  
   return (
     <div>
