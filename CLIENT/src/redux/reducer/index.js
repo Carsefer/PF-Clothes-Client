@@ -15,7 +15,8 @@ const initialState = {
     productsAux: [],
     productDetail: [],
     sizes: [],
-    marks: []
+    marks: [],
+    productsStatus:"loading"
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -78,6 +79,7 @@ const rootReducer = (state = initialState, action) => {
         case FILTER_PRODUCTS:
             return {
                 ...state,
+                productsStatus:!action.payload.length ? "No se encontraron productos con este filtro" : "loading",
                 products: action.payload
             }
         case CREATE_USER:
