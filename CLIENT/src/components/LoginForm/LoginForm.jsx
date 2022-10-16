@@ -114,7 +114,7 @@ const LoginForm = () => {
             </form>
           )}
         </Formik>
-        <p className="footer1">
+        <p className="LoginFormsFooter">
           Don't have an account?{" "}
           <Link className="register" to="/register">
             Sign up

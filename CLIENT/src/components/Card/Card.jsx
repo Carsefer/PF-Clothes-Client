@@ -4,11 +4,11 @@ import "./Card.css"
 
 const Card = ({ img, title, price, id }) => {
   return (
-    <div className="Card">
-      <Link className="Link" to={`/Home/Product/${id}`}>
-        <div className="ImgContainer">
+    <div className="CardProductHome">
+      <Link className="CardProductHomeLink" to={`/Home/Product/${id}`}>
+        <div className="CardProductHomeImgContainer">
           <img
-            className="ProductIMG"
+            className="CardProductHomeProductImg"
             /*className="w-25 p-3"*/
             src={img}
             alt="img not found"

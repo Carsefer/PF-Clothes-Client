@@ -22,12 +22,8 @@ export default function Home() {
   return (
     <div>
       <NavBar />
-      <Link to="/">
-        <h1>Home</h1>
-      </Link>
-      <Filters/>
-      <SearchBar/>
-      <div >        
+      <div className="ProductsHomeContainer">
+        <Filters />       
         { allProducts.length ? allProducts.map((p) => (
           <Card
             key={p.id}

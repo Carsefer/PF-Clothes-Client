@@ -1,4 +1,4 @@
-.footer {
+.FooterLanding {
     width: 100%;
     display: flex;
     justify-content: space-evenly;
@@ -9,5 +9,10 @@
     text-decoration: none;
     z-index: 9999;
     background-color: #ffc872;
-    max-width: fit-content;
 }
+
+.FooterLandingText{
+    text-decoration: none;
+    color: black;
+}
+  

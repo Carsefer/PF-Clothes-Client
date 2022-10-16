@@ -114,7 +114,7 @@ const CreateUser = () => {
           </form>
         )}
       </Formik>
-      <p className="footer">
+      <p className="CreateUserFooter">
         Have an account ?{" "}
         <Link className="lognin" to="/login">
           Log in
