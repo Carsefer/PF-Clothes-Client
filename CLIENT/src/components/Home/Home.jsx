@@ -15,9 +15,7 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getProducts());
-  }, [dispatch]);
-
-  
+  }, [dispatch]);  
   return (
     <div>
       <NavBar/>
