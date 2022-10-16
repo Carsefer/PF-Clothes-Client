@@ -24,7 +24,7 @@ export default function Home() {
       </Link>
       <Filters/>
       <SearchBar/>
-      <div >        
+      <div className="Products">        
         {/* {allProducts?.map(p => 
         <Card
         key={p.id}

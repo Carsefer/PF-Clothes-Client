@@ -1,4 +1,4 @@
-.Card {
+.CardProductHome {
     width: 225px;
     height: 300px;
     padding: 2%;
@@ -16,16 +16,16 @@
     text-align: center;
 }
    
-.Card:hover {
+.CardProductHome:hover {
     border: #31B189 0.2em solid;
 }
 
-.ProductIMG {
+.CardProductHomeImg {
     width: 150px;
 }
 
-.Link:visited {
+.CardProductHomeLink:visited {
     color: inherit
 }
   
-.Link:link { text-decoration: none; }
+.CardProductHomeLink:link { text-decoration: none; }
