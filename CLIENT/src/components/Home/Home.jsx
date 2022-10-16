@@ -17,6 +17,7 @@ export default function Home() {
     dispatch(getProducts());
     dispatch(emptyDetail());
   }, [dispatch]);  
+  
   return (
     <div>
       <NavBar/>
