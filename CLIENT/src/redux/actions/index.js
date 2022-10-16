@@ -25,10 +25,10 @@ export const getProducts = () => {
 
 export const getProductDetail = (id) => {
   return async function (dispatch) {
-    const detail = await axios.get(`http://localhost:3001/product/all`);
+    const detail = await axios.get(`http://localhost:3001/product/${id}`);
     dispatch({
       type: GET_PRODUCT_DETAIL,
-      payload: detail.data.filter((d) => d.id === id),
+      payload: detail.data,
     });
   };
 };
