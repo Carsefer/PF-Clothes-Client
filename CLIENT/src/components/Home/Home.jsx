@@ -25,15 +25,6 @@ export default function Home() {
       <Filters/>
       <SearchBar/>
       <div >        
-        {/* {allProducts?.map(p => 
-        <Card
-        key={p.id}
-        id={p.id}
-        img={p.img}
-        title={p.name}
-        price={p.price}
-        />
-        )} */}
         {allProducts?.map((p) => (
           <Card
             key={p.id}
