@@ -1,18 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./Card.css"
 
 const Card = ({ img, title, price, id }) => {
   return (
-    <div className="container">
-      <Link to={`/home/product/${id}`}>
-        <img
-          /* className="w-25 p-3" */
-          src={img}
-          alt="img not found"
-        />
+    <div className="Card">
+      <Link className="Link" to={`/Home/Product/${id}`}>
+        <div className="ImgContainer">
+          <img
+            className="ProductIMG"
+            /*className="w-25 p-3"*/
+            src={img}
+            alt="img not found"
+          />
+        </div>
+        <h3>{title}</h3>
+        <h3>${price}</h3>
       </Link>
-      <h3>{title}</h3>
-      <h4>${price}</h4>
     </div>
   );
 };

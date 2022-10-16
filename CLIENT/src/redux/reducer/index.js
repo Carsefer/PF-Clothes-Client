@@ -7,12 +7,13 @@ import { GET_PRODUCTS,
          ORDER_PRODUCTS_BY_SCORE,
          FILTER_PRODUCTS,
          CREATE_USER, 
-         CREATE_PUBLICATION} from "../action-types"
+         CREATE_PUBLICATION,
+         EMPTY_DETAIL} from "../action-types"
 
 const initialState = {
     products: [],
     productsAux: [],
-    productDetail: {},
+    productDetail: [],
     sizes: [],
     marks: [],
     productsStatus:"loading"
@@ -30,6 +31,11 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 productDetail: action.payload
+            }
+        case EMPTY_DETAIL:
+            return {
+                ...state,
+                productDetail:[]
             }
         case SEARCH_PRODUCT:
             return {
