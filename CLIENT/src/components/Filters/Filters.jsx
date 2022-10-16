@@ -1,90 +1,90 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from "react-redux"
-import { getSizes, 
-         getMark,
-         filterProducts } from '../../redux/actions';
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { filterProducts } from "../../redux/actions";
 
 const Filters = () => {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch()
+  // useEffect(() => {
+  //     dispatch(getSizes())
+  //     dispatch(getMark())
+  // }, [dispatch])
 
-    useEffect(() => {
-        dispatch(getSizes())
-        dispatch(getMark())
-    }, [dispatch])
+  const [price, setPrice] = useState("");
+  const [size, setSize] = useState("");
+  const [demographic, setDemographic] = useState("");
+  //const [cant, setCant] = useState("");
 
-    const sizes = useSelector(state => state.sizes)
-    const marks = useSelector(state => state.marks)
-    const demographies = []
-    const types = []
-    const locations = []
+  useEffect(() => {
+    dispatch(filterProducts(price, size, demographic));
+  }, [dispatch, price, size, demographic]);
 
-    const handleSelect = (e) => {
-        e.preventDefault()
-        if (e.target.value.length) {
-            const values = e.target.value.split("-")
-            const filter = {
-                type: values[0],
-                value: values[1]
-            }
-            dispatch(filterProducts(filter))
-        }
-    }
+  // const sizes = useSelector(state => state.sizes)
+  // const marks = useSelector(state => state.marks)
+  // const demographies = []
+  // const types = []
+  // const locations = []
 
-    return (
-        <div>
-            <select onChange={(e) => handleSelect(e)}>
-                <option value="">Filtrar por Talle</option>
-                {
-                    sizes.length ? sizes.map(s => {
-                        return (
-                            <option value={`size-${s}`}>{s}</option>
-                        )
-                    }) : <option value=""></option>
-                }
-            </select>
-            <select onChange={(e) => handleSelect(e)}>
-                <option value="">Filtrar por Marca</option>
-                {
-                    marks.length ? marks.map(m => {
-                        return (
-                            <option value={`mark-${m}`}>{m}</option>
-                        )
-                    }) : <option value=""></option>
-                }
-            </select>
-            <select onChange={(e) => handleSelect(e)}>
-                <option value="">Filtrar por Genero</option>
-                {
-                    demographies.length ? demographies.map(demo => {
-                        return (
-                            <option value={`demography-${demo}`}>{demo}</option>
-                        )
-                    }) : <option value=""></option>
-                }
-            </select>
-            <select onChange={(e) => handleSelect(e)}>
-                <option value="">Filtrar por Tipo</option>
-                {
-                    types.length ? types.map(type => {
-                        return (
-                            <option value={`type-${type}`}>{type}</option>
-                        )
-                    }) : <option value=""></option>
-                }
-            </select>
-            <select onChange={(e) => handleSelect(e)}>
-                <option value="">Filtrar por Localización</option>
-                {
-                    locations.length ? locations.map(location => {
-                        return (
-                            <option value={`location-${location}`}>{location}</option>
-                        )
-                    }) : <option value=""></option>
-                }
-            </select>
-        </div>
-    );
+  //FILTER PRICE
+  const filterByPrice = (e) => {
+    e.preventDefault();
+    setPrice(e.target.value);
+  };
+
+  //FILTER SIZE
+  const filterBySize = (e) => {
+    e.preventDefault();
+    setSize(e.target.value);
+  };
+
+  //FILTER DEMOGRAPHIC
+  const filterByDemographic = (e) => {
+    e.preventDefault();
+    setDemographic(e.target.value);
+  };
+
+  // const handleSelect = (e) => {
+  //   e.preventDefault();
+  //   if (e.target.value.length) {
+  //     const values = e.target.value.split("-");
+  //     const filter = {
+  //       type: values[0],
+  //       value: values[1],
+  //     };
+  //     dispatch(filterProducts(filter));
+  //   }
+  // };
+
+  return (
+    <div>
+      <select onChange={(e) => filterBySize(e)}>
+        <option value="">Filtrar por Talle</option>
+        <option value="XXXL">XXXL</option>
+        <option value="XXL">XXL</option>
+        <option value="XL">XL</option>
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="XXS">XXS</option>
+        <option value="XXXS">XXXS</option>
+      </select>
+
+      <select onChange={(e) => filterByDemographic(e)}>
+        <option value="">Filtrar por Genero</option>
+        <option value="adult male">adult male</option>
+        <option value="adult female">adult female</option>
+        <option value="teen female">teen female</option>
+        <option value="teen male">teen male</option>
+        <option value="little boy">little boy</option>
+        <option value="little girl">little girl</option>
+      </select>
+
+      <select onChange={(e) => filterByPrice(e)}>
+        <option value="">Filtrar por Precio</option>
+        <option value="25">25</option>
+      </select>
+    </div>
+  );
 };
 
 export default Filters;
