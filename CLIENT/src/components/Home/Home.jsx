@@ -12,7 +12,8 @@ import SearchBar from "../Searchbar/SearchBar";
 export default function Home() {
   const dispatch = useDispatch();
   const allProducts = useSelector(state => state.products);
-
+  const results = useSelector(state => state.productsStatus);
+  
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);  
@@ -34,7 +35,7 @@ export default function Home() {
         price={p.price}
         />
         )} */}
-        {allProducts?.map((p) => (
+        { allProducts.length ? allProducts.map((p) => (
           <Card
             key={p.id}
             id={p.id}
@@ -42,7 +43,9 @@ export default function Home() {
             title={p.name}
             price={p.price}
           />
-        ))}
+        )) : <div>
+            <p>{results}</p>
+          </div>}
       </div>
     </div>
   );
