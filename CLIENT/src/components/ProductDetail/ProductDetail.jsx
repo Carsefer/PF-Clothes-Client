@@ -11,7 +11,7 @@ const ProductDetail = () => {
     dispatch(getProductDetail(id));
   }, [dispatch, id]);
 
-  const detail = useSelector(state => state.productDetail)[0];
+  const detail = useSelector(state => state.productDetail);
 
   return (
     <div>
