@@ -11,11 +11,11 @@ const Card = ({ img, title, price, id }) => {
             className="CardProductHomeProductImg"
             /*className="w-25 p-3"*/
             src={img}
-            alt="shirt"
+            alt="img not found"
           />
         </div>
         <h3>{title}</h3>
-        <h3>{price}</h3>
+        <h3>${price}</h3>
       </Link>
     </div>
   );

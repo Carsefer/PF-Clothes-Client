@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   GET_PRODUCTS,
   GET_PRODUCT_DETAIL,
+  EMPTY_DETAIL,
   SEARCH_PRODUCT,
   GET_SIZES,
   GET_MARKS,
@@ -32,6 +33,12 @@ export const getProductDetail = (id) => {
     });
   };
 };
+
+export const emptyDetail = () => {
+  return {
+    type: EMPTY_DETAIL
+  }
+}
 
 export const searchProduct = (name) => {
   return async function (dispatch) {
@@ -95,6 +102,36 @@ export const filterProducts = (price, size, demographic) => {
   };
 };
 
+
+export const loginUser = (userInfo) => {
+  return async function (dispatch) {
+    dispatch({
+      type: LOGIN_USER,
+      payload: userInfo,
+    });
+  };
+};
+
+export const createUser = () => {
+  return async (dispatch) => {
+    const res = await axios.post(`/register`);
+    return dispatch({
+      type: CREATE_USER,
+      payload: res.data,
+    });
+  };
+};
+
+export const createPublication = () => {
+  return async (dispatch) => {
+    const res = await axios.post(`/publication`);
+    return dispatch({
+      type: CREATE_PUBLICATION,
+      payload: res.data,
+    });
+  };
+};
+
 /* export const filterProductsByMark = (mark) => {
     return async function (dispatch) {
         const filteredProductsByMark = await axios.get("http://localhost:3001/productMarks" + mark)
@@ -144,32 +181,3 @@ export const filterProductsByPrice = (price) => {
         })
     }
 } */
-
-export const loginUser = (userInfo) => {
-  return async function (dispatch) {
-    dispatch({
-      type: LOGIN_USER,
-      payload: userInfo,
-    });
-  };
-};
-
-export const createUser = () => {
-  return async (dispatch) => {
-    const res = await axios.post(`/register`);
-    return dispatch({
-      type: CREATE_USER,
-      payload: res.data,
-    });
-  };
-};
-
-export const createPublication = () => {
-  return async (dispatch) => {
-    const res = await axios.post(`/publication`);
-    return dispatch({
-      type: CREATE_PUBLICATION,
-      payload: res.data,
-    });
-  };
-};
