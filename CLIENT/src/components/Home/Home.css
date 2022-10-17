@@ -16,7 +16,7 @@
 }
 
 .ProductsHomeProductsCard {
-    height: 100vh;
+    height: 450px;
     display: flex;
     flex-direction: row;
     justify-content: center;
