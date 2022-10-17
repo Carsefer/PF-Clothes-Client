@@ -17,18 +17,18 @@ const LoginForm = () => {
         </div>
         <Formik
           initialValues={{
-            email: "",
+            username: "",
             password: "",
           }}
           validate={(value) => {
             let errors = {};
 
             if (
-              !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
-                value.email
+              !/^[a-zA-Z0-9_]+$/.test(
+                value.username
               )
             ) {
-              errors.email = "Ingrese un correo valido";
+              errors.username = "Ingrese un usuario";
             } else if (!value.password) {
               errors.password = "Ingrese contraseña";
             }
@@ -56,21 +56,21 @@ const LoginForm = () => {
               <div className="entry">
                 <input
                   type="text"
-                  id="email"
-                  placeholder="Correo electronico"
-                  name="email"
+                  id="username"
+                  placeholder="Usuario"
+                  name="username"
                   className="form1"
-                  value={values.email}
+                  value={values.username}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   required
                   autoComplete="off"
                 />
 
-                {touched.email && errors.email && (
+                {touched.username && errors.username && (
                   <div className="errors">
                     {" "}
-                    <span>{errors.email}</span>{" "}
+                    <span>{errors.username}</span>{" "}
                   </div>
                 )}
 
@@ -105,7 +105,7 @@ const LoginForm = () => {
                 </div>
               </div>
               {/* VALIDATIONS */}
-              {!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
+              {!/^[a-zA-Z0-9_]+$/.test(
                 values.email || !values.phone || !values.username
               ) || !values.password ? (
                 <button className="btnDisabled" disabled>
