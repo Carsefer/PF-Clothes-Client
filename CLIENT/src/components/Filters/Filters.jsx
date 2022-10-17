@@ -6,25 +6,16 @@ import "./Filters.css";
 const Filters = () => {
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //     dispatch(getSizes())
-  //     dispatch(getMark())
-  // }, [dispatch])
-
   const [price, setPrice] = useState("");
   const [size, setSize] = useState("");
   const [demographic, setDemographic] = useState("");
+  const [color, setColor] = useState("");
+
   //const [cant, setCant] = useState("");
 
   useEffect(() => {
-    dispatch(filterProducts(price, size, demographic));
-  }, [dispatch, price, size, demographic]);
-
-  // const sizes = useSelector(state => state.sizes)
-  // const marks = useSelector(state => state.marks)
-  // const demographies = []
-  // const types = []
-  // const locations = []
+    dispatch(filterProducts(price, size, demographic, color));
+  }, [dispatch, price, size, demographic, color]);
 
   //FILTER PRICE
   const filterByPrice = (e) => {
@@ -44,17 +35,11 @@ const Filters = () => {
     setDemographic(e.target.value);
   };
 
-  // const handleSelect = (e) => {
-  //   e.preventDefault();
-  //   if (e.target.value.length) {
-  //     const values = e.target.value.split("-");
-  //     const filter = {
-  //       type: values[0],
-  //       value: values[1],
-  //     };
-  //     dispatch(filterProducts(filter));
-  //   }
-  // };
+  //FILTER COLOR
+  const filterByColor = (e) => {
+    e.preventDefault();
+    setColor(e.target.value);
+  };
 
   return (
     <div className="FilterProductsHome">
@@ -95,6 +80,18 @@ const Filters = () => {
         <option value="50">hasta 50$</option>
         <option value="75">hasta 75$</option>
         <option value="100">hasta 100$</option>
+      </select>
+
+      <select
+        className="FilterProductsHomeSelect"
+        onChange={(e) => filterByColor(e)}
+      >
+        <option value="">Filtrar por Color</option>
+        <option value="Gris">Gris</option>
+        <option value="Negro">Negro</option>
+        <option value="Blanco">Blanco</option>
+        <option value="Azul">Azul</option>
+        <option value="Amarillo">Amarillo</option>
       </select>
     </div>
   );
