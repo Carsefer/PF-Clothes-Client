@@ -12,6 +12,11 @@ import {
   LOGIN_USER,
   CREATE_USER,
   CREATE_PUBLICATION,
+  ADD_TO_CART,
+  CLEAR_CART,
+  REMOVE_ALL_FROM_CART,
+  REMOVE_ONE_FROM_CART,
+
 } from "../action-types";
 
 export const getProducts = () => {
@@ -36,9 +41,9 @@ export const getProductDetail = (id) => {
 
 export const emptyDetail = () => {
   return {
-    type: EMPTY_DETAIL
-  }
-}
+    type: EMPTY_DETAIL,
+  };
+};
 
 export const searchProduct = (name) => {
   return async function (dispatch) {
@@ -102,7 +107,6 @@ export const filterProducts = (price, size, demographic) => {
   };
 };
 
-
 export const loginUser = (userInfo) => {
   return async function (dispatch) {
     dispatch({
@@ -112,9 +116,9 @@ export const loginUser = (userInfo) => {
   };
 };
 
-export const createUser = () => {
+export const createUser = (data) => {
   return async (dispatch) => {
-    const res = await axios.post(`/register`);
+    const res = await axios.post(`http://localhost:3001/user`, data);
     return dispatch({
       type: CREATE_USER,
       payload: res.data,
@@ -181,3 +185,16 @@ export const filterProductsByPrice = (price) => {
         })
     }
 } */
+
+export const addToCart = (id) => ({ type: ADD_TO_CART, payload: id });
+
+
+export const delFromCart = (id, all = false) =>
+  all
+    ? { type: REMOVE_ALL_FROM_CART, payload: id }
+    : { type: REMOVE_ONE_FROM_CART, payload: id };
+
+export const clearCart = () => ({ type: CLEAR_CART });
+
+
+
