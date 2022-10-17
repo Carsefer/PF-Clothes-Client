@@ -10,6 +10,7 @@ import {
   CREATE_USER,
   CREATE_PUBLICATION,
   EMPTY_DETAIL,
+  LOGIN_USER,
 } from "../action-types";
 
 const initialState = {
@@ -19,6 +20,9 @@ const initialState = {
   sizes: [],
   marks: [],
   productsStatus: "loading",
+  session:{
+    status:"no logged",
+  },
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -96,6 +100,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+    case LOGIN_USER:
+      return{
+        ...state,
+        session:action.payload,
+      }
     default:
       return state;
   }
