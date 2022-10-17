@@ -36,9 +36,9 @@ export const getProductDetail = (id) => {
 
 export const emptyDetail = () => {
   return {
-    type: EMPTY_DETAIL
-  }
-}
+    type: EMPTY_DETAIL,
+  };
+};
 
 export const searchProduct = (name) => {
   return async function (dispatch) {
@@ -102,7 +102,6 @@ export const filterProducts = (price, size, demographic) => {
   };
 };
 
-
 export const loginUser = (userInfo) => {
   return async function (dispatch) {
     dispatch({
@@ -112,9 +111,9 @@ export const loginUser = (userInfo) => {
   };
 };
 
-export const createUser = () => {
+export const createUser = (data) => {
   return async (dispatch) => {
-    const res = await axios.post(`/register`);
+    const res = await axios.post(`http://localhost:3001/user`, data);
     return dispatch({
       type: CREATE_USER,
       payload: res.data,
