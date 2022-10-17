@@ -81,7 +81,11 @@ const Filters = () => {
 
       <select onChange={(e) => filterByPrice(e)}>
         <option value="">Filtrar por Precio</option>
-        <option value="25">25</option>
+        <option value="10000000">All</option>
+        <option value="25">0-25</option>
+        <option value="50">0-50</option>
+        <option value="75">0-75</option>
+        <option value="100">0-100</option>
       </select>
     </div>
   );

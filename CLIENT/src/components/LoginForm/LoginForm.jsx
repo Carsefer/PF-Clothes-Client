@@ -2,18 +2,18 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../redux/actions";
 import { Formik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./LoginForm.css";
 const LoginForm = () => {
   const [showPwd, setShowPwd] = useState(false);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   return (
     <>
       <div className="container">
         <div className="header"></div>
         <div className="subtitle">
-          <h2>Welcome Back</h2>
+          <h2>Bienvenido devuelta.</h2>
         </div>
         <Formik
           initialValues={{
@@ -22,21 +22,26 @@ const LoginForm = () => {
           }}
           validate={(value) => {
             let errors = {};
+
             if (
               !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
                 value.email
               )
             ) {
-              errors.email = "Enter valid email";
+              errors.email = "Ingrese un correo valido";
             } else if (!value.password) {
-              errors.password = "Password is required";
+              errors.password = "Ingrese contraseña";
             }
             return errors;
           }}
           onSubmit={(values, { resetForm }) => {
             resetForm();
             dispatch(loginUser(values));
-            alert("Sucess");
+            alert("Exitoso");
+            setTimeout(() => {
+              resetForm();
+            }, 1000);
+            navigate("/home");
           }}
         >
           {({
@@ -52,7 +57,7 @@ const LoginForm = () => {
                 <input
                   type="text"
                   id="email"
-                  placeholder="Email"
+                  placeholder="Correo electronico"
                   name="email"
                   className="form1"
                   value={values.email}
@@ -73,7 +78,7 @@ const LoginForm = () => {
                   <div>
                     <input
                       type={showPwd ? "text" : "password"}
-                      placeholder="Password"
+                      placeholder="Contraseña"
                       className="form2"
                       name="password"
                       value={values.password}
@@ -91,35 +96,34 @@ const LoginForm = () => {
 
                 <div>
                   <Link to="/#" className="fp">
-                    Forgot Password
+                    Olvido su contraseña?
                   </Link>
                 </div>
                 <div className="remember">
                   <input type="checkbox" className="checkbox" />
-                  <label className="label">Remember me.</label>
+                  <label className="label">Recordarme.</label>
                 </div>
               </div>
               {/* VALIDATIONS */}
               {!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
-                values.email
+                values.email || !values.phone || !values.username
               ) || !values.password ? (
                 <button className="btnDisabled" disabled>
-                  Log In
+                  Iniciar sesión
                 </button>
               ) : (
                 <button type="submit" className="submit">
-                  Log In
+                  Iniciar sesión
                 </button>
               )}
             </form>
           )}
         </Formik>
         <p className="footer1">
-          Don't have an account?{" "}
+          No tiene cuenta?{" "}
           <Link className="register" to="/register">
-            Sign up
+            Crear cuenta.
           </Link>{" "}
-          instead.
         </p>
         <div
           className="eye2 position-absolute pointer pwd-icon"
