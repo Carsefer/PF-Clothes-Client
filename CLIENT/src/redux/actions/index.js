@@ -103,19 +103,26 @@ export const filterProducts = (price, size, demographic) => {
 };
 
 export const loginUser = (userInfo) => {
-  console.log(userInfo);
   return function (dispatch) {
     axios.post('http://localhost:3001/login',userInfo).then(
       function({data}){
         dispatch({
           type: LOGIN_USER,
-          payload: data,
+          payload: {
+            user:data.username,
+            token:data.token,
+            error:"",
+          },
         });
       },
       function({response}){
         dispatch({
           type: LOGIN_USER,
-          payload: response.data,
+          payload: {
+            user:"",
+            token:"",
+            error:response.data,
+          }
         });
       }
     );

@@ -21,7 +21,8 @@ const initialState = {
   marks: [],
   productsStatus: "loading",
   session:{
-    status:"no logged",
+    error:"",
+    user:"",
   },
 };
 
