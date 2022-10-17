@@ -12,6 +12,8 @@ import {
   LOGIN_USER,
   CREATE_USER,
   CREATE_PUBLICATION,
+  ADD_TO_FAVORITE,
+  GET_FAVORITES
 } from "../action-types";
 
 export const getProducts = () => {
@@ -130,6 +132,25 @@ export const createPublication = () => {
     });
   };
 };
+
+export const getFavorites = (user) => {
+  return async (dispatch) => {
+    const favorites = axios.get(`http://localhost:3001/${user}/favorites`)
+    dispatch({
+      type: GET_FAVORITES,
+      payload: favorites.data
+    })
+  }
+}
+
+export const addToFavorite = (id) => {
+  return async (dispatch) => {
+    dispatch({
+      type: ADD_TO_FAVORITE,
+      payload: id
+    })
+  }
+}
 
 /* export const filterProductsByMark = (mark) => {
     return async function (dispatch) {

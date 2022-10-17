@@ -10,6 +10,7 @@ import {
   CREATE_USER,
   CREATE_PUBLICATION,
   EMPTY_DETAIL,
+  GET_FAVORITES
 } from "../action-types";
 
 const initialState = {
@@ -19,6 +20,7 @@ const initialState = {
   sizes: [],
   marks: [],
   productsStatus: "loading",
+  favorites: []
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -96,6 +98,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+    case GET_FAVORITES:
+      return {
+        ...state,
+        favorites: action.payload
+      }
     default:
       return state;
   }
