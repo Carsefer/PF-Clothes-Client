@@ -2,7 +2,6 @@ import React from "react";
 import Footer from "../Footer/Footer";
 import { Link } from "react-router-dom";
 import "./LandingHome.css";
-import { Container } from "react-bootstrap";
 
 export default function LandingHome() {
   return (
