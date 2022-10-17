@@ -11,7 +11,8 @@ import Footer from "../Footer/Footer";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const allProducts = useSelector((state) => state.products);
+  const allProducts = useSelector(state => state.products);
+  const results = useSelector(state => state.productsStatus);
 
   useEffect(() => {
     dispatch(getProducts());
@@ -25,15 +26,17 @@ export default function Home() {
         <div className="ProductsHome">
           <Filters />
           <div className="ProductsHomeProductsCard">
-            {allProducts?.map((p) => (
-              <Card
-                key={p.id}
-                id={p.id}
-                img={p.image}
-                title={p.name[0].toUpperCase() + p.name.substring(1)}
-                price={p.price}
-              />
-            ))}
+            { allProducts.length ? allProducts.map((p) => (
+            <Card
+              key={p.id}
+              id={p.id}
+              img={p.image}
+              title={p.name[0].toUpperCase() + p.name.substring(1)}
+              price={p.price}
+            />
+            )) :  <div>
+                    <p>{results}</p>
+                  </div>}
           </div>
         </div>
       </div>
