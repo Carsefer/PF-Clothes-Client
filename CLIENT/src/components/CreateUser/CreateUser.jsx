@@ -10,7 +10,7 @@ const CreateUser = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="container">
+    <div className="container1">
       <h1 className="subtitle ">Registrar usuario</h1>
       <Formik
         initialValues={{

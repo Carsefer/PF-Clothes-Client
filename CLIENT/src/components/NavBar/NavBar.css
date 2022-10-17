@@ -1,0 +1,50 @@
+.NavbarHome {
+    top: 0;
+    position: fixed;
+    width: 100%;
+    padding-left: 2vh;
+    padding-right: 2vh;
+    padding-top: 2vh;
+    background-color: #31B189;
+    height: 12vh;
+}
+
+.NavbarHomeContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.NavbarHomeLogo {
+    width: 30vh;
+    margin: 0;
+}
+
+.NavbarHomeFormsButtonsContainer {
+    display: flex;
+    flex-direction: row;    
+    justify-content: space-between;
+    align-items: center;
+    width: 40vh;
+
+}
+
+.NavbarHomeButtons {
+    display: inline-block;
+    padding: 6px 11px;
+    border: 1px solid #FFE3B3;
+    border-radius: 10px;
+    position: relative;
+    font-size: 19px;
+    color: black;
+    z-index: 1;
+    background-color: #FFE3B3;
+    text-align: center;
+    transition: all 0.2s ease-in;
+}
+
+.NavbarHomeButtons:hover {
+    color: #31B189;
+    border: 1px solid white;
+}

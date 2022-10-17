@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { filterProducts } from "../../redux/actions";
+import "./Filters.css";
 
 const Filters = () => {
   const dispatch = useDispatch();
@@ -56,8 +57,11 @@ const Filters = () => {
   // };
 
   return (
-    <div>
-      <select onChange={(e) => filterBySize(e)}>
+    <div className="FilterProductsHome">
+      <select
+        className="FilterProductsHomeSelect"
+        onChange={(e) => filterBySize(e)}
+      >
         <option value="">Filtrar por Talle</option>
         <option value="XXXL">XXXL</option>
         <option value="XXL">XXL</option>
@@ -69,7 +73,10 @@ const Filters = () => {
         <option value="XXXS">XXXS</option>
       </select>
 
-      <select onChange={(e) => filterByDemographic(e)}>
+      <select
+        className="FilterProductsHomeSelect"
+        onChange={(e) => filterByDemographic(e)}
+      >
         <option value="">Filtrar por Genero</option>
         <option value="adult male">adult male</option>
         <option value="adult female">adult female</option>
@@ -79,13 +86,15 @@ const Filters = () => {
         <option value="little girl">little girl</option>
       </select>
 
-      <select onChange={(e) => filterByPrice(e)}>
+      <select
+        className="FilterProductsHomeSelect"
+        onChange={(e) => filterByPrice(e)}
+      >
         <option value="">Filtrar por Precio</option>
-        <option value="10000000">All</option>
-        <option value="25">0-25</option>
-        <option value="50">0-50</option>
-        <option value="75">0-75</option>
-        <option value="100">0-100</option>
+        <option value="25">hasta 25$</option>
+        <option value="50">hasta 50$</option>
+        <option value="75">hasta 75$</option>
+        <option value="100">hasta 100$</option>
       </select>
     </div>
   );

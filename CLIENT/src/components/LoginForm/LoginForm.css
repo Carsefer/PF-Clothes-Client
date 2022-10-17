@@ -49,6 +49,7 @@ h2,
 p {
   text-align: center;
   margin: 1.5rem;
+  font-size: 24px;
 }
 img {
   width: 38px;
@@ -193,7 +194,7 @@ p a {
   margin-left: 100px;
   justify-content: flex-start;
 }
-.footer1 {
+.LoginFormsFooter {
   width: 100%;
   max-width: 390px;
   margin-bottom: 50px;

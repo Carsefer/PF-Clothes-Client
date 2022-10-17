@@ -4,18 +4,20 @@ import "./Card.css"
 
 const Card = ({ img, title, price, id }) => {
   return (
-    <div className="Card">
-      <Link className="Link" to={`/Home/Product/${id}`}>
-        <div className="ImgContainer">
+    <div className="CardProductHome">
+      <Link className="CardProductHomeLink" to={`/Home/Product/${id}`}>
+        <div className="CardProductHomeLinkImgContainer">
           <img
-            className="ProductIMG"
+            className="CardProductHomeLinkProductImg"
             /*className="w-25 p-3"*/
             src={img}
             alt="img not found"
           />
         </div>
-        <h3>{title}</h3>
-        <h3>${price}</h3>
+        <div className="CardProductHomeLinkProductTextContainer">
+          <h3 className="CardProductHomeProductTitle">{title}</h3>
+          <h3 className="CardProductHomeProductPrice">${price}</h3>
+        </div>
       </Link>
     </div>
   );
