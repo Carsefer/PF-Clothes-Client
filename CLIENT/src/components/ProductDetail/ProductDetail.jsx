@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getProductDetail } from "../../redux/actions";
 import "./ProductDetail.css"
+import Comments from "../Comments/Comments";
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
@@ -17,29 +18,31 @@ const ProductDetail = () => {
   return (
     <div className="detailsContainer">
       <div className="sectionDetails">
+        <h1 className="detailsTitle">{detail.name}</h1>
+        <div className="article__details">
+          <div className="articleDetailsImage">
+            <img src={detail.image} alt="img not found" />
+          </div>
+          <div className="article_details_container">
       
-      <h1 className="detailsTitle">{detail.name}</h1>
-       <div className="article__details">
-      <div className="articleDetailsImage">
-      <img src={detail.image} alt="img not found" />
-      </div>
-      <div className="article_details_container">
-      
-      <p>Precio: ${detail.price}</p>
+            <p>Precio: ${detail.price}</p>
       
       
-      <p>Talle: {detail.size}</p>
+            <p>Talle: {detail.size}</p>
       
-      <p>Marca: {detail.brand}</p>
+            <p>Marca: {detail.brand}</p>
       
-      <p>Color: {detail.color}</p>
+            <p>Color: {detail.color}</p>
       
-      <p>Material: {detail.materials}</p>
+            <p>Material: {detail.materials}</p>
      
-      <p>Quedan {detail.stock} unidades disponibles</p>
+            <p>Quedan {detail.stock} unidades disponibles</p>
       
-      </div>
-      </div>
+          </div>
+          <div>
+            <Comments/>
+          </div>
+        </div>
       </div>
     </div>
   );
