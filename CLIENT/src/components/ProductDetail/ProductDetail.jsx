@@ -33,6 +33,10 @@ const ProductDetail = () => {
             <p>Material: {detail.materials}</p>
             <p>Quedan {detail.stock} unidades disponibles</p>
           </div>
+          <div>
+            <h2>Reseñas</h2>
+            
+          </div>
         </div>
       </div>
     </div>

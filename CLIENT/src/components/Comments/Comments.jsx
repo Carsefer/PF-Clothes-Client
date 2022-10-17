@@ -1,4 +1,3 @@
-import React from "react";
 import Star from "../images/icono-estrella.png"
 
 const Comments = (score, review) => {
