@@ -113,10 +113,10 @@ export const loginUser = (userInfo) => {
       function({data}){
         sessionStorage.setItem('sessionData',JSON.stringify(data));
       },
-      function({response}){
+      function(err){
         dispatch({
           type: LOGIN_USER,
-          payload: response.data,
+          payload: err.response.data.error,
         });
       }
     );

@@ -9,8 +9,6 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const invalidLogin = useSelector(state => state.loginError);
-  console.log("login");
-  console.log(invalidLogin);
   return (
     <>
       <div className="container">

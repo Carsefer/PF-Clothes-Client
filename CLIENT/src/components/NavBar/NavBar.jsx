@@ -11,15 +11,12 @@ const NavBar = () => {
     const [user,setUser] = useState("");
 
     useEffect(() => {  
-        //const session = JSON.parse(sessionStorage.getItem('sessionData'));
         (async()=>{
             if(!user){
                 const data = await getSession();
-                console.log(data);
                 await setUser(data);
             }
         })() 
-        //setUser(getSesion);
     },[user])
 
     
@@ -28,7 +25,6 @@ const NavBar = () => {
         sessionStorage.removeItem('sessionData');
     }
 
-    console.log("render");
     console.log(user);
     return (
         <nav className='NavbarHome'>
