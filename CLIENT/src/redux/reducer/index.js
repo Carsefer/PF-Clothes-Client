@@ -20,10 +20,7 @@ const initialState = {
   sizes: [],
   marks: [],
   productsStatus: "loading",
-  session:{
-    error:"",
-    user:"",
-  },
+  session:{},
 };
 
 const rootReducer = (state = initialState, action) => {
