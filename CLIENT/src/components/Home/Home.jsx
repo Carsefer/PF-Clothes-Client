@@ -20,6 +20,7 @@ export default function Home() {
 
   //Paginado
   const [currentPage, setCurrentPage] = useState(1);
+  //Acá se define la cantidad de productos que aparecerán por pantalla.
   const productsPerPage = 12;
   const indexOfLastproduct = currentPage * productsPerPage;
   const indexOfFirstproduct = indexOfLastproduct - productsPerPage;
