@@ -1,21 +1,32 @@
 import React from "react";
 import "./Home.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts, emptyDetail } from "../../redux/actions";
 import Card from "../Card/Card";
 import NavBar from "../NavBar/NavBar";
 import Filters from "../Filters/Filters";
+import Paginado from "../Paginado/Paginado";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const allProducts = useSelector((state) => state.products);
-  const results = useSelector((state) => state.productsStatus);
+  const allProducts = useSelector(state => state.products);
+  const results = useSelector(state => state.productsStatus);
 
   useEffect(() => {
     dispatch(getProducts());
     dispatch(emptyDetail());
   }, [dispatch]);
+
+  //Paginado
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 12;
+  const indexOfLastproduct = currentPage * productsPerPage;
+  const indexOfFirstproduct = indexOfLastproduct - productsPerPage;
+  const currentProducts = allProducts.slice(indexOfFirstproduct, indexOfLastproduct);
+  const paginado = pageNum => {
+    setCurrentPage(pageNum);
+  }
 
   return (
     <div className="Home">
@@ -23,9 +34,14 @@ export default function Home() {
       <div className="ProductsHomeContainer">
         <div className="ProductsHome">
           <Filters />
+          <Paginado
+          productsPerPage={productsPerPage}
+          allProducts={allProducts.length}
+          paginado={paginado}
+          />
           <div className="ProductsHomeProductsCard">
             {allProducts.length ? (
-              allProducts.map((p) => (
+              currentProducts.map((p) => (
                 <Card
                   key={p.id}
                   id={p.id}
