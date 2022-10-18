@@ -13,7 +13,8 @@ import {
   CREATE_USER,
   CREATE_PUBLICATION,
   ADD_TO_FAVORITE,
-  GET_FAVORITES
+  GET_FAVORITES,
+  DELETE_TO_FAVORITES
 } from "../action-types";
 
 export const getProducts = () => {
@@ -147,6 +148,15 @@ export const addToFavorite = (id) => {
   return async (dispatch) => {
     dispatch({
       type: ADD_TO_FAVORITE,
+      payload: id
+    })
+  }
+}
+
+export const deleteToFavorites = (id) => {
+  return async (dispatch) => {
+    dispatch({
+      type: DELETE_TO_FAVORITES,
       payload: id
     })
   }

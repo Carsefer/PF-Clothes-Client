@@ -24,6 +24,7 @@ const Favorites = () => {
                             img={cloth.image}
                             title={cloth.name[0].toUpperCase() + p.name.substring(1)}
                             price={cloth.price}
+                            inFavorites={true}
                         />
                     )
                 }) : <h1>Tu lista de favoritos está vacía, añade prendas a tu lista y aparecerán aquí</h1>
