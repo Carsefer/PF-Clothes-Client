@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { loginUser } from "../../redux/actions";
 import { Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,6 +8,9 @@ const LoginForm = () => {
   const [showPwd, setShowPwd] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const invalidLogin = useSelector(state => state.loginError);
+  console.log("login");
+  console.log(invalidLogin);
   return (
     <>
       <div className="container">
@@ -36,12 +39,19 @@ const LoginForm = () => {
           }}
           onSubmit={(values, { resetForm }) => {
             resetForm();
-            dispatch(loginUser(values));
-            alert("Exitoso");
-            setTimeout(() => {
+            if(!invalidLogin){
+              dispatch(loginUser(values));
+              alert("Exitoso");
+              setTimeout(() => {
               resetForm();
-            }, 1000);
-            navigate("/home");
+              }, 1000);
+              navigate("/home");
+            }else{
+              console.log(invalidLogin);
+              resetForm();
+              alert(invalidLogin);
+            }
+            
           }}
         >
           {({

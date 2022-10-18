@@ -112,20 +112,11 @@ export const loginUser = (userInfo) => {
     axios.post('http://localhost:3001/login',userInfo).then(
       function({data}){
         sessionStorage.setItem('sessionData',JSON.stringify(data));
-        dispatch({
-          type: LOGIN_USER,
-          payload: {
-            user:data.username,
-            token:data.token,
-          },
-        });
       },
       function({response}){
         dispatch({
           type: LOGIN_USER,
-          payload: {
-            error:response.data,
-          }
+          payload: response.data,
         });
       }
     );

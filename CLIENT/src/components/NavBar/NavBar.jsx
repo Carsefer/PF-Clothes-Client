@@ -5,18 +5,31 @@ import "./NavBar.css"
 import Logo from "../images/express-fashion-stores.svg"
 import Cart from "./cart.svg"
 
+const getSession = async () => await JSON.parse(sessionStorage.getItem('sessionData'));
+
 const NavBar = () => {
     const [user,setUser] = useState("");
 
     useEffect(() => {  
-        const session = JSON.parse(sessionStorage.getItem('sessionData'));
-        setUser(session);
-    },[])
+        //const session = JSON.parse(sessionStorage.getItem('sessionData'));
+        (async()=>{
+            if(!user){
+                const data = await getSession();
+                console.log(data);
+                await setUser(data);
+            }
+        })() 
+        //setUser(getSesion);
+    },[user])
+
     
     const handleLogout = (e) => {
         setUser("");
+        sessionStorage.removeItem('sessionData');
     }
 
+    console.log("render");
+    console.log(user);
     return (
         <nav className='NavbarHome'>
             <div className='NavbarHomeContainer'>

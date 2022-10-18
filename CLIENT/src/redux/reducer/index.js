@@ -24,7 +24,7 @@ const initialState = {
   sizes: [],
   marks: [],
   productsStatus: "loading",
-  session:{},
+  loginError:"",
   cart: []
 };
 
@@ -106,7 +106,7 @@ const rootReducer = (state = initialState, action) => {
     case LOGIN_USER:
       return{
         ...state,
-        session:action.payload,
+        loginError:action.payload,
       }
     case ADD_TO_CART: {
         let newItem = state.products.find(
