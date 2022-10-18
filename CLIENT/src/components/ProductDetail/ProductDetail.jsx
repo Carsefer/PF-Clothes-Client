@@ -3,8 +3,8 @@ import { FaCartPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getProductDetail, addToCart, getProductDetailReviews } from "../../redux/actions";
-import "./ProductDetail.css"
 import Comments from "../Comments/Comments";
+import "./ProductDetail.css"
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
