@@ -16,6 +16,7 @@ import {
   CLEAR_CART,
   REMOVE_ALL_FROM_CART,
   REMOVE_ONE_FROM_CART,
+  GET_REVIEWS_PRODUCT_DETAIL,
 
 } from "../action-types";
 
@@ -35,6 +36,16 @@ export const getProductDetail = (id) => {
     dispatch({
       type: GET_PRODUCT_DETAIL,
       payload: detail.data,
+    });
+  };
+};
+
+export const getProductDetailReviews = (id) => {
+  return async function (dispatch) {
+    const reviews = await axios.get(`http://localhost:3001/product/review/${id}`)
+    dispatch({
+      type: GET_REVIEWS_PRODUCT_DETAIL,
+      payload: reviews.data,
     });
   };
 };

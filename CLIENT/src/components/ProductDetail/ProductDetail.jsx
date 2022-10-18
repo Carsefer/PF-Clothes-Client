@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { FaCartPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getProductDetail, addToCart } from "../../redux/actions";
+import { getProductDetail, addToCart, getProductDetailReviews } from "../../redux/actions";
 import "./ProductDetail.css"
 import Comments from "../Comments/Comments";
 
@@ -12,9 +12,14 @@ const ProductDetail = () => {
 
   useEffect(() => {
     dispatch(getProductDetail(id));
+    dispatch(getProductDetailReviews(id));
   }, [dispatch, id]);
 
   const detail = useSelector(state => state.productDetail);
+  const reviews = useSelector(state => state.productReviews);
+
+  console.log("hola")
+  console.log(reviews)
 
   return (
     <div className="detailsContainer">
@@ -35,7 +40,18 @@ const ProductDetail = () => {
           </div>
           <div>
             <h2>Reseñas</h2>
-            
+            {reviews.length ? (
+              reviews.map((r) => (
+                <Comments 
+                  score = {r.score}
+                  reviews = {r.reviews}
+                />
+              ))
+            ) : (
+              <div>
+                <p>No hay reseñas</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -44,3 +60,12 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
+
+/*
+{reviews.map((r) => (
+  <Comments 
+    score = {r.score}
+    review = {r.review}
+  />
+))}
+<Comments/>*/

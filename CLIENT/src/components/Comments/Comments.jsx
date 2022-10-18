@@ -1,6 +1,6 @@
 import Star from "../images/icono-estrella.png"
 
-const Comments = (score, review) => {
+const Comments = ({score, reviews}) => {
     return (
         <div>
             <div>
@@ -9,7 +9,7 @@ const Comments = (score, review) => {
                 })}
             </div>
             <div>
-                <p>{review}</p>
+                <p>{reviews}</p>
             </div>
         </div>
     );
