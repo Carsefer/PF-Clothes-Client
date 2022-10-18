@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
+import { FaCartPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getProductDetail } from "../../redux/actions";
+import { getProductDetail, addToCart } from "../../redux/actions";
 import "./ProductDetail.css"
 
 const ProductDetail = () => {
@@ -17,8 +18,8 @@ const ProductDetail = () => {
   return (
     <div className="detailsContainer">
       <div className="sectionDetails">
-      
-      <h1 className="detailsTitle">{detail.name}</h1>
+      <button onClick={() => dispatch (addToCart(id))}><FaCartPlus/>Agregar</button> 
+     <h1 className="detailsTitle">{detail.name}</h1>
        <div className="article__details">
       <div className="articleDetailsImage">
       <img src={detail.image} alt="img not found" />
@@ -26,18 +27,12 @@ const ProductDetail = () => {
       <div className="article_details_container">
       
       <p>Precio: ${detail.price}</p>
-      
-      
       <p>Talle: {detail.size}</p>
-      
       <p>Marca: {detail.brand}</p>
-      
       <p>Color: {detail.color}</p>
-      
       <p>Material: {detail.materials}</p>
-     
       <p>Quedan {detail.stock} unidades disponibles</p>
-      
+     
       </div>
       </div>
       </div>
