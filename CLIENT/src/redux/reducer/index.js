@@ -15,12 +15,15 @@ import {
   CLEAR_CART,
   REMOVE_ALL_FROM_CART,
   REMOVE_ONE_FROM_CART,
+  GET_REVIEWS_PRODUCT_DETAIL,
+
 } from "../action-types";
 
 const initialState = {
   products: [],
   productsAux: [],
   productDetail: [],
+  productReviews: [],
   sizes: [],
   marks: [],
   productsStatus: "loading",
@@ -40,6 +43,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         productDetail: action.payload,
+      };
+    case GET_REVIEWS_PRODUCT_DETAIL: 
+      return {
+        ...state,
+        productReviews: action.payload,
       };
     case EMPTY_DETAIL:
       return {
