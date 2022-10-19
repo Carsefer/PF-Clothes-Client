@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { useDispatch,useSelector } from "react-redux";
-import { loginUser } from "../../redux/actions";
+import { loginUser,flushError } from "../../redux/actions";
 import { Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import "./LoginForm.css";
+import { useEffect } from "react";
 const LoginForm = () => {
   const [showPwd, setShowPwd] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const invalidLogin = useSelector(state => state.loginError);
+  useEffect(() => {
+    //dispatch(flushError());
+  },[]);
   return (
     <>
       <div className="container">
@@ -37,18 +41,42 @@ const LoginForm = () => {
           }}
           onSubmit={(values, { resetForm }) => {
             resetForm();
-            if(!invalidLogin){
-              dispatch(loginUser(values));
-              alert("Exitoso");
-              setTimeout(() => {
-              resetForm();
-              }, 1000);
-              navigate("/home");
-            }else{
-              console.log(invalidLogin);
-              resetForm();
-              alert(invalidLogin);
-            }
+
+            /*(async () => {
+              await dispatch(loginUser(values));
+              
+              if(!invalidLogin){
+                await alert("Exitoso");
+                await dispatch(flushError());
+                await navigate("/home");
+              }
+
+              if(invalidLogin){
+                await console.log(invalidLogin);
+                //resetForm();
+                await alert(invalidLogin.error);
+                await dispatch(flushError());
+              }
+
+            })()*/
+            console.time("timer1");
+            dispatch(loginUser(values)).then(
+              function(){
+                if(invalidLogin){
+                  //console.timeLog("timer1");
+                  //console.log(invalidLogin);
+                  //console.timeEnd("timer1");
+                  //resetForm();
+                  //alert(invalidLogin.error);
+                }else{
+                  //console.timeLog("timer1");
+                  //alert("Exitoso");
+                  //console.timeEnd("timer1");
+                  navigate("/home");
+                }
+                
+              }
+            )          
             
           }}
         >

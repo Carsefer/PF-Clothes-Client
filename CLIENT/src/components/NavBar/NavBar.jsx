@@ -5,6 +5,7 @@ import "./NavBar.css"
 import Logo from "../images/express-fashion-stores.svg"
 import Cart from "./cart.svg"
 
+// extraer token 
 const getSession = async () => await JSON.parse(sessionStorage.getItem('sessionData'));
 
 const NavBar = () => {

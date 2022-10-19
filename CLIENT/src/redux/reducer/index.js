@@ -16,7 +16,7 @@ import {
   REMOVE_ALL_FROM_CART,
   REMOVE_ONE_FROM_CART,
   GET_REVIEWS_PRODUCT_DETAIL,
-
+  FLUSH_ERROR,
 } from "../action-types";
 
 const initialState = {
@@ -27,7 +27,7 @@ const initialState = {
   sizes: [],
   marks: [],
   productsStatus: "loading",
-  loginError:"",
+  loginError:null,
   cart: []
 };
 
@@ -166,6 +166,12 @@ const rootReducer = (state = initialState, action) => {
           ...state,
         }
       };
+      case FLUSH_ERROR:{
+        return{
+          ...state,
+          loginError:action.payload,
+        }
+      }
     default:
       return state;
   }
