@@ -19,6 +19,7 @@ import {
   REMOVE_ALL_FROM_CART,
   REMOVE_ONE_FROM_CART,
   GET_REVIEWS_PRODUCT_DETAIL,
+  FLUSH_ERROR,
 } from "../action-types";
 
 export const getProducts = () => {
@@ -109,10 +110,21 @@ export const filterProducts = (price, size, demographic) => {
 
 export const loginUser = (userInfo) => {
   return async function (dispatch) {
-    dispatch({
-      type: LOGIN_USER,
-      payload: userInfo,
-    });
+    axios.post('http://localhost:3001/login',userInfo).then(
+      function({data}){
+        dispatch({
+          type:LOGIN_USER,
+          payload:null,
+        })
+        sessionStorage.setItem('sessionData',JSON.stringify(data));
+      },
+      function(err){
+        dispatch({
+          type: LOGIN_USER,
+          payload: err.response.data,
+        });
+      }
+    );
   };
 };
 
@@ -181,4 +193,16 @@ export const delFromCart = (id, all = false) =>
     ? { type: REMOVE_ALL_FROM_CART, payload: id }
     : { type: REMOVE_ONE_FROM_CART, payload: id };
 
+<<<<<<< HEAD
 export const clearCart = () => ({ type: CLEAR_CART }); */
+export const clearCart = () => ({ type: CLEAR_CART });
+
+export const flushError = () => {
+  return async (dispatch) => {
+    dispatch({
+      type:FLUSH_ERROR,
+      payload:null,
+    })
+  } 
+}
+
