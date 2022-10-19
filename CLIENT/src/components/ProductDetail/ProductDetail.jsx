@@ -1,31 +1,42 @@
 import React, { useEffect } from "react";
 import { FaCartPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { getProductDetail, addToCart, getProductDetailReviews } from "../../redux/actions";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  getProductDetail,
+  addToCart,
+  getProductDetailReviews,
+} from "../../redux/actions";
 import Comments from "../Comments/Comments";
-import "./ProductDetail.css"
+import "./ProductDetail.css";
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getProductDetail(id));
     dispatch(getProductDetailReviews(id));
   }, [dispatch, id]);
 
-  const detail = useSelector(state => state.productDetail);
-  const reviews = useSelector(state => state.productReviews);
+  const detail = useSelector((state) => state.productDetail);
+  const reviews = useSelector((state) => state.productReviews);
 
-  console.log("hola")
-  console.log(reviews)
+  console.log("hola");
+  console.log(reviews);
 
   return (
     <div className="detailsContainer">
       <div className="sectionDetails">
-        <button onClick={() => dispatch (addToCart(id))}><FaCartPlus/>Agregar</button> 
-        <h1 className="detailsTitle">{detail.name}</h1>
+        <button onClick={() => navigate(-1)}>Volver atrás</button>
+        <button onClick={() => dispatch(addToCart(id))}>
+          <FaCartPlus />
+          Agregar
+        </button>
+        <h1 className="detailsTitle">
+          {detail.name?.charAt(0).toUpperCase() + detail.name?.slice(1)}
+        </h1>
         <div className="article__details">
           <div className="articleDetailsImage">
             <img src={detail.image} alt="img not found" />
@@ -42,10 +53,7 @@ const ProductDetail = () => {
             <h2>Reseñas</h2>
             {reviews.length ? (
               reviews.map((r) => (
-                <Comments 
-                  score = {r.score}
-                  reviews = {r.reviews}
-                />
+                <Comments score={r.score} reviews={r.reviews} />
               ))
             ) : (
               <div>
