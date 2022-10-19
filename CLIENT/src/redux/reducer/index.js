@@ -9,13 +9,14 @@ import {
   CREATE_USER,
   CREATE_PUBLICATION,
   EMPTY_DETAIL,
+  GET_FAVORITES,
   LOGIN_USER,
   ADD_TO_CART,
   CLEAR_CART,
   REMOVE_ALL_FROM_CART,
   REMOVE_ONE_FROM_CART,
   GET_REVIEWS_PRODUCT_DETAIL,
-  FLUSH_ERROR,
+  FLUSH_ERROR
 } from "../action-types";
 
 const initialState = {
@@ -25,6 +26,7 @@ const initialState = {
   productReviews: [],
   sizes: [],
   productsStatus: "loading",
+  favorites: [],
   loginError:null,
   cart: []
 };
@@ -104,6 +106,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
       };
+    case GET_FAVORITES:
+      return {
+        ...state,
+        favorites: action.payload
+      }
     case LOGIN_USER:
       return{
         ...state,
