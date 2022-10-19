@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch,useSelector } from "react-redux";
-import { loginUser,flushError } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser, flushError } from "../../redux/actions";
 import { Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import Styles from "./LoginForm.module.css";
@@ -12,20 +12,19 @@ const LoginForm = () => {
   const navigate = useNavigate();
 
   const handleLogin = async (userInfo) => {
-    try{
-      const res = await axios.post(`http://localhost:3001/login`,userInfo);
-      sessionStorage.setItem('sessionData',JSON.stringify(res.data));
-      if(res.data){
+    try {
+      const res = await axios.post(`http://localhost:3001/login`, userInfo);
+      sessionStorage.setItem("sessionData", JSON.stringify(res.data));
+      if (res.data) {
         alert("Credenciales correctas");
         navigate("/home");
       }
-    }catch(err){
+    } catch (err) {
       console.log("incorrect");
       alert("Credenciales incorrectas");
     }
-    
-  }
-  
+  };
+
   return (
     <>
       <div className={Styles.container}>
@@ -41,11 +40,7 @@ const LoginForm = () => {
           validate={(value) => {
             let errors = {};
 
-            if (
-              !/^[a-zA-Z0-9_]+$/.test(
-                value.username
-              )
-            ) {
+            if (!/^[a-zA-Z0-9_]+$/.test(value.username)) {
               errors.username = "Ingrese un usuario";
             } else if (!value.password) {
               errors.password = "Ingrese contraseña";
@@ -53,7 +48,7 @@ const LoginForm = () => {
             return errors;
           }}
           onSubmit={(values, { resetForm }) => {
-            resetForm();       
+            resetForm();
             handleLogin(values);
           }}
         >
