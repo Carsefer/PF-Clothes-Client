@@ -3,15 +3,15 @@ import { createUser } from "../../redux/actions";
 import { Formik } from "formik";
 
 import { useNavigate, Link } from "react-router-dom";
-import "./CreateUser.css";
+import Styles from "./CreateUser.module.css";
 
 const CreateUser = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   return (
-    <div className="container1">
-      <h1 className="subtitle ">Registrar usuario</h1>
+    <div className={Styles.container1}>
+      <h1 className={Styles.subtitle}>Registrar usuario</h1>
       <Formik
         initialValues={{
           username: "",
@@ -96,15 +96,15 @@ const CreateUser = () => {
           handleChange,
           handleBlur,
         }) => (
-          <form className="form" onSubmit={handleSubmit}>
-            <div className="entry">
-              <div className="column">
+          <form className={Styles.form} onSubmit={handleSubmit}>
+            <div className={Styles.entry}>
+              <div className={Styles.column}>
                 <input
                   type="text"
                   id="username"
                   placeholder="Nombre de usuario"
                   name="username"
-                  className="form1"
+                  className={Styles.form1}
                   value={values.username}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -113,7 +113,7 @@ const CreateUser = () => {
                   autoComplete="off"
                 />
                 {touched.username && errors.username && (
-                  <div className="error">
+                  <div className={Styles.error}>
                     {" "}
                     <span>{errors.username}</span>{" "}
                   </div>
@@ -123,7 +123,7 @@ const CreateUser = () => {
                   id="name"
                   placeholder="Nombre"
                   name="name"
-                  className="form1"
+                  className={Styles.form1}
                   value={values.name}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -131,7 +131,7 @@ const CreateUser = () => {
                   autoComplete="off"
                 />
                 {touched.name && errors.name && (
-                  <div className="error">
+                  <div className={Styles.error}>
                     {" "}
                     <span>{errors.name}</span>{" "}
                   </div>
@@ -142,7 +142,7 @@ const CreateUser = () => {
                   id="lastname"
                   placeholder="Apellido"
                   name="lastname"
-                  className="form1"
+                  className={Styles.form1}
                   value={values.lastname}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -151,7 +151,7 @@ const CreateUser = () => {
                   autoComplete="off"
                 />
                 {touched.lastname && errors.lastname && (
-                  <div className="error">
+                  <div className={Styles.error}>
                     {" "}
                     <span>{errors.lastname}</span>{" "}
                   </div>
@@ -162,7 +162,7 @@ const CreateUser = () => {
                   id="mail"
                   placeholder="Correo electronico"
                   name="mail"
-                  className="form1"
+                  className={Styles.form1}
                   value={values.mail}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -171,7 +171,7 @@ const CreateUser = () => {
                   autoComplete="off"
                 />
                 {touched.mail && errors.mail && (
-                  <div className="error">
+                  <div className={Styles.error}>
                     {" "}
                     <span>{errors.mail}</span>{" "}
                   </div>
@@ -181,7 +181,7 @@ const CreateUser = () => {
                   id="password"
                   placeholder="Contraseña"
                   name="password"
-                  className="form1"
+                  className={Styles.form1}
                   value={values.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -190,7 +190,7 @@ const CreateUser = () => {
                   autoComplete="off"
                 />
                 {touched.password && errors.password && (
-                  <div className="error">
+                  <div className={Styles.error}>
                     {" "}
                     <span>{errors.password}</span>{" "}
                   </div>
@@ -200,7 +200,7 @@ const CreateUser = () => {
                   id="repassword"
                   placeholder="Ingresar contraseña nuevamente"
                   name="passwords"
-                  className="form1"
+                  className={Styles.form1}
                   value={values.passwords}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -209,7 +209,7 @@ const CreateUser = () => {
                   autoComplete="off"
                 />
                 {touched.passwords && errors.passwords && (
-                  <div className="error">
+                  <div className={Styles.error}>
                     {" "}
                     <span>{errors.passwords}</span>{" "}
                   </div>
@@ -219,7 +219,7 @@ const CreateUser = () => {
                   id="phone"
                   placeholder="Ingrese un número de telefono"
                   name="phone"
-                  className="form1"
+                  className={Styles.form1}
                   value={values.phone}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -228,7 +228,7 @@ const CreateUser = () => {
                   autoComplete="off"
                 />
                 {touched.phone && errors.phone && (
-                  <div className="error">
+                  <div className={Styles.error}>
                     {" "}
                     <span>{errors.phone}</span>{" "}
                   </div>
@@ -241,13 +241,13 @@ const CreateUser = () => {
                   !/^\d[0-9,$]*$/.test(values.phone) ||
                   values.passwords !== values.password ? (
                     <div>
-                      <button className="btnDisabled2" disabled>
+                      <button className={Styles.btnDisabled2} disabled>
                         Registrar
                       </button>
                     </div>
                   ) : (
                     <div>
-                      <button type="submit" className="submit2">
+                      <button type="submit" className={Styles.submit2}>
                         Registrar
                       </button>
                     </div>
@@ -258,9 +258,9 @@ const CreateUser = () => {
           </form>
         )}
       </Formik>
-      <p className="footer-user">
+      <p className={Styles.footerUser}>
         Ya tiene una cuenta?{" "}
-        <Link className="lognin" to="/login">
+        <Link className={Styles.lognin} to="/login">
           Iniciar sesion
         </Link>{" "}
       </p>

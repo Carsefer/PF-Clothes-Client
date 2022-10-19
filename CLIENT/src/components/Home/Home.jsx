@@ -1,5 +1,5 @@
 import React from "react";
-import "./Home.css";
+import Styles from "./Home.module.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filterProducts, emptyDetail } from "../../redux/actions";
@@ -106,7 +106,7 @@ export default function Home() {
   // };
 
   return (
-    <div className="Home">
+    <div className={Styles.Home}>
       <NavBar />
       <div className="ProductsHomeContainer">
         <div className="ProductsHome">
@@ -128,7 +128,7 @@ export default function Home() {
             </select>
 
             <select
-              className="FilterProductsHomeSelect"
+              className={Styles.FilterProductsHomeSelect}
               value={demographic}
               onChange={(e) => filterByDemographic(e)}
             >
@@ -142,7 +142,7 @@ export default function Home() {
             </select>
 
             <select
-              className="FilterProductsHomeSelect"
+              className={Styles.FilterProductsHomeSelect}
               value={price}
               onChange={(e) => filterByPrice(e)}
             >
@@ -154,7 +154,7 @@ export default function Home() {
             </select>
 
             <select
-              className="FilterProductsHomeSelect"
+              className={Styles.FilterProductsHomeSelect}
               value={color}
               onChange={(e) => filterByColor(e)}
             >
@@ -167,7 +167,7 @@ export default function Home() {
             </select>
 
             <input
-              class="FilterProductsHomeSelect"
+              class={Styles.FilterProductsHomeSelect}
               id="text"
               type="text"
               value={name}
@@ -176,7 +176,7 @@ export default function Home() {
             />
             <Orders setOrder={setOrder} />
             <button
-              class="FilterProductsHomeSelect"
+              class={Styles.FilterProductsHomeSelect}
               onClick={(e) => {
                 handleClickShowAll(e);
               }}
@@ -185,7 +185,7 @@ export default function Home() {
             </button>
           </div>
 
-          <div className="ProductsHomeProductsCard">
+          <div className={Styles.ProductsHomeProductsCard}>
             {allProducts.length ? (
               allProducts.map((p) => (
                 <Card
