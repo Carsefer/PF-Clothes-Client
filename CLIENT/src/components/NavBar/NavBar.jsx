@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import SearchBar from "../Searchbar/SearchBar";
 import "./NavBar.css"
 import Logo from "../images/express-fashion-stores.svg"
-import Cart from "./cart.svg"
+import Cart from "../images/cart.svg"
 
 const NavBar = () => {
     return (
