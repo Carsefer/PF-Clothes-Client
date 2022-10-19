@@ -1,4 +1,5 @@
 import Star from "../images/icono-estrella.png"
+import Rating from '@mui/material/Rating';
 
 const Comments = ({score, reviews}) => {
     return (
@@ -11,6 +12,7 @@ const Comments = ({score, reviews}) => {
             <div>
                 <p>{reviews}</p>
             </div>
+            <Rating value={score}/>
         </div>
     );
 };
