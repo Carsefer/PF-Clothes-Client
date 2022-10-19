@@ -16,7 +16,7 @@ import {
   REMOVE_ALL_FROM_CART,
   REMOVE_ONE_FROM_CART,
   GET_REVIEWS_PRODUCT_DETAIL,
-  FLUSH_ERROR
+  FLUSH_ERROR,
 } from "../action-types";
 
 const initialState = {
@@ -27,8 +27,8 @@ const initialState = {
   sizes: [],
   productsStatus: "loading",
   favorites: [],
-  loginError:null,
-  cart: []
+  loginError: null,
+  cart: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -44,7 +44,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         productDetail: action.payload,
       };
-    case GET_REVIEWS_PRODUCT_DETAIL: 
+    case GET_REVIEWS_PRODUCT_DETAIL:
       return {
         ...state,
         productReviews: action.payload,
@@ -111,69 +111,68 @@ const rootReducer = (state = initialState, action) => {
     case GET_FAVORITES:
       return {
         ...state,
-        favorites: action.payload
-      }
+        favorites: action.payload,
+      };
     case LOGIN_USER:
-      return{
+      return {
         ...state,
-        loginError:action.payload,
-      }
+        loginError: action.payload,
+      };
     case ADD_TO_CART: {
-        let newItem = state.products.find(
-          (product) => product.id === action.payload
-        );
-        
-  
-        let itemInCart = state.cart.find((item) => item.id === newItem.id);
-  
-        return itemInCart
-          ? {
-              ...state,
-              cart: state.cart.map((item) =>
-                item.id === newItem.id
-                  ? { ...item, quantity: item.quantity + 1 }
-                  : item
-              ),
-            }
-          : {
-              ...state,
-              cart: [...state.cart, { ...newItem, quantity: 1 }],
-            };
-      }
-      case REMOVE_ONE_FROM_CART: {
-        let itemToDelete = state.cart.find((item) => item.id === action.payload);
-  
-        return itemToDelete.quantity > 1
-          ? {
-              ...state,
-              cart: state.cart.map((item) =>
-                item.id === action.payload
-                  ? { ...item, quantity: item.quantity - 1 }
-                  : item
-              ),
-            }
-          : {
-              ...state,
-              cart: state.cart.filter((item) => item.id !== action.payload),
-            };
-      }
-      case REMOVE_ALL_FROM_CART: {
-        return {
-          ...state,
-          cart: state.cart.filter((item) => item.id !== action.payload),
-        };
-      }
-      case CLEAR_CART:
-        return {
-          ...state,
-        }
-      case FLUSH_ERROR:
-        return{
-          ...state,
-          loginError:action.payload,
-        }
-      default:
-        return state;
+      let newItem = state.products.find(
+        (product) => product.id === action.payload
+      );
+
+      let itemInCart = state.cart.find((item) => item.id === newItem.id);
+
+      return itemInCart
+        ? {
+            ...state,
+            cart: state.cart.map((item) =>
+              item.id === newItem.id
+                ? { ...item, quantity: item.quantity + 1 }
+                : item
+            ),
+          }
+        : {
+            ...state,
+            cart: [...state.cart, { ...newItem, quantity: 1 }],
+          };
+    }
+    case REMOVE_ONE_FROM_CART: {
+      let itemToDelete = state.cart.find((item) => item.id === action.payload);
+
+      return itemToDelete.quantity > 1
+        ? {
+            ...state,
+            cart: state.cart.map((item) =>
+              item.id === action.payload
+                ? { ...item, quantity: item.quantity - 1 }
+                : item
+            ),
+          }
+        : {
+            ...state,
+            cart: state.cart.filter((item) => item.id !== action.payload),
+          };
+    }
+    case REMOVE_ALL_FROM_CART: {
+      return {
+        ...state,
+        cart: state.cart.filter((item) => item.id !== action.payload),
+      };
+    }
+    case CLEAR_CART:
+      return {
+        ...state,
+      };
+    case FLUSH_ERROR:
+      return {
+        ...state,
+        loginError: action.payload,
+      };
+    default:
+      return state;
   }
 };
 export default rootReducer;
