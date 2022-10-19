@@ -176,16 +176,6 @@ export const deleteToFavorites = (id) => {
   }
 }
 
-/* export const filterProductsByMark = (mark) => {
-    return async function (dispatch) {
-        const filteredProductsByMark = await axios.get("http://localhost:3001/productMarks" + mark)
-        dispatch({
-            type: FILTER_PRODUCTS_BY_MARK,
-            payload: filteredProductsByMark.data
-        })
-    }
-}
-
 export const addToCart = (id) => ({ type: ADD_TO_CART, payload: id });
 
 export const delFromCart = (id, all = false) =>
@@ -193,8 +183,7 @@ export const delFromCart = (id, all = false) =>
     ? { type: REMOVE_ALL_FROM_CART, payload: id }
     : { type: REMOVE_ONE_FROM_CART, payload: id };
 
-<<<<<<< HEAD
-export const clearCart = () => ({ type: CLEAR_CART }); */
+
 export const clearCart = () => ({ type: CLEAR_CART });
 
 export const flushError = () => {
