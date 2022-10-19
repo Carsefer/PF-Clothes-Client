@@ -56,7 +56,7 @@ const Filters = () => {
     setDemographic("");
     setColor("");
     setName("");
-    dispatch(filterProducts(price, size, demographic, color));
+    dispatch(filterProducts(name, price, size, demographic, color));
   };
 
   return (
