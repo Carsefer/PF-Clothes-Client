@@ -3,7 +3,6 @@ import {
   GET_PRODUCT_DETAIL,
   SEARCH_PRODUCT,
   GET_SIZES,
-  GET_MARKS,
   ORDER_PRODUCTS_BY_NAME,
   ORDER_PRODUCTS_BY_SCORE,
   FILTER_PRODUCTS,
@@ -25,7 +24,6 @@ const initialState = {
   productDetail: [],
   productReviews: [],
   sizes: [],
-  marks: [],
   productsStatus: "loading",
   loginError:null,
   cart: []
@@ -63,11 +61,6 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         sizes: action.payload,
-      };
-    case GET_MARKS:
-      return {
-        ...state,
-        marks: action.payload,
       };
     case ORDER_PRODUCTS_BY_NAME:
       const orderedProductsByName =
@@ -161,19 +154,17 @@ const rootReducer = (state = initialState, action) => {
           cart: state.cart.filter((item) => item.id !== action.payload),
         };
       }
-      case CLEAR_CART: {
+      case CLEAR_CART:
         return {
           ...state,
         }
-      };
-      case FLUSH_ERROR:{
+      case FLUSH_ERROR:
         return{
           ...state,
           loginError:action.payload,
         }
-      }
-    default:
-      return state;
+      default:
+        return state;
   }
 };
 export default rootReducer;
