@@ -10,8 +10,6 @@ import NavBar from "../NavBar/NavBar";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const allProducts = useSelector((state) => state.products);
-  const results = useSelector((state) => state.productsStatus);
 
   const {
     setPrice,
@@ -19,19 +17,24 @@ export default function Home() {
     setDemographic,
     setColor,
     setName,
+    setPage,
     price,
     size,
     demographic,
     color,
     name,
+    page,
   } = useContext(AppContext);
 
   //const [cant, setCant] = useState("");
 
   useEffect(() => {
-    dispatch(filterProducts(name, price, size, demographic, color));
+    dispatch(filterProducts(name, price, size, demographic, color, page));
     dispatch(emptyDetail());
-  }, [dispatch, name, price, size, demographic, color]);
+  }, [dispatch, name, price, size, demographic, color, page]);
+
+  const allProducts = useSelector((state) => state.products);
+  const results = useSelector((state) => state.productsStatus);
 
   //Paginado
   // const [currentPage, setCurrentPage] = useState(1);
@@ -50,59 +53,65 @@ export default function Home() {
   //SEARCH
   const filterByName = (e) => {
     e.preventDefault();
+    setPage(0);
     setName(e.target.value);
   };
 
   //FILTER PRICE
   const filterByPrice = (e) => {
     e.preventDefault();
+    setPage(0);
     setPrice(e.target.value);
   };
 
   //FILTER SIZE
   const filterBySize = (e) => {
     e.preventDefault();
+    setPage(0);
     setSize(e.target.value);
   };
 
   //FILTER DEMOGRAPHIC
   const filterByDemographic = (e) => {
     e.preventDefault();
+    setPage(0);
     setDemographic(e.target.value);
   };
 
   //FILTER COLOR
   const filterByColor = (e) => {
     e.preventDefault();
+    setPage(0);
     setColor(e.target.value);
   };
 
   //SHOW ALL
   const handleClickShowAll = (e) => {
     e.preventDefault();
+    setPage(0);
     setPrice("");
     setSize("");
     setDemographic("");
     setColor("");
     setName("");
-    dispatch(filterProducts(name, price, size, demographic, color));
+    dispatch(filterProducts(name, price, size, demographic, color, page));
   };
 
   //PAGINATED
-  // const start = (e) => {
-  //   e.preventDefault();
-  //   setCant(0);
-  // };
+  const start = (e) => {
+    e.preventDefault();
+    setPage(0);
+  };
 
-  // const prev = (e) => {
-  //   e.preventDefault();
-  //   setCant(cant - 1);
-  // };
+  const prev = (e) => {
+    e.preventDefault();
+    setPage(page - 10);
+  };
 
-  // const next = (e) => {
-  //   e.preventDefault();
-  //   setCant(cant + 1);
-  // };
+  const next = (e) => {
+    e.preventDefault();
+    setPage(page + 10);
+  };
 
   return (
     <div className="Home">
@@ -181,6 +190,35 @@ export default function Home() {
               }}
             >
               Mostrar todo
+            </button>
+          </div>
+
+          <div>
+            <button
+              onClick={(e) => {
+                start(e);
+              }}
+              disabled={page <= 0}
+            >
+              {"Comienzo"}
+            </button>
+            <button
+              value={page}
+              onClick={(e) => {
+                prev(e);
+              }}
+              disabled={page <= 0}
+            >
+              {"Anterior"}
+            </button>
+            <button class="paginated_num">{page / 10}</button>
+            <button
+              onClick={(e) => {
+                next(e);
+              }}
+              disabled={allProducts.length < 10}
+            >
+              {"Siguiente"}
             </button>
           </div>
 
