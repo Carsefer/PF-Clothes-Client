@@ -1,30 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { filterProducts } from "../../redux/actions";
-import "./Filters.css";
+import Styles from "./Filters.module.css";
 
 const Filters = () => {
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //     dispatch(getSizes())
-  //     dispatch(getMark())
-  // }, [dispatch])
-
   const [price, setPrice] = useState("");
   const [size, setSize] = useState("");
   const [demographic, setDemographic] = useState("");
+  const [color, setColor] = useState("");
+  const [name, setName] = useState("");
+
   //const [cant, setCant] = useState("");
 
   useEffect(() => {
-    dispatch(filterProducts(price, size, demographic));
-  }, [dispatch, price, size, demographic]);
+    dispatch(filterProducts(name, price, size, demographic, color));
+  }, [dispatch, name, price, size, demographic, color]);
 
-  // const sizes = useSelector(state => state.sizes)
-  // const marks = useSelector(state => state.marks)
-  // const demographies = []
-  // const types = []
-  // const locations = []
+  //SEARCH
+  const filterByName = (e) => {
+    e.preventDefault();
+    setName(e.target.value);
+  };
 
   //FILTER PRICE
   const filterByPrice = (e) => {
@@ -44,22 +42,28 @@ const Filters = () => {
     setDemographic(e.target.value);
   };
 
-  // const handleSelect = (e) => {
-  //   e.preventDefault();
-  //   if (e.target.value.length) {
-  //     const values = e.target.value.split("-");
-  //     const filter = {
-  //       type: values[0],
-  //       value: values[1],
-  //     };
-  //     dispatch(filterProducts(filter));
-  //   }
-  // };
+  //FILTER COLOR
+  const filterByColor = (e) => {
+    e.preventDefault();
+    setColor(e.target.value);
+  };
+
+  //SHOW ALL
+  const handleClickShowAll = (e) => {
+    e.preventDefault();
+    setPrice("");
+    setSize("");
+    setDemographic("");
+    setColor("");
+    setName("");
+    dispatch(filterProducts(name, price, size, demographic, color));
+  };
 
   return (
-    <div className="FilterProductsHome">
+    <div className={Styles.FilterProductsHome}>
       <select
-        className="FilterProductsHomeSelect"
+        className={Styles.FilterProductsHomeSelect}
+        value={size}
         onChange={(e) => filterBySize(e)}
       >
         <option value="">Filtrar por Talle</option>
@@ -74,7 +78,8 @@ const Filters = () => {
       </select>
 
       <select
-        className="FilterProductsHomeSelect"
+        className={Styles.FilterProductsHomeSelect}
+        value={demographic}
         onChange={(e) => filterByDemographic(e)}
       >
         <option value="">Filtrar por Genero</option>
@@ -87,7 +92,8 @@ const Filters = () => {
       </select>
 
       <select
-        className="FilterProductsHomeSelect"
+        className={Styles.FilterProductsHomeSelect}
+        value={price}
         onChange={(e) => filterByPrice(e)}
       >
         <option value="">Filtrar por Precio</option>
@@ -96,6 +102,37 @@ const Filters = () => {
         <option value="75">hasta 75$</option>
         <option value="100">hasta 100$</option>
       </select>
+
+      <select
+        className="FilterProductsHomeSelect"
+        value={color}
+        onChange={(e) => filterByColor(e)}
+      >
+        <option value="">Filtrar por Color</option>
+        <option value="Gris">Gris</option>
+        <option value="Negro">Negro</option>
+        <option value="Blanco">Blanco</option>
+        <option value="Azul">Azul</option>
+        <option value="Amarillo">Amarillo</option>
+      </select>
+
+      <input
+        class="FilterProductsHomeSelect"
+        id="text"
+        type="text"
+        value={name}
+        placeholder="Buscar productos..."
+        onChange={(e) => filterByName(e)}
+      />
+
+      <button
+        class="FilterProductsHomeSelect"
+        onClick={(e) => {
+          handleClickShowAll(e);
+        }}
+      >
+        Mostrar todo
+      </button>
     </div>
   );
 };

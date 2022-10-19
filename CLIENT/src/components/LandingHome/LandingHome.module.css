@@ -4,6 +4,10 @@
     flex-direction: column;
     height: 100vh;
     text-align: center;
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 3;
 }
 
 .BackgroundImage {
@@ -15,13 +19,6 @@
     z-index: 1;
     display: block;
     width: 100%;
-}
-
-.LandingContainer {
-    position: fixed;
-    left: 0;
-    right: 0;
-    z-index: 3;
 }
 
 .LandingTitle {

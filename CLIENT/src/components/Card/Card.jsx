@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToFavorite, deleteToFavorites } from "../../redux/actions";
-import "./Card.css"
+import CardStyles from "./Card.module.css";
 
 const Card = ({ img, title, price, id, inFavorites }) => {
 
@@ -19,24 +19,24 @@ const Card = ({ img, title, price, id, inFavorites }) => {
   }
 
   return (
-    <div className="CardProductHome">
-      <Link className="CardProductHomeLink" to={`/Home/Product/${id}`}>
+    <div className={CardStyles.CardProductHome}>
+      <Link className={CardStyles.CardProductHomeLink} to={`/Home/Product/${id}`}>
         {
           inFavorites ? 
           <button onClick={(e) => handleDeleteFavorites(e)}>Quitar de Favoritos</button> :
           <button onClick={(e) => handleFavorites(e)}>Añadir a Favoritos</button>
         }
-        <div className="CardProductHomeLinkImgContainer">
+        <div className={CardStyles.CardProductHomeLinkImgContainer}>
           <img
-            className="CardProductHomeLinkProductImg"
+            className={CardStyles.CardProductHomeLinkProductImg}
             /*className="w-25 p-3"*/
             src={img}
             alt="img not found"
           />
         </div>
-        <div className="CardProductHomeLinkProductTextContainer">
-          <h3 className="CardProductHomeProductTitle">{title}</h3>
-          <h3 className="CardProductHomeProductPrice">${price}</h3>
+        <div className={CardStyles.CardProductHomeLinkProductTextContainer}>
+          <h3 className={CardStyles.CardProductHomeProductTitle}>{title}</h3>
+          <h3 className={CardStyles.CardProductHomeProductPrice}>${price}</h3>
         </div>
       </Link>
     </div>

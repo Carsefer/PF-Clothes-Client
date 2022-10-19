@@ -44,7 +44,9 @@ export const getProductDetail = (id) => {
 
 export const getProductDetailReviews = (id) => {
   return async function (dispatch) {
-    const reviews = await axios.get(`http://localhost:3001/product/review/${id}`)
+    const reviews = await axios.get(
+      `http://localhost:3001/product/review/${id}`
+    );
     dispatch({
       type: GET_REVIEWS_PRODUCT_DETAIL,
       payload: reviews.data,
@@ -60,7 +62,9 @@ export const emptyDetail = () => {
 
 export const searchProduct = (name) => {
   return async function (dispatch) {
-    const json = await axios.get(`http://localhost:3001/product/?search=${name}`);
+    const json = await axios.get(
+      `http://localhost:3001/product/?search=${name}`
+    );
     dispatch({
       type: SEARCH_PRODUCT,
       payload: json.data,
@@ -78,28 +82,26 @@ export const getSizes = () => {
   };
 };
 
-export const orderProductsByName = (orden) => {
-  return async function (dispatch) {
-    dispatch({
-      type: ORDER_PRODUCTS_BY_NAME,
-      payload: orden,
-    });
+export const orderProductsByName = (data) => {
+  return {
+    type: ORDER_PRODUCTS_BY_NAME,
+    payload: data,
   };
 };
 
-export const orderProductsByScore = (orden) => {
+/* export const orderProductsByScore = (orden) => {
   return async function (dispatch) {
     dispatch({
       type: ORDER_PRODUCTS_BY_SCORE,
       payload: orden,
     });
   };
-};
+}; */
 
-export const filterProducts = (price, size, demographic) => {
+export const filterProducts = (name, price, size, demographic, color, page) => {
   return async function (dispatch) {
     const filteredProducts = await axios.get(
-      `http://localhost:3001/product/filter?price=${price}&size=${size}&demographic=${demographic}`
+      `http://localhost:3001/product/filter?name=${name}&price=${price}&size=${size}&demographic=${demographic}&color=${color}&page=${page}`
     );
     dispatch({
       type: FILTER_PRODUCTS,
@@ -110,15 +112,15 @@ export const filterProducts = (price, size, demographic) => {
 
 export const loginUser = (userInfo) => {
   return async function (dispatch) {
-    axios.post('http://localhost:3001/login',userInfo).then(
-      function({data}){
+    axios.post("http://localhost:3001/login", userInfo).then(
+      function ({ data }) {
         dispatch({
-          type:LOGIN_USER,
-          payload:null,
-        })
-        sessionStorage.setItem('sessionData',JSON.stringify(data));
+          type: LOGIN_USER,
+          payload: null,
+        });
+        sessionStorage.setItem("sessionData", JSON.stringify(data));
       },
-      function(err){
+      function (err) {
         dispatch({
           type: LOGIN_USER,
           payload: err.response.data,
@@ -150,31 +152,31 @@ export const createPublication = () => {
 
 export const getFavorites = (user) => {
   return async (dispatch) => {
-    const favorites = axios.get(`http://localhost:3001/${user}/favorites`)
+    const favorites = axios.get(`http://localhost:3001/${user}/favorites`);
     dispatch({
       type: GET_FAVORITES,
-      payload: favorites.data
-    })
-  }
-}
+      payload: favorites.data,
+    });
+  };
+};
 
 export const addToFavorite = (id) => {
   return async (dispatch) => {
     dispatch({
       type: ADD_TO_FAVORITE,
-      payload: id
-    })
-  }
-}
+      payload: id,
+    });
+  };
+};
 
 export const deleteToFavorites = (id) => {
   return async (dispatch) => {
     dispatch({
       type: DELETE_TO_FAVORITES,
       payload: id
-    })
-  }
-}
+    });
+  };
+};
 
 /* export const filterProductsByMark = (mark) => {
     return async function (dispatch) {
@@ -186,21 +188,22 @@ export const deleteToFavorites = (id) => {
     }
 }
 */
+
 export const addToCart = (id) => ({ type: ADD_TO_CART, payload: id });
 
-export const delFromCart = (id, all = false) =>
+export const delFromCart = (id, all = false) => {
   all
     ? { type: REMOVE_ALL_FROM_CART, payload: id }
     : { type: REMOVE_ONE_FROM_CART, payload: id };
+}
  
 export const clearCart = () => ({ type: CLEAR_CART });
 
 export const flushError = () => {
   return async (dispatch) => {
     dispatch({
-      type:FLUSH_ERROR,
-      payload:null,
-    })
-  } 
-}
-
+      type: FLUSH_ERROR,
+      payload: null,
+    });
+  };
+};

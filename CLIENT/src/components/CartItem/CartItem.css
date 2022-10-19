@@ -1,0 +1,21 @@
+.imageCart{
+    margin-left: 100px;
+    width: 15%;
+    height: 50%;
+    object-fit: cover;
+    border-radius: 5px;
+    transition: all 400ms;
+}
+
+.DetailCart{
+    margin-left: 100px;
+}
+
+.NameCart{
+    margin-left: 100px;
+}
+
+.ButtonsCart{
+    margin-left: 100px;
+    display: flex;
+}

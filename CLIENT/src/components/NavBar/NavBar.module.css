@@ -21,6 +21,10 @@
     margin: 0;
 }
 
+.CartIcon {
+    margin: 0;
+}
+
 .NavbarHomeFormsButtonsContainer {
     display: flex;
     flex-direction: row;    
