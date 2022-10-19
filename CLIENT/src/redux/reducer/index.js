@@ -65,19 +65,21 @@ const rootReducer = (state = initialState, action) => {
         sizes: action.payload,
       };
     case ORDER_PRODUCTS_BY_NAME:
-      const orderedProductsByName =
-        action.payload === "ascendente"
-          ? state.products.sort((a, b) => {
-              return a.name - b.name;
-            })
-          : state.products.sort((a, b) => {
-              return b.name - a.name;
-            });
       return {
         ...state,
-        products: orderedProductsByName,
+        products: state.products.sort((a, b) => {
+          if (action.payload === "A-Z") {
+            if (a.name < b.name) return -1;
+            if (b.name < a.name) return 1;
+            return 0;
+          } else {
+            if (b.name < a.name) return -1;
+            if (a.name < b.name) return 1;
+            return 0;
+          }
+        }),
       };
-    case ORDER_PRODUCTS_BY_SCORE:
+    /* case ORDER_PRODUCTS_BY_SCORE:
       const orderedProductsByScore =
         action.payload === "ascendente"
           ? state.products.sort((a, b) => {
@@ -89,7 +91,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         products: orderedProductsByScore,
-      };
+      }; */
     case FILTER_PRODUCTS:
       return {
         ...state,
