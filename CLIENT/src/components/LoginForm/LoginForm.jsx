@@ -4,15 +4,27 @@ import { loginUser, flushError } from "../../redux/actions";
 import { Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import "./LoginForm.css";
-import { useEffect } from "react";
+import axios from "axios";
+
 const LoginForm = () => {
   const [showPwd, setShowPwd] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const invalidLogin = useSelector((state) => state.loginError);
-  useEffect(() => {
-    //dispatch(flushError());
-  }, []);
+
+  const handleLogin = async (userInfo) => {
+    try {
+      const res = await axios.post(`http://localhost:3001/login`, userInfo);
+      sessionStorage.setItem("sessionData", JSON.stringify(res.data));
+      if (res.data) {
+        alert("Credenciales correctas");
+        navigate("/home");
+      }
+    } catch (err) {
+      console.log("incorrect");
+      alert("Credenciales incorrectas");
+    }
+  };
+
   return (
     <>
       <div className="container">
@@ -37,38 +49,7 @@ const LoginForm = () => {
           }}
           onSubmit={(values, { resetForm }) => {
             resetForm();
-
-            (async () => {
-              await dispatch(loginUser(values));
-
-              if (!invalidLogin) {
-                await alert("Exitoso");
-                await dispatch(flushError());
-                await navigate("/home");
-              }
-
-              if (invalidLogin) {
-                await console.log(invalidLogin);
-                //resetForm();
-                await alert(invalidLogin.error);
-                await dispatch(flushError());
-              }
-            })();
-            console.time("timer1");
-            dispatch(loginUser(values)).then(function () {
-              if (invalidLogin) {
-                //console.timeLog("timer1");
-                //console.log(invalidLogin);
-                //console.timeEnd("timer1");
-                //resetForm();
-                //alert(invalidLogin.error);
-              } else {
-                //console.timeLog("timer1");
-                //alert("Exitoso");
-                //console.timeEnd("timer1");
-                navigate("/home");
-              }
-            });
+            handleLogin(values);
           }}
         >
           {({
