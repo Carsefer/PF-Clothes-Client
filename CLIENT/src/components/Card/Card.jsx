@@ -9,12 +9,12 @@ const Card = ({ img, title, price, id, inFavorites }) => {
   const dispatch = useDispatch()
 
   const handleFavorites = (idFav) => {
-    e.preventDefault();
+    idFav.preventDefault();
     dispatch(addToFavorite(idFav))
   }
 
   const handleDeleteFavorites = (idDelete) => {
-    e.preventDefault();
+    idDelete.preventDefault();
     dispatch(deleteToFavorites(idDelete))
   }
 
