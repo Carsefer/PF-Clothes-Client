@@ -4,6 +4,7 @@ import Home from "./components/Home/Home";
 import LandingHome from "./components/LandingHome/LandingHome";
 import Login from "./components/Login/Login";
 import ProductDetail from "./components/ProductDetail/ProductDetail";
+import ShoppingCart from "./components/ShoppingCart/ShoppingCart"
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/home/signup" element={<CreateUser />} />
         <Route path="/home/product/:id" element={<ProductDetail />} />
         <Route path="/register" element={<CreateUser />} />
+        <Route exact path="/home/ShoppingCart" element={<ShoppingCart />} />
       </Routes>
     </>
   );

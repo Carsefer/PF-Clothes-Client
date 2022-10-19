@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { FaCartPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getProductDetail, addToCart, getProductDetailReviews } from "../../redux/actions";
@@ -11,9 +12,14 @@ const ProductDetail = () => {
 
   useEffect(() => {
     dispatch(getProductDetail(id));
+    dispatch(getProductDetailReviews(id));
   }, [dispatch, id]);
 
   const detail = useSelector(state => state.productDetail);
+  const reviews = useSelector(state => state.productReviews);
+
+  console.log("hola")
+  console.log(reviews)
 
   return (
     <div className={Style.detailsContainer}>
@@ -54,3 +60,12 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
+
+/*
+{reviews.map((r) => (
+  <Comments 
+    score = {r.score}
+    review = {r.review}
+  />
+))}
+<Comments/>*/
