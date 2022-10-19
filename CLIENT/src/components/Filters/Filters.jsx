@@ -10,12 +10,19 @@ const Filters = () => {
   const [size, setSize] = useState("");
   const [demographic, setDemographic] = useState("");
   const [color, setColor] = useState("");
+  const [name, setName] = useState("");
 
   //const [cant, setCant] = useState("");
 
   useEffect(() => {
-    dispatch(filterProducts(price, size, demographic, color));
-  }, [dispatch, price, size, demographic, color]);
+    dispatch(filterProducts(name, price, size, demographic, color));
+  }, [dispatch, name, price, size, demographic, color]);
+
+  //SEARCH
+  const filterByName = (e) => {
+    e.preventDefault();
+    setName(e.target.value);
+  };
 
   //FILTER PRICE
   const filterByPrice = (e) => {
@@ -41,10 +48,22 @@ const Filters = () => {
     setColor(e.target.value);
   };
 
+  //SHOW ALL
+  const handleClickShowAll = (e) => {
+    e.preventDefault();
+    setPrice("");
+    setSize("");
+    setDemographic("");
+    setColor("");
+    setName("");
+    dispatch(filterProducts(price, size, demographic, color));
+  };
+
   return (
     <div className="FilterProductsHome">
       <select
         className="FilterProductsHomeSelect"
+        value={size}
         onChange={(e) => filterBySize(e)}
       >
         <option value="">Filtrar por Talle</option>
@@ -60,6 +79,7 @@ const Filters = () => {
 
       <select
         className="FilterProductsHomeSelect"
+        value={demographic}
         onChange={(e) => filterByDemographic(e)}
       >
         <option value="">Filtrar por Genero</option>
@@ -73,6 +93,7 @@ const Filters = () => {
 
       <select
         className="FilterProductsHomeSelect"
+        value={price}
         onChange={(e) => filterByPrice(e)}
       >
         <option value="">Filtrar por Precio</option>
@@ -84,6 +105,7 @@ const Filters = () => {
 
       <select
         className="FilterProductsHomeSelect"
+        value={color}
         onChange={(e) => filterByColor(e)}
       >
         <option value="">Filtrar por Color</option>
@@ -93,6 +115,24 @@ const Filters = () => {
         <option value="Azul">Azul</option>
         <option value="Amarillo">Amarillo</option>
       </select>
+
+      <input
+        class="FilterProductsHomeSelect"
+        id="text"
+        type="text"
+        value={name}
+        placeholder="Buscar productos..."
+        onChange={(e) => filterByName(e)}
+      />
+
+      <button
+        class="FilterProductsHomeSelect"
+        onClick={(e) => {
+          handleClickShowAll(e);
+        }}
+      >
+        Show all
+      </button>
     </div>
   );
 };

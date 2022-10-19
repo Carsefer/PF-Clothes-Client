@@ -90,10 +90,10 @@ export const orderProductsByScore = (orden) => {
   };
 };
 
-export const filterProducts = (price, size, demographic, color) => {
+export const filterProducts = (name, price, size, demographic, color) => {
   return async function (dispatch) {
     const filteredProducts = await axios.get(
-      `http://localhost:3001/product/filter?price=${price}&size=${size}&demographic=${demographic}&color=${color}`
+      `http://localhost:3001/product/filter?name=${name}&price=${price}&size=${size}&demographic=${demographic}&color=${color}`
     );
     dispatch({
       type: FILTER_PRODUCTS,
