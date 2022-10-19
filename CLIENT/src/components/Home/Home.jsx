@@ -1,5 +1,5 @@
 import React from "react";
-import "./Home.css";
+import Styles from "./Home.module.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts, emptyDetail } from "../../redux/actions";
@@ -30,17 +30,17 @@ export default function Home() {
   }
 
   return (
-    <div className="Home">
+    <div className={Styles.Home}>
       <NavBar />
-      <div className="ProductsHomeContainer">
-        <div className="ProductsHome">
+      <div className={Styles.ProductsHomeContainer}>
+        <div className={Styles.ProductsHome}>
           <Filters />
           <Paginado
           productsPerPage={productsPerPage}
           allProducts={allProducts.length}
           paginado={paginado}
           />
-          <div className="ProductsHomeProductsCard">
+          <div className={Styles.ProductsHomeProductsCard}>
             {allProducts.length ? (
               currentProducts.map((p) => (
                 <Card

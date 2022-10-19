@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { filterProducts } from "../../redux/actions";
-import "./Filters.css";
+import Styles from "./Filters.module.css";
 
 const Filters = () => {
   const dispatch = useDispatch();
@@ -57,9 +57,9 @@ const Filters = () => {
   // };
 
   return (
-    <div className="FilterProductsHome">
+    <div className={Styles.FilterProductsHome}>
       <select
-        className="FilterProductsHomeSelect"
+        className={Styles.FilterProductsHomeSelect}
         onChange={(e) => filterBySize(e)}
       >
         <option value="">Filtrar por Talle</option>
@@ -74,7 +74,7 @@ const Filters = () => {
       </select>
 
       <select
-        className="FilterProductsHomeSelect"
+        className={Styles.FilterProductsHomeSelect}
         onChange={(e) => filterByDemographic(e)}
       >
         <option value="">Filtrar por Genero</option>
@@ -87,7 +87,7 @@ const Filters = () => {
       </select>
 
       <select
-        className="FilterProductsHomeSelect"
+        className={Styles.FilterProductsHomeSelect}
         onChange={(e) => filterByPrice(e)}
       >
         <option value="">Filtrar por Precio</option>
