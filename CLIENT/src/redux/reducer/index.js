@@ -3,7 +3,6 @@ import {
   GET_PRODUCT_DETAIL,
   SEARCH_PRODUCT,
   GET_SIZES,
-  GET_MARKS,
   ORDER_PRODUCTS_BY_NAME,
   ORDER_PRODUCTS_BY_SCORE,
   FILTER_PRODUCTS,
@@ -15,7 +14,6 @@ import {
   REMOVE_ALL_FROM_CART,
   REMOVE_ONE_FROM_CART,
   GET_REVIEWS_PRODUCT_DETAIL,
-
 } from "../action-types";
 
 const initialState = {
@@ -24,7 +22,6 @@ const initialState = {
   productDetail: [],
   productReviews: [],
   sizes: [],
-  marks: [],
   productsStatus: "loading",
   cart: []
 };
@@ -61,11 +58,6 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         sizes: action.payload,
-      };
-    case GET_MARKS:
-      return {
-        ...state,
-        marks: action.payload,
       };
     case ORDER_PRODUCTS_BY_NAME:
       const orderedProductsByName =
@@ -154,13 +146,10 @@ const rootReducer = (state = initialState, action) => {
           cart: state.cart.filter((item) => item.id !== action.payload),
         };
       }
-      case CLEAR_CART: {
+      case CLEAR_CART:
         return {
           ...state,
-        }
-      };
-        
-
+        };
     default:
       return state;
   }
