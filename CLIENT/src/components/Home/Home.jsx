@@ -1,12 +1,13 @@
 import React from "react";
 import "./Home.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filterProducts, emptyDetail } from "../../redux/actions";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 import Card from "../Card/Card";
 import NavBar from "../NavBar/NavBar";
+import Orders from "../Orders/Orders" 
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ export default function Home() {
   } = useContext(AppContext);
 
   //const [cant, setCant] = useState("");
-
+  const [, setOrder ] = useState("");
   useEffect(() => {
     dispatch(filterProducts(name, price, size, demographic, color));
     dispatch(emptyDetail());
@@ -173,7 +174,7 @@ export default function Home() {
               placeholder="Buscar productos..."
               onChange={(e) => filterByName(e)}
             />
-
+            <Orders setOrder={setOrder} />
             <button
               class="FilterProductsHomeSelect"
               onClick={(e) => {
