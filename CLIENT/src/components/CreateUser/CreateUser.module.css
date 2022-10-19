@@ -1,0 +1,188 @@
+.container1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.subtitle {
+  margin-top: 26px;
+  font-size: 25px;
+  margin-bottom: 25px;
+  padding: 0px 15px;
+  color: var(--verde);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  font-weight: 400px;
+  line-height: 1.5;
+  color: #212529;
+  text-align: var(--bs-body-text-align);
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  justify-content: center;
+  justify-items: center;
+  text-align: center;
+  align-items: center;
+}
+
+.entry {
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.form1 {
+  width: 300px;
+  height: 50px;
+  border: 1px solid #dfdfdf;
+  border-radius: 6px;
+  color: #110826;
+  line-height: 17px;
+  padding: 11px 40px 11px 12px;
+  outline: 0px;
+  font-size: 20px;
+  box-shadow: none;
+  text-align: left;
+  background-color: #ffffff;
+  margin-top: 15px;
+}
+
+.error {
+  color: red;
+  display: flex;
+  justify-content: flex-start;
+  font-size: 14px;
+}
+
+.btnDisabled2 {
+  padding: 0 24px;
+  width: 100%;
+  height: 50px;
+  border-radius: 3rem;
+  background-color: #88c47c;
+  border: none;
+  color: var(--blanco);
+  font-size: 20px;
+  font-weight: 350;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.submit2 {
+  padding: 0 24px;
+  width: 100%;
+  height: 50px;
+  border-radius: 3rem;
+  background-color: var(--verde);
+  border: none;
+  color: var(--blanco);
+  font-size: 20px;
+  font-weight: 350;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.footer-user {
+  width: 100%;
+  max-width: 320px;
+  margin-bottom: 50px;
+  padding-top: 10px;
+  border-top: 1px solid rgb(223, 223, 223);
+  font-weight: 520;
+  font-size: 20px;
+  text-align: center;
+}
+.footer::before {
+  box-sizing: border-box;
+}
+
+.lognin {
+  color: var(--verde);
+}
+
+
+/*NADA DE ESTO SE ESTA USANDO EN NI UNA SOLA LINEA DEL RESTO DEL CODIGO!!!!!!!*/
+.sub {
+  margin-left: 10px;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  color: var(--morado);
+  font-size: 22px;
+}
+
+.title span {
+  color: var(--gris);
+}
+
+.input3 {
+  width: 300px;
+  height: 50px;
+  border: 1px solid #dfdfdf;
+  border-radius: 6px;
+  color: #110826;
+  line-height: 17px;
+  padding: 11px 40px 11px 12px;
+  outline: 0px;
+  font-size: 20px;
+  box-shadow: none;
+  text-align: left;
+  background-color: #ffffff;
+  margin-top: 20px;
+}
+
+.eye {
+  margin-top: -30px;
+  margin-left: 267px;
+  height: 24px;
+  width: 26px;
+  cursor: pointer;
+}
+
+.form-check-span {
+  margin-right: 0px;
+  font-size: 14px;
+  width: 100%;
+  height: 50%;
+  font-weight: 520;
+}
+
+.form-check {
+  width: 220px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-top: 10px;
+  height: 100px;
+}
+
+.countrys {
+  font-size: 10px;
+}
+
+
+
+.select {
+  margin-top: 20px;
+  padding: 5px;
+  width: 300px;
+  height: 45px;
+  border: 1px solid #dfdfdf;
+  border-radius: 20px;
+  color: var(--morado);
+  cursor: pointer;
+  font-size: 18px;
+}
