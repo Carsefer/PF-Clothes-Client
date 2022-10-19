@@ -107,11 +107,11 @@ export default function Home() {
   return (
     <div className={Styles.Home}>
       <NavBar />
-      <div className="ProductsHomeContainer">
-        <div className="ProductsHome">
-          <div className="FilterProductsHome">
+      <div className={Styles.ProductsHomeContainer}>
+        <div className={Styles.ProductsHome}>
+          <div className={Styles.FilterProductsHome}>
             <select
-              className="FilterProductsHomeSelect"
+              className={Styles.FilterProductsHomeSelect}
               value={size}
               onChange={(e) => filterBySize(e)}
             >
