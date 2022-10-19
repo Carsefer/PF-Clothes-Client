@@ -5,19 +5,21 @@ import {
   EMPTY_DETAIL,
   SEARCH_PRODUCT,
   GET_SIZES,
-  GET_MARKS,
   ORDER_PRODUCTS_BY_NAME,
   ORDER_PRODUCTS_BY_SCORE,
   FILTER_PRODUCTS,
   LOGIN_USER,
   CREATE_USER,
   CREATE_PUBLICATION,
+  ADD_TO_FAVORITE,
+  GET_FAVORITES,
+  DELETE_TO_FAVORITES,
   ADD_TO_CART,
   CLEAR_CART,
   REMOVE_ALL_FROM_CART,
   REMOVE_ONE_FROM_CART,
   GET_REVIEWS_PRODUCT_DETAIL,
-
+  FLUSH_ERROR,
 } from "../action-types";
 
 export const getProducts = () => {
@@ -58,9 +60,7 @@ export const emptyDetail = () => {
 
 export const searchProduct = (name) => {
   return async function (dispatch) {
-    const json = await axios.get(
-      `http://localhost:3001/product/?search=${name}`
-    );
+    const json = await axios.get(`http://localhost:3001/product/?search=${name}`);
     dispatch({
       type: SEARCH_PRODUCT,
       payload: json.data,
@@ -74,16 +74,6 @@ export const getSizes = () => {
     dispatch({
       type: GET_SIZES,
       payload: sizes.data,
-    });
-  };
-};
-
-export const getMark = () => {
-  return async function (dispatch) {
-    const marks = await axios.get(`http://localhost:3001/marks`);
-    dispatch({
-      type: GET_MARKS,
-      payload: marks.data,
     });
   };
 };
@@ -106,10 +96,10 @@ export const orderProductsByScore = (orden) => {
   };
 };
 
-export const filterProducts = (price, size, demographic) => {
+export const filterProducts = (name, price, size, demographic, color) => {
   return async function (dispatch) {
     const filteredProducts = await axios.get(
-      `http://localhost:3001/product/filter?price=${price}&size=${size}&demographic=${demographic}`
+      `http://localhost:3001/product/filter?name=${name}&price=${price}&size=${size}&demographic=${demographic}&color=${color}`
     );
     dispatch({
       type: FILTER_PRODUCTS,
@@ -120,10 +110,21 @@ export const filterProducts = (price, size, demographic) => {
 
 export const loginUser = (userInfo) => {
   return async function (dispatch) {
-    dispatch({
-      type: LOGIN_USER,
-      payload: userInfo,
-    });
+    axios.post('http://localhost:3001/login',userInfo).then(
+      function({data}){
+        dispatch({
+          type:LOGIN_USER,
+          payload:null,
+        })
+        sessionStorage.setItem('sessionData',JSON.stringify(data));
+      },
+      function(err){
+        dispatch({
+          type: LOGIN_USER,
+          payload: err.response.data,
+        });
+      }
+    );
   };
 };
 
@@ -147,58 +148,35 @@ export const createPublication = () => {
   };
 };
 
-/* export const filterProductsByMark = (mark) => {
-    return async function (dispatch) {
-        const filteredProductsByMark = await axios.get("http://localhost:3001/productMarks" + mark)
-        dispatch({
-            type: FILTER_PRODUCTS_BY_MARK,
-            payload: filteredProductsByMark.data
-        })
-    }
+export const getFavorites = (user) => {
+  return async (dispatch) => {
+    const favorites = axios.get(`http://localhost:3001/${user}/favorites`)
+    dispatch({
+      type: GET_FAVORITES,
+      payload: favorites.data
+    })
+  }
 }
 
-export const filterProductsByDemography = (demo) => {
-    return async function (dispatch) {
-        const filteredProductsByDemography = await axios.get("http://localhost:3001/productDemos" + demo)
-        dispatch({
-            type: FILTER_PRODUCTS_BY_DEMOGRAPHY,
-            payload: filteredProductsByDemography.data
-        })
-    }
+export const addToFavorite = (id) => {
+  return async (dispatch) => {
+    dispatch({
+      type: ADD_TO_FAVORITE,
+      payload: id
+    })
+  }
 }
 
-export const filterProductsByLocation = (location) => {
-    return async function (dispatch) {
-        const filteredProductsByLocation = await axios.get("http://localhost:3001/productLocation" + location)
-        dispatch({
-            type: FILTER_PRODUCTS_BY_LOCATION,
-            payload: filteredProductsByLocation.data
-        })
-    }
+export const deleteToFavorites = (id) => {
+  return async (dispatch) => {
+    dispatch({
+      type: DELETE_TO_FAVORITES,
+      payload: id
+    })
+  }
 }
-
-export const filterProductsByType = (type) => {
-    return async function (dispatch) {
-        const filteredProductsByType = await axios.get("http://localhost:3001/productTypes" + type)
-        dispatch({
-            type: FILTER_PRODUCTS_BY_TYPE,
-            payload: filteredProductsByType.data
-        })
-    }
-}
-
-export const filterProductsByPrice = (price) => {
-    return async function (dispatch) {
-        const filteredProductsByPrice = await axios.get("http://localhost:3001/productPrices" + price)
-        dispatch({
-            type: FILTER_PRODUCTS_BY_PRICE,
-            payload: filteredProductsByPrice.data
-        })
-    }
-} */
 
 export const addToCart = (id) => ({ type: ADD_TO_CART, payload: id });
-
 
 export const delFromCart = (id, all = false) =>
   all
@@ -207,5 +185,12 @@ export const delFromCart = (id, all = false) =>
 
 export const clearCart = () => ({ type: CLEAR_CART });
 
-
+export const flushError = () => {
+  return async (dispatch) => {
+    dispatch({
+      type:FLUSH_ERROR,
+      payload:null,
+    })
+  } 
+}
 

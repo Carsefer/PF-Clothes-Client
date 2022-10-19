@@ -1,13 +1,18 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { loginUser } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser, flushError } from "../../redux/actions";
 import { Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import "./LoginForm.css";
+import { useEffect } from "react";
 const LoginForm = () => {
   const [showPwd, setShowPwd] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const invalidLogin = useSelector((state) => state.loginError);
+  useEffect(() => {
+    //dispatch(flushError());
+  }, []);
   return (
     <>
       <div className="container">
@@ -17,18 +22,14 @@ const LoginForm = () => {
         </div>
         <Formik
           initialValues={{
-            email: "",
+            username: "",
             password: "",
           }}
           validate={(value) => {
             let errors = {};
 
-            if (
-              !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
-                value.email
-              )
-            ) {
-              errors.email = "Ingrese un correo valido";
+            if (!/^[a-zA-Z0-9_]+$/.test(value.username)) {
+              errors.username = "Ingrese un usuario";
             } else if (!value.password) {
               errors.password = "Ingrese contraseña";
             }
@@ -36,12 +37,38 @@ const LoginForm = () => {
           }}
           onSubmit={(values, { resetForm }) => {
             resetForm();
-            dispatch(loginUser(values));
-            alert("Exitoso");
-            setTimeout(() => {
-              resetForm();
-            }, 1000);
-            navigate("/home");
+
+            (async () => {
+              await dispatch(loginUser(values));
+
+              if (!invalidLogin) {
+                await alert("Exitoso");
+                await dispatch(flushError());
+                await navigate("/home");
+              }
+
+              if (invalidLogin) {
+                await console.log(invalidLogin);
+                //resetForm();
+                await alert(invalidLogin.error);
+                await dispatch(flushError());
+              }
+            })();
+            console.time("timer1");
+            dispatch(loginUser(values)).then(function () {
+              if (invalidLogin) {
+                //console.timeLog("timer1");
+                //console.log(invalidLogin);
+                //console.timeEnd("timer1");
+                //resetForm();
+                //alert(invalidLogin.error);
+              } else {
+                //console.timeLog("timer1");
+                //alert("Exitoso");
+                //console.timeEnd("timer1");
+                navigate("/home");
+              }
+            });
           }}
         >
           {({
@@ -56,21 +83,21 @@ const LoginForm = () => {
               <div className="entry">
                 <input
                   type="text"
-                  id="email"
-                  placeholder="Correo electronico"
-                  name="email"
+                  id="username"
+                  placeholder="Usuario"
+                  name="username"
                   className="form1"
-                  value={values.email}
+                  value={values.username}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   required
                   autoComplete="off"
                 />
 
-                {touched.email && errors.email && (
+                {touched.username && errors.username && (
                   <div className="errors">
                     {" "}
-                    <span>{errors.email}</span>{" "}
+                    <span>{errors.username}</span>{" "}
                   </div>
                 )}
 
@@ -105,7 +132,7 @@ const LoginForm = () => {
                 </div>
               </div>
               {/* VALIDATIONS */}
-              {!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
+              {!/^[a-zA-Z0-9_]+$/.test(
                 values.email || !values.phone || !values.username
               ) || !values.password ? (
                 <button className="btnDisabled" disabled>
