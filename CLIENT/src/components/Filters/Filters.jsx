@@ -131,7 +131,7 @@ const Filters = () => {
           handleClickShowAll(e);
         }}
       >
-        Show all
+        Mostrar todo
       </button>
     </div>
   );
