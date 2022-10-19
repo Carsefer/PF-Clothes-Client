@@ -82,23 +82,22 @@ export const getSizes = () => {
   };
 };
 
-export const orderProductsByName = (orden) => {
-  return async function (dispatch) {
-    dispatch({
+export const orderProductsByName = (data) => {
+  return {
       type: ORDER_PRODUCTS_BY_NAME,
-      payload: orden,
-    });
+      payload: data,
+    
   };
 };
 
-export const orderProductsByScore = (orden) => {
+/* export const orderProductsByScore = (orden) => {
   return async function (dispatch) {
     dispatch({
       type: ORDER_PRODUCTS_BY_SCORE,
       payload: orden,
     });
   };
-};
+}; */
 
 export const filterProducts = (name, price, size, demographic, color, cant) => {
   return async function (dispatch) {
