@@ -84,9 +84,8 @@ export const getSizes = () => {
 
 export const orderProductsByName = (data) => {
   return {
-      type: ORDER_PRODUCTS_BY_NAME,
-      payload: data,
-    
+    type: ORDER_PRODUCTS_BY_NAME,
+    payload: data,
   };
 };
 
@@ -99,10 +98,10 @@ export const orderProductsByName = (data) => {
   };
 }; */
 
-export const filterProducts = (name, price, size, demographic, color, cant) => {
+export const filterProducts = (name, price, size, demographic, color, page) => {
   return async function (dispatch) {
     const filteredProducts = await axios.get(
-      `http://localhost:3001/product/filter?name=${name}&price=${price}&size=${size}&demographic=${demographic}&color=${color}`
+      `http://localhost:3001/product/filter?name=${name}&price=${price}&size=${size}&demographic=${demographic}&color=${color}&page=${page}`
     );
     dispatch({
       type: FILTER_PRODUCTS,
