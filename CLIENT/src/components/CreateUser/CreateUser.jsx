@@ -21,6 +21,10 @@ const CreateUser = () => {
           password: "",
           passwords: "",
           phone: "",
+          storeName: null,
+          banner: null,
+          profilePicture: null,
+          location: null,
         }}
         validate={(value) => {
           let errors = {};
@@ -44,7 +48,18 @@ const CreateUser = () => {
           return errors;
         }}
         onSubmit={(data, { resetForm }) => {
-          let { username, name, lastname, mail, password, phone } = data;
+          let {
+            username,
+            name,
+            lastname,
+            mail,
+            password,
+            phone,
+            storeName,
+            banner,
+            profilePicture,
+            location,
+          } = data;
           name = `${name} ${lastname}`;
           const a = {
             username,
@@ -52,6 +67,10 @@ const CreateUser = () => {
             mail,
             password,
             phone,
+            storeName,
+            banner,
+            profilePicture,
+            location,
           };
           console.log(a);
 
