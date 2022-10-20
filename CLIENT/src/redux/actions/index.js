@@ -98,10 +98,19 @@ export const orderProductsByName = (data) => {
   };
 }; */
 
-export const filterProducts = (name, price, size, demographic, color, page) => {
+export const filterProducts = (
+  name,
+  price,
+  size,
+  demographic,
+  color,
+  page,
+  orderBy,
+  sortBy
+) => {
   return async function (dispatch) {
     const filteredProducts = await axios.get(
-      `http://localhost:3001/product/filter?name=${name}&price=${price}&size=${size}&demographic=${demographic}&color=${color}&page=${page}`
+      `http://localhost:3001/product/filter?name=${name}&price=${price}&size=${size}&demographic=${demographic}&color=${color}&page=${page}&sortBy=${sortBy}&orderBy=${orderBy}`
     );
     dispatch({
       type: FILTER_PRODUCTS,
@@ -173,18 +182,30 @@ export const deleteToFavorites = (id) => {
   return async (dispatch) => {
     dispatch({
       type: DELETE_TO_FAVORITES,
-      payload: id,
+      payload: id
     });
   };
 };
 
+/* export const filterProductsByMark = (mark) => {
+    return async function (dispatch) {
+        const filteredProductsByMark = await axios.get("http://localhost:3001/productMarks" + mark)
+        dispatch({
+            type: FILTER_PRODUCTS_BY_MARK,
+            payload: filteredProductsByMark.data
+        })
+    }
+}
+*/
+
 export const addToCart = (id) => ({ type: ADD_TO_CART, payload: id });
 
-export const delFromCart = (id, all = false) =>
+export const delFromCart = (id, all = false) => {
   all
     ? { type: REMOVE_ALL_FROM_CART, payload: id }
     : { type: REMOVE_ONE_FROM_CART, payload: id };
-
+}
+ 
 export const clearCart = () => ({ type: CLEAR_CART });
 
 export const flushError = () => {
