@@ -10,6 +10,7 @@ import {
   FILTER_PRODUCTS,
   LOGIN_USER,
   CREATE_USER,
+  CREATE_STORE,
   CREATE_PUBLICATION,
   GET_FAVORITES,
   ADD_TO_FAVORITES,
@@ -152,6 +153,16 @@ export const createUser = (data) => {
     }
   };
 };
+let id = "b181bed3-1e13-4ce0-ab57-95241b83a8dd";
+export const createStore = (data) => {
+  return async (dispatch) => {
+    const res = await axios.put(`http://localhost:3001/user/${id}`, data);
+    return dispatch({
+      type: CREATE_STORE,
+      payload: res.data,
+    });
+  };
+};
 
 export const createPublication = () => {
   return async (dispatch) => {
@@ -165,21 +176,21 @@ export const createPublication = () => {
 
 export const getFavorites = () => {
   return {
-    type: GET_FAVORITES
-  }
+    type: GET_FAVORITES,
+  };
 };
 
 export const addToFavorites = (id) => {
   return {
-      type: ADD_TO_FAVORITES,
-      payload: id,
-    };
+    type: ADD_TO_FAVORITES,
+    payload: id,
+  };
 };
 
 export const deleteFavorite = (id) => {
   return {
-      type: DELETE_FAVORITE,
-      payload: id,
+    type: DELETE_FAVORITE,
+    payload: id,
   };
 };
 
@@ -196,12 +207,11 @@ export const deleteFavorite = (id) => {
 
 export const addToCart = (id) => ({ type: ADD_TO_CART, payload: id });
 
-export const delFromCart = (id, all = false) => (
+export const delFromCart = (id, all = false) =>
   all
     ? { type: REMOVE_ALL_FROM_CART, payload: id }
-    : { type: REMOVE_ONE_FROM_CART, payload: id }
-)
- 
+    : { type: REMOVE_ONE_FROM_CART, payload: id };
+
 export const clearCart = () => ({ type: CLEAR_CART });
 
 export const flushError = () => {
