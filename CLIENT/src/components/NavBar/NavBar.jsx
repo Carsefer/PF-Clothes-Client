@@ -45,7 +45,7 @@ const NavBar = () => {
                 Iniciar Sesión
               </button>
             </Link>
-            <Link to="/home/signup">
+            <Link to="/register">
               <button className={Styles.NavbarHomeButtons}>Registrarse</button>
             </Link>
           </div>
