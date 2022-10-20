@@ -98,10 +98,19 @@ export const orderProductsByName = (data) => {
   };
 }; */
 
-export const filterProducts = (name, price, size, demographic, color, page) => {
+export const filterProducts = (
+  name,
+  price,
+  size,
+  demographic,
+  color,
+  page,
+  orderBy,
+  sortBy
+) => {
   return async function (dispatch) {
     const filteredProducts = await axios.get(
-      `http://localhost:3001/product/filter?name=${name}&price=${price}&size=${size}&demographic=${demographic}&color=${color}&page=${page}`
+      `http://localhost:3001/product/filter?name=${name}&price=${price}&size=${size}&demographic=${demographic}&color=${color}&page=${page}&sortBy=${sortBy}&orderBy=${orderBy}`
     );
     dispatch({
       type: FILTER_PRODUCTS,

@@ -19,20 +19,35 @@ export default function Home() {
     setColor,
     setName,
     setPage,
+    setOrderBy,
+    setSortBy,
     price,
     size,
     demographic,
     color,
     name,
     page,
+    orderBy,
+    sortBy,
   } = useContext(AppContext);
 
   //const [cant, setCant] = useState("");
   //const [, setOrder] = useState("");
   useEffect(() => {
-    dispatch(filterProducts(name, price, size, demographic, color, page));
+    dispatch(
+      filterProducts(
+        name,
+        price,
+        size,
+        demographic,
+        color,
+        page,
+        orderBy,
+        sortBy
+      )
+    );
     dispatch(emptyDetail());
-  }, [dispatch, name, price, size, demographic, color, page]);
+  }, [dispatch, name, price, size, demographic, color, page, orderBy, sortBy]);
 
   const allProducts = useSelector((state) => state.products);
   const results = useSelector((state) => state.productsStatus);
@@ -86,16 +101,43 @@ export default function Home() {
     setColor(e.target.value);
   };
 
+  //SORT
+  const changeSort = (e) => {
+    e.preventDefault();
+    setPage(0);
+    setSortBy(e.target.value);
+  };
+
+  //ORDER
+  const changeOrder = (e) => {
+    e.preventDefault();
+    setPage(0);
+    setOrderBy(e.target.value);
+  };
+
   //SHOW ALL
   const handleClickShowAll = (e) => {
     e.preventDefault();
     setPage(0);
+    setSortBy("name");
+    setOrderBy("ASC");
     setPrice("");
     setSize("");
     setDemographic("");
     setColor("");
     setName("");
-    dispatch(filterProducts(name, price, size, demographic, color, page));
+    dispatch(
+      filterProducts(
+        name,
+        price,
+        size,
+        demographic,
+        color,
+        page,
+        orderBy,
+        sortBy
+      )
+    );
   };
 
   //PAGINATED
@@ -200,6 +242,19 @@ export default function Home() {
               onChange={(e) => filterByName(e)}
             />
             {/* <Orders setOrder={setOrder} /> */}
+            <b> Order by:</b>
+            <select name="sort" value={sortBy} onChange={(e) => changeSort(e)}>
+              <option value="name">Nombre</option>
+              <option value="price">Precio</option>
+            </select>
+            <select
+              name="order"
+              value={orderBy}
+              onChange={(e) => changeOrder(e)}
+            >
+              <option value="ASC">Ascendente</option>
+              <option value="DESC">Descendente</option>
+            </select>
             <button
               class={Styles.FilterProductsHomeSelect}
               onClick={(e) => {

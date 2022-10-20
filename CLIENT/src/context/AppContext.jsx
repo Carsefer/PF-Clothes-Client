@@ -11,6 +11,8 @@ export const AppProvider = ({ children }) => {
   const [color, setColor] = useState("");
   const [name, setName] = useState("");
   const [page, setPage] = useState(0);
+  const [orderBy, setOrderBy] = useState("ASC");
+  const [sortBy, setSortBy] = useState("name");
 
   const context = {
     setPrice,
@@ -19,12 +21,16 @@ export const AppProvider = ({ children }) => {
     setColor,
     setName,
     setPage,
+    setOrderBy,
+    setSortBy,
     price,
     size,
     demographic,
     color,
     name,
     page,
+    orderBy,
+    sortBy,
   };
   return <AppContext.Provider value={context}>{children}</AppContext.Provider>;
 };
