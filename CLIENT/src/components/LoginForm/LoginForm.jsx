@@ -14,11 +14,11 @@ const LoginForm = () => {
 
   const handleLogin = async (userInfo) => {
     dispatch(loginUser(userInfo))
-    if(!loginError) {
+    if(loginError===null) {
+      alert("Credenciales incorrectas");
+    } else  {
       alert("Credenciales correctas");
       navigate("/home");
-    } else  {
-      alert(loginError.error);
     }
   };
 
