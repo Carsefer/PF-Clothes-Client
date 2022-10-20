@@ -21,6 +21,7 @@ import {
   REMOVE_ONE_FROM_CART,
   GET_REVIEWS_PRODUCT_DETAIL,
   FLUSH_ERROR,
+  GET_SELLS_HISTORY,
 } from "../action-types";
 
 export const getProducts = () => {
@@ -222,3 +223,13 @@ export const flushError = () => {
     });
   };
 };
+
+export const getSellsHistory = () => {
+  return async (dispatch) => {
+    const history = await axios.get("http://localhost:3001/sellsHistory")
+    dispatch({
+      type: GET_SELLS_HISTORY,
+      payload: history.data
+    })
+  }
+}
