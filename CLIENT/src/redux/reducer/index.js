@@ -29,6 +29,7 @@ const initialState = {
   favorites: [],
   loginError: null,
   cart: [],
+  user: {}
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -114,6 +115,11 @@ const rootReducer = (state = initialState, action) => {
         favorites: action.payload,
       };
     case LOGIN_USER:
+      return {
+        ...state,
+        user: action.payload,
+      };
+    case LOGIN_ERROR:
       return {
         ...state,
         loginError: action.payload,

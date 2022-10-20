@@ -5,6 +5,7 @@ import { Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import Styles from "./LoginForm.module.css";
 import axios from "axios";
+import { loginUser } from "../../redux/actions";
 
 const LoginForm = () => {
   const [showPwd, setShowPwd] = useState(false);
@@ -12,6 +13,8 @@ const LoginForm = () => {
   const navigate = useNavigate();
 
   const handleLogin = async (userInfo) => {
+    dispatch(loginUser(userInfo))
+    /*
     try {
       const res = await axios.post(`http://localhost:3001/login`, userInfo);
       sessionStorage.setItem("sessionData", JSON.stringify(res.data));
@@ -22,7 +25,7 @@ const LoginForm = () => {
     } catch (err) {
       console.log("incorrect");
       alert("Credenciales incorrectas");
-    }
+    }*/
   };
 
   return (

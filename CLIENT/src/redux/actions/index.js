@@ -121,17 +121,16 @@ export const filterProducts = (
 
 export const loginUser = (userInfo) => {
   return async function (dispatch) {
-    axios.post("http://localhost:3001/login", userInfo).then(
+    const res = await axios.post("http://localhost:3001/login", userInfo).then(
       function ({ data }) {
         dispatch({
           type: LOGIN_USER,
-          payload: null,
+          payload: res,
         });
-        sessionStorage.setItem("sessionData", JSON.stringify(data));
       },
       function (err) {
         dispatch({
-          type: LOGIN_USER,
+          type: LOGIN_ERROR,
           payload: err.response.data,
         });
       }
