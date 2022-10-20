@@ -19,6 +19,7 @@ import {
   REMOVE_ONE_FROM_CART,
   GET_REVIEWS_PRODUCT_DETAIL,
   FLUSH_ERROR,
+  GET_SELLS_HISTORY
 } from "../action-types";
 
 const initialState = {
@@ -31,6 +32,7 @@ const initialState = {
   favorites: [],
   loginError: null,
   cart: [],
+  sellsHistory: []
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -188,6 +190,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         loginError: action.payload,
       };
+    case GET_SELLS_HISTORY:
+      return {
+        ...state,
+        sellsHistory: action.payload
+      }
     default:
       return state;
   }
