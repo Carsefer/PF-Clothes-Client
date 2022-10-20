@@ -33,9 +33,7 @@ const NavBar = () => {
       <div className={Styles.NavbarHomeContainer}>
         <img className={Styles.NavbarHomeLogo} src={Logo} alt="logo" />
         <SearchBar />
-        <Link to="/home/ShoppingCart">
-          <img className={Styles.CartIcon} src={Cart}></img>
-        </Link>
+
         {/* si el usuario no esta logueado mostrar login y signup
                 en caso contrario mostrar el usuario logueado y boton de 
                 cerrar sesion */}
@@ -46,12 +44,18 @@ const NavBar = () => {
                 Iniciar Sesión
               </button>
             </Link>
-            <Link to="/home/signup">
+            <Link to="/register">
               <button className={Styles.NavbarHomeButtons}>Registrarse</button>
             </Link>
           </div>
         ) : (
-          <div>
+          <div className={Styles.NavBarText}>
+            <Link to="/home/ShoppingCart">
+              <img className={Styles.CartIcon} src={Cart}></img>
+            </Link>
+            <Link to="/home/profile">
+              <img className="" src={Profile}></img>
+            </Link>
             {/* username */}
             <p>{user.username}</p>
             <button

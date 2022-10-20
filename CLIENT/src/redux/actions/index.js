@@ -10,6 +10,7 @@ import {
   FILTER_PRODUCTS,
   LOGIN_USER,
   CREATE_USER,
+  CREATE_STORE,
   CREATE_PUBLICATION,
   ADD_TO_FAVORITE,
   GET_FAVORITES,
@@ -82,23 +83,21 @@ export const getSizes = () => {
   };
 };
 
-export const orderProductsByName = (orden) => {
-  return async function (dispatch) {
-    dispatch({
-      type: ORDER_PRODUCTS_BY_NAME,
-      payload: orden,
-    });
+export const orderProductsByName = (data) => {
+  return {
+    type: ORDER_PRODUCTS_BY_NAME,
+    payload: data,
   };
 };
 
-export const orderProductsByScore = (orden) => {
+/* export const orderProductsByScore = (orden) => {
   return async function (dispatch) {
     dispatch({
       type: ORDER_PRODUCTS_BY_SCORE,
       payload: orden,
     });
   };
-};
+}; */
 
 export const filterProducts = (name, price, size, demographic, color, cant) => {
   return async function (dispatch) {
@@ -135,6 +134,16 @@ export const loginUser = (userInfo) => {
 export const createUser = (data) => {
   return async (dispatch) => {
     const res = await axios.post(`http://localhost:3001/user`, data);
+    return dispatch({
+      type: CREATE_USER,
+      payload: res.data,
+    });
+  };
+};
+let id = "b181bed3-1e13-4ce0-ab57-95241b83a8dd";
+export const createStore = (data) => {
+  return async (dispatch) => {
+    const res = await axios.put(`http://localhost:3001/user/${id}`, data);
     return dispatch({
       type: CREATE_USER,
       payload: res.data,

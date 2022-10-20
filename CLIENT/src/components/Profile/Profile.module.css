@@ -1,0 +1,48 @@
+.sectionContainer {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+  padding-bottom: 320px;
+
+  transition: all 800ms;
+  border-radius: 10px;
+}
+.profileContainer {
+  margin-top: 96px;
+  background-color: rgba(103, 103, 103, 0.615);
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  margin-left: 90px;
+}
+
+.titleUsername {
+  font-size: 50px;
+  display: flex;
+
+  justify-content: flex-start;
+}
+.pictureProfile {
+  margin-top: 50px;
+  margin-left: 1px;
+  width: 20%;
+  height: 100%;
+  border-radius: 80%;
+}
+.buttonProfile {
+  margin-top: 20px;
+  width: 100px;
+  height: 60px;
+}
+.profileContainer {
+  margin-bottom: 100px;
+}
+
+.profileInformation {
+  flex-direction: column;
+  position: absolute;
+  margin-left: 35%;
+}

@@ -1,12 +1,13 @@
 import React from "react";
-import "./Home.css";
-import { useEffect } from "react";
+import Styles from "./Home.module.css";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filterProducts, emptyDetail } from "../../redux/actions";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 import Card from "../Card/Card";
 import NavBar from "../NavBar/NavBar";
+import Orders from "../Orders/Orders";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ export default function Home() {
   } = useContext(AppContext);
 
   //const [cant, setCant] = useState("");
-
+  const [, setOrder] = useState("");
   useEffect(() => {
     dispatch(filterProducts(name, price, size, demographic, color));
     dispatch(emptyDetail());
@@ -105,13 +106,15 @@ export default function Home() {
   // };
 
   return (
-    <div className="Home">
+    <div className={Styles.Home}>
       <NavBar />
-      <div className="ProductsHomeContainer">
-        <div className="ProductsHome">
-          <div className="FilterProductsHome">
+
+      <div className={Styles.ProductsHomeContainer}>
+        <div className={Styles.ProductsHome}>
+          <div className={Styles.FilterProductsHome}>
+            <Orders setOrder={setOrder} />
             <select
-              className="FilterProductsHomeSelect"
+              className={Styles.FilterProductsHomeSelect}
               value={size}
               onChange={(e) => filterBySize(e)}
             >
@@ -127,7 +130,7 @@ export default function Home() {
             </select>
 
             <select
-              className="FilterProductsHomeSelect"
+              className={Styles.FilterProductsHomeSelect}
               value={demographic}
               onChange={(e) => filterByDemographic(e)}
             >
@@ -141,7 +144,7 @@ export default function Home() {
             </select>
 
             <select
-              className="FilterProductsHomeSelect"
+              className={Styles.FilterProductsHomeSelect}
               value={price}
               onChange={(e) => filterByPrice(e)}
             >
@@ -153,7 +156,7 @@ export default function Home() {
             </select>
 
             <select
-              className="FilterProductsHomeSelect"
+              className={Styles.FilterProductsHomeSelect}
               value={color}
               onChange={(e) => filterByColor(e)}
             >
@@ -166,7 +169,7 @@ export default function Home() {
             </select>
 
             <input
-              class="FilterProductsHomeSelect"
+              class={Styles.FilterProductsHomeSelect}
               id="text"
               type="text"
               value={name}
@@ -175,7 +178,7 @@ export default function Home() {
             />
 
             <button
-              class="FilterProductsHomeSelect"
+              class={Styles.FilterProductsHomeSelect}
               onClick={(e) => {
                 handleClickShowAll(e);
               }}
@@ -184,7 +187,7 @@ export default function Home() {
             </button>
           </div>
 
-          <div className="ProductsHomeProductsCard">
+          <div className={Styles.ProductsHomeProductsCard}>
             {allProducts.length ? (
               allProducts.map((p) => (
                 <Card

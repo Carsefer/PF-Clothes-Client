@@ -7,8 +7,8 @@ import {
   addToCart,
   getProductDetailReviews,
 } from "../../redux/actions";
+import Style from "./ProductDetail.module.css";
 import Comments from "../Comments/Comments";
-import "./ProductDetail.css";
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
@@ -27,21 +27,22 @@ const ProductDetail = () => {
   console.log(reviews);
 
   return (
-    <div className="detailsContainer">
-      <div className="sectionDetails">
+    <div className={Style.detailsContainer}>
+      <div className={Style.sectionDetails}>
         <button onClick={() => navigate(-1)}>Volver atrás</button>
+
         <button onClick={() => dispatch(addToCart(id))}>
           <FaCartPlus />
           Agregar
         </button>
-        <h1 className="detailsTitle">
+        <h1 className={Style.detailsTitle}>
           {detail.name?.charAt(0).toUpperCase() + detail.name?.slice(1)}
         </h1>
-        <div className="article__details">
-          <div className="articleDetailsImage">
+        <div className={Style.article__details}>
+          <div className={Style.articleDetailsImage}>
             <img src={detail.image} alt="img not found" />
           </div>
-          <div className="article_details_container">
+          <div className={Style.article_details_container}>
             <p>Precio: ${detail.price}</p>
             <p>Talle: {detail.size}</p>
             <p>Marca: {detail.brand}</p>
