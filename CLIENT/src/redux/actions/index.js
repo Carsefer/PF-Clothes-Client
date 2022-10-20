@@ -142,11 +142,15 @@ export const loginUser = (userInfo) => {
 
 export const createUser = (data) => {
   return async (dispatch) => {
-    const res = await axios.post(`http://localhost:3001/user`, data);
-    return dispatch({
-      type: CREATE_USER,
-      payload: res.data,
-    });
+    try {
+      const res = await axios.post(`http://localhost:3001/user`, data);
+      return dispatch({
+        type: CREATE_USER,
+        payload: res.data,
+      }); 
+    } catch (error) {
+      alert(error)
+    }
   };
 };
 let id = "b181bed3-1e13-4ce0-ab57-95241b83a8dd";

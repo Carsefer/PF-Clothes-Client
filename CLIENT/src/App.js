@@ -19,7 +19,6 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<CreateUser />} />
         <Route path="/home/createStore" element={<CreateStore />} />
-
         <Route path="/home/product/:id" element={<ProductDetail />} />
         <Route path="/home/profile" element={<Profile />} />
         <Route exact path="/home/ShoppingCart" element={<ShoppingCart />} />
