@@ -50,7 +50,7 @@ const ProductDetail = () => {
         ) : (
           <button onClick={handleDelFav}>Eliminar de favoritos</button>
         )}
-        <h1 className={Style.detailsTitle}>{detail.name}</h1>
+        <h1 className={Style.detailsTitle}>{detail.name?.charAt(0).toUpperCase() + detail.name?.slice(1)}</h1>
         <div className={Style.article__details}>
           <div className={Style.articleDetailsImage}>
             <img src={detail.image} alt="img not found" />
