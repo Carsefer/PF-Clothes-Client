@@ -5,17 +5,37 @@ import NavBar from "../NavBar/NavBar";
 import Style from "./Profile.module.css";
 import { Link } from "react-router-dom";
 
+const {getSession} = require('../../utils/getSession');
+
 export default function Profile() {
+  const [info, setInfo] = useState("");
   const [us, setUs] = useState({});
 
   const url =
-    "http://localhost:3001/user/get/3a8c449c-853b-45cb-ae89-4d19e062d7ab";
+    "http://localhost:3001/user/get";
   useEffect(() => {
-    (async function () {
-      let data = await axios.get(url);
-      setUs(data.data);
+    (async () => {
+      if (!info) {
+        const data = await getSession();
+        setInfo(data);
+      }
+      
+      if(info){
+
+        console.log("info before request",info);
+        await axios.post(url,{},{
+          headers:{
+            'Authorization':`Bearer ${info.token}`
+          }
+        }).then((res) => {
+          console.log(res.data);
+          setUs(res.data);
+        }).catch((error) => {
+          console.log(error);
+        });
+      }
     })();
-  }, [url]);
+  }, [info]);
   console.log(us);
   return (
     <>

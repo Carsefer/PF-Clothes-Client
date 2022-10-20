@@ -6,10 +6,8 @@ import Logo from "../images/express-fashion-stores.svg";
 import Cart from "../images/cart.svg";
 import Star from "../images/icono-estrella.png";
 import Profile from "../images/profile.svg";
+const {getSession} = require('../../utils/getSession');
 
-// extraer token
-const getSession = async () =>
-  await JSON.parse(sessionStorage.getItem("sessionData"));
 
 const NavBar = () => {
   const [user, setUser] = useState("");
