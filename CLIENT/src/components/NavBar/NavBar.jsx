@@ -24,6 +24,7 @@ const NavBar = () => {
   const handleLogout = (e) => {
     setUser("");
     sessionStorage.removeItem("sessionData");
+    
   };
 
   console.log(user);
