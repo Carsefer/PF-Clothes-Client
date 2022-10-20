@@ -30,7 +30,7 @@ const LoginForm = () => {
       <div className={Styles.container}>
         <div className={Styles.header}></div>
         <div className={Styles.subtitle}>
-          <h2>Bienvenido devuelta.</h2>
+          <h2>Bienvenido</h2>
         </div>
         <Formik
           initialValues={{

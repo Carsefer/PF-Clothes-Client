@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { getProductDetail, addToCart, getProductDetailReviews } from "../../redux/actions";
 import Style from "./ProductDetail.module.css";
 import Comments from "../Comments/Comments";
-import Rating from '@mui/material/Rating';
+import CreateReview from "../CreateReview/CreateReview";
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
@@ -40,8 +40,8 @@ const ProductDetail = () => {
             <p>Quedan {detail.stock} unidades disponibles</p>
           </div>
           <div>
+            <CreateReview/>
             <h2>Reseñas</h2>
-            <Rating value={5}/>
             {reviews.length ? (
               reviews.map((r) => (
                 <Comments 
@@ -62,12 +62,3 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
-
-/*
-{reviews.map((r) => (
-  <Comments 
-    score = {r.score}
-    review = {r.review}
-  />
-))}
-<Comments/>*/
