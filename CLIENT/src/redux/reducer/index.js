@@ -116,10 +116,17 @@ const rootReducer = (state = initialState, action) => {
     //     favorites: action.payload,
     //   };
     case ADD_TO_FAVORITES:
-      let newFavorite = state.products.find( p => p.id === action.payload)
+      let newFavorite = state.products.find( p => p.id === action.payload);
+      let productInFav = state.favorites.find( f => f.id === newFavorite.id)
+      return !productInFav?{
+        ...state,
+        favorites: [...state.favorites, newFavorite]
+      }: state
+    case DELETE_FAVORITE:
+      let delFav = state.favorites.filter(f => f.id !== action.payload);
       return {
         ...state,
-        favorites: [...newFavorite]
+        favorites: delFav
       }
     case LOGIN_USER:
       return {
