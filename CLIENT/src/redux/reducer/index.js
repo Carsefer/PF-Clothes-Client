@@ -10,6 +10,8 @@ import {
   CREATE_PUBLICATION,
   EMPTY_DETAIL,
   GET_FAVORITES,
+  ADD_TO_FAVORITES,
+  DELETE_FAVORITE,
   LOGIN_USER,
   ADD_TO_CART,
   CLEAR_CART,
@@ -108,11 +110,17 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
       };
-    case GET_FAVORITES:
+    // case GET_FAVORITES:
+    //   return {
+    //     ...state,
+    //     favorites: action.payload,
+    //   };
+    case ADD_TO_FAVORITES:
+      let newFavorite = state.products.find( p => p.id === action.payload)
       return {
         ...state,
-        favorites: action.payload,
-      };
+        favorites: [...newFavorite]
+      }
     case LOGIN_USER:
       return {
         ...state,

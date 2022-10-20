@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFavorites } from '../../redux/actions/index.js';
+//import { getFavorites } from '../../redux/actions/index.js';
 import Card from "../Card/Card.jsx";
 
 const Favorites = () => {
 
-    const dispatch = useDispatch()
+    //const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(getFavorites())
-    })
+    // useEffect(() => {
+    //     dispatch(getFavorites())
+    // })
 
     const favoritesList = useSelector(state => state.favorites)
 
@@ -22,7 +22,7 @@ const Favorites = () => {
                             key={cloth.id}
                             id={cloth.id}
                             img={cloth.image}
-                            title={cloth.name[0].toUpperCase() + p.name.substring(1)}
+                            title={cloth.name[0].toUpperCase() + cloth.name.substring(1)}
                             price={cloth.price}
                             inFavorites={true}
                         />

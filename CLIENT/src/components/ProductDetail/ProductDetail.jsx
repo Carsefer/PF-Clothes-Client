@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { FaCartPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getProductDetail, addToCart, getProductDetailReviews } from "../../redux/actions";
+import { getProductDetail, addToCart, getProductDetailReviews, addToFavorites } from "../../redux/actions";
 import Style from "./ProductDetail.module.css";
 import Comments from "../Comments/Comments";
 
@@ -25,6 +25,7 @@ const ProductDetail = () => {
     <div className={Style.detailsContainer}>
       <div className={Style.sectionDetails}>
         <button onClick={() => dispatch (addToCart(id))}><FaCartPlus/>Agregar</button> 
+        <button onClick={() => dispatch(addToFavorites(id))}>Agregar a favoritos</button>
         <h1 className={Style.detailsTitle}>{detail.name}</h1>
         <div className={Style.article__details}>
           <div className={Style.articleDetailsImage}>

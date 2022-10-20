@@ -11,9 +11,9 @@ import {
   LOGIN_USER,
   CREATE_USER,
   CREATE_PUBLICATION,
-  ADD_TO_FAVORITE,
   GET_FAVORITES,
-  DELETE_TO_FAVORITES,
+  ADD_TO_FAVORITES,
+  DELETE_FAVORITE,
   ADD_TO_CART,
   CLEAR_CART,
   REMOVE_ALL_FROM_CART,
@@ -151,31 +151,23 @@ export const createPublication = () => {
   };
 };
 
-export const getFavorites = (user) => {
-  return async (dispatch) => {
-    const favorites = axios.get(`http://localhost:3001/${user}/favorites`);
-    dispatch({
-      type: GET_FAVORITES,
-      payload: favorites.data,
-    });
-  };
+export const getFavorites = () => {
+  return {
+    type: GET_FAVORITES
+  }
 };
 
-export const addToFavorite = (id) => {
-  return async (dispatch) => {
-    dispatch({
-      type: ADD_TO_FAVORITE,
+export const addToFavorites = (id) => {
+  return {
+      type: ADD_TO_FAVORITES,
       payload: id,
-    });
-  };
+    };
 };
 
 export const deleteToFavorites = (id) => {
-  return async (dispatch) => {
-    dispatch({
-      type: DELETE_TO_FAVORITES,
+  return {
+      type: DELETE_FAVORITE,
       payload: id,
-    });
   };
 };
 
