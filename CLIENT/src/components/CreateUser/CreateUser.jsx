@@ -258,6 +258,12 @@ const CreateUser = () => {
           </form>
         )}
       </Formik>
+      <p className={Styles.footerUser}>
+        Ya tiene una cuenta?{" "}
+        <Link className={Styles.lognin} to="/login">
+          Iniciar sesion
+        </Link>{" "}
+      </p>
     </div>
   );
 };

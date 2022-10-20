@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import CreateStore from "./components/CreateStore/CreateStore";
 import CreateUser from "./components/CreateUser/CreateUser";
+import Favorites from "./components/Favorites/Favorites";
 import Home from "./components/Home/Home";
 import LandingHome from "./components/LandingHome/LandingHome";
 import Login from "./components/Login/Login";
@@ -22,6 +23,7 @@ function App() {
         <Route path="/home/product/:id" element={<ProductDetail />} />
         <Route path="/home/profile" element={<Profile />} />
         <Route exact path="/home/ShoppingCart" element={<ShoppingCart />} />
+        <Route path="/home/Favorites" element={<Favorites />} />
       </Routes>
     </AppProvider>
   );
