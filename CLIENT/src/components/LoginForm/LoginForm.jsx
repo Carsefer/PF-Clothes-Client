@@ -5,6 +5,7 @@ import { Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import Styles from "./LoginForm.module.css";
 import axios from "axios";
+import GoogleButton from 'react-google-button';
 
 const LoginForm = () => {
   const [showPwd, setShowPwd] = useState(false);
@@ -158,9 +159,11 @@ const LoginForm = () => {
                   Iniciar sesión
                 </button>
               )}
+
             </form>
           )}
         </Formik>
+        <GoogleButton/>
         <p className={Styles.LoginFormsFooter}>
           No tiene cuenta?{" "}
           <Link className={Styles.register} to="/register">
