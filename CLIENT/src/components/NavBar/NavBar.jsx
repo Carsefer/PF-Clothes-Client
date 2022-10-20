@@ -4,6 +4,7 @@ import SearchBar from "../Searchbar/SearchBar";
 import Styles from "./NavBar.module.css"
 import Logo from "../images/express-fashion-stores.svg"
 import Cart from "../images/cart.svg"
+import Star from "../images/icono-estrella.png"
 
 // extraer token 
 const getSession = async () => await JSON.parse(sessionStorage.getItem('sessionData'));
@@ -35,9 +36,12 @@ const NavBar = () => {
                 <Link to="/home/ShoppingCart" >
                     <img className={Styles.CartIcon} src={Cart}></img>
                 </Link>
+                <Link to="/home/Favorites">
+                    <img className={Styles.CartIcon} src={Star} />
+                </Link>
                 {/* si el usuario no esta logueado mostrar login y signup
                 en caso contrario mostrar el usuario logueado y boton de 
-                cerrar sesion */}
+            cerrar sesion */}
                {!user ? 
                 <div className={Styles.NavbarHomeFormsButtonsContainer}>
                 
