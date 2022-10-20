@@ -30,7 +30,7 @@ const NavBar = () => {
   return (
     <nav className={Styles.NavbarHome}>
       <div className={Styles.NavbarHomeContainer}>
-        <img className={Styles.NavbarHomeLogo} src={Logo} alt="logo" />
+        <Link to="/"><img className={Styles.NavbarHomeLogo} src={Logo} alt="logo" /></Link>
         <SearchBar />
 
         {/* si el usuario no esta logueado mostrar login y signup

@@ -82,13 +82,13 @@ const Filters = () => {
         value={demographic}
         onChange={(e) => filterByDemographic(e)}
       >
-        <option value="">Filtrar por Genero</option>
-        <option value="adult male">adult male</option>
-        <option value="adult female">adult female</option>
-        <option value="teen female">teen female</option>
-        <option value="teen male">teen male</option>
-        <option value="little boy">little boy</option>
-        <option value="little girl">little girl</option>
+        <option value="">Filtrar por Género</option>
+        <option value="adult male">Hombre</option>
+        <option value="adult female">Mujer</option>
+        <option value="teen male">Hombre adolescente</option>
+        <option value="teen female">Mujer adolescente</option>
+        <option value="little boy">Niño</option>
+        <option value="little girl">Niña</option>
       </select>
 
       <select
