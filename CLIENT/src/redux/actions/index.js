@@ -11,11 +11,15 @@ import {
   LOGIN_USER,
   CREATE_USER,
   CREATE_PUBLICATION,
+  GET_FAVORITES,
+  ADD_TO_FAVORITES,
+  DELETE_FAVORITE,
   ADD_TO_CART,
   CLEAR_CART,
   REMOVE_ALL_FROM_CART,
   REMOVE_ONE_FROM_CART,
   GET_REVIEWS_PRODUCT_DETAIL,
+  FLUSH_ERROR,
 } from "../action-types";
 
 export const getProducts = () => {
@@ -40,7 +44,9 @@ export const getProductDetail = (id) => {
 
 export const getProductDetailReviews = (id) => {
   return async function (dispatch) {
-    const reviews = await axios.get(`http://localhost:3001/product/review/${id}`)
+    const reviews = await axios.get(
+      `http://localhost:3001/product/review/${id}`
+    );
     dispatch({
       type: GET_REVIEWS_PRODUCT_DETAIL,
       payload: reviews.data,
@@ -56,7 +62,9 @@ export const emptyDetail = () => {
 
 export const searchProduct = (name) => {
   return async function (dispatch) {
-    const json = await axios.get(`http://localhost:3001/product/?search=${name}`);
+    const json = await axios.get(
+      `http://localhost:3001/product/?search=${name}`
+    );
     dispatch({
       type: SEARCH_PRODUCT,
       payload: json.data,
@@ -74,28 +82,35 @@ export const getSizes = () => {
   };
 };
 
-export const orderProductsByName = (orden) => {
-  return async function (dispatch) {
-    dispatch({
-      type: ORDER_PRODUCTS_BY_NAME,
-      payload: orden,
-    });
+export const orderProductsByName = (data) => {
+  return {
+    type: ORDER_PRODUCTS_BY_NAME,
+    payload: data,
   };
 };
 
-export const orderProductsByScore = (orden) => {
+/* export const orderProductsByScore = (orden) => {
   return async function (dispatch) {
     dispatch({
       type: ORDER_PRODUCTS_BY_SCORE,
       payload: orden,
     });
   };
-};
+}; */
 
-export const filterProducts = (price, size, demographic) => {
+export const filterProducts = (
+  name,
+  price,
+  size,
+  demographic,
+  color,
+  page,
+  orderBy,
+  sortBy
+) => {
   return async function (dispatch) {
     const filteredProducts = await axios.get(
-      `http://localhost:3001/product/filter?price=${price}&size=${size}&demographic=${demographic}`
+      `http://localhost:3001/product/filter?name=${name}&price=${price}&size=${size}&demographic=${demographic}&color=${color}&page=${page}&sortBy=${sortBy}&orderBy=${orderBy}`
     );
     dispatch({
       type: FILTER_PRODUCTS,
@@ -106,10 +121,21 @@ export const filterProducts = (price, size, demographic) => {
 
 export const loginUser = (userInfo) => {
   return async function (dispatch) {
-    dispatch({
-      type: LOGIN_USER,
-      payload: userInfo,
-    });
+    axios.post("http://localhost:3001/login", userInfo).then(
+      function ({ data }) {
+        dispatch({
+          type: LOGIN_USER,
+          payload: null,
+        });
+        sessionStorage.setItem("sessionData", JSON.stringify(data));
+      },
+      function (err) {
+        dispatch({
+          type: LOGIN_USER,
+          payload: err.response.data,
+        });
+      }
+    );
   };
 };
 
@@ -137,11 +163,52 @@ export const createPublication = () => {
   };
 };
 
+export const getFavorites = () => {
+  return {
+    type: GET_FAVORITES
+  }
+};
+
+export const addToFavorites = (id) => {
+  return {
+      type: ADD_TO_FAVORITES,
+      payload: id,
+    };
+};
+
+export const deleteFavorite = (id) => {
+  return {
+      type: DELETE_FAVORITE,
+      payload: id,
+  };
+};
+
+/* export const filterProductsByMark = (mark) => {
+    return async function (dispatch) {
+        const filteredProductsByMark = await axios.get("http://localhost:3001/productMarks" + mark)
+        dispatch({
+            type: FILTER_PRODUCTS_BY_MARK,
+            payload: filteredProductsByMark.data
+        })
+    }
+}
+*/
+
 export const addToCart = (id) => ({ type: ADD_TO_CART, payload: id });
 
-export const delFromCart = (id, all = false) =>
+export const delFromCart = (id, all = false) => (
   all
     ? { type: REMOVE_ALL_FROM_CART, payload: id }
-    : { type: REMOVE_ONE_FROM_CART, payload: id };
-
+    : { type: REMOVE_ONE_FROM_CART, payload: id }
+)
+ 
 export const clearCart = () => ({ type: CLEAR_CART });
+
+export const flushError = () => {
+  return async (dispatch) => {
+    dispatch({
+      type: FLUSH_ERROR,
+      payload: null,
+    });
+  };
+};

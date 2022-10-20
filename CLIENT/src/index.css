@@ -11,3 +11,65 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+:root {
+  --verde: #31b189;
+  --verde-claro: #7ace67;
+  --grisClaro: #e0e0e0;
+  --gris: #616161;
+  --blanco: #ffffff;
+  --fuentePrincipal: "GothamRoundedBook", "sans-serif";
+  --inset: inset 3px 5px 10px var(--rgba1);
+  --rgba1: rgba(89, 89, 89, 0.15);
+  --main: #110826;
+}
+
+body {
+  font-family: "GothamRoundedBook", "sans-serif";
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+
+
+h1 {
+  font-size: 3.2rem;
+}
+
+a {
+  font-size: 1.9rem;
+}
+
+label {
+  font-size: 14px;
+  line-height: 14px;
+  font-weight: 520;
+  margin: 0px 0px 0px 8px;
+  color: var(--main);
+}
+
+h1,h2,p {
+  text-align: center;
+  margin: 1.5rem;
+  font-size: 24px;
+}
+
+img {
+  width: 38px;
+  height: 5rem;
+  margin: 1rem -2px;
+}
+
+p a {
+  font-size: 18px;
+}
