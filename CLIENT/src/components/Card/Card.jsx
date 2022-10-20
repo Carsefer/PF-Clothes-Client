@@ -8,14 +8,14 @@ const Card = ({ img, title, price, id, inFavorites }) => {
 
   const dispatch = useDispatch()
 
-  const handleFavorites = (idFav) => {
-    idFav.preventDefault();
-    dispatch(addToFavorite(idFav))
+  const handleFavorites = (e) => {
+    e.preventDefault();
+    dispatch(addToFavorite(id))
   }
 
-  const handleDeleteFavorites = (idDelete) => {
-    idDelete.preventDefault();
-    dispatch(deleteToFavorites(idDelete))
+  const handleDeleteFavorites = (e) => {
+    e.preventDefault();
+    dispatch(deleteToFavorites(id))
   }
 
   return (
@@ -23,8 +23,8 @@ const Card = ({ img, title, price, id, inFavorites }) => {
       <Link className={CardStyles.CardProductHomeLink} to={`/Home/Product/${id}`}>
         {
           inFavorites ? 
-          <button onClick={(e) => handleDeleteFavorites(id)}>Quitar de Favoritos</button> :
-          <button onClick={(e) => handleFavorites(id)}>Añadir a Favoritos</button>
+          <button onClick={(e) => handleDeleteFavorites(e)}>Quitar de Favoritos</button> :
+          <button onClick={(e) => handleFavorites(e)}>Añadir a Favoritos</button>
         }
         <div className={CardStyles.CardProductHomeLinkImgContainer}>
           <img
