@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 const CreateReview = ({id}) => {
     const [rating, setRating] = useState({value: null, text: "Introduzca review"})
-    const [hola, setDisabled] = useState()
     const dispatch = useDispatch();
 
     const handdleChange = (e) => {
