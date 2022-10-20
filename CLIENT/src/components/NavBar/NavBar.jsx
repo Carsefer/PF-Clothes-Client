@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "../Searchbar/SearchBar";
 import Styles from "./NavBar.module.css";
 import Logo from "../images/express-fashion-stores.svg";
@@ -11,6 +11,7 @@ const {getSession} = require('../../utils/getSession');
 
 const NavBar = () => {
   const [user, setUser] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -24,7 +25,7 @@ const NavBar = () => {
   const handleLogout = (e) => {
     setUser("");
     sessionStorage.removeItem("sessionData");
-    
+    navigate("/home");
   };
 
   console.log(user);
