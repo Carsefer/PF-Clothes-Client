@@ -7,12 +7,10 @@ import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 import Card from "../Card/Card";
 import NavBar from "../NavBar/NavBar";
-import Orders from "../Orders/Orders" 
+//import Orders from "../Orders/Orders";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const allProducts = useSelector((state) => state.products);
-  const results = useSelector((state) => state.productsStatus);
 
   const {
     setPrice,
@@ -20,19 +18,39 @@ export default function Home() {
     setDemographic,
     setColor,
     setName,
+    setPage,
+    setOrderBy,
+    setSortBy,
     price,
     size,
     demographic,
     color,
     name,
+    page,
+    orderBy,
+    sortBy,
   } = useContext(AppContext);
 
   //const [cant, setCant] = useState("");
-  const [, setOrder ] = useState("");
+  //const [, setOrder] = useState("");
   useEffect(() => {
-    dispatch(filterProducts(name, price, size, demographic, color));
+    dispatch(
+      filterProducts(
+        name,
+        price,
+        size,
+        demographic,
+        color,
+        page,
+        orderBy,
+        sortBy
+      )
+    );
     dispatch(emptyDetail());
-  }, [dispatch, name, price, size, demographic, color]);
+  }, [dispatch, name, price, size, demographic, color, page, orderBy, sortBy]);
+
+  const allProducts = useSelector((state) => state.products);
+  const results = useSelector((state) => state.productsStatus);
 
   //Paginado
   // const [currentPage, setCurrentPage] = useState(1);
@@ -51,42 +69,91 @@ export default function Home() {
   //SEARCH
   const filterByName = (e) => {
     e.preventDefault();
+    setPage(0);
     setName(e.target.value);
   };
 
   //FILTER PRICE
   const filterByPrice = (e) => {
     e.preventDefault();
+    setPage(0);
     setPrice(e.target.value);
   };
 
   //FILTER SIZE
   const filterBySize = (e) => {
     e.preventDefault();
+    setPage(0);
     setSize(e.target.value);
   };
 
   //FILTER DEMOGRAPHIC
   const filterByDemographic = (e) => {
     e.preventDefault();
+    setPage(0);
     setDemographic(e.target.value);
   };
 
   //FILTER COLOR
   const filterByColor = (e) => {
     e.preventDefault();
+    setPage(0);
     setColor(e.target.value);
+  };
+
+  //SORT
+  const changeSort = (e) => {
+    e.preventDefault();
+    setPage(0);
+    setSortBy(e.target.value);
+  };
+
+  //ORDER
+  const changeOrder = (e) => {
+    e.preventDefault();
+    setPage(0);
+    setOrderBy(e.target.value);
   };
 
   //SHOW ALL
   const handleClickShowAll = (e) => {
     e.preventDefault();
+    setPage(0);
+    setSortBy("name");
+    setOrderBy("ASC");
     setPrice("");
     setSize("");
     setDemographic("");
     setColor("");
     setName("");
-    dispatch(filterProducts(name, price, size, demographic, color));
+    dispatch(
+      filterProducts(
+        name,
+        price,
+        size,
+        demographic,
+        color,
+        page,
+        orderBy,
+        sortBy
+      )
+    );
+  };
+
+  //PAGINATED
+  const start = (e) => {
+    e.preventDefault();
+    setPage(0);
+  };
+
+  const prev = (e) => {
+    e.preventDefault();
+    setPage(page - 10);
+  };
+
+  const next = (e) => {
+    e.preventDefault();
+    setPage(page + 10);
   };
 
   //PAGINATED
@@ -174,7 +241,20 @@ export default function Home() {
               placeholder="Buscar productos..."
               onChange={(e) => filterByName(e)}
             />
-            <Orders setOrder={setOrder} />
+            {/* <Orders setOrder={setOrder} /> */}
+            <b> Order by:</b>
+            <select name="sort" value={sortBy} onChange={(e) => changeSort(e)}>
+              <option value="name">Nombre</option>
+              <option value="price">Precio</option>
+            </select>
+            <select
+              name="order"
+              value={orderBy}
+              onChange={(e) => changeOrder(e)}
+            >
+              <option value="ASC">Ascendente</option>
+              <option value="DESC">Descendente</option>
+            </select>
             <button
               class={Styles.FilterProductsHomeSelect}
               onClick={(e) => {
@@ -182,6 +262,35 @@ export default function Home() {
               }}
             >
               Mostrar todo
+            </button>
+          </div>
+
+          <div>
+            <button
+              onClick={(e) => {
+                start(e);
+              }}
+              disabled={page <= 0}
+            >
+              {"Comienzo"}
+            </button>
+            <button
+              value={page}
+              onClick={(e) => {
+                prev(e);
+              }}
+              disabled={page <= 0}
+            >
+              {"Anterior"}
+            </button>
+            <button class="paginated_num">{page / 10}</button>
+            <button
+              onClick={(e) => {
+                next(e);
+              }}
+              disabled={allProducts.length < 10}
+            >
+              {"Siguiente"}
             </button>
           </div>
 
