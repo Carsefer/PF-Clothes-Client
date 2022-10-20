@@ -5,7 +5,7 @@ const Comments = ({score, reviews}) => {
     return (
         <div>
             <div>
-                <Rating value={score} readOnly/>
+                <Rating value={score} readOnly sx={{fontSize: '5rem',}}/>
             </div>
             <div>
                 <p>{reviews}</p>

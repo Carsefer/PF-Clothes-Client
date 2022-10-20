@@ -19,7 +19,7 @@ const CreateReview = ({id}) => {
         <div>
             <h2>Realizar Reseña</h2>
             <div>
-                <Rating disabled={disabled} precision={0.5} value={rating.value} onChange={(event, newvalue) => {setRating({...rating, value: newvalue});}}/>
+                <Rating disabled={disabled} precision={0.5} value={rating.value} onChange={(event, newvalue) => {setRating({...rating, value: newvalue});}} sx={{fontSize: '5rem',}}/>
             </div>
             <div>
                 <form onSubmit={(e) => {
