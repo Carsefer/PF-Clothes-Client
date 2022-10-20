@@ -8,25 +8,18 @@ import axios from "axios";
 
 const LoginForm = () => {
   const [showPwd, setShowPwd] = useState(false);
+  const loginError = useSelector(state => state.loginError)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogin = async (userInfo) => {
     dispatch(loginUser(userInfo))
-    alert("Credenciales correctas");
-    navigate("/home");
-    /*
-    try {
-      const res = await axios.post(`http://localhost:3001/login`, userInfo);
-      sessionStorage.setItem("sessionData", JSON.stringify(res.data));
-      if (res.data) {
-        alert("Credenciales correctas");
-        navigate("/home");
-      }
-    } catch (err) {
-      console.log("incorrect");
-      alert("Credenciales incorrectas");
-    }*/
+    if(!loginError) {
+      alert("Credenciales correctas");
+      navigate("/home");
+    } else  {
+      alert(loginError.error);
+    }
   };
 
   return (

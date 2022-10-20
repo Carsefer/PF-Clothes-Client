@@ -9,6 +9,7 @@ import {
   ORDER_PRODUCTS_BY_SCORE,
   FILTER_PRODUCTS,
   LOGIN_USER,
+  LOGIN_ERROR,
   CREATE_USER,
   CREATE_PUBLICATION,
   ADD_TO_FAVORITE,
@@ -121,11 +122,11 @@ export const filterProducts = (
 
 export const loginUser = (userInfo) => {
   return async function (dispatch) {
-    const res = await axios.post("http://localhost:3001/login", userInfo).then(
+    await axios.post("http://localhost:3001/login", userInfo).then(
       function ({ data }) {
         dispatch({
           type: LOGIN_USER,
-          payload: res,
+          payload: data,
         });
       },
       function (err) {

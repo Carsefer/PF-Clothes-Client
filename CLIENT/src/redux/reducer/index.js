@@ -28,7 +28,7 @@ const initialState = {
   sizes: [],
   productsStatus: "loading",
   favorites: [],
-  loginError: null,
+  loginError: {},
   cart: [],
   user: {}
 };
@@ -118,6 +118,7 @@ const rootReducer = (state = initialState, action) => {
     case LOGIN_USER:
       return {
         ...state,
+        error: {},
         user: action.payload,
       };
     case LOGIN_ERROR:
