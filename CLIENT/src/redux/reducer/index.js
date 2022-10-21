@@ -10,6 +10,8 @@ import {
   CREATE_PUBLICATION,
   EMPTY_DETAIL,
   GET_FAVORITES,
+  ADD_TO_FAVORITES,
+  DELETE_FAVORITE,
   LOGIN_USER,
   LOGIN,
   LOGOUT,
@@ -19,6 +21,7 @@ import {
   REMOVE_ONE_FROM_CART,
   GET_REVIEWS_PRODUCT_DETAIL,
   FLUSH_ERROR,
+  GET_SELLS_HISTORY
 } from "../action-types";
 
 const initialState = {
@@ -31,7 +34,8 @@ const initialState = {
   favorites: [],
   login: false,
   cart: [],
-  user: {}
+  user: {},
+  sellsHistory: []
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -111,10 +115,25 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
       };
-    case GET_FAVORITES:
+    // case GET_FAVORITES:
+    //   return {
+    //     ...state,
+    //     favorites: action.payload,
+    //   };
+    case ADD_TO_FAVORITES:
+      let newFavorite = state.products.find((p) => p.id === action.payload);
+      let productInFav = state.favorites.find((f) => f.id === newFavorite.id);
+      return !productInFav
+        ? {
+            ...state,
+            favorites: [...state.favorites, newFavorite],
+          }
+        : state;
+    case DELETE_FAVORITE:
+      let delFav = state.favorites.filter((f) => f.id !== action.payload);
       return {
         ...state,
-        favorites: action.payload,
+        favorites: delFav,
       };
     case LOGIN_USER:
       return {
@@ -184,6 +203,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         loginError: action.payload,
       };
+    case GET_SELLS_HISTORY:
+      return {
+        ...state,
+        sellsHistory: action.payload
+      }
     default:
       return state;
   }

@@ -12,16 +12,18 @@ import {
   LOGIN,
   LOGOUT,
   CREATE_USER,
+  CREATE_STORE,
   CREATE_PUBLICATION,
-  ADD_TO_FAVORITE,
   GET_FAVORITES,
-  DELETE_TO_FAVORITES,
+  ADD_TO_FAVORITES,
+  DELETE_FAVORITE,
   ADD_TO_CART,
   CLEAR_CART,
   REMOVE_ALL_FROM_CART,
   REMOVE_ONE_FROM_CART,
   GET_REVIEWS_PRODUCT_DETAIL,
   FLUSH_ERROR,
+  GET_SELLS_HISTORY,
 } from "../action-types";
 
 export const getProducts = () => {
@@ -153,9 +155,23 @@ export const loginOut = () => {
 
 export const createUser = (data) => {
   return async (dispatch) => {
-    const res = await axios.post(`https://pf-cloth-2022.herokuapp.com/user`, data);
+    try {
+      const res = await axios.post(`https://pf-cloth-2022.herokuapp.com/user`, data);
+      return dispatch({
+        type: CREATE_USER,
+        payload: res.data,
+      }); 
+    } catch (error) {
+      alert(error)
+    }
+  };
+};
+let id = "b181bed3-1e13-4ce0-ab57-95241b83a8dd";
+export const createStore = (data) => {
+  return async (dispatch) => {
+    const res = await axios.put(`https://pf-cloth-2022.herokuapp.com/user/${id}`, data);
     return dispatch({
-      type: CREATE_USER,
+      type: CREATE_STORE,
       payload: res.data,
     });
   };
@@ -171,31 +187,23 @@ export const createPublication = () => {
   };
 };
 
-export const getFavorites = (user) => {
-  return async (dispatch) => {
-    const favorites = axios.get(`https://pf-cloth-2022.herokuapp.com/${user}/favorites`);
-    dispatch({
-      type: GET_FAVORITES,
-      payload: favorites.data,
-    });
+export const getFavorites = () => {
+  return {
+    type: GET_FAVORITES,
   };
 };
 
-export const addToFavorite = (id) => {
-  return async (dispatch) => {
-    dispatch({
-      type: ADD_TO_FAVORITE,
-      payload: id,
-    });
+export const addToFavorites = (id) => {
+  return {
+    type: ADD_TO_FAVORITES,
+    payload: id,
   };
 };
 
-export const deleteToFavorites = (id) => {
-  return async (dispatch) => {
-    dispatch({
-      type: DELETE_TO_FAVORITES,
-      payload: id
-    });
+export const deleteFavorite = (id) => {
+  return {
+    type: DELETE_FAVORITE,
+    payload: id,
   };
 };
 
@@ -212,10 +220,11 @@ export const deleteToFavorites = (id) => {
 
 export const addToCart = (id) => ({ type: ADD_TO_CART, payload: id });
 
-export const delFromCart = (id, all = false) => {
-  all ? { type: REMOVE_ALL_FROM_CART, payload: id } : { type: REMOVE_ONE_FROM_CART, payload: id };
-}
- 
+export const delFromCart = (id, all = false) =>
+  all
+    ? { type: REMOVE_ALL_FROM_CART, payload: id }
+    : { type: REMOVE_ONE_FROM_CART, payload: id };
+
 export const clearCart = () => ({ type: CLEAR_CART });
 
 export const flushError = () => {
@@ -226,3 +235,13 @@ export const flushError = () => {
     });
   };
 };
+
+export const getSellsHistory = () => {
+  return async (dispatch) => {
+    const history = await axios.get("https://pf-cloth-2022.herokuapp.com/sellsHistory")
+    dispatch({
+      type: GET_SELLS_HISTORY,
+      payload: history.data
+    })
+  }
+}
