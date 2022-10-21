@@ -38,9 +38,9 @@ const ProductDetail = () => {
     alert("Producto eliminado de favoritos");
   };
 
-  const sizes = detail.variants.map( v => v.size).join(", ");
-  const colors = detail.variants.map( v => v.color).join(", ");
-  const stock = detail.variants.map( v => v.stock).reduce((a,b) => a + b);
+  const sizes = detail.variants?.map( v => v.size).join(", ");
+  const colors = detail.variants?.map( v => v.color).join(", ");
+  const stock = detail.variants?.map( v => v.stock).reduce((a,b) => a + b);
 
   return (
     <div className={Style.detailsContainer}>
