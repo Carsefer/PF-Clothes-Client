@@ -9,9 +9,6 @@ import {
   ORDER_PRODUCTS_BY_SCORE,
   FILTER_PRODUCTS,
   LOGIN_USER,
-  LOGIN,
-  LOGOUT,
-  LOGOUT_USER,
   CREATE_USER,
   CREATE_STORE,
   CREATE_PUBLICATION,
@@ -29,7 +26,7 @@ import {
 
 export const getProducts = () => {
   return async function (dispatch) {
-    const products = await axios.get("https://pf-cloth-2022.herokuapp.com/product/all");
+    const products = await axios.get("http://localhost:3001/product/all");
     dispatch({
       type: GET_PRODUCTS,
       payload: products.data,
@@ -39,7 +36,7 @@ export const getProducts = () => {
 
 export const getProductDetail = (id) => {
   return async function (dispatch) {
-    const detail = await axios.get(`https://pf-cloth-2022.herokuapp.com/product/${id}`);
+    const detail = await axios.get(`http://localhost:3001/product/${id}`);
     dispatch({
       type: GET_PRODUCT_DETAIL,
       payload: detail.data,
@@ -50,7 +47,7 @@ export const getProductDetail = (id) => {
 export const getProductDetailReviews = (id) => {
   return async function (dispatch) {
     const reviews = await axios.get(
-      `https://pf-cloth-2022.herokuapp.com/product/review/${id}`
+      `http://localhost:3001/product/review/${id}`
     );
     dispatch({
       type: GET_REVIEWS_PRODUCT_DETAIL,
@@ -68,7 +65,7 @@ export const emptyDetail = () => {
 export const searchProduct = (name) => {
   return async function (dispatch) {
     const json = await axios.get(
-      `https://pf-cloth-2022.herokuapp.com/product/?search=${name}`
+      `http://localhost:3001/product/?search=${name}`
     );
     dispatch({
       type: SEARCH_PRODUCT,
@@ -79,7 +76,7 @@ export const searchProduct = (name) => {
 
 export const getSizes = () => {
   return async function (dispatch) {
-    const sizes = await axios.get(`https://pf-cloth-2022.herokuapp.com/sizes`);
+    const sizes = await axios.get(`http://localhost:3001/sizes`);
     dispatch({
       type: GET_SIZES,
       payload: sizes.data,
@@ -115,7 +112,7 @@ export const filterProducts = (
 ) => {
   return async function (dispatch) {
     const filteredProducts = await axios.get(
-      `https://pf-cloth-2022.herokuapp.com/product/filter?name=${name}&price=${price}&size=${size}&demographic=${demographic}&color=${color}&page=${page}&sortBy=${sortBy}&orderBy=${orderBy}`
+      `http://localhost:3001/product/filter?name=${name}&price=${price}&size=${size}&demographic=${demographic}&color=${color}&page=${page}&sortBy=${sortBy}&orderBy=${orderBy}`
     );
     dispatch({
       type: FILTER_PRODUCTS,
@@ -126,42 +123,28 @@ export const filterProducts = (
 
 export const loginUser = (userInfo) => {
   return async function (dispatch) {
-    await axios.post("https://pf-cloth-2022.herokuapp.com/login", userInfo).then(
+    axios.post("http://localhost:3001/login", userInfo).then(
       function ({ data }) {
         dispatch({
           type: LOGIN_USER,
-          payload: data,
+          payload: null,
         });
-        dispatch({
-          type: LOGIN,
-          payload: true,
-        });
-        return Promise.resolve();
-    },
+        sessionStorage.setItem("sessionData", JSON.stringify(data));
+      },
       function (err) {
-        return Promise.reject();
+        dispatch({
+          type: LOGIN_USER,
+          payload: err.response.data,
+        });
       }
     );
-  };
-};
-
-export const loginOut = () => {
-  return async (dispatch) => {
-    dispatch({
-      type: LOGOUT,
-      payload: false,
-    });
-    dispatch({
-      type: LOGOUT_USER,
-      payload: {},
-    })
   };
 };
 
 export const createUser = (data) => {
   return async (dispatch) => {
     try {
-      const res = await axios.post(`https://pf-cloth-2022.herokuapp.com/user`, data);
+      const res = await axios.post(`http://localhost:3001/user`, data);
       return dispatch({
         type: CREATE_USER,
         payload: res.data,
@@ -174,7 +157,7 @@ export const createUser = (data) => {
 let id = "b181bed3-1e13-4ce0-ab57-95241b83a8dd";
 export const createStore = (data) => {
   return async (dispatch) => {
-    const res = await axios.put(`https://pf-cloth-2022.herokuapp.com/user/${id}`, data);
+    const res = await axios.put(`http://localhost:3001/user/${id}`, data);
     return dispatch({
       type: CREATE_STORE,
       payload: res.data,
@@ -243,7 +226,7 @@ export const flushError = () => {
 
 export const getSellsHistory = () => {
   return async (dispatch) => {
-    const history = await axios.get("https://pf-cloth-2022.herokuapp.com/sellsHistory")
+    const history = await axios.get("http://localhost:3001/sellsHistory")
     dispatch({
       type: GET_SELLS_HISTORY,
       payload: history.data

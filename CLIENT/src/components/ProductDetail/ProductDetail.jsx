@@ -11,7 +11,6 @@ import {
 } from "../../redux/actions";
 import Style from "./ProductDetail.module.css";
 import Comments from "../Comments/Comments";
-import CreateReview from "../CreateReview/CreateReview";
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
@@ -65,7 +64,6 @@ const ProductDetail = () => {
             <p>Quedan {detail.stock} unidades disponibles</p>
           </div>
           <div>
-            <CreateReview/>
             <h2>Reseñas</h2>
             {reviews.length ? (
               reviews.map((r) => (
@@ -84,3 +82,12 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
+
+/*
+{reviews.map((r) => (
+  <Comments 
+    score = {r.score}
+    review = {r.review}
+  />
+))}
+<Comments/>*/
