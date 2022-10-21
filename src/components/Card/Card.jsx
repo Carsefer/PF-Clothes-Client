@@ -5,12 +5,14 @@ import { addToFavorite, deleteToFavorites } from "../../redux/actions";
 import CardStyles from "./Card.module.css";
 
 const Card = ({ img, title, price, id, inFavorites }) => {
-
   const dispatch = useDispatch();
 
   return (
     <div className={CardStyles.CardProductHome}>
-      <Link className={CardStyles.CardProductHomeLink} to={`/Home/Product/${id}`}>
+      <Link
+        className={CardStyles.CardProductHomeLink}
+        to={`/Home/Product/${id}`}
+      >
         <div className={CardStyles.CardProductHomeLinkImgContainer}>
           <img
             className={CardStyles.CardProductHomeLinkProductImg}
