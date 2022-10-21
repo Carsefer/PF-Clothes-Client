@@ -6,8 +6,7 @@ import Logo from "../images/express-fashion-stores.svg";
 import Cart from "../images/cart.svg";
 import Star from "../images/icono-estrella.png";
 import Profile from "../images/profile.svg";
-const {getSession} = require('../../utils/getSession');
-
+import { getSession } from "../../utils/getSession";
 
 const NavBar = () => {
   const [user, setUser] = useState("");
@@ -32,7 +31,9 @@ const NavBar = () => {
   return (
     <nav className={Styles.NavbarHome}>
       <div className={Styles.NavbarHomeContainer}>
-        <Link to="/"><img className={Styles.NavbarHomeLogo} src={Logo} alt="logo" /></Link>
+        <Link to="/">
+          <img className={Styles.NavbarHomeLogo} src={Logo} alt="logo" />
+        </Link>
         <SearchBar />
 
         {/* si el usuario no esta logueado mostrar login y signup
