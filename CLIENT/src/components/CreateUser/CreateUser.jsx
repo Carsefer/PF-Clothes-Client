@@ -1,26 +1,91 @@
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createUser } from "../../redux/actions";
 import { Formik } from "formik";
 
 import { useNavigate, Link } from "react-router-dom";
-import "./CreateUser.css";
+import Styles from "./CreateUser.module.css";
 
 const CreateUser = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   return (
-    <div className="container">
-      <h1 className="subtitle ">Register User</h1>
+    <div className={Styles.container1}>
+      <h1 className={Styles.subtitle}>Registrar usuario</h1>
       <Formik
         initialValues={{
+          username: "",
           name: "",
           lastname: "",
-          email: "",
+          mail: "",
           password: "",
           passwords: "",
           phone: "",
+          storeName: null,
+          banner: null,
+          profilePicture: null,
+          location: null,
+        }}
+        validate={(value) => {
+          let errors = {};
+          if (!value.username.length) {
+            errors.username = "Ingrese nombre de usuario";
+          } else if (!value.name.length) {
+            errors.name = "Ingrese su nombre";
+          } else if (!value.lastname.length) {
+            errors.lastname = "Ingrese su apellido";
+          } else if (!value.password.length) {
+            errors.password = "Ingrese contraseña";
+          } else if (value.password !== value.passwords || !value.passwords) {
+            errors.passwords = "La contraseña no coincide, inténtalo de nuevo";
+          } else if (!/^\d[0-9,$]*$/.test(value.phone) || !value.phone) {
+            errors.phone = "Ingrese numero de telefono valido";
+          } else if (
+            !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(value.mail)
+          ) {
+            errors.mail = "Ingrese un correo valido";
+          }
+          return errors;
+        }}
+        onSubmit={(data, { resetForm }) => {
+          let {
+            username,
+            name,
+            lastname,
+            mail,
+            password,
+            phone,
+            storeName,
+            banner,
+            profilePicture,
+            location,
+          } = data;
+          name = `${name} ${lastname}`;
+          const a = {
+            username,
+            name,
+            mail,
+            password,
+            phone,
+            storeName,
+            banner,
+            profilePicture,
+            location,
+          };
+          console.log(a);
+
+          dispatch(createUser(a))
+            .then(function (res) {
+              console.log(res);
+              alert("Redireccionando..");
+            })
+            .catch(function (res) {
+              console.log(res);
+            });
+          setTimeout(() => {
+            resetForm();
+            navigate("/login");
+          }, 2000);
         }}
       >
         {({
@@ -31,80 +96,159 @@ const CreateUser = () => {
           handleChange,
           handleBlur,
         }) => (
-          <form className="form">
-            <div className="entry">
-              <div className="column">
+          <form className={Styles.form} onSubmit={handleSubmit}>
+            <div className={Styles.entry}>
+              <div className={Styles.column}>
+                <input
+                  type="text"
+                  id="username"
+                  placeholder="Nombre de usuario"
+                  name="username"
+                  className={Styles.form1}
+                  value={values.username}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  onKeyUp={handleBlur}
+                  required
+                  autoComplete="off"
+                />
+                {touched.username && errors.username && (
+                  <div className={Styles.error}>
+                    {" "}
+                    <span>{errors.username}</span>{" "}
+                  </div>
+                )}
                 <input
                   type="text"
                   id="name"
-                  placeholder="Name"
+                  placeholder="Nombre"
                   name="name"
-                  className="form1"
+                  className={Styles.form1}
                   value={values.name}
                   onChange={handleChange}
+                  onBlur={handleBlur}
+                  required
+                  autoComplete="off"
                 />
+                {touched.name && errors.name && (
+                  <div className={Styles.error}>
+                    {" "}
+                    <span>{errors.name}</span>{" "}
+                  </div>
+                )}
 
                 <input
                   type="text"
                   id="lastname"
-                  placeholder="Last Name"
+                  placeholder="Apellido"
                   name="lastname"
-                  className="form1"
+                  className={Styles.form1}
                   value={values.lastname}
                   onChange={handleChange}
+                  onBlur={handleBlur}
+                  onKeyUp={handleBlur}
+                  required
+                  autoComplete="off"
                 />
+                {touched.lastname && errors.lastname && (
+                  <div className={Styles.error}>
+                    {" "}
+                    <span>{errors.lastname}</span>{" "}
+                  </div>
+                )}
 
                 <input
                   type="email"
-                  id="email"
-                  placeholder="Email"
-                  name="email"
-                  className="form1"
-                  value={values.email}
+                  id="mail"
+                  placeholder="Correo electronico"
+                  name="mail"
+                  className={Styles.form1}
+                  value={values.mail}
                   onChange={handleChange}
+                  onBlur={handleBlur}
+                  onKeyUp={handleBlur}
+                  required
+                  autoComplete="off"
                 />
+                {touched.mail && errors.mail && (
+                  <div className={Styles.error}>
+                    {" "}
+                    <span>{errors.mail}</span>{" "}
+                  </div>
+                )}
                 <input
                   type="password"
                   id="password"
-                  placeholder="Password"
+                  placeholder="Contraseña"
                   name="password"
-                  className="form1"
+                  className={Styles.form1}
                   value={values.password}
                   onChange={handleChange}
+                  onBlur={handleBlur}
+                  onKeyUp={handleBlur}
+                  required
+                  autoComplete="off"
                 />
+                {touched.password && errors.password && (
+                  <div className={Styles.error}>
+                    {" "}
+                    <span>{errors.password}</span>{" "}
+                  </div>
+                )}
                 <input
                   type="password"
                   id="repassword"
-                  placeholder="Retype Password"
+                  placeholder="Ingresar contraseña nuevamente"
                   name="passwords"
-                  className="form1"
+                  className={Styles.form1}
                   value={values.passwords}
                   onChange={handleChange}
+                  onBlur={handleBlur}
+                  onKeyUp={handleBlur}
+                  required
+                  autoComplete="off"
                 />
+                {touched.passwords && errors.passwords && (
+                  <div className={Styles.error}>
+                    {" "}
+                    <span>{errors.passwords}</span>{" "}
+                  </div>
+                )}
                 <input
                   type="text"
                   id="phone"
-                  placeholder="Enter a number phone"
+                  placeholder="Ingrese un número de telefono"
                   name="phone"
-                  className="form1"
+                  className={Styles.form1}
                   value={values.phone}
                   onChange={handleChange}
+                  onBlur={handleBlur}
+                  onKeyUp={handleBlur}
+                  required
+                  autoComplete="off"
                 />
+                {touched.phone && errors.phone && (
+                  <div className={Styles.error}>
+                    {" "}
+                    <span>{errors.phone}</span>{" "}
+                  </div>
+                )}
                 <div>
                   {!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
-                    values.email
+                    values.mail
                   ) ||
                   !values.password ||
+                  !/^\d[0-9,$]*$/.test(values.phone) ||
                   values.passwords !== values.password ? (
                     <div>
-                      <button className="btnDisabled2" disabled>
-                        Sign up
+                      <button className={Styles.btnDisabled2} disabled>
+                        Registrar
                       </button>
                     </div>
                   ) : (
                     <div>
-                      <button type="submit" className="submit2">
-                        Sign up
+                      <button type="submit" className={Styles.submit2}>
+                        Registrar
                       </button>
                     </div>
                   )}
@@ -114,12 +258,11 @@ const CreateUser = () => {
           </form>
         )}
       </Formik>
-      <p className="footer">
-        Have an account ?{" "}
-        <Link className="lognin" to="/login">
-          Log in
+      <p className={Styles.footerUser}>
+        Ya tiene una cuenta?{" "}
+        <Link className={Styles.lognin} to="/login">
+          Iniciar sesion
         </Link>{" "}
-        instead.
       </p>
     </div>
   );
