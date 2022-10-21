@@ -9,7 +9,8 @@ import {
   ORDER_PRODUCTS_BY_SCORE,
   FILTER_PRODUCTS,
   LOGIN_USER,
-  LOGIN_ERROR,
+  LOGIN,
+  LOGOUT,
   CREATE_USER,
   CREATE_PUBLICATION,
   ADD_TO_FAVORITE,
@@ -128,14 +129,25 @@ export const loginUser = (userInfo) => {
           type: LOGIN_USER,
           payload: data,
         });
-      },
-      function (err) {
         dispatch({
-          type: LOGIN_ERROR,
-          payload: err.response.data,
+          type: LOGIN,
+          payload: true,
         });
+        return Promise.resolve();
+    },
+      function (err) {
+        return Promise.reject();
       }
     );
+  };
+};
+
+export const loginOut = () => {
+  return async (dispatch) => {
+    dispatch({
+      type: LOGOUT,
+      payload: false,
+    });
   };
 };
 

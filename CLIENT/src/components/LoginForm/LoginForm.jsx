@@ -8,18 +8,16 @@ import axios from "axios";
 
 const LoginForm = () => {
   const [showPwd, setShowPwd] = useState(false);
-  const loginError = useSelector(state => state.loginError)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogin = async (userInfo) => {
-    dispatch(loginUser(userInfo))
-    if(loginError===null) {
-      alert("Credenciales incorrectas");
-    } else  {
+    dispatch(loginUser(userInfo)).then(() => {
       alert("Credenciales correctas");
       navigate("/home");
-    }
+    }).catch(() => {
+      alert("Credenciales incorrectas");
+    })
   };
 
   return (

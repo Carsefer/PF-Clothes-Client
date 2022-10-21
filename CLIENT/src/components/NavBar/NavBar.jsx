@@ -1,4 +1,5 @@
 import { React,useEffect,useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom"
 import SearchBar from "../Searchbar/SearchBar";
 import Styles from "./NavBar.module.css"
@@ -9,8 +10,9 @@ import Cart from "../images/cart.svg"
 const getSession = async () => await JSON.parse(sessionStorage.getItem('sessionData'));
 
 const NavBar = () => {
-    const [user,setUser] = useState("");
-
+    const login = useSelector(state => state.login);
+    const user = useSelector(state => state.user);
+    /*
     useEffect(() => {  
         (async()=>{
             if(!user){
@@ -18,7 +20,7 @@ const NavBar = () => {
                 await setUser(data);
             }
         })() 
-    },[user])
+    },[user])*/
 
     
     const handleLogout = (e) => {
@@ -38,7 +40,7 @@ const NavBar = () => {
                 {/* si el usuario no esta logueado mostrar login y signup
                 en caso contrario mostrar el usuario logueado y boton de 
                 cerrar sesion */}
-               {!user ? 
+               {!login ? 
                 <div className={Styles.NavbarHomeFormsButtonsContainer}>
                 
                     <Link to="/login">

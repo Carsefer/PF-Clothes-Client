@@ -11,7 +11,8 @@ import {
   EMPTY_DETAIL,
   GET_FAVORITES,
   LOGIN_USER,
-  LOGIN_ERROR,
+  LOGIN,
+  LOGOUT,
   ADD_TO_CART,
   CLEAR_CART,
   REMOVE_ALL_FROM_CART,
@@ -28,7 +29,7 @@ const initialState = {
   sizes: [],
   productsStatus: "loading",
   favorites: [],
-  loginError: null,
+  login: false,
   cart: [],
   user: {}
 };
@@ -118,13 +119,17 @@ const rootReducer = (state = initialState, action) => {
     case LOGIN_USER:
       return {
         ...state,
-        loginError: null,
         user: action.payload,
       };
-    case LOGIN_ERROR:
+    case LOGIN:
       return {
         ...state,
-        loginError: action.payload,
+        login: action.payload,
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        login: action.payload,
       };
     case ADD_TO_CART: {
       let newItem = state.products.find(
