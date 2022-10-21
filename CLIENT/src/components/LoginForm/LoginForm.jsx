@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loginUser, flushError } from "../../redux/actions";
 import { Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,17 +12,12 @@ const LoginForm = () => {
   const navigate = useNavigate();
 
   const handleLogin = async (userInfo) => {
-    try {
-      const res = await axios.post(`http://localhost:3001/login`, userInfo);
-      sessionStorage.setItem("sessionData", JSON.stringify(res.data));
-      if (res.data) {
-        alert("Credenciales correctas");
-        navigate("/home");
-      }
-    } catch (err) {
-      console.log("incorrect");
+    dispatch(loginUser(userInfo)).then(() => {
+      alert("Credenciales correctas");
+      navigate("/home");
+    }).catch(() => {
       alert("Credenciales incorrectas");
-    }
+    })
   };
 
   return (
@@ -30,7 +25,7 @@ const LoginForm = () => {
       <div className={Styles.container}>
         <div className={Styles.header}></div>
         <div className={Styles.subtitle}>
-          <h2>Bienvenido devuelta.</h2>
+          <h2>Bienvenido</h2>
         </div>
         <Formik
           initialValues={{

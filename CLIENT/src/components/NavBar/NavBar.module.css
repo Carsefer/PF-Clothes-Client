@@ -25,6 +25,12 @@
   margin-top: 0px;
 }
 
+.StarIcon {
+  display: flex;
+  margin-top: 0px;
+  width: 30px;
+}
+
 .NavbarHomeFormsButtonsContainer {
   display: flex;
   flex-direction: row;

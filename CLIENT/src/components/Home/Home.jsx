@@ -220,7 +220,7 @@ export default function Home() {
             </select>
 
             <input
-              class={Styles.FilterProductsHomeSelect}
+              className={Styles.FilterProductsHomeSelect}
               id="text"
               type="text"
               value={name}
@@ -242,7 +242,7 @@ export default function Home() {
               <option value="DESC">Descendente</option>
             </select>
             <button
-              class={Styles.FilterProductsHomeSelect}
+              className={Styles.FilterProductsHomeSelect}
               onClick={(e) => {
                 handleClickShowAll(e);
               }}
@@ -269,7 +269,7 @@ export default function Home() {
             >
               {"Anterior"}
             </button>
-            <button class="paginated_num">{page / 10}</button>
+            <button className="paginated_num">{page / 10}</button>
             <button
               onClick={(e) => {
                 next(e);
