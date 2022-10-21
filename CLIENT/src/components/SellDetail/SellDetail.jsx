@@ -16,6 +16,13 @@ const SellDetail = () => {
 
     return (
         <div>
+            <img src={detail.image} alt="foto" />
+            <h1>{detail.name}</h1>
+            <h3>{detail.buyer}</h3>
+            <h3>{detail.location}</h3>
+            <p>Salida: {detail.sendedDate}</p>
+            <p>Entrega: {detail.receivedDate}</p>
+            <p>Reseña del comprador: {detail.review}</p>
             
         </div>
     );
