@@ -22,6 +22,7 @@ import {
   GET_REVIEWS_PRODUCT_DETAIL,
   FLUSH_ERROR,
   GET_SELLS_HISTORY,
+  GET_SELL_DETAIL
 } from "../action-types";
 
 export const getProducts = () => {
@@ -229,3 +230,13 @@ export const getSellsHistory = () => {
     });
   };
 };
+
+export const getSellDetail = (idSell) => {
+  return async (dispatch) => {
+    const sellDetail = await axios.get(`/sell/${idSell}`)
+    dispatch({
+      type: GET_SELL_DETAIL,
+      payload: sellDetail.data
+    })
+  }
+}

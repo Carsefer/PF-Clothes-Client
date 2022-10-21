@@ -19,7 +19,8 @@ import {
   REMOVE_ONE_FROM_CART,
   GET_REVIEWS_PRODUCT_DETAIL,
   FLUSH_ERROR,
-  GET_SELLS_HISTORY
+  GET_SELLS_HISTORY,
+  GET_SELL_DETAIL
 } from "../action-types";
 
 const initialState = {
@@ -32,7 +33,8 @@ const initialState = {
   favorites: [],
   loginError: null,
   cart: [],
-  sellsHistory: []
+  sellsHistory: [],
+  sellDetail: {}
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -194,6 +196,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         sellsHistory: action.payload
+      }
+    case GET_SELL_DETAIL:
+      return {
+        ...state,
+        sellDetail: action.payload
       }
     default:
       return state;
