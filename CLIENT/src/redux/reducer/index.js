@@ -15,6 +15,7 @@ import {
   LOGIN_USER,
   LOGIN,
   LOGOUT,
+  LOGOUT_USER,
   ADD_TO_CART,
   CLEAR_CART,
   REMOVE_ALL_FROM_CART,
@@ -136,6 +137,11 @@ const rootReducer = (state = initialState, action) => {
         favorites: delFav,
       };
     case LOGIN_USER:
+      return {
+        ...state,
+        user: action.payload,
+      };
+    case LOGOUT_USER:
       return {
         ...state,
         user: action.payload,

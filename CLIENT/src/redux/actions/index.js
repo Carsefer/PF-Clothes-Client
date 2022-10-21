@@ -11,6 +11,7 @@ import {
   LOGIN_USER,
   LOGIN,
   LOGOUT,
+  LOGOUT_USER,
   CREATE_USER,
   CREATE_STORE,
   CREATE_PUBLICATION,
@@ -150,6 +151,10 @@ export const loginOut = () => {
       type: LOGOUT,
       payload: false,
     });
+    dispatch({
+      type: LOGOUT_USER,
+      payload: {},
+    })
   };
 };
 

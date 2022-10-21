@@ -14,6 +14,7 @@ export const FILTER_PRODUCTS_BY_PRICE = "FILTER_PRODUCTS_BY_PRICE";
 export const LOGIN_USER = "LOGIN_USER";
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
+export const LOGOUT_USER = "LOGOUT_USER";
 export const CREATE_USER = "CREATER_USER";
 export const CREATE_PUBLICATION = "CREATE_PUBLICATION";
 export const SEARCH_PRODUCT = "SEARCH_PRODUCT";
