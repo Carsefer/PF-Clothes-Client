@@ -150,8 +150,7 @@ export const createUser = (data) => {
     }
   };
 };
-let id = "b181bed3-1e13-4ce0-ab57-95241b83a8dd";
-export const createStore = (data) => {
+export const createStore = (id, data) => {
   return async (dispatch) => {
     const res = await axios.put(`/user/${id}`, data);
     return dispatch({

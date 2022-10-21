@@ -1,13 +1,50 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { useDispatch } from "react-redux";
 import { createStore } from "../../redux/actions";
 import { Formik } from "formik";
 import { useNavigate, Link } from "react-router-dom";
 import Styles from "./CreateStore.module.css";
+const { getSession } = require("../../utils/getSession");
 
 const CreateStore = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [info, setInfo] = useState("");
+  const [us, setUs] = useState({});
 
+  const url = "http://localhost:3001/user/get";
+  useEffect(() => {
+    (async () => {
+      if (!info) {
+        const data = await getSession();
+        setInfo(data);
+      }
+
+      if (info) {
+        console.log("info before request", info);
+        await axios
+          .post(
+            url,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${info.token}`,
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res.data);
+            setUs(res.data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    })();
+  }, [info]);
+  console.log(us);
+  const id = us?.id;
   return (
     <div className={Styles.container1}>
       <h1 className={Styles.subtitle}>Crear una tienda</h1>
@@ -34,7 +71,7 @@ const CreateStore = () => {
           };
           console.log(a);
 
-          dispatch(createStore(a))
+          dispatch(createStore(id, a))
             .then(function (res) {
               console.log(res);
               alert("Exitoso");
