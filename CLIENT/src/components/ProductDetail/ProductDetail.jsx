@@ -38,6 +38,10 @@ const ProductDetail = () => {
     alert("Producto eliminado de favoritos");
   };
 
+  const sizes = detail.variants?.map( v => v.size).join(", ");
+  const colors = detail.variants?.map( v => v.color).join(", ");
+  const stock = detail.variants?.map( v => v.stock).reduce((a,b) => a + b);
+
   return (
     <div className={Style.detailsContainer}>
       <div className={Style.sectionDetails}>
@@ -50,18 +54,19 @@ const ProductDetail = () => {
         ) : (
           <button onClick={handleDelFav}>Eliminar de favoritos</button>
         )}
-        <h1 className={Style.detailsTitle}>{detail.name}</h1>
+        <br />
+        <h1 className={Style.detailsTitle}>{detail.name?.charAt(0).toUpperCase() + detail.name?.slice(1)}</h1>
         <div className={Style.article__details}>
           <div className={Style.articleDetailsImage}>
             <img src={detail.image} alt="img not found" />
           </div>
           <div className={Style.article_details_container}>
             <p>Precio: ${detail.price}</p>
-            <p>Talle: {detail.size}</p>
-            <p>Marca: {detail.brand}</p>
-            <p>Color: {detail.color}</p>
-            <p>Material: {detail.materials}</p>
-            <p>Quedan {detail.stock} unidades disponibles</p>
+            <p>Talles: {sizes}</p>
+            <p>Marca: {detail.brand?detail.brand:" - "}</p>
+            <p>Color: {colors}</p>
+            <p>Material: {detail.materials?detail.materials:" - "}</p>
+            <p>Quedan {stock} unidades disponibles</p>
           </div>
           <div>
             <h2>Reseñas</h2>

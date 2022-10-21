@@ -1,16 +1,16 @@
 import { React, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "../Searchbar/SearchBar";
 import Styles from "./NavBar.module.css";
 import Logo from "../images/express-fashion-stores.svg";
 import Cart from "../images/cart.svg";
 import Star from "../images/icono-estrella.png";
 import Profile from "../images/profile.svg";
-const {getSession} = require('../../utils/getSession');
-
+import { getSession } from "../../utils/getSession";
 
 const NavBar = () => {
   const [user, setUser] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -24,13 +24,16 @@ const NavBar = () => {
   const handleLogout = (e) => {
     setUser("");
     sessionStorage.removeItem("sessionData");
+    navigate("/home");
   };
 
   console.log(user);
   return (
     <nav className={Styles.NavbarHome}>
       <div className={Styles.NavbarHomeContainer}>
-        <img className={Styles.NavbarHomeLogo} src={Logo} alt="logo" />
+        <Link to="/">
+          <img className={Styles.NavbarHomeLogo} src={Logo} alt="logo" />
+        </Link>
         <SearchBar />
 
         {/* si el usuario no esta logueado mostrar login y signup

@@ -52,20 +52,6 @@ export default function Home() {
   const allProducts = useSelector((state) => state.products);
   const results = useSelector((state) => state.productsStatus);
 
-  //Paginado
-  // const [currentPage, setCurrentPage] = useState(1);
-  // //Acá se define la cantidad de productos que aparecerán por pantalla.
-  // const productsPerPage = 12;
-  // const indexOfLastproduct = currentPage * productsPerPage;
-  // const indexOfFirstproduct = indexOfLastproduct - productsPerPage;
-  // const currentProducts = allProducts.slice(
-  //   indexOfFirstproduct,
-  //   indexOfLastproduct
-  // );
-  // const paginado = (pageNum) => {
-  //   setCurrentPage(pageNum);
-  // };
-
   //SEARCH
   const filterByName = (e) => {
     e.preventDefault();
@@ -199,13 +185,13 @@ export default function Home() {
               value={demographic}
               onChange={(e) => filterByDemographic(e)}
             >
-              <option value="">Filtrar por Genero</option>
-              <option value="adult male">adult male</option>
-              <option value="adult female">adult female</option>
-              <option value="teen female">teen female</option>
-              <option value="teen male">teen male</option>
-              <option value="little boy">little boy</option>
-              <option value="little girl">little girl</option>
+              <option value="">Filtrar por Género</option>
+              <option value="adult male">Hombre</option>
+              <option value="adult female">Mujer</option>
+              <option value="teen male">Hombre adolescente</option>
+              <option value="teen female">Mujer adolescente</option>
+              <option value="little boy">Niño</option>
+              <option value="little girl">Niña</option>
             </select>
 
             <select
