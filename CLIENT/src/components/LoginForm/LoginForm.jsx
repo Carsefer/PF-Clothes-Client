@@ -26,6 +26,25 @@ const LoginForm = () => {
     }
   };
 
+  const redirectToGoogleSSO = async () => {
+    const googleLoginURL = "http://localhost:3001/login/google";
+    window.open(
+      googleLoginURL,
+      "_self",
+    );
+    //navigate("/home");
+  }
+
+  const fetchAuthUser = async () => {
+    const res = axios.get("http://localhost:3001/auth/user",{ withCredentials: true }).catch((err) => {
+      console.log("Not properly authenticated");
+    });
+
+    if(res && res.data){
+      console.log("User: ", res.data);
+    }
+  }
+
   return (
     <>
       <div className={Styles.container}>
@@ -163,7 +182,7 @@ const LoginForm = () => {
             </form>
           )}
         </Formik>
-        <GoogleButton/>
+        <GoogleButton onClick={redirectToGoogleSSO}/>
         <p className={Styles.LoginFormsFooter}>
           No tiene cuenta?{" "}
           <Link className={Styles.register} to="/register">

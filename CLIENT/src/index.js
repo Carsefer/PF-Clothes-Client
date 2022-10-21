@@ -7,13 +7,16 @@ import { BrowserRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Provider } from "react-redux";
 import store from "./redux/store/index";
+import Context from "./context/Session";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <Provider store={store}>
       <React.StrictMode>
-        <App />
+        <Context>
+          <App />
+        </Context>
       </React.StrictMode>
     </Provider>
   </BrowserRouter>
