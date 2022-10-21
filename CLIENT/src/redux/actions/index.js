@@ -26,7 +26,7 @@ import {
 
 export const getProducts = () => {
   return async function (dispatch) {
-    const products = await axios.get("http://localhost:3001/product/all");
+    const products = await axios.get("/product/all");
     dispatch({
       type: GET_PRODUCTS,
       payload: products.data,
@@ -36,7 +36,7 @@ export const getProducts = () => {
 
 export const getProductDetail = (id) => {
   return async function (dispatch) {
-    const detail = await axios.get(`http://localhost:3001/product/${id}`);
+    const detail = await axios.get(`/product/${id}`);
     dispatch({
       type: GET_PRODUCT_DETAIL,
       payload: detail.data,
@@ -46,9 +46,7 @@ export const getProductDetail = (id) => {
 
 export const getProductDetailReviews = (id) => {
   return async function (dispatch) {
-    const reviews = await axios.get(
-      `http://localhost:3001/product/review/${id}`
-    );
+    const reviews = await axios.get(`/product/review/${id}`);
     dispatch({
       type: GET_REVIEWS_PRODUCT_DETAIL,
       payload: reviews.data,
@@ -64,9 +62,7 @@ export const emptyDetail = () => {
 
 export const searchProduct = (name) => {
   return async function (dispatch) {
-    const json = await axios.get(
-      `http://localhost:3001/product/?search=${name}`
-    );
+    const json = await axios.get(`/product/?search=${name}`);
     dispatch({
       type: SEARCH_PRODUCT,
       payload: json.data,
@@ -76,7 +72,7 @@ export const searchProduct = (name) => {
 
 export const getSizes = () => {
   return async function (dispatch) {
-    const sizes = await axios.get(`http://localhost:3001/sizes`);
+    const sizes = await axios.get(`/sizes`);
     dispatch({
       type: GET_SIZES,
       payload: sizes.data,
@@ -112,7 +108,7 @@ export const filterProducts = (
 ) => {
   return async function (dispatch) {
     const filteredProducts = await axios.get(
-      `http://localhost:3001/product/filter?name=${name}&price=${price}&size=${size}&demographic=${demographic}&color=${color}&page=${page}&sortBy=${sortBy}&orderBy=${orderBy}`
+      `/product/filter?name=${name}&price=${price}&size=${size}&demographic=${demographic}&color=${color}&page=${page}&sortBy=${sortBy}&orderBy=${orderBy}`
     );
     dispatch({
       type: FILTER_PRODUCTS,
@@ -123,7 +119,7 @@ export const filterProducts = (
 
 export const loginUser = (userInfo) => {
   return async function (dispatch) {
-    axios.post("http://localhost:3001/login", userInfo).then(
+    axios.post("/login", userInfo).then(
       function ({ data }) {
         dispatch({
           type: LOGIN_USER,
@@ -144,20 +140,20 @@ export const loginUser = (userInfo) => {
 export const createUser = (data) => {
   return async (dispatch) => {
     try {
-      const res = await axios.post(`http://localhost:3001/user`, data);
+      const res = await axios.post(`/user`, data);
       return dispatch({
         type: CREATE_USER,
         payload: res.data,
-      }); 
+      });
     } catch (error) {
-      alert(error)
+      alert(error);
     }
   };
 };
 let id = "b181bed3-1e13-4ce0-ab57-95241b83a8dd";
 export const createStore = (data) => {
   return async (dispatch) => {
-    const res = await axios.put(`http://localhost:3001/user/${id}`, data);
+    const res = await axios.put(`/user/${id}`, data);
     return dispatch({
       type: CREATE_STORE,
       payload: res.data,
@@ -197,7 +193,7 @@ export const deleteFavorite = (id) => {
 
 /* export const filterProductsByMark = (mark) => {
     return async function (dispatch) {
-        const filteredProductsByMark = await axios.get("http://localhost:3001/productMarks" + mark)
+        const filteredProductsByMark = await axios.get("/productMarks" + mark)
         dispatch({
             type: FILTER_PRODUCTS_BY_MARK,
             payload: filteredProductsByMark.data
@@ -226,10 +222,10 @@ export const flushError = () => {
 
 export const getSellsHistory = () => {
   return async (dispatch) => {
-    const history = await axios.get("http://localhost:3001/sellsHistory")
+    const history = await axios.get("/sellsHistory");
     dispatch({
       type: GET_SELLS_HISTORY,
-      payload: history.data
-    })
-  }
-}
+      payload: history.data,
+    });
+  };
+};
