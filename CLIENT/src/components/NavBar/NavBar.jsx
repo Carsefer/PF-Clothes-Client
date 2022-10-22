@@ -4,7 +4,7 @@ import SearchBar from "../Searchbar/SearchBar";
 import Styles from "./NavBar.module.css";
 import Logo from "../images/express-fashion-stores.svg";
 import Cart from "../images/cart.svg";
-import Star from "../images/icono-estrella.png";
+import ButtonFav from "../images/buttonFavNav.svg"
 import Profile from "../images/profile.svg";
 import { getSession } from "../../utils/getSession";
 
@@ -56,16 +56,16 @@ const NavBar = () => {
               <img className={Styles.CartIcon} src={Cart}></img>
             </Link>
             <Link to="/home/Favorites">
-              <img className={Styles.CartIcon} src={Star} />
+              <img className={Styles.FavIcon} src={ButtonFav} />
             </Link>
             <Link to="/home/profile">
-              <img className="" src={Profile}></img>
+              <img className={Styles.ProfileFav} src={Profile}></img>
             </Link>
             <div>
               {/* username */}
-              <p>{user.username}</p>
+              <p >{user.username}</p>
               <button
-                className="NavbarHomeButtons"
+                className={Styles.NavbarHomeButtons2}
                 onClick={(e) => {
                   handleLogout(e);
                 }}
