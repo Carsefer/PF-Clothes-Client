@@ -34,13 +34,15 @@ const NavBar = () => {
         const data = await getSession();
         setUser(data);  
       }*/
+
       
-      await handleSession(getSession,userObject,user,setUser);
 
     })();
-  }, []);
+    console.log("userObject",userObject);
+    setUser(userObject);
+  }, [user]);
 
-  console.log(userObject);
+  
 
   const handleLogout = (e) => {
 
