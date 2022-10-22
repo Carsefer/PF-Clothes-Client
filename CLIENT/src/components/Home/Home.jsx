@@ -8,10 +8,11 @@ import { AppContext } from "../../context/AppContext";
 import Card from "../Card/Card";
 import NavBar from "../NavBar/NavBar";
 //import Orders from "../Orders/Orders";
+import { session } from "../../context/Session";
 
 export default function Home() {
   const dispatch = useDispatch();
-
+  const context = useContext(session);
   const {
     setPrice,
     setSize,
@@ -161,6 +162,7 @@ export default function Home() {
   return (
     <div className={Styles.Home}>
       <NavBar />
+      <h1>{context ? context.username : "nobody"}</h1>
       <div className={Styles.ProductsHomeContainer}>
         <div className={Styles.ProductsHome}>
           <div className={Styles.FilterProductsHome}>

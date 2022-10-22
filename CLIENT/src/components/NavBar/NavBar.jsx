@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState,useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "../Searchbar/SearchBar";
 import Styles from "./NavBar.module.css";
@@ -7,24 +7,44 @@ import Cart from "../images/cart.svg";
 import Star from "../images/icono-estrella.png";
 import Profile from "../images/profile.svg";
 import { getSession } from "../../utils/getSession";
+import axios from "axios";
+import { session } from "../../context/Session";
 
 const NavBar = () => {
   const [user, setUser] = useState("");
   const navigate = useNavigate();
 
+  const userObject = useContext(session);
+
   useEffect(() => {
     (async () => {
-      if (!user) {
-        const data = await getSession();
-        await setUser(data);
+      if(!user && userObject){
+        setUser(userObject);
       }
+
+      if (!user && !userObject) {
+        const data = await getSession();
+        setUser(data);  
+      }
+
     })();
   }, [user]);
 
+  console.log(userObject);
+
   const handleLogout = (e) => {
+
+    /* jwt session
     setUser("");
     sessionStorage.removeItem("sessionData");
     navigate("/home");
+    */
+
+    axios.get("http://localhost:3001/auth/logout",{withCredentials:true}).then(res => {
+      if(res.data === "done"){
+        window.location.href = "/"
+      }
+    })
   };
 
   console.log(user);
