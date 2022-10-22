@@ -228,7 +228,7 @@ export default function Home() {
               onChange={(e) => filterByName(e)}
             />
             {/* <Orders setOrder={setOrder} /> */}
-            <b> Order by:</b>
+            <b> ORDENAR POR:</b>
             <select name="sort" value={sortBy} onChange={(e) => changeSort(e)}>
               <option value="name">Nombre</option>
               <option value="price">Precio</option>
