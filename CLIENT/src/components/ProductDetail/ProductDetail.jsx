@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { FaCartPlus } from "react-icons/fa";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
@@ -13,6 +12,9 @@ import {
 import Style from "./ProductDetail.module.css";
 import Comments from "../Comments/Comments";
 import { getSession } from "../../utils/getSession";
+import buttonCart from "../images/cart.svg"
+import buttonFav from "../images/buttonFav.svg"
+import buttonDeleteFav from "../images/buttonDeleteFav.svg"
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
@@ -81,14 +83,13 @@ const ProductDetail = () => {
   return (
     <div className={Style.detailsContainer}>
       <div className={Style.sectionDetails}>
-        <button onClick={() => handleAddCart()}>
-          <FaCartPlus />
-          Agregar
+        <button className={Style.buttonCartDetail} onClick={() => handleAddCart()}>
+        <img src={buttonCart}></img>
         </button>
         {!favorites.find((f) => f.id === id) ? (
-          <button onClick={handleFav}>Agregar a favoritos</button>
+          <button className={Style.buttonfavDetail} onClick={handleFav}><img src={buttonFav}></img></button>
         ) : (
-          <button onClick={handleDelFav}>Eliminar de favoritos</button>
+          <button className={Style.buttonDeletefavDetail} onClick={handleDelFav}><img src={buttonDeleteFav}></img></button>
         )}
         <br />
         <h1 className={Style.detailsTitle}>
@@ -114,7 +115,7 @@ const ProductDetail = () => {
               ))
             ) : (
               <div>
-                <p>No hay reseñas</p>
+                <a>No hay reseñas</a>
               </div>
             )}
           </div>
