@@ -209,7 +209,7 @@ export const addToCart = (id, profileId) => {
       `/user/shoppingcart?productID=${id}&profileID=${profileId}`
     );
     return dispatch({
-      type: CREATE_STORE,
+      type: ADD_TO_CART,
       payload: res,
     });
   };
