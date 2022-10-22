@@ -178,10 +178,15 @@ export const getFavorites = () => {
   };
 };
 
-export const addToFavorites = (id) => {
-  return {
-    type: ADD_TO_FAVORITES,
-    payload: id,
+export const addToFavorites = (id, profileId) => {
+  return async (dispatch) => {
+    const res = await axios.put(
+      `/user/favorites?productID=${id}&profileID=${profileId}`
+    );
+    return dispatch ({
+      type: ADD_TO_FAVORITES,
+      payload: res,
+    });
   };
 };
 
@@ -192,28 +197,18 @@ export const deleteFavorite = (id) => {
   };
 };
 
-/* export const filterProductsByMark = (mark) => {
-    return async function (dispatch) {
-        const filteredProductsByMark = await axios.get("/productMarks" + mark)
-        dispatch({
-            type: FILTER_PRODUCTS_BY_MARK,
-            payload: filteredProductsByMark.data
-        })
-    }
-}
-*/
-
 export const addToCart = (id, profileId) => {
   return async (dispatch) => {
     const res = await axios.put(
       `/user/shoppingcart?productID=${id}&profileID=${profileId}`
     );
     return dispatch({
-      type: CREATE_STORE,
+      type: ADD_TO_CART,
       payload: res,
     });
   };
 };
+
 export const getCartProducts = (id) => {
   return async (dispatch) => {
     const res = await axios.get(`/user/shoppingcart?profileID=${id}`);

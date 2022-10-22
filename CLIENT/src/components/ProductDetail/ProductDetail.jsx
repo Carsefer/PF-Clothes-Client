@@ -63,7 +63,7 @@ const ProductDetail = () => {
   console.log(reviews);
 
   const handleFav = () => {
-    dispatch(addToFavorites(id));
+    dispatch(addToFavorites(id, profileId));
     alert("Producto agregado a favoritos!");
   };
   const handleDelFav = () => {
@@ -72,7 +72,7 @@ const ProductDetail = () => {
   };
   const handleAddCart = () => {
     dispatch(addToCart(id, profileId));
-    alert("Producto agregado");
+    alert("Producto agregado al carrito!");
   };
   const sizes = detail.variants?.map((v) => v.size).join(", ");
   const colors = detail.variants?.map((v) => v.color).join(", ");
