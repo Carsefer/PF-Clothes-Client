@@ -7,6 +7,7 @@ import {
   ORDER_PRODUCTS_BY_SCORE,
   FILTER_PRODUCTS,
   CREATE_USER,
+  GET_PRODUCTS_CART,
   CREATE_PUBLICATION,
   EMPTY_DETAIL,
   GET_FAVORITES,
@@ -20,7 +21,7 @@ import {
   GET_REVIEWS_PRODUCT_DETAIL,
   FLUSH_ERROR,
   GET_SELLS_HISTORY,
-  GET_SELL_DETAIL
+  GET_SELL_DETAIL,
 } from "../action-types";
 
 const initialState = {
@@ -34,7 +35,7 @@ const initialState = {
   loginError: null,
   cart: [],
   sellsHistory: [],
-  sellDetail: {}
+  sellDetail: {},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -195,13 +196,18 @@ const rootReducer = (state = initialState, action) => {
     case GET_SELLS_HISTORY:
       return {
         ...state,
-        sellsHistory: action.payload
-      }
+        sellsHistory: action.payload,
+      };
+    case GET_PRODUCTS_CART:
+      return {
+        ...state,
+        cart: action.payload,
+      };
     case GET_SELL_DETAIL:
       return {
         ...state,
-        sellDetail: action.payload
-      }
+        sellDetail: action.payload,
+      };
     default:
       return state;
   }

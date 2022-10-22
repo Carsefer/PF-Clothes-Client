@@ -1,13 +1,55 @@
 import { useSelector, useDispatch } from "react-redux";
-import { addToCart, clearCart, delFromCart } from "../../redux/actions";
+import {
+  getCartProducts,
+  clearCart,
+  delFromCart,
+  delProductCart,
+} from "../../redux/actions";
+import axios from "axios";
+import { useState, useEffect } from "react";
 import CartItem from "../CartItem/CartItem";
+import { getSession } from "../../utils/getSession";
 
 const ShoppingCart = () => {
-  const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const detail = useSelector((state) => state.productDetail);
+  const [info, setInfo] = useState("");
+  const [us, setUs] = useState({});
 
-  const { products, cart } = state;
+  const url = "http://localhost:3001/user/get";
+  useEffect(() => {
+    (async () => {
+      if (!info) {
+        const data = await getSession();
+        setInfo(data);
+      }
+
+      if (info) {
+        console.log("info before request", info);
+        await axios
+          .post(
+            url,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${info.token}`,
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res.data);
+            setUs(res.data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    })();
+    const id = us.id;
+    dispatch(getCartProducts(id));
+  }, [info, dispatch, us.id]);
+  console.log(us);
+  const cartList = useSelector((state) => state.cart);
+  console.log(cartList);
 
   return (
     <div>
@@ -17,12 +59,19 @@ const ShoppingCart = () => {
       <article className="box">
         <button onClick={() => dispatch(clearCart())}>Limpiar Carrito</button>
 
-        {cart.map((item, index) => (
+        {cartList?.map((e) => (
           <CartItem
-            key={index}
-            data={item}
-            delOneFromCart={() => dispatch(delFromCart(item.id))}
-            delAllFromCart={() => dispatch(delFromCart(item.id, true))}
+            key={e?.id + 1}
+            name={e.name}
+            price={e.price}
+            quantity="1"
+            image={e.image}
+            delOneFromCart={() =>
+              dispatch(delProductCart(e.id, us.id)).then(
+                dispatch(delFromCart(e.id))
+              )
+            }
+            delAllFromCart={() => dispatch(delFromCart(e.id, true))}
           />
         ))}
       </article>
