@@ -14,7 +14,7 @@ export default function Context(props){
                 setUserObject(res.data);
             }
         },(err) => {
-            console.log(err);
+            console.log("no google user data");
         }) 
     },[])
     return(

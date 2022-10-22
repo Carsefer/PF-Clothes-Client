@@ -6,9 +6,17 @@ import Logo from "../images/express-fashion-stores.svg";
 import Cart from "../images/cart.svg";
 import Star from "../images/icono-estrella.png";
 import Profile from "../images/profile.svg";
-import { getSession } from "../../utils/getSession";
+import { getSession } from "../../sessionUtils/jwtSession";
 import axios from "axios";
 import { session } from "../../context/Session";
+
+const handleSession = async (jwt,google,user,cb) => {
+  if(google){
+    cb(google);
+  }else if(await jwt()){
+    cb(jwt);
+  }
+}
 
 const NavBar = () => {
   const [user, setUser] = useState("");
@@ -18,33 +26,35 @@ const NavBar = () => {
 
   useEffect(() => {
     (async () => {
-      if(!user && userObject){
+      /*if(!user && userObject){
         setUser(userObject);
       }
 
       if (!user && !userObject) {
         const data = await getSession();
         setUser(data);  
-      }
+      }*/
+      
+      await handleSession(getSession,userObject,user,setUser);
 
     })();
-  }, [user]);
+  }, []);
 
   console.log(userObject);
 
   const handleLogout = (e) => {
 
-    /* jwt session
     setUser("");
     sessionStorage.removeItem("sessionData");
-    navigate("/home");
-    */
+    
 
     axios.get("http://localhost:3001/auth/logout",{withCredentials:true}).then(res => {
       if(res.data === "done"){
         window.location.href = "/"
       }
     })
+
+    navigate("/");
   };
 
   console.log(user);
