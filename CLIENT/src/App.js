@@ -8,6 +8,7 @@ import Login from "./components/Login/Login";
 import ProductDetail from "./components/ProductDetail/ProductDetail";
 import Profile from "./components/Profile/Profile";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
+import Stadistics from "./components/Stadistics/Stadistics"
 import { AppProvider } from "./context/AppContext";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/home/createStore" element={<CreateStore />} />
         <Route path="/home/product/:id" element={<ProductDetail />} />
         <Route path="/home/profile" element={<Profile />} />
+        <Route path="/home/stadistics" element={<Stadistics />} />
         <Route exact path="/home/ShoppingCart" element={<ShoppingCart />} />
         <Route path="/home/Favorites" element={<Favorites />} />
       </Routes>

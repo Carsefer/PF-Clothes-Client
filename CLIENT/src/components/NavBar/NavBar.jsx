@@ -61,6 +61,9 @@ const NavBar = () => {
             <Link to="/home/profile">
               <img className={Styles.ProfileFav} src={Profile}></img>
             </Link>
+            <Link to="/home/stadistics">
+              <p>Estadísticas</p>
+            </Link>
             <div>
               {/* username */}
               <p>{user.username}</p>
