@@ -12,9 +12,9 @@ import {
 import Style from "./ProductDetail.module.css";
 import Comments from "../Comments/Comments";
 import { getSession } from "../../utils/getSession";
-import buttonCart from "../images/cart.svg"
-import buttonFav from "../images/buttonFav.svg"
-import buttonDeleteFav from "../images/buttonDeleteFav.svg"
+import buttonCart from "../images/cart.svg";
+import buttonFav from "../images/buttonFav.svg";
+import buttonDeleteFav from "../images/buttonDeleteFav.svg";
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
@@ -83,13 +83,26 @@ const ProductDetail = () => {
   return (
     <div className={Style.detailsContainer}>
       <div className={Style.sectionDetails}>
-        <button className={Style.buttonCartDetail} onClick={() => handleAddCart()}>
-        <img src={buttonCart}></img>
+        <button className={Style.backButton} onClick={() => navigate("/home")}>
+          Atrás
+        </button>
+        <button
+          className={Style.buttonCartDetail}
+          onClick={() => handleAddCart()}
+        >
+          <img src={buttonCart} alt="cart-button"></img>
         </button>
         {!favorites.find((f) => f.id === id) ? (
-          <button className={Style.buttonfavDetail} onClick={handleFav}><img src={buttonFav}></img></button>
+          <button className={Style.buttonfavDetail} onClick={handleFav}>
+            <img src={buttonFav}></img>
+          </button>
         ) : (
-          <button className={Style.buttonDeletefavDetail} onClick={handleDelFav}><img src={buttonDeleteFav}></img></button>
+          <button
+            className={Style.buttonDeletefavDetail}
+            onClick={handleDelFav}
+          >
+            <img src={buttonDeleteFav}></img>
+          </button>
         )}
         <br />
         <h1 className={Style.detailsTitle}>
