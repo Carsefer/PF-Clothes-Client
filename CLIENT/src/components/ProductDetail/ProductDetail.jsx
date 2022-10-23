@@ -129,7 +129,11 @@ const ProductDetail = () => {
               value={filterBySize}
               onChange={(e) => handleSize(e)}
             >
-              <option value="">Todos</option>
+              {[...new Set(detail.variants?.map((e) => e.size))].length > 1 ? (
+                <option value="">Todos</option>
+              ) : (
+                <p></p>
+              )}
               {[...new Set(detail.variants?.map((e) => e.size))]?.map((el) => {
                 return <option value={el}>{el}</option>;
               })}
@@ -140,7 +144,11 @@ const ProductDetail = () => {
               value={filterByColor}
               onChange={(e) => handleColor(e)}
             >
-              <option value="">Todos</option>
+              {[...new Set(detail.variants?.map((e) => e.color))].length > 1 ? (
+                <option value="">Todos</option>
+              ) : (
+                <p></p>
+              )}
               {[...new Set(detail.variants?.map((e) => e.color))]?.map((el) => {
                 return <option value={el}>{el}</option>;
               })}
