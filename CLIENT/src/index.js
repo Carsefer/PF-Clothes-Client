@@ -8,7 +8,6 @@ import { BrowserRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Provider } from "react-redux";
 import store from "./redux/store/index";
-import Context from "./context/Session";
 
 axios.defaults.baseURL = process.env.REACT_APP_API || "http://localhost:3001";
 
@@ -17,9 +16,7 @@ root.render(
   <BrowserRouter>
     <Provider store={store}>
       <React.StrictMode>
-        <Context>
           <App />
-        </Context>
       </React.StrictMode>
     </Provider>
   </BrowserRouter>

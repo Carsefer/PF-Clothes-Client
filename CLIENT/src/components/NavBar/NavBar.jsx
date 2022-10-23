@@ -7,31 +7,14 @@ import Cart from "../images/cart.svg";
 import Star from "../images/icono-estrella.png";
 import Profile from "../images/profile.svg";
 import { getSession } from "../../sessionUtils/jwtSession";
-import {QueryClient,useQuery} from '@tanstack/react-query';
 
 
 const NavBar = () => {
   const [user, setUser] = useState("");
   const navigate = useNavigate();
 
-  const {isError,isSuccess,isLoading,data,error} = useQuery(
-    ["NavBar"],
-    getSession,
-  );
-
-  if (isLoading) {
-    console.log("Loading...");
-    return <div>Loading...</div>;
-  }
-
-  if (isError) {
-    console.log("Error: ", error);
-    return <div>Error...</div>;
-  }
-
-
-  /*useEffect(() => {
-    /*(async () => {
+  useEffect(() => {
+    (async () => {
 
       if (!user) {
         const data = await getSession();
@@ -43,10 +26,8 @@ const NavBar = () => {
 
     })();
 
-  }, [user])*/
-
-  //window.location.reload();  
-
+  }, [user])
+ 
   const handleLogout = (e) => {
 
     setUser("");
@@ -54,7 +35,6 @@ const NavBar = () => {
     navigate("/");
   };
 
-  console.log(user);
   return (
     <nav className={Styles.NavbarHome}>
       <div className={Styles.NavbarHomeContainer}>
@@ -66,7 +46,7 @@ const NavBar = () => {
         {/* si el usuario no esta logueado mostrar login y signup
                 en caso contrario mostrar el usuario logueado y boton de 
             cerrar sesion */}
-        {!data  ? (
+        {!user  ? (
           <div className={Styles.NavbarHomeFormsButtonsContainer}>
             <Link to="/login">
               <button className={Styles.NavbarHomeButtons}>
@@ -90,7 +70,7 @@ const NavBar = () => {
             </Link>
             <div>
               {/* username */}
-              <p>{data.username}</p>
+              <p>{user.username}</p>
               <button
                 className="NavbarHomeButtons"
                 onClick={(e) => {
