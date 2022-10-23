@@ -103,3 +103,11 @@
   display: flex;
   font-size: 20px;
 }
+
+.FilterProductsSelect {
+  height: 100%;
+  margin-left: 2%;
+  background-color: white;
+  border: 1px solid #31b189;
+  border-radius: 5px;
+}

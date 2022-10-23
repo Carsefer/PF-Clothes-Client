@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "../../context/AppContext";
 import {
   getProductDetail,
   addToCart,
@@ -27,8 +29,8 @@ const ProductDetail = () => {
 
   const [info, setInfo] = useState("");
   const [us, setUs] = useState({});
-  const [filterBySize, setFilterBySize] = useState("");
-  const [filterByColor, setFilterByColor] = useState("");
+  const { setFilterBySize, setFilterByColor, filterBySize, filterByColor } =
+    useContext(AppContext);
 
   const url = "http://localhost:3001/user/get";
   useEffect(() => {
@@ -126,74 +128,83 @@ const ProductDetail = () => {
           </div>
           <div className={Style.article_details_container}>
             <p>Precio: ${detail.price}</p>
-            <p>Seleccionar Talle:</p>
-            <select
-              class=""
-              value={filterBySize}
-              onChange={(e) => handleSize(e)}
-            >
-              {[...new Set(detail.variants?.map((e) => e.size))].length > 1 ? (
-                <option value="">Todos</option>
-              ) : (
-                <p></p>
-              )}
-              {[...new Set(detail.variants?.map((e) => e.size))]?.map((el) => {
-                return <option value={el}>{el}</option>;
-              })}
-            </select>
-            <p>Seleccionar Color:</p>
-            <select
-              class=""
-              value={filterByColor}
-              onChange={(e) => handleColor(e)}
-            >
-              {[...new Set(detail.variants?.map((e) => e.color))].length > 1 ? (
-                <option value="">Todos</option>
-              ) : (
-                <p></p>
-              )}
-              {[...new Set(detail.variants?.map((e) => e.color))]?.map((el) => {
-                return <option value={el}>{el}</option>;
-              })}
-            </select>
+            <p>
+              Seleccionar Talle:
+              <select
+                className={Style.FilterProductsSelect}
+                value={filterBySize}
+                onChange={(e) => handleSize(e)}
+              >
+                {[...new Set(detail.variants?.map((e) => e.size))].length >
+                1 ? (
+                  <option value="">Todos</option>
+                ) : (
+                  <p></p>
+                )}
+                {[...new Set(detail.variants?.map((e) => e.size))]?.map(
+                  (el) => {
+                    return <option value={el}>{el}</option>;
+                  }
+                )}
+              </select>
+            </p>
+            <p>
+              Seleccionar Color:
+              <select
+                className={Style.FilterProductsSelect}
+                value={filterByColor}
+                onChange={(e) => handleColor(e)}
+              >
+                {[...new Set(detail.variants?.map((e) => e.color))].length >
+                1 ? (
+                  <option value="">Todos</option>
+                ) : (
+                  <p></p>
+                )}
+                {[...new Set(detail.variants?.map((e) => e.color))]?.map(
+                  (el) => {
+                    return <option value={el}>{el}</option>;
+                  }
+                )}
+              </select>
+            </p>
             {detail.brand ? <p>Marca: {detail.brand}</p> : <p></p>}
             {detail.materials ? <p>Material: {detail.materials}</p> : <p></p>}
-            {filterByColor && filterBySize ? (
-              <p>
-                Quedan{" "}
-                {detail.variants
-                  ?.map(
-                    (v) =>
-                      v.size === filterBySize &&
-                      v.color === filterByColor &&
-                      v.stock
-                  )
-                  .reduce((a, b) => a + b)}{" "}
-                unidades
-              </p>
-            ) : filterBySize ? (
-              <p>
-                Quedan{" "}
-                {detail.variants
-                  ?.map((v) => v.size === filterBySize && v.stock)
-                  .reduce((a, b) => a + b)}{" "}
-                unidades
-              </p>
-            ) : filterByColor ? (
-              <p>
-                Quedan{" "}
-                {detail.variants
-                  ?.map((v) => v.color === filterByColor && v.stock)
-                  .reduce((a, b) => a + b)}{" "}
-                unidades
-              </p>
-            ) : (
-              <p>
-                Quedan{" "}
-                {detail.variants?.map((v) => v.stock).reduce((a, b) => a + b)}{" "}
-                unidades
-              </p>
-            )}
+            <p>
+              Stock:
+              {filterByColor && filterBySize ? (
+                <p>
+                  {detail.variants
+                    ?.map(
+                      (v) =>
+                        v.size === filterBySize &&
+                        v.color === filterByColor &&
+                        v.stock
+                    )
+                    .reduce((a, b) => a + b)}{" "}
+                  unidades
+                </p>
+              ) : filterBySize ? (
+                <p>
+                  {detail.variants
+                    ?.map((v) => v.size === filterBySize && v.stock)
+                    .reduce((a, b) => a + b)}{" "}
+                  unidades
+                </p>
+              ) : filterByColor ? (
+                <p>
+                  {detail.variants
+                    ?.map((v) => v.color === filterByColor && v.stock)
+                    .reduce((a, b) => a + b)}{" "}
+                  unidades
+                </p>
+              ) : (
+                <p>
+                  {detail.variants?.map((v) => v.stock).reduce((a, b) => a + b)}{" "}
+                  unidades
+                </p>
+              )}
+            </p>
           </div>
           <div>
             <h2>Reseñas</h2>
