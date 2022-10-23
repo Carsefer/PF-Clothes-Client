@@ -12,16 +12,23 @@ import {
 import Style from "./ProductDetail.module.css";
 import Comments from "../Comments/Comments";
 import { getSession } from "../../utils/getSession";
-import buttonCart from "../images/cart.svg"
-import buttonFav from "../images/buttonFav.svg"
-import buttonDeleteFav from "../images/buttonDeleteFav.svg"
+import buttonCart from "../images/cart.svg";
+import buttonFav from "../images/buttonFav.svg";
+import buttonDeleteFav from "../images/buttonDeleteFav.svg";
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const detail = useSelector((state) => state.productDetail);
+  const reviews = useSelector((state) => state.productReviews);
+  const favorites = useSelector((state) => state.favorites);
+
   const [info, setInfo] = useState("");
   const [us, setUs] = useState({});
+  const [filterBySize, setFilterBySize] = useState("");
+  const [filterByColor, setFilterByColor] = useState("");
 
   const url = "http://localhost:3001/user/get";
   useEffect(() => {
@@ -57,10 +64,6 @@ const ProductDetail = () => {
   }, [info, dispatch, id]);
   const profileId = us.id;
 
-  const detail = useSelector((state) => state.productDetail);
-  const reviews = useSelector((state) => state.productReviews);
-  const favorites = useSelector((state) => state.favorites);
-
   console.log("hola");
   console.log(reviews);
 
@@ -76,20 +79,39 @@ const ProductDetail = () => {
     dispatch(addToCart(id, profileId));
     alert("Producto agregado");
   };
-  const sizes = detail.variants?.map((v) => v.size).join(", ");
-  const colors = detail.variants?.map((v) => v.color).join(", ");
-  const stock = detail.variants?.map((v) => v.stock).reduce((a, b) => a + b);
+
+  //FILTER ACTIVITY
+  const handleSize = (e) => {
+    e.preventDefault();
+    setFilterBySize(e.target.value);
+  };
+
+  //FILTER COLOR
+  const handleColor = (e) => {
+    e.preventDefault();
+    setFilterByColor(e.target.value);
+  };
 
   return (
     <div className={Style.detailsContainer}>
       <div className={Style.sectionDetails}>
-        <button className={Style.buttonCartDetail} onClick={() => handleAddCart()}>
-        <img src={buttonCart}></img>
+        <button
+          className={Style.buttonCartDetail}
+          onClick={() => handleAddCart()}
+        >
+          <img src={buttonCart}></img>
         </button>
         {!favorites.find((f) => f.id === id) ? (
-          <button className={Style.buttonfavDetail} onClick={handleFav}><img src={buttonFav}></img></button>
+          <button className={Style.buttonfavDetail} onClick={handleFav}>
+            <img src={buttonFav}></img>
+          </button>
         ) : (
-          <button className={Style.buttonDeletefavDetail} onClick={handleDelFav}><img src={buttonDeleteFav}></img></button>
+          <button
+            className={Style.buttonDeletefavDetail}
+            onClick={handleDelFav}
+          >
+            <img src={buttonDeleteFav}></img>
+          </button>
         )}
         <br />
         <h1 className={Style.detailsTitle}>
@@ -101,11 +123,66 @@ const ProductDetail = () => {
           </div>
           <div className={Style.article_details_container}>
             <p>Precio: ${detail.price}</p>
-            <p>Talles: {sizes}</p>
-            <p>Marca: {detail.brand ? detail.brand : " - "}</p>
-            <p>Color: {colors}</p>
-            <p>Material: {detail.materials ? detail.materials : " - "}</p>
-            <p>Quedan {stock} unidades disponibles</p>
+            <p>Seleccionar Talle:</p>
+            <select
+              class=""
+              value={filterBySize}
+              onChange={(e) => handleSize(e)}
+            >
+              <option value="">Todos</option>
+              {[...new Set(detail.variants?.map((e) => e.size))]?.map((el) => {
+                return <option value={el}>{el}</option>;
+              })}
+            </select>
+            <p>Seleccionar Color:</p>
+            <select
+              class=""
+              value={filterByColor}
+              onChange={(e) => handleColor(e)}
+            >
+              <option value="">Todos</option>
+              {[...new Set(detail.variants?.map((e) => e.color))]?.map((el) => {
+                return <option value={el}>{el}</option>;
+              })}
+            </select>
+            {detail.brand ? <p>Marca: {detail.brand}</p> : <p></p>}
+            {detail.materials ? <p>Material: {detail.materials}</p> : <p></p>}
+            {filterByColor && filterBySize ? (
+              <p>
+                Quedan{" "}
+                {detail.variants
+                  ?.map(
+                    (v) =>
+                      v.size === filterBySize &&
+                      v.color === filterByColor &&
+                      v.stock
+                  )
+                  .reduce((a, b) => a + b)}{" "}
+                unidades
+              </p>
+            ) : filterBySize ? (
+              <p>
+                Quedan{" "}
+                {detail.variants
+                  ?.map((v) => v.size === filterBySize && v.stock)
+                  .reduce((a, b) => a + b)}{" "}
+                unidades
+              </p>
+            ) : filterByColor ? (
+              <p>
+                Quedan{" "}
+                {detail.variants
+                  ?.map((v) => v.color === filterByColor && v.stock)
+                  .reduce((a, b) => a + b)}{" "}
+                unidades
+              </p>
+            ) : (
+              <p>
+                Quedan{" "}
+                {detail.variants?.map((v) => v.stock).reduce((a, b) => a + b)}{" "}
+                unidades
+              </p>
+            )}
           </div>
           <div>
             <h2>Reseñas</h2>
