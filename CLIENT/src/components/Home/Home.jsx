@@ -179,7 +179,6 @@ export default function Home() {
               <option value="XXS">XXS</option>
               <option value="XXXS">XXXS</option>
             </select>
-
             <select
               className={Styles.FilterProductsHomeSelect}
               value={demographic}
@@ -193,7 +192,6 @@ export default function Home() {
               <option value="little boy">Niño</option>
               <option value="little girl">Niña</option>
             </select>
-
             <select
               className={Styles.FilterProductsHomeSelect}
               value={price}
@@ -205,7 +203,6 @@ export default function Home() {
               <option value="75">hasta 75$</option>
               <option value="100">hasta 100$</option>
             </select>
-
             <select
               className={Styles.FilterProductsHomeSelect}
               value={color}
@@ -216,7 +213,11 @@ export default function Home() {
               <option value="Negro">Negro</option>
               <option value="Blanco">Blanco</option>
               <option value="Azul">Azul</option>
+              <option value="Verde">Verde</option>{" "}
+              <option value="Rojo">Rojo</option>{" "}
               <option value="Amarillo">Amarillo</option>
+              <option value="Rosado">Rosado</option>{" "}
+              <option value="Marron">Marron</option>
             </select>
 
             <input
