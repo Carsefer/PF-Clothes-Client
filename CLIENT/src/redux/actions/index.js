@@ -9,6 +9,7 @@ import {
   ORDER_PRODUCTS_BY_SCORE,
   FILTER_PRODUCTS,
   LOGIN_USER,
+  GET_PRODUCTS_CART,
   CREATE_USER,
   CREATE_STORE,
   CREATE_PUBLICATION,
@@ -22,6 +23,7 @@ import {
   GET_REVIEWS_PRODUCT_DETAIL,
   FLUSH_ERROR,
   GET_SELLS_HISTORY,
+  GET_SELL_DETAIL,
 } from "../action-types";
 
 export const getProducts = () => {
@@ -150,8 +152,7 @@ export const createUser = (data) => {
     }
   };
 };
-let id = "b181bed3-1e13-4ce0-ab57-95241b83a8dd";
-export const createStore = (data) => {
+export const createStore = (id, data) => {
   return async (dispatch) => {
     const res = await axios.put(`/user/${id}`, data);
     return dispatch({
@@ -177,10 +178,15 @@ export const getFavorites = () => {
   };
 };
 
-export const addToFavorites = (id) => {
-  return {
-    type: ADD_TO_FAVORITES,
-    payload: id,
+export const addToFavorites = (id, profileId) => {
+  return async (dispatch) => {
+    const res = await axios.put(
+      `/user/favorites?productID=${id}&profileID=${profileId}`
+    );
+    return dispatch ({
+      type: ADD_TO_FAVORITES,
+      payload: res,
+    });
   };
 };
 
@@ -191,18 +197,38 @@ export const deleteFavorite = (id) => {
   };
 };
 
-/* export const filterProductsByMark = (mark) => {
-    return async function (dispatch) {
-        const filteredProductsByMark = await axios.get("/productMarks" + mark)
-        dispatch({
-            type: FILTER_PRODUCTS_BY_MARK,
-            payload: filteredProductsByMark.data
-        })
-    }
-}
-*/
+export const addToCart = (id, profileId) => {
+  return async (dispatch) => {
+    const res = await axios.put(
+      `/user/shoppingcart?productID=${id}&profileID=${profileId}`
+    );
+    return dispatch({
+      type: ADD_TO_CART,
+      payload: res,
+    });
+  };
+};
 
-export const addToCart = (id) => ({ type: ADD_TO_CART, payload: id });
+export const getCartProducts = (id) => {
+  return async (dispatch) => {
+    const res = await axios.get(`/user/shoppingcart?profileID=${id}`);
+    return dispatch({
+      type: GET_PRODUCTS_CART,
+      payload: res.data,
+    });
+  };
+};
+export const delProductCart = (productId, profileId) => {
+  return async (dispatch) => {
+    const res = await axios.delete(
+      `/user/shoppingcart?productID=${productId}&profileID=${profileId}`
+    );
+    return dispatch({
+      type: REMOVE_ONE_FROM_CART,
+      payload: res,
+    });
+  };
+};
 
 export const delFromCart = (id, all = false) =>
   all
@@ -226,6 +252,16 @@ export const getSellsHistory = () => {
     dispatch({
       type: GET_SELLS_HISTORY,
       payload: history.data,
+    });
+  };
+};
+
+export const getSellDetail = (idSell) => {
+  return async (dispatch) => {
+    const sellDetail = await axios.get(`/sell/${idSell}`);
+    dispatch({
+      type: GET_SELL_DETAIL,
+      payload: sellDetail.data,
     });
   };
 };

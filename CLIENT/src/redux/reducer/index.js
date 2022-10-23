@@ -7,6 +7,7 @@ import {
   ORDER_PRODUCTS_BY_SCORE,
   FILTER_PRODUCTS,
   CREATE_USER,
+  GET_PRODUCTS_CART,
   CREATE_PUBLICATION,
   EMPTY_DETAIL,
   GET_FAVORITES,
@@ -19,7 +20,8 @@ import {
   REMOVE_ONE_FROM_CART,
   GET_REVIEWS_PRODUCT_DETAIL,
   FLUSH_ERROR,
-  GET_SELLS_HISTORY
+  GET_SELLS_HISTORY,
+  GET_SELL_DETAIL,
 } from "../action-types";
 
 const initialState = {
@@ -32,7 +34,8 @@ const initialState = {
   favorites: [],
   loginError: null,
   cart: [],
-  sellsHistory: []
+  sellsHistory: [],
+  sellDetail: {},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -112,11 +115,6 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
       };
-    // case GET_FAVORITES:
-    //   return {
-    //     ...state,
-    //     favorites: action.payload,
-    //   };
     case ADD_TO_FAVORITES:
       let newFavorite = state.products.find((p) => p.id === action.payload);
       let productInFav = state.favorites.find((f) => f.id === newFavorite.id);
@@ -193,8 +191,18 @@ const rootReducer = (state = initialState, action) => {
     case GET_SELLS_HISTORY:
       return {
         ...state,
-        sellsHistory: action.payload
-      }
+        sellsHistory: action.payload,
+      };
+    case GET_PRODUCTS_CART:
+      return {
+        ...state,
+        cart: action.payload,
+      };
+    case GET_SELL_DETAIL:
+      return {
+        ...state,
+        sellDetail: action.payload,
+      };
     default:
       return state;
   }
