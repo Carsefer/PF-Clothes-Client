@@ -68,7 +68,7 @@ const ProductDetail = () => {
   console.log(reviews);
 
   const handleFav = () => {
-    dispatch(addToFavorites(id));
+    dispatch(addToFavorites(id, profileId));
     alert("Producto agregado a favoritos!");
   };
   const handleDelFav = () => {
@@ -77,7 +77,7 @@ const ProductDetail = () => {
   };
   const handleAddCart = () => {
     dispatch(addToCart(id, profileId));
-    alert("Producto agregado");
+    alert("Producto agregado al carrito!");
   };
 
   //FILTER ACTIVITY
