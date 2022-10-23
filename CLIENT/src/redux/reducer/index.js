@@ -198,6 +198,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         cart: action.payload,
       };
+    case GET_FAVORITES:
+      return {
+        ...state,
+        favorites: action.payload,
+      };
     case GET_SELL_DETAIL:
       return {
         ...state,
