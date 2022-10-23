@@ -74,7 +74,7 @@ const ProductDetail = () => {
     alert("Producto agregado a favoritos!");
   };
   const handleDelFav = () => {
-    dispatch(deleteFavorite(id));
+    dispatch(deleteFavorite(id, profileId));
     alert("Producto eliminado de favoritos");
   };
   const handleAddCart = () => {
@@ -106,14 +106,15 @@ const ProductDetail = () => {
         >
           <img src={buttonCart}></img>
         </button>
-        {!favorites.find((f) => f.id === id) ? (
-          <button className={Style.buttonfavDetail} onClick={handleFav}>
+
+        {!favorites.find((f) => f?.id === id) ? (
+          <button className={Style.buttonfavDetail} onClick={() => handleFav()}>
             <img src={buttonFav}></img>
           </button>
         ) : (
           <button
             className={Style.buttonDeletefavDetail}
-            onClick={handleDelFav}
+            onClick={() => handleDelFav()}
           >
             <img src={buttonDeleteFav}></img>
           </button>

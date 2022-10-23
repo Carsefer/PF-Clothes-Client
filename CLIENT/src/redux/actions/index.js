@@ -16,6 +16,7 @@ import {
   GET_FAVORITES,
   ADD_TO_FAVORITES,
   DELETE_FAVORITE,
+  DELETE_ONE_FAVORITE,
   ADD_TO_CART,
   CLEAR_CART,
   REMOVE_ALL_FROM_CART,
@@ -172,9 +173,13 @@ export const createPublication = () => {
   };
 };
 
-export const getFavorites = () => {
-  return {
-    type: GET_FAVORITES,
+export const getFavorites = (id) => {
+  return async (dispatch) => {
+    const res = await axios.get(`/user/favorites?profileID=${id}`);
+    return dispatch({
+      type: GET_FAVORITES,
+      payload: res.data,
+    });
   };
 };
 
@@ -183,7 +188,7 @@ export const addToFavorites = (id, profileId) => {
     const res = await axios.put(
       `/user/favorites?productID=${id}&profileID=${profileId}`
     );
-    return dispatch ({
+    return dispatch({
       type: ADD_TO_FAVORITES,
       payload: res,
     });
@@ -194,6 +199,17 @@ export const deleteFavorite = (id) => {
   return {
     type: DELETE_FAVORITE,
     payload: id,
+  };
+};
+export const deleteOneFavorite = (productId, profileId) => {
+  return async (dispatch) => {
+    const res = await axios.delete(
+      `/user/favorites?productID=${productId}&profileID=${profileId}`
+    );
+    return dispatch({
+      type: DELETE_ONE_FAVORITE,
+      payload: res,
+    });
   };
 };
 
