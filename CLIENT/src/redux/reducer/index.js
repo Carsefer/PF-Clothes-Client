@@ -115,11 +115,6 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
       };
-    // case GET_FAVORITES:
-    //   return {
-    //     ...state,
-    //     favorites: action.payload,
-    //   };
     case ADD_TO_FAVORITES:
       let newFavorite = state.products.find((p) => p.id === action.payload);
       let productInFav = state.favorites.find((f) => f.id === newFavorite.id);

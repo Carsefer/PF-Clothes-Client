@@ -4,7 +4,7 @@ import SearchBar from "../Searchbar/SearchBar";
 import Styles from "./NavBar.module.css";
 import Logo from "../images/express-fashion-stores.svg";
 import Cart from "../images/cart.svg";
-import ButtonFav from "../images/buttonFavNav.svg"
+import ButtonFav from "../images/buttonFavNav.svg";
 import Profile from "../images/profile.svg";
 import { getSession } from "../../utils/getSession";
 
@@ -34,7 +34,7 @@ const NavBar = () => {
         <Link to="/">
           <img className={Styles.NavbarHomeLogo} src={Logo} alt="logo" />
         </Link>
-        <SearchBar />
+        {/* <SearchBar /> */}
 
         {/* si el usuario no esta logueado mostrar login y signup
                 en caso contrario mostrar el usuario logueado y boton de 
@@ -63,7 +63,7 @@ const NavBar = () => {
             </Link>
             <div>
               {/* username */}
-              <p >{user.username}</p>
+              <p>{user.username}</p>
               <button
                 className={Styles.NavbarHomeButtons2}
                 onClick={(e) => {

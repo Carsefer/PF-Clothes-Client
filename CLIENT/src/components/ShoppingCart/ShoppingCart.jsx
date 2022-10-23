@@ -9,6 +9,8 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import CartItem from "../CartItem/CartItem";
 import { getSession } from "../../utils/getSession";
+import Style from "./ShoppingCart.module.css";
+import NavBar from "../NavBar/NavBar";
 
 const ShoppingCart = () => {
   const dispatch = useDispatch();
@@ -52,30 +54,33 @@ const ShoppingCart = () => {
   console.log(cartList);
 
   return (
-    <div>
-      <h2>Carrito de Compras</h2>
-      <h3>Productos</h3>
+    <>
+      <NavBar />
+      <div className={Style.containerShopping}>
+        <h2>Carrito de Compras</h2>
+        <h3>Productos</h3>
 
-      <article className="box">
-        <button onClick={() => dispatch(clearCart())}>Limpiar Carrito</button>
+        <article className="box">
+          <button onClick={() => dispatch(clearCart())}>Limpiar Carrito</button>
 
-        {cartList?.map((e) => (
-          <CartItem
-            key={e?.id + 1}
-            name={e.name}
-            price={e.price}
-            quantity="1"
-            image={e.image}
-            delOneFromCart={() =>
-              dispatch(delProductCart(e.id, us.id)).then(
-                dispatch(delFromCart(e.id))
-              )
-            }
-            delAllFromCart={() => dispatch(delFromCart(e.id, true))}
-          />
-        ))}
-      </article>
-    </div>
+          {cartList?.map((e) => (
+            <CartItem
+              key={e?.id + 1}
+              name={e.name}
+              price={e.price}
+              quantity="1"
+              image={e.image}
+              delOneFromCart={() =>
+                dispatch(delProductCart(e.id, us.id)).then(
+                  dispatch(delFromCart(e.id))
+                )
+              }
+              delAllFromCart={() => dispatch(delFromCart(e.id, true))}
+            />
+          ))}
+        </article>
+      </div>
+    </>
   );
 };
 
