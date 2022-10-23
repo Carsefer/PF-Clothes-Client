@@ -8,54 +8,34 @@ import Star from "../images/icono-estrella.png";
 import Profile from "../images/profile.svg";
 import { getSession } from "../../sessionUtils/jwtSession";
 import axios from "axios";
-import { session } from "../../context/Session";
 
-const handleSession = async (jwt,google,user,cb) => {
-  if(google){
-    cb(google);
-  }else if(await jwt()){
-    cb(jwt);
-  }
-}
 
 const NavBar = () => {
   const [user, setUser] = useState("");
   const navigate = useNavigate();
-
-  const userObject = useContext(session);
+  const [loaded,setLoaded] = useState(false);
 
   useEffect(() => {
     (async () => {
-      /*if(!user && userObject){
-        setUser(userObject);
+
+      if (!user) {
+        const data = await getSession();
+        if(data){
+          setUser(data);
+        }
       }
 
-      if (!user && !userObject) {
-        const data = await getSession();
-        setUser(data);  
-      }*/
-
-      
 
     })();
-    console.log("userObject",userObject);
-    setUser(userObject);
+
   }, [user]);
 
-  
+  //window.location.reload();  
 
   const handleLogout = (e) => {
 
     setUser("");
     sessionStorage.removeItem("sessionData");
-    
-
-    axios.get("http://localhost:3001/auth/logout",{withCredentials:true}).then(res => {
-      if(res.data === "done"){
-        window.location.href = "/"
-      }
-    })
-
     navigate("/");
   };
 
@@ -71,7 +51,7 @@ const NavBar = () => {
         {/* si el usuario no esta logueado mostrar login y signup
                 en caso contrario mostrar el usuario logueado y boton de 
             cerrar sesion */}
-        {!user ? (
+        {!user  ? (
           <div className={Styles.NavbarHomeFormsButtonsContainer}>
             <Link to="/login">
               <button className={Styles.NavbarHomeButtons}>

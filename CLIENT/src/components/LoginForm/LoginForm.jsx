@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Styles from "./LoginForm.module.css";
 import axios from "axios";
 import GoogleButton from 'react-google-button';
+import {setSession} from '../../sessionUtils/jwtSession';
 
 const LoginForm = () => {
   const [showPwd, setShowPwd] = useState(false);
@@ -32,17 +33,19 @@ const LoginForm = () => {
       googleLoginURL,
       "_self",
     );
-    //navigate("/home");
+    //fetchAuthUser();
   }
 
-  const fetchAuthUser = async () => {
-    const res = axios.get("http://localhost:3001/auth/user",{ withCredentials: true }).catch((err) => {
-      console.log("Not properly authenticated");
+  const fetchAuthUser = () => {
+    axios.get("http://localhost:3001/auth/user",{withCredentials:true}).then(res => {
+      if(res.data){
+          console.log(res.data);
+          setSession(res.data);
+      }
+    },(err) => {
+      console.log("no google user data");
+      console.log(err);
     });
-
-    if(res && res.data){
-      console.log("User: ", res.data);
-    }
   }
 
   return (
