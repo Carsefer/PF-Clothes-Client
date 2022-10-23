@@ -8,7 +8,7 @@ export default function Context(props){
 
     const [userObject,setUserObject] = useState();
 
-    useEffect(() => {
+   /* useEffect(() => {
         axios.get("http://localhost:3001/auth/user",{withCredentials:true}).then(res => {
             if(res.data){
                 setSession(res.data);
@@ -16,7 +16,7 @@ export default function Context(props){
         },(err) => {
             console.log("no google user data");
         }) 
-    },[userObject])
+    },[userObject])*/
     return(
         <session.Provider value={userObject}>{props.children}</session.Provider>
     );

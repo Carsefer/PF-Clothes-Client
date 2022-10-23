@@ -7,16 +7,31 @@ import Cart from "../images/cart.svg";
 import Star from "../images/icono-estrella.png";
 import Profile from "../images/profile.svg";
 import { getSession } from "../../sessionUtils/jwtSession";
-import axios from "axios";
+import {QueryClient,useQuery} from '@tanstack/react-query';
 
 
 const NavBar = () => {
   const [user, setUser] = useState("");
   const navigate = useNavigate();
-  const [loaded,setLoaded] = useState(false);
 
-  useEffect(() => {
-    (async () => {
+  const {isError,isSuccess,isLoading,data,error} = useQuery(
+    ["NavBar"],
+    getSession,
+  );
+
+  if (isLoading) {
+    console.log("Loading...");
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    console.log("Error: ", error);
+    return <div>Error...</div>;
+  }
+
+
+  /*useEffect(() => {
+    /*(async () => {
 
       if (!user) {
         const data = await getSession();
@@ -28,7 +43,7 @@ const NavBar = () => {
 
     })();
 
-  }, [user]);
+  }, [user])*/
 
   //window.location.reload();  
 
@@ -51,7 +66,7 @@ const NavBar = () => {
         {/* si el usuario no esta logueado mostrar login y signup
                 en caso contrario mostrar el usuario logueado y boton de 
             cerrar sesion */}
-        {!user  ? (
+        {!data  ? (
           <div className={Styles.NavbarHomeFormsButtonsContainer}>
             <Link to="/login">
               <button className={Styles.NavbarHomeButtons}>
@@ -75,7 +90,7 @@ const NavBar = () => {
             </Link>
             <div>
               {/* username */}
-              <p>{user.username}</p>
+              <p>{data.username}</p>
               <button
                 className="NavbarHomeButtons"
                 onClick={(e) => {

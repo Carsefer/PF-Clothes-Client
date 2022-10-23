@@ -33,11 +33,11 @@ const LoginForm = () => {
       googleLoginURL,
       "_self",
     );
-    //fetchAuthUser();
+    fetchAuthUser();
   }
 
-  const fetchAuthUser = () => {
-    axios.get("http://localhost:3001/auth/user",{withCredentials:true}).then(res => {
+  const fetchAuthUser = async () => {
+    await axios.get("http://localhost:3001/auth/user",{withCredentials:true}).then(res => {
       if(res.data){
           console.log(res.data);
           setSession(res.data);
