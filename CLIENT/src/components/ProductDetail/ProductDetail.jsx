@@ -95,6 +95,9 @@ const ProductDetail = () => {
   return (
     <div className={Style.detailsContainer}>
       <div className={Style.sectionDetails}>
+        <button className={Style.backButton} onClick={() => navigate("/home")}>
+          Atrás
+        </button>
         <button
           className={Style.buttonCartDetail}
           onClick={() => handleAddCart()}
