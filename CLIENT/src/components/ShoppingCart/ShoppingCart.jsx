@@ -71,7 +71,7 @@ const ShoppingCart = () => {
               quantity="1"
               image={e.image}
               delOneFromCart={() =>
-                dispatch(delProductCart(e.id, us.id)).then(
+                dispatch(delProductCart(e?.id, us?.id)).then(
                   dispatch(delFromCart(e.id))
                 )
               }

@@ -5,8 +5,8 @@ import { Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import Styles from "./LoginForm.module.css";
 import axios from "axios";
-import GoogleButton from 'react-google-button';
-import {setSession} from '../../sessionUtils/jwtSession';
+import GoogleButton from "react-google-button";
+import { setSession } from "../../sessionUtils/jwtSession";
 
 const LoginForm = () => {
   const [showPwd, setShowPwd] = useState(false);
@@ -16,7 +16,7 @@ const LoginForm = () => {
   /* login with user and password */
   const handleLogin = async (userInfo) => {
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API || 'http://localhost:3001'}/login`, userInfo);
+      const res = await axios.post(`http://localhost:3001/login`, userInfo);
       sessionStorage.setItem("sessionData", JSON.stringify(res.data));
       if (res.data) {
         alert("Credenciales correctas");
@@ -30,25 +30,27 @@ const LoginForm = () => {
 
   /* loging with google */
   const redirectToGoogleSSO = async () => {
-    const googleLoginURL = `${process.env.REACT_APP_API || 'http://localhost:3001'}/login/google`;
-    window.open(
-      googleLoginURL,
-      "_self",
-    );
+    const googleLoginURL = `http://localhost:3001/login/google`;
+    window.open(googleLoginURL, "_self");
     fetchAuthUser();
-  }
+  };
 
   const fetchAuthUser = async () => {
-    await axios.get(`${process.env.REACT_APP_API || 'http://localhost:3001'}/auth/user`,{withCredentials:true}).then(res => {
-      if(res.data){
-          console.log(res.data);
-          setSession(res.data);
-      }
-    },(err) => {
-      console.log("no google user data");
-      console.log(err);
-    });
-  }
+    await axios
+      .get(`http://localhost:3001/auth/user`, { withCredentials: true })
+      .then(
+        (res) => {
+          if (res.data) {
+            console.log(res.data);
+            setSession(res.data);
+          }
+        },
+        (err) => {
+          console.log("no google user data");
+          console.log(err);
+        }
+      );
+  };
 
   return (
     <>
@@ -86,10 +88,7 @@ const LoginForm = () => {
             handleBlur,
           }) => (
             <form className={Styles.formulario} onSubmit={handleSubmit}>
-              <div
-                className={Styles.eye2}
-                onClick={() => setShowPwd(!showPwd)}
-              >
+              <div className={Styles.eye2} onClick={() => setShowPwd(!showPwd)}>
                 {showPwd ? (
                   <svg
                     className={Styles.pwdicon}
@@ -183,11 +182,10 @@ const LoginForm = () => {
                   Iniciar sesión
                 </button>
               )}
-
             </form>
           )}
         </Formik>
-        <GoogleButton onClick={redirectToGoogleSSO}/>
+        <GoogleButton onClick={redirectToGoogleSSO} />
         <p className={Styles.LoginFormsFooter}>
           No tiene cuenta?{" "}
           <Link className={Styles.register} to="/register">

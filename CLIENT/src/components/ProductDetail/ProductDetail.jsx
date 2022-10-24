@@ -70,7 +70,7 @@ const ProductDetail = () => {
   console.log(reviews);
 
   const handleFav = () => {
-    dispatch(addToFavorites(id, profileId));
+    dispatch(addToFavorites(id, profileId, info.token));
     alert("Producto agregado a favoritos!");
   };
   const handleDelFav = () => {
@@ -78,7 +78,7 @@ const ProductDetail = () => {
     alert("Producto eliminado de favoritos");
   };
   const handleAddCart = () => {
-    dispatch(addToCart(id, profileId));
+    dispatch(addToCart(id, profileId, info.token));
     alert("Producto agregado al carrito!");
   };
 
