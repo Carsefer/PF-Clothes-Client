@@ -103,8 +103,8 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         productsStatus: !action.payload.length
-          ? "No se encontraron productos con este filtro"
-          : "loading",
+          ? "No se encontraron productos"
+          : "Cargando...",
         products: action.payload,
       };
     case CREATE_USER:
