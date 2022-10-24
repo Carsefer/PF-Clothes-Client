@@ -30,7 +30,7 @@ const initialState = {
   productDetail: [],
   productReviews: [],
   sizes: [],
-  productsStatus: "loading",
+  productsStatus: "Cargando productos...",
   favorites: [],
   loginError: null,
   cart: [],
@@ -103,8 +103,8 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         productsStatus: !action.payload.length
-          ? "No se encontraron productos con este filtro"
-          : "loading",
+          ? "No se encontraron productos"
+          : "Cargando productos...",
         products: action.payload,
       };
     case CREATE_USER:
