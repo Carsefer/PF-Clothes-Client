@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState,useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "../Searchbar/SearchBar";
 import Styles from "./NavBar.module.css";
@@ -6,7 +6,8 @@ import Logo from "../images/express-fashion-stores.svg";
 import Cart from "../images/cart.svg";
 import ButtonFav from "../images/buttonFavNav.svg";
 import Profile from "../images/profile.svg";
-import { getSession } from "../../utils/getSession";
+import { getSession } from "../../sessionUtils/jwtSession";
+
 
 const NavBar = () => {
   const [user, setUser] = useState("");
@@ -14,20 +15,26 @@ const NavBar = () => {
 
   useEffect(() => {
     (async () => {
+
       if (!user) {
         const data = await getSession();
-        await setUser(data);
+        if(data){
+          setUser(data);
+        }
       }
-    })();
-  }, [user]);
 
+
+    })();
+
+  }, [user])
+ 
   const handleLogout = (e) => {
+
     setUser("");
     sessionStorage.removeItem("sessionData");
-    navigate("/home");
+    navigate("/");
   };
 
-  console.log(user);
   return (
     <nav className={Styles.NavbarHome}>
       <div className={Styles.NavbarHomeContainer}>
@@ -39,7 +46,7 @@ const NavBar = () => {
         {/* si el usuario no esta logueado mostrar login y signup
                 en caso contrario mostrar el usuario logueado y boton de 
             cerrar sesion */}
-        {!user ? (
+        {!user  ? (
           <div className={Styles.NavbarHomeFormsButtonsContainer}>
             <Link to="/login">
               <button className={Styles.NavbarHomeButtons}>
@@ -60,6 +67,9 @@ const NavBar = () => {
             </Link>
             <Link to="/home/profile">
               <img className={Styles.ProfileFav} src={Profile}></img>
+            </Link>
+            <Link to="/home/stadistics">
+              <p>Estadísticas</p>
             </Link>
             <div>
               {/* username */}

@@ -8,7 +8,7 @@ import {
 import axios from "axios";
 import { useState, useEffect } from "react";
 import CartItem from "../CartItem/CartItem";
-import { getSession } from "../../utils/getSession";
+import { getSession } from "../../sessionUtils/jwtSession";
 import Style from "./ShoppingCart.module.css";
 import NavBar from "../NavBar/NavBar";
 
@@ -71,7 +71,7 @@ const ShoppingCart = () => {
               quantity="1"
               image={e.image}
               delOneFromCart={() =>
-                dispatch(delProductCart(e.id, us.id)).then(
+                dispatch(delProductCart(e?.id, us?.id)).then(
                   dispatch(delFromCart(e.id))
                 )
               }

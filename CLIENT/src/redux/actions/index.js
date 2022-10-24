@@ -153,9 +153,18 @@ export const createUser = (data) => {
     }
   };
 };
-export const createStore = (id, data) => {
+export const createStore = (id, data, token) => {
   return async (dispatch) => {
-    const res = await axios.put(`/user/${id}`, data);
+    const res = await axios.put(
+      `/user/${id}`,
+      data,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return dispatch({
       type: CREATE_STORE,
       payload: res.data,
@@ -183,11 +192,18 @@ export const getFavorites = (id) => {
   };
 };
 
-export const addToFavorites = (id, profileId) => {
+export const addToFavorites = (id, profileId, token) => {
   return async (dispatch) => {
     const res = await axios.put(
-      `/user/favorites?productID=${id}&profileID=${profileId}`
+      `/user/favorites?productID=${id}&profileID=${profileId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
+
     return dispatch({
       type: ADD_TO_FAVORITES,
       payload: res,
@@ -213,10 +229,16 @@ export const deleteOneFavorite = (productId, profileId) => {
   };
 };
 
-export const addToCart = (id, profileId) => {
+export const addToCart = (id, profileId, token) => {
   return async (dispatch) => {
     const res = await axios.put(
-      `/user/shoppingcart?productID=${id}&profileID=${profileId}`
+      `/user/shoppingcart?productID=${id}&profileID=${profileId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     return dispatch({
       type: ADD_TO_CART,

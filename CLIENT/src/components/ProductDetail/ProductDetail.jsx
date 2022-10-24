@@ -14,7 +14,7 @@ import {
 } from "../../redux/actions";
 import Style from "./ProductDetail.module.css";
 import Comments from "../Comments/Comments";
-import { getSession } from "../../utils/getSession";
+import { getSession } from "../../sessionUtils/jwtSession";
 import buttonCart from "../images/cart.svg";
 import buttonFav from "../images/buttonFav.svg";
 import buttonDeleteFav from "../images/buttonDeleteFav.svg";
@@ -71,12 +71,8 @@ const ProductDetail = () => {
   console.log(reviews);
 
   const handleFav = () => {
-    if (!us) {
-      navigate("/login");
-    } else {
-      dispatch(addToFavorites(id, profileId));
-      alert("Producto agregado a favoritos!");
-    }
+    dispatch(addToFavorites(id, profileId, info.token));
+    alert("Producto agregado a favoritos!");
   };
   const handleDelFav = () => {
     dispatch(deleteFavorite(id)).then(
@@ -84,12 +80,8 @@ const ProductDetail = () => {
     );
   };
   const handleAddCart = () => {
-    if (!us) {
-      navigate("/login");
-    } else {
-      dispatch(addToCart(id, profileId));
-      alert("Producto agregado al carrito!");
-    }
+    dispatch(addToCart(id, profileId, info.token));
+    alert("Producto agregado al carrito!");
   };
   //FILTER ACTIVITY
   const handleSize = (e) => {
@@ -112,6 +104,18 @@ const ProductDetail = () => {
         <button
           className={Style.buttonCartDetail}
           onClick={() => handleAddCart()}
+          disabled={
+            filterBySize === "" ||
+            filterByColor === "" ||
+            detail.variants
+              ?.map(
+                (v) =>
+                  v.size === filterBySize &&
+                  v.color === filterByColor &&
+                  v.stock
+              )
+              .reduce((a, b) => a + b) === 0
+          }
         >
           <img src={buttonCart}></img>
         </button>

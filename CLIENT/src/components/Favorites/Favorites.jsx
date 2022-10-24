@@ -11,7 +11,7 @@ import {
 } from "../../redux/actions/index.js";
 import Style from "./Favorites.module.css";
 import NavBar from "../NavBar/NavBar";
-import { getSession } from "../../utils/getSession.js";
+import { getSession } from "../../sessionUtils/jwtSession";
 const Favorites = () => {
   const dispatch = useDispatch();
   const [info, setInfo] = useState("");
@@ -67,9 +67,9 @@ const Favorites = () => {
                 title={cloth?.name[0].toUpperCase() + cloth?.name.substring(1)}
                 price={cloth?.price}
                 deleteFavorite={() => {
-                  dispatch(deleteOneFavorite(cloth?.id, us.id)).then(
-                    dispatch(deleteFavorite(cloth?.id))
-                  );
+                  dispatch(
+                    deleteOneFavorite(cloth?.id, us.id, info.token)
+                  ).then(dispatch(deleteFavorite(cloth?.id)));
                 }}
               />
             ))

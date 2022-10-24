@@ -5,12 +5,15 @@ import { Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import Styles from "./LoginForm.module.css";
 import axios from "axios";
+import GoogleButton from "react-google-button";
+import { setSession } from "../../sessionUtils/jwtSession";
 
 const LoginForm = () => {
   const [showPwd, setShowPwd] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  /* login with user and password */
   const handleLogin = async (userInfo) => {
     try {
       const res = await axios.post(`http://localhost:3001/login`, userInfo);
@@ -24,6 +27,30 @@ const LoginForm = () => {
       console.log("incorrect");
       alert("Credenciales incorrectas");
     }
+  };
+
+  /* loging with google */
+  const redirectToGoogleSSO = async () => {
+    const googleLoginURL = `http://localhost:3001/login/google`;
+    window.open(googleLoginURL, "_self");
+    fetchAuthUser();
+  };
+
+  const fetchAuthUser = async () => {
+    await axios
+      .get(`http://localhost:3001/auth/user`, { withCredentials: true })
+      .then(
+        (res) => {
+          if (res.data) {
+            console.log(res.data);
+            setSession(res.data);
+          }
+        },
+        (err) => {
+          console.log("no google user data");
+          console.log(err);
+        }
+      );
   };
 
   return (
@@ -159,6 +186,7 @@ const LoginForm = () => {
             </form>
           )}
         </Formik>
+        <GoogleButton onClick={redirectToGoogleSSO} />
         <p className={Styles.LoginFormsFooter}>
           No tiene cuenta?{" "}
           <Link className={Styles.register} to="/register">
