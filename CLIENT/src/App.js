@@ -12,7 +12,7 @@ import Profile from "./components/Profile/Profile";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import Stadistics from "./components/Stadistics/Stadistics";
 import { AppProvider } from "./context/AppContext";
-import { getSession } from "./utils/getSession";
+import { getSession } from "./sessionUtils/jwtSession";
 import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
@@ -52,7 +52,7 @@ function App() {
   return (
     <AppProvider>
       <Routes>
-        <Route index element={<Home />} />
+        <Route index element={<LandingHome />} />
         <Route exact path="/" element={<LandingHome />} />
         <Route exact path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />

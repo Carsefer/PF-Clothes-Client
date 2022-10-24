@@ -71,8 +71,12 @@ const ProductDetail = () => {
   console.log(reviews);
 
   const handleFav = () => {
-    dispatch(addToFavorites(id, profileId, info.token));
-    alert("Producto agregado a favoritos!");
+    if (!us) {
+      return navigate("/login");
+    } else {
+      dispatch(addToFavorites(id, profileId, info.token));
+      alert("Producto agregado a favoritos!");
+    }
   };
   const handleDelFav = () => {
     dispatch(deleteFavorite(id)).then(
@@ -80,8 +84,12 @@ const ProductDetail = () => {
     );
   };
   const handleAddCart = () => {
-    dispatch(addToCart(id, profileId, info.token));
-    alert("Producto agregado al carrito!");
+    if (!us) {
+      return navigate("/login");
+    } else {
+      dispatch(addToCart(id, profileId, info.token));
+      alert("Producto agregado al carrito!");
+    }
   };
   //FILTER ACTIVITY
   const handleSize = (e) => {

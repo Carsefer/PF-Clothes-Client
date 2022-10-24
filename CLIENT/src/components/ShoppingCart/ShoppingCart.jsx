@@ -15,7 +15,7 @@ import NavBar from "../NavBar/NavBar";
 const ShoppingCart = () => {
   const dispatch = useDispatch();
   const [info, setInfo] = useState("");
-  const [us, setUs] = useState({});
+  const [us, setUs] = useState(null);
 
   const url = "http://localhost:3001/user/get";
   useEffect(() => {
@@ -39,18 +39,18 @@ const ShoppingCart = () => {
           )
           .then((res) => {
             console.log(res.data);
-            setUs(res.data);
+            setUs(res?.data);
           })
           .catch((error) => {
             console.log(error);
           });
       }
     })();
-    const id = us.id;
+    const id = us?.id;
     dispatch(getCartProducts(id));
-  }, [info, dispatch, us.id]);
+  }, [info, dispatch, us?.id]);
   console.log(us);
-  const cartList = useSelector((state) => state.cart);
+  const cartList = useSelector((state) => state?.cart);
   console.log(cartList);
 
   return (
@@ -66,10 +66,10 @@ const ShoppingCart = () => {
           {cartList?.map((e) => (
             <CartItem
               key={e?.id + 1}
-              name={e.name}
-              price={e.price}
+              name={e?.name}
+              price={e?.price}
               quantity="1"
-              image={e.image}
+              image={e?.image}
               delOneFromCart={() =>
                 dispatch(delProductCart(e?.id, us?.id)).then(
                   dispatch(delFromCart(e.id))
