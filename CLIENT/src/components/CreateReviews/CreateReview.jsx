@@ -1,6 +1,6 @@
 import Rating from '@mui/material/Rating';
-import {useState, useEffect} from "react"
-import { useDispatch, useSelector } from "react-redux";
+import {useState} from "react"
+import { useDispatch } from "react-redux";
 
 const CreateReview = ({id}) => {
     const [rating, setRating] = useState({value: null, text: "Introduzca review"})
