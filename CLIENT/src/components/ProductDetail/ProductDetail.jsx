@@ -13,7 +13,7 @@ import {
 } from "../../redux/actions";
 import Style from "./ProductDetail.module.css";
 import Comments from "../Comments/Comments";
-import { getSession } from "../../utils/getSession";
+import { getSession } from "../../sessionUtils/jwtSession";
 import buttonCart from "../images/cart.svg";
 import buttonFav from "../images/buttonFav.svg";
 import buttonDeleteFav from "../images/buttonDeleteFav.svg";

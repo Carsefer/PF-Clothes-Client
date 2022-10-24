@@ -10,6 +10,7 @@ import Profile from "./components/Profile/Profile";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import { AppProvider } from "./context/AppContext";
 
+
 function App() {
   return (
     <AppProvider>
@@ -23,7 +24,7 @@ function App() {
         <Route path="/home/profile" element={<Profile />} />
         <Route exact path="/home/ShoppingCart" element={<ShoppingCart />} />
         <Route path="/home/Favorites" element={<Favorites />} />
-      </Routes>
+      </Routes>   
     </AppProvider>
   );
 }

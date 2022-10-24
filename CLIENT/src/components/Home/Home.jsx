@@ -11,7 +11,6 @@ import NavBar from "../NavBar/NavBar";
 
 export default function Home() {
   const dispatch = useDispatch();
-
   const {
     setPrice,
     setSize,
