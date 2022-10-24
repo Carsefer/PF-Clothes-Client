@@ -3,35 +3,22 @@ import Styles from "./Home.module.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filterProducts, emptyDetail } from "../../redux/actions";
-import { useContext } from "react";
-import { AppContext } from "../../context/AppContext";
 import Card from "../Card/Card";
 import NavBar from "../NavBar/NavBar";
+import { useLocalStorage } from "../../Utils/useLocalStorage";
 //import Orders from "../Orders/Orders";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const {
-    setPrice,
-    setSize,
-    setDemographic,
-    setColor,
-    setName,
-    setPage,
-    setOrderBy,
-    setSortBy,
-    price,
-    size,
-    demographic,
-    color,
-    name,
-    page,
-    orderBy,
-    sortBy,
-  } = useContext(AppContext);
+  const [price, setPrice] = useLocalStorage("price", "");
+  const [size, setSize] = useLocalStorage("size", "");
+  const [demographic, setDemographic] = useLocalStorage("demographic", "");
+  const [color, setColor] = useLocalStorage("color", "");
+  const [name, setName] = useLocalStorage("name", "");
+  const [page, setPage] = useLocalStorage("page", 0);
+  const [orderBy, setOrderBy] = useLocalStorage("orderBy", "ASC");
+  const [sortBy, setSortBy] = useLocalStorage("sortBy", "name");
 
-  //const [cant, setCant] = useState("");
-  //const [, setOrder] = useState("");
   useEffect(() => {
     dispatch(
       filterProducts(

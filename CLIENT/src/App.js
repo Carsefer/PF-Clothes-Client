@@ -11,7 +11,6 @@ import ProductDetail from "./components/ProductDetail/ProductDetail";
 import Profile from "./components/Profile/Profile";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import Stadistics from "./components/Stadistics/Stadistics";
-import { AppProvider } from "./context/AppContext";
 import { getSession } from "./sessionUtils/jwtSession";
 import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
 
@@ -50,23 +49,21 @@ function App() {
     })();
   }, [info]);
   return (
-    <AppProvider>
-      <Routes>
-        <Route index element={<LandingHome />} />
-        <Route exact path="/" element={<LandingHome />} />
-        <Route exact path="/home" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<CreateUser />} />
-        <Route element={<ProtectedRoute us={us} />}>
-          <Route path="/home/Favorites" element={<Favorites />} />
-          <Route path="/home/ShoppingCart" element={<ShoppingCart />} />
-          <Route path="/home/profile" element={<Profile />} />
-          <Route path="/home/stadistics" element={<Stadistics />} />
-          <Route path="/home/createStore" element={<CreateStore />} />
-        </Route>
-        <Route path="/home/product/:id" element={<ProductDetail />} />
-      </Routes>
-    </AppProvider>
+    <Routes>
+      <Route index element={<LandingHome />} />
+      <Route exact path="/" element={<LandingHome />} />
+      <Route exact path="/home" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<CreateUser />} />
+      <Route element={<ProtectedRoute us={us} />}>
+        <Route path="/home/Favorites" element={<Favorites />} />
+        <Route path="/home/ShoppingCart" element={<ShoppingCart />} />
+        <Route path="/home/profile" element={<Profile />} />
+        <Route path="/home/stadistics" element={<Stadistics />} />
+        <Route path="/home/createStore" element={<CreateStore />} />
+      </Route>
+      <Route path="/home/product/:id" element={<ProductDetail />} />
+    </Routes>
   );
 }
 

@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { AppContext } from "../../context/AppContext";
+import { useLocalStorage } from "../../Utils/useLocalStorage";
 import {
   getProductDetail,
   addToCart,
@@ -30,8 +29,11 @@ const ProductDetail = () => {
 
   const [info, setInfo] = useState("");
   const [us, setUs] = useState(null);
-  const { setFilterBySize, setFilterByColor, filterBySize, filterByColor } =
-    useContext(AppContext);
+  const [filterBySize, setFilterBySize] = useLocalStorage("filterBySize", "");
+  const [filterByColor, setFilterByColor] = useLocalStorage(
+    "filterByColor",
+    ""
+  );
 
   const url = "http://localhost:3001/user/get";
   useEffect(() => {
