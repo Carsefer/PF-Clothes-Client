@@ -103,6 +103,18 @@ const ProductDetail = () => {
         <button
           className={Style.buttonCartDetail}
           onClick={() => handleAddCart()}
+          disabled={
+            filterBySize === "" ||
+            filterByColor === "" ||
+            detail.variants
+              ?.map(
+                (v) =>
+                  v.size === filterBySize &&
+                  v.color === filterByColor &&
+                  v.stock
+              )
+              .reduce((a, b) => a + b) === 0
+          }
         >
           <img src={buttonCart}></img>
         </button>
