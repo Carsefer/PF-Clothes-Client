@@ -18,6 +18,7 @@ const LoginForm = () => {
       if (res.data) {
         alert("Credenciales correctas");
         navigate("/home");
+        window.location.reload();
       }
     } catch (err) {
       console.log("incorrect");
@@ -61,10 +62,7 @@ const LoginForm = () => {
             handleBlur,
           }) => (
             <form className={Styles.formulario} onSubmit={handleSubmit}>
-              <div
-                className={Styles.eye2}
-                onClick={() => setShowPwd(!showPwd)}
-              >
+              <div className={Styles.eye2} onClick={() => setShowPwd(!showPwd)}>
                 {showPwd ? (
                   <svg
                     className={Styles.pwdicon}
