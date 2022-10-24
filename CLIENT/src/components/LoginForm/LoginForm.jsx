@@ -21,6 +21,7 @@ const LoginForm = () => {
       if (res.data) {
         alert("Credenciales correctas");
         navigate("/home");
+        window.location.reload();
       }
     } catch (err) {
       console.log("incorrect");

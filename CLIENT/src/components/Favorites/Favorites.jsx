@@ -46,7 +46,7 @@ const Favorites = () => {
           });
       }
     })();
-    const id = us.id;
+    const id = us?.id;
     dispatch(getFavorites(id));
   }, [info, dispatch, us.id]);
   console.log(us);
@@ -67,9 +67,9 @@ const Favorites = () => {
                 title={cloth?.name[0].toUpperCase() + cloth?.name.substring(1)}
                 price={cloth?.price}
                 deleteFavorite={() => {
-                  dispatch(
-                    deleteOneFavorite(cloth?.id, us.id, info.token)
-                  ).then(dispatch(deleteFavorite(cloth?.id)));
+                  dispatch(deleteOneFavorite(cloth?.id, us?.id)).then(
+                    dispatch(deleteFavorite(cloth?.id))
+                  );
                 }}
               />
             ))

@@ -10,6 +10,7 @@ import {
   getProductDetailReviews,
   addToFavorites,
   deleteFavorite,
+  deleteOneFavorite,
 } from "../../redux/actions";
 import Style from "./ProductDetail.module.css";
 import Comments from "../Comments/Comments";
@@ -28,7 +29,7 @@ const ProductDetail = () => {
   const favorites = useSelector((state) => state.favorites);
 
   const [info, setInfo] = useState("");
-  const [us, setUs] = useState({});
+  const [us, setUs] = useState(null);
   const { setFilterBySize, setFilterByColor, filterBySize, filterByColor } =
     useContext(AppContext);
 
@@ -64,24 +65,32 @@ const ProductDetail = () => {
     dispatch(getProductDetail(id));
     dispatch(getProductDetailReviews(id));
   }, [info, dispatch, id]);
-  const profileId = us.id;
+  const profileId = us?.id;
 
   console.log("hola");
   console.log(reviews);
 
   const handleFav = () => {
-    dispatch(addToFavorites(id, profileId, info.token));
-    alert("Producto agregado a favoritos!");
+    if (!us) {
+      return navigate("/login");
+    } else {
+      dispatch(addToFavorites(id, profileId, info.token));
+      alert("Producto agregado a favoritos!");
+    }
   };
   const handleDelFav = () => {
-    dispatch(deleteFavorite(id, profileId));
-    alert("Producto eliminado de favoritos");
+    dispatch(deleteFavorite(id)).then(
+      dispatch(deleteOneFavorite(id, profileId))
+    );
   };
   const handleAddCart = () => {
-    dispatch(addToCart(id, profileId, info.token));
-    alert("Producto agregado al carrito!");
+    if (!us) {
+      return navigate("/login");
+    } else {
+      dispatch(addToCart(id, profileId, info.token));
+      alert("Producto agregado al carrito!");
+    }
   };
-
   //FILTER ACTIVITY
   const handleSize = (e) => {
     e.preventDefault();
