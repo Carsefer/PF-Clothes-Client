@@ -1,6 +1,5 @@
 import { React, useEffect, useState,useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import SearchBar from "../Searchbar/SearchBar";
 import Styles from "./NavBar.module.css";
 import Logo from "../images/express-fashion-stores.svg";
 import Cart from "../images/cart.svg";
@@ -32,7 +31,7 @@ const NavBar = () => {
 
     setUser("");
     sessionStorage.removeItem("sessionData");
-    navigate("/");
+    navigate("/home");
   };
 
   return (
@@ -41,8 +40,6 @@ const NavBar = () => {
         <Link to="/">
           <img className={Styles.NavbarHomeLogo} src={Logo} alt="logo" />
         </Link>
-        {/* <SearchBar /> */}
-
         {/* si el usuario no esta logueado mostrar login y signup
                 en caso contrario mostrar el usuario logueado y boton de 
             cerrar sesion */}
@@ -59,6 +56,7 @@ const NavBar = () => {
           </div>
         ) : (
           <>
+            <Link to="/home">Inicio</Link>
             <Link to="/home/ShoppingCart">
               <img className={Styles.CartIcon} src={Cart}></img>
             </Link>
@@ -68,9 +66,7 @@ const NavBar = () => {
             <Link to="/home/profile">
               <img className={Styles.ProfileFav} src={Profile}></img>
             </Link>
-            <Link to="/home/stadistics">
-              <p>Estadísticas</p>
-            </Link>
+            <Link to="/home/stadistics">Estadísticas</Link>
             <div>
               {/* username */}
               <p>{user.username}</p>
