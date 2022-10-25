@@ -18,11 +18,20 @@ import buttonCart from "../images/cart.svg";
 import buttonFav from "../images/buttonFav.svg";
 import buttonDeleteFav from "../images/buttonDeleteFav.svg";
 import CreateReview from "../CreateReviews/CreateReview";
+import Toastify from 'toastify-js';
+import "toastify-js/src/toastify.css";
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
+  const toast = (text, color="green") => Toastify({
+    text: text,
+    duration: 3000,
+    position: "center",
+    className: Style.toast,
+    backgroundColor: color
+    }).showToast();
 
   const detail = useSelector((state) => state.productDetail);
   const reviews = useSelector((state) => state.productReviews);
@@ -72,23 +81,27 @@ const ProductDetail = () => {
 
   const handleFav = () => {
     if (!us) {
+      toast("Logueate para seguir tus productos favoritos!");
       return navigate("/login");
     } else {
       dispatch(addToFavorites(id, profileId, info.token));
-      alert("Producto agregado a favoritos!");
+      toast("Producto agregado a favoritos!");
     }
   };
   const handleDelFav = () => {
-    dispatch(deleteFavorite(id)).then(
-      dispatch(deleteOneFavorite(id, profileId))
+    dispatch(deleteFavorite(id)).then(() => {
+      dispatch(deleteOneFavorite(id, profileId));
+      toast("Producto eliminado de favoritos", "yellow");
+    }
     );
   };
   const handleAddCart = () => {
     if (!us) {
+      toast("Logueate para seguir tus productos favoritos!");
       return navigate("/login");
     } else {
       dispatch(addToCart(id, profileId, info.token));
-      alert("Producto agregado al carrito!");
+      toast("Producto agregado al carrito!");
     }
   };
   //FILTER ACTIVITY
