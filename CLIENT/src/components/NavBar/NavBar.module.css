@@ -85,3 +85,8 @@
 .NavBarText {
   margin-top: -30px;
 }
+
+.toast {
+  font-size: large;
+  border-radius: 10px;
+}

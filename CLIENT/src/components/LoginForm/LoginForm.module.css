@@ -176,3 +176,8 @@
   color: var(--verde);
   text-decoration: underline;
 }
+
+.toast {
+  font-size: large;
+  border-radius: 10px;
+}

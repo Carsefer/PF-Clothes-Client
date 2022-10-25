@@ -7,11 +7,20 @@ import Styles from "./LoginForm.module.css";
 import axios from "axios";
 import GoogleButton from "react-google-button";
 import { setSession } from "../../sessionUtils/jwtSession";
+import Toastify from 'toastify-js';
+import "toastify-js/src/toastify.css";
 
 const LoginForm = () => {
   const [showPwd, setShowPwd] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const toast = (text) => Toastify({
+    text: text,
+    duration: 2000,
+    position: "center",
+    className: Styles.toast,
+    backgroundColor: "red"
+    }).showToast();
 
   /* login with user and password */
   const handleLogin = async (userInfo) => {
@@ -19,13 +28,13 @@ const LoginForm = () => {
       const res = await axios.post(`http://localhost:3001/login`, userInfo);
       sessionStorage.setItem("sessionData", JSON.stringify(res.data));
       if (res.data) {
-        alert("Credenciales correctas");
+        //alert("Credenciales correctas")
         navigate("/home");
-        window.location.reload();
+        //window.location.reload();
       }
     } catch (err) {
       console.log("incorrect");
-      alert("Credenciales incorrectas");
+      toast("Credenciales incorrectas");
     }
   };
 
@@ -76,7 +85,7 @@ const LoginForm = () => {
             return errors;
           }}
           onSubmit={(values, { resetForm }) => {
-            resetForm();
+            //resetForm();
             handleLogin(values);
           }}
         >

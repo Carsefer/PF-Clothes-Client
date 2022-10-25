@@ -109,3 +109,8 @@
 .lognin {
   color: var(--verde);
 }
+.toast {
+  font-size: large;
+  border-radius: 10px;
+}
+
