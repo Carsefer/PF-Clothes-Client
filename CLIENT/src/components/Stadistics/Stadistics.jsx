@@ -32,14 +32,34 @@ const Stadistics = () => {
         } else if (thirtyOneDays.includes(thisMonth)) {
             daysOfThisMonth = listNumbers(31)
         } else {
-            daysOfThisMonth = listNumber(28)
+            daysOfThisMonth = listNumbers(28)
         }
         return daysOfThisMonth
     }
 
+    const sellsForDays = () => {
+        const thisMonth = Date().split(" ")[1]
+        const thisYear = Date().split(" ")[3]
+        let sellsDays = []
+        /* sellsHistory.length ? sellsHistory.forEach() : null */
+    }
+
+    const randomSells = () => {
+        let randomSell = Math.floor(Math.random() * 10)
+        return randomSell
+    }
+
+    const sellsInProcess = () => {
+        let auxSells = []
+        for (let i = 1; i <= 31; i++) {
+            auxSells.push(randomSells())
+        }
+        return auxSells
+    }
+
     /* const days = ["22", "23", "24", "25", "26", "27"] */
     const days = daysMonth()
-    const sells = ["5", "2", "7", "6", "4", "5"]
+    const sells = sellsInProcess()
 
     return (
         <div>
