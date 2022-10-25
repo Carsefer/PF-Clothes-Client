@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+
 import { useParams, useNavigate } from "react-router-dom";
 import { useLocalStorage } from "../../Utils/useLocalStorage";
 import {
@@ -10,6 +11,8 @@ import {
   addToFavorites,
   deleteFavorite,
   deleteOneFavorite,
+  postProductDetailReviews,
+  clearFormReview,
 } from "../../redux/actions";
 import Style from "./ProductDetail.module.css";
 import Comments from "../Comments/Comments";
@@ -20,11 +23,12 @@ import buttonDeleteFav from "../images/buttonDeleteFav.svg";
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
+
   const { id } = useParams();
   const navigate = useNavigate();
 
   const detail = useSelector((state) => state.productDetail);
-  const reviews = useSelector((state) => state.productReviews);
+  const reviewss = useSelector((state) => state.productReviews);
   const favorites = useSelector((state) => state.favorites);
 
   const [info, setInfo] = useState("");
@@ -34,6 +38,8 @@ const ProductDetail = () => {
     "filterByColor",
     ""
   );
+  const [reviews, setReviews] = useState("");
+  const [score, setScore] = useState("");
 
   const url = "http://localhost:3001/user/get";
   useEffect(() => {
@@ -104,6 +110,24 @@ const ProductDetail = () => {
     e.preventDefault();
     setFilterByColor(e.target.value);
   };
+
+  //SUBMIT
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(postProductDetailReviews(score, reviews, id));
+    alert("La reseña se creo con exito");
+    setReviews("");
+    setScore("");
+    dispatch(getProductDetailReviews(id));
+  };
+
+  function handleComentario(value) {
+    setReviews(value);
+  }
+
+  function handleScore(value) {
+    setScore(value);
+  }
 
   return (
     <div className={Style.detailsContainer}>
@@ -232,8 +256,41 @@ const ProductDetail = () => {
           </div>
           <div>
             <h2>Reseñas</h2>
-            {reviews.length ? (
-              reviews.map((r) => (
+            <form
+              onSubmit={(e) => {
+                handleSubmit(e);
+              }}
+            >
+              <textarea
+                placeholder="Ingrese su reseña del producto..."
+                name="reviews"
+                cols="50"
+                rows="10"
+                onChange={(e) => {
+                  handleComentario(e.target.value);
+                }}
+                value={reviews}
+              ></textarea>
+              <input
+                value={score}
+                name="score"
+                type="number"
+                placeholder="Score..."
+                onChange={(e) => {
+                  handleScore(e.target.value);
+                }}
+              />
+              <button
+                type="submit"
+                disabled={
+                  reviews === "" || score === "" || score > 5 || score < 1
+                }
+              >
+                Enviar
+              </button>
+            </form>
+            {reviewss.length ? (
+              reviewss.map((r) => (
                 <Comments score={r.score} reviews={r.reviews} />
               ))
             ) : (

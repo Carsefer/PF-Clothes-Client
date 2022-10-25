@@ -47,6 +47,15 @@ export const getProductDetail = (id) => {
   };
 };
 
+export function postProductDetailReviews(score, reviews, id) {
+  return async function () {
+    await axios.post(`/product/review/${id}`, {
+      score,
+      reviews,
+    });
+  };
+}
+
 export const getProductDetailReviews = (id) => {
   return async function (dispatch) {
     const reviews = await axios.get(`/product/review/${id}`);
