@@ -14,11 +14,41 @@ const Stadistics = () => {
 
     const sellsHistory = useSelector(state => state.sellsHistory)
 
+    const listNumbers = (num) => {
+        let numbers = [];
+        for (let i = 1; i <= num; i++) {
+            numbers.push(i.toString())
+        }
+        return numbers;
+    }
+
+    const daysMonth = () => {
+        const thisMonth = Date().split(" ")[1]
+        const thirtyDays = ["Abr", "Jun", "Sep", "Nov"]
+        const thirtyOneDays = ["Jan", "Mar", "May", "Jul", "Aug", "Oct", "Dec"]
+        let daysOfThisMonth = [];
+        if (thirtyDays.includes(thisMonth)) {
+            daysOfThisMonth = listNumbers(30)
+        } else if (thirtyOneDays.includes(thisMonth)) {
+            daysOfThisMonth = listNumbers(31)
+        } else {
+            daysOfThisMonth = listNumber(28)
+        }
+        return daysOfThisMonth
+    }
+
+    /* const days = ["22", "23", "24", "25", "26", "27"] */
+    const days = daysMonth()
+    const sells = ["5", "2", "7", "6", "4", "5"]
+
     return (
         <div>
             <h1>Panel de Control</h1>
             <div>
-                <SellsGraphic />
+                <SellsGraphic 
+                    days={days}
+                    sells={sells}
+                />
                 {
                     sellsHistory.length ? sellsHistory.map(sell => {
                         return (
