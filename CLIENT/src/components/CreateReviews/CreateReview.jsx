@@ -2,10 +2,14 @@ import Rating from '@mui/material/Rating';
 import {useEffect, useState} from "react"
 import Styles from "./CreateReview.module.css"
 import { createReviewProduct } from '../../redux/actions';
+import { getSession } from "../../sessionUtils/jwtSession";
+import { useDispatch } from 'react-redux';
 
 const CreateReview = ({id}) => {
     const [rating, setRating] = useState({value: null, text: ""})
     const [info, setInfo] = useState("");
+    const [error, setError] = useState("");
+    const dispatch = useDispatch();
 
     useEffect(() => {
         (async () => {
@@ -15,24 +19,37 @@ const CreateReview = ({id}) => {
         }})();
     }, [info]);
 
+    const errorhandle = (event) => {
+        if(rating.value && rating.text) {
+            postReview()
+        } else {
+            setError("Necesita brindar una Puntuacion y un Comentario");
+        }
+    }
+
     const handdleChange = (e) => {
         setRating({...rating, text: e.target.value});
     }
 
     const postReview = () => {
-        createReviewProduct(id, rating.text, rating.value, info.token);
+        const data = {
+            score: rating.value,
+            reviews: rating.text
+        }
+        dispatch(createReviewProduct(id, data, info.token)).then(alert("Reseña creada con exito").catch(alert("Algo salio mal")));
     }
 
     return (
         <div>
             <h2>Realizar Reseña</h2>
             <div>
-                <Rating value={rating.value} onChange={(event, newvalue) => {setRating({...rating, value: newvalue});}} sx={{fontSize: '5rem',}}/>
+                <Rating value={rating.value} onChange={(event, newvalue) => setRating({...rating, value: newvalue})} sx={{fontSize: '5rem',}}/>
             </div>
+            {!error ? null : <span>{error}</span>}
             <div className={Styles.ReviewFormsContainer}>
                 <form className={Styles.ReviewForms} onSubmit={(e) => {
                     e.preventDefault();
-                    postReview();
+                    errorhandle(e)
                 }}>
                     <textarea className={Styles.ReviewText} name="" id="" cols="30" rows="10" onChange={(evento) => handdleChange(evento)} placeholder={"Introduzca Reseña..."}></textarea>
                     <input type="submit" value="Enviar"/>

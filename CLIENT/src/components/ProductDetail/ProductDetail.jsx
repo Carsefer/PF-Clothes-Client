@@ -68,9 +68,6 @@ const ProductDetail = () => {
   }, [info, dispatch, id]);
   const profileId = us?.id;
 
-  console.log("hola");
-  console.log(reviews);
-
   const handleFav = () => {
     if (!us) {
       return navigate("/login");
