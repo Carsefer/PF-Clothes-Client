@@ -303,3 +303,10 @@ export const getSellDetail = (idSell) => {
     });
   };
 };
+
+export const createReviewProduct = (id, review, score, token) => {
+  return async () => {
+    await axios.post(`/product/review/${id}`,
+      {score: score, review: review},{headers: {Authorization: `Bearer ${info.token}`,}})
+  }
+}
