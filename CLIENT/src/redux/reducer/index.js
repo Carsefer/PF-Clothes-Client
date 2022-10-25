@@ -22,6 +22,7 @@ import {
   FLUSH_ERROR,
   GET_SELLS_HISTORY,
   GET_SELL_DETAIL,
+  CREATE_REVIEW_PRODUCT,
 } from "../action-types";
 
 const initialState = {
@@ -207,6 +208,10 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         sellDetail: action.payload,
+      };
+    case CREATE_REVIEW_PRODUCT:
+      return {
+        ...state
       };
     default:
       return state;

@@ -1,0 +1,12 @@
+.ReviewForms {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    height: 30%;
+}
+
+.ReviewText {
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+}

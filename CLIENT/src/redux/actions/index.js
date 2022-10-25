@@ -25,6 +25,7 @@ import {
   FLUSH_ERROR,
   GET_SELLS_HISTORY,
   GET_SELL_DETAIL,
+  CREATE_REVIEW_PRODUCT,
 } from "../action-types";
 
 export const getProducts = () => {
@@ -303,3 +304,13 @@ export const getSellDetail = (idSell) => {
     });
   };
 };
+
+export const createReviewProduct = (id, data, token) => {
+  return async (dispatch) => {
+    const res = await axios.post(`/product/review/${id}`,data, {headers: {Authorization: `Bearer ${token}`,}});
+    dispatch({
+      type: CREATE_REVIEW_PRODUCT,
+      payload: res.data,
+    });
+  }
+}

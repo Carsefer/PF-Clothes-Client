@@ -17,6 +17,7 @@ import { getSession } from "../../sessionUtils/jwtSession";
 import buttonCart from "../images/cart.svg";
 import buttonFav from "../images/buttonFav.svg";
 import buttonDeleteFav from "../images/buttonDeleteFav.svg";
+import CreateReview from "../CreateReviews/CreateReview";
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
@@ -68,9 +69,6 @@ const ProductDetail = () => {
     dispatch(getProductDetailReviews(id));
   }, [info, dispatch, id]);
   const profileId = us?.id;
-
-  console.log("hola");
-  console.log(reviews);
 
   const handleFav = () => {
     if (!us) {
@@ -231,6 +229,7 @@ const ProductDetail = () => {
             </p>
           </div>
           <div>
+            {!us ? (<></>) : (<CreateReview id={id}/>)}
             <h2>Reseñas</h2>
             {reviews.length ? (
               reviews.map((r) => (
@@ -249,12 +248,3 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
-
-/*
-{reviews.map((r) => (
-  <Comments 
-    score = {r.score}
-    review = {r.review}
-  />
-))}
-<Comments/>*/
