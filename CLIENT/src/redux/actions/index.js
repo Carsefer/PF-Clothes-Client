@@ -207,25 +207,25 @@ export const addToFavorites = (id, profileId, token) => {
 
     return dispatch({
       type: ADD_TO_FAVORITES,
-      payload: res,
+      payload: id,
     });
   };
 };
 
-export const deleteFavorite = (id) => {
-  return {
-    type: DELETE_FAVORITE,
-    payload: id,
-  };
-};
-export const deleteOneFavorite = (productId, profileId) => {
+// export const deleteFavorite = (id) => {
+//   return {
+//     type: DELETE_FAVORITE,
+//     payload: id,
+//   };
+// };
+export const deleteFavorite = (productId, profileId) => {
   return async (dispatch) => {
     const res = await axios.delete(
       `/user/favorites?productID=${productId}&profileID=${profileId}`
     );
     return dispatch({
-      type: DELETE_ONE_FAVORITE,
-      payload: res,
+      type: DELETE_FAVORITE,
+      payload: productId,
     });
   };
 };

@@ -10,6 +10,7 @@ import {
   addToFavorites,
   deleteFavorite,
   deleteOneFavorite,
+  getFavorites
 } from "../../redux/actions";
 import Style from "./ProductDetail.module.css";
 import Comments from "../Comments/Comments";
@@ -76,6 +77,7 @@ const ProductDetail = () => {
     })();
     dispatch(getProductDetail(id));
     dispatch(getProductDetailReviews(id));
+    dispatch(getFavorites(us?.id));
   }, [info, dispatch, id]);
   const profileId = us?.id;
 
@@ -89,11 +91,8 @@ const ProductDetail = () => {
     }
   };
   const handleDelFav = () => {
-    dispatch(deleteFavorite(id)).then(() => {
-      dispatch(deleteOneFavorite(id, profileId));
-      toast("Producto eliminado de favoritos", "yellow");
-    }
-    );
+    dispatch(deleteFavorite(id, profileId));
+    toast("Producto eliminado de favoritos", "yellow");
   };
   const handleAddCart = () => {
     if (!us) {
