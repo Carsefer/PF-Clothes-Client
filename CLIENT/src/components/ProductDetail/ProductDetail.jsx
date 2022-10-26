@@ -27,7 +27,7 @@ const ProductDetail = () => {
   const navigate = useNavigate();
   const toast = (text, color="#32CD32") => Toastify({
     text: text,
-    duration: 3000,
+    duration: 1500,
     position: "center",
     className: Style.toast,
     backgroundColor: color

@@ -87,19 +87,6 @@ const rootReducer = (state = initialState, action) => {
           }
         }),
       };
-    /* case ORDER_PRODUCTS_BY_SCORE:
-      const orderedProductsByScore =
-        action.payload === "ascendente"
-          ? state.products.sort((a, b) => {
-              return a.score - b.score;
-            })
-          : state.products.sort((a, b) => {
-              return b.score - a.score;
-            });
-      return {
-        ...state,
-        products: orderedProductsByScore,
-      }; */
     case FILTER_PRODUCTS:
       return {
         ...state,
@@ -117,19 +104,19 @@ const rootReducer = (state = initialState, action) => {
         ...state,
       };
     case ADD_TO_FAVORITES:
-      let newFavorite = state.products.find((p) => p.id === action.payload);
-      let productInFav = state.favorites.find((f) => f.id === newFavorite.id);
-      return !productInFav
-        ? {
-            ...state,
-            favorites: [...state.favorites, newFavorite],
-          }
-        : state;
+      return {
+        ...state,
+      };
     case DELETE_FAVORITE:
       let delFav = state.favorites.filter((f) => f.id !== action.payload);
       return {
         ...state,
         favorites: delFav,
+      };
+    case GET_FAVORITES:
+      return {
+        ...state,
+         favorites: action.payload,
       };
     case LOGIN_USER:
       return {
@@ -198,11 +185,6 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         cart: action.payload,
-      };
-    case GET_FAVORITES:
-      return {
-        ...state,
-        favorites: action.payload,
       };
     case GET_SELL_DETAIL:
       return {
