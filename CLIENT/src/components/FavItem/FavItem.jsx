@@ -1,11 +1,8 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import Card from "../Card/Card";
-
 import Style from "./favItem.module.css";
 import buttonDelete from "../images/Delete.svg";
 const FavItem = ({ img, title, price, deleteFavorite, id }) => {
-  const dispatch = useDispatch();
 
   return (
     <div className={Style.artilce_FavItem}>
@@ -16,7 +13,7 @@ const FavItem = ({ img, title, price, deleteFavorite, id }) => {
         className={Style.buttonDeleteFav}
         onClick={() => deleteFavorite(id)}
       >
-        <img src={buttonDelete}></img>
+        <img src={buttonDelete} alt="img not found"></img>
       </button>
     </div>
   );

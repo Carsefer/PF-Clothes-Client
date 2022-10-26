@@ -3,7 +3,7 @@ import CreateStore from "./components/CreateStore/CreateStore";
 import CreateUser from "./components/CreateUser/CreateUser";
 import Favorites from "./components/Favorites/Favorites";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Home from "./components/Home/Home";
 import LandingHome from "./components/LandingHome/LandingHome";
 import Login from "./components/Login/Login";
@@ -15,7 +15,7 @@ import { getSession } from "./sessionUtils/jwtSession";
 import { useLocalStorage } from "./Utils/useLocalStorage";
 import {
   ProtectedRoute,
-  ProtectedRoutes,
+  //ProtectedRoutes,
 } from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
@@ -51,17 +51,16 @@ function App() {
           });
       }
     })();
-  }, [info]);
+  }, [info, setInfo, setUs, us]);
   return (
     <Routes>
       <Route index element={<LandingHome />} />
       <Route exact path="/" element={<LandingHome />} />
       <Route exact path="/home" element={<Home />} />
-      <Route element={<ProtectedRoutes us={us} />}>
+      {/* <Route element={<ProtectedRoutes us={us} />}> */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<CreateUser />} />
-      </Route>
-
+      {/* </Route> */}
       <Route element={<ProtectedRoute us={us} />}>
         <Route path="/home/Favorites" element={<Favorites />} />
         <Route path="/home/ShoppingCart" element={<ShoppingCart />} />

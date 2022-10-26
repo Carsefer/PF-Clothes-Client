@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { createStore } from "../../redux/actions";
 import { Formik } from "formik";
 import { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Styles from "./CreateStore.module.css";
 import axios from "axios";
 import { getSession } from "../../sessionUtils/jwtSession";
