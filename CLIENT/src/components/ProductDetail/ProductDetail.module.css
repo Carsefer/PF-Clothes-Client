@@ -103,6 +103,7 @@
 }
 
 .FilterProductsSelect {
+  cursor: pointer;
   color: #ffe3b3;
   font-size: 16px;
   height: 8%;
