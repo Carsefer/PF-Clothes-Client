@@ -12,11 +12,15 @@ import Profile from "./components/Profile/Profile";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import Stadistics from "./components/Stadistics/Stadistics";
 import { getSession } from "./sessionUtils/jwtSession";
-import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
+import { useLocalStorage } from "./Utils/useLocalStorage";
+import {
+  ProtectedRoute,
+  ProtectedRoutes,
+} from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
-  const [info, setInfo] = useState("");
-  const [us, setUs] = useState(null);
+  const [info, setInfo] = useLocalStorage("");
+  const [us, setUs] = useLocalStorage(null);
 
   const url = "http://localhost:3001/user/get";
   useEffect(() => {
@@ -53,8 +57,11 @@ function App() {
       <Route index element={<LandingHome />} />
       <Route exact path="/" element={<LandingHome />} />
       <Route exact path="/home" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<CreateUser />} />
+      <Route element={<ProtectedRoutes us={us} />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<CreateUser />} />
+      </Route>
+
       <Route element={<ProtectedRoute us={us} />}>
         <Route path="/home/Favorites" element={<Favorites />} />
         <Route path="/home/ShoppingCart" element={<ShoppingCart />} />

@@ -1,4 +1,4 @@
-import { React, useEffect, useState,useContext } from "react";
+import { React, useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Styles from "./NavBar.module.css";
 import Logo from "../images/express-fashion-stores.svg";
@@ -6,36 +6,39 @@ import Cart from "../images/cart.svg";
 import ButtonFav from "../images/buttonFavNav.svg";
 import Profile from "../images/profile.svg";
 import { getSession } from "../../sessionUtils/jwtSession";
-import Toastify from 'toastify-js';
+import { useLocalStorage } from "../../Utils/useLocalStorage";
+import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
-
-
+import { FaWindows } from "react-icons/fa";
 
 const NavBar = () => {
-  const [user, setUser] = useState("");
+  const [user, setUser] = useLocalStorage("");
   const navigate = useNavigate();
-  const toast = (text) => Toastify({
-    text: text,
-    duration: 2000,
-    position: "center",
-    className: Styles.toast,
-    backgroundColor: "black"
+  const toast = (text) =>
+    Toastify({
+      text: text,
+      duration: 2000,
+      position: "center",
+      className: Styles.toast,
+      backgroundColor: "black",
     }).showToast();
 
   useEffect(() => {
     (async () => {
       if (!user) {
         const data = await getSession();
-        if(data){
+        if (data) {
           setUser(data);
         }
       }
     })();
-  }, [user])
- 
+  }, [user]);
+
   const handleLogout = (e) => {
     setUser("");
+
     sessionStorage.removeItem("sessionData");
+    window.localStorage.clear();
     toast("Sesión cerrada");
     navigate("/home");
   };
@@ -49,7 +52,7 @@ const NavBar = () => {
         {/* si el usuario no esta logueado mostrar login y signup
                 en caso contrario mostrar el usuario logueado y boton de 
             cerrar sesion */}
-        {!user  ? (
+        {!user ? (
           <div className={Styles.NavbarHomeFormsButtonsContainer}>
             <Link to="/login">
               <button className={Styles.NavbarHomeButtons}>
