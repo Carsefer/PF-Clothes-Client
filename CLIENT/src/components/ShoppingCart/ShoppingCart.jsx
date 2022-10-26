@@ -4,6 +4,7 @@ import {
   clearCart,
   delFromCart,
   delProductCart,
+  buyProduct,
 } from "../../redux/actions";
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -48,9 +49,12 @@ const ShoppingCart = () => {
     })();
     const id = us?.id;
     dispatch(getCartProducts(id));
+    dispatch(buyProduct());
   }, [info, dispatch, us?.id]);
   console.log(us);
   const cartList = useSelector((state) => state?.cart);
+  const compra = useSelector((state) => state.linkCompra);
+
   console.log(cartList);
 
   return (
@@ -79,6 +83,9 @@ const ShoppingCart = () => {
             />
           ))}
         </article>
+        <a href={compra}>
+          <button>COMPRAR</button>
+        </a>
       </div>
     </>
   );

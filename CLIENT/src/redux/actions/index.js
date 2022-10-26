@@ -24,6 +24,7 @@ import {
   GET_SELLS_HISTORY,
   GET_SELL_DETAIL,
   CREATE_REVIEW_PRODUCT,
+  BUY_PRODUCT,
 } from "../action-types";
 
 export const getProducts = () => {
@@ -289,10 +290,22 @@ export const getSellDetail = (idSell) => {
 
 export const createReviewProduct = (id, data, token) => {
   return async (dispatch) => {
-    const res = await axios.post(`/product/review/${id}`,data, {headers: {Authorization: `Bearer ${token}`,}});
+    const res = await axios.post(`/product/review/${id}`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     dispatch({
       type: CREATE_REVIEW_PRODUCT,
       payload: res.data,
     });
-  }
-}
+  };
+};
+
+export const buyProduct = () => {
+  return async function (dispatch) {
+    const link = await axios.get("/generar");
+    dispatch({
+      type: BUY_PRODUCT,
+      payload: link.data,
+    });
+  };
+};
