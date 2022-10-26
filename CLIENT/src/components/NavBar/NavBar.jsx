@@ -6,31 +6,37 @@ import Cart from "../images/cart.svg";
 import ButtonFav from "../images/buttonFavNav.svg";
 import Profile from "../images/profile.svg";
 import { getSession } from "../../sessionUtils/jwtSession";
+import Toastify from 'toastify-js';
+import "toastify-js/src/toastify.css";
+
 
 
 const NavBar = () => {
   const [user, setUser] = useState("");
   const navigate = useNavigate();
+  const toast = (text) => Toastify({
+    text: text,
+    duration: 2000,
+    position: "center",
+    className: Styles.toast,
+    backgroundColor: "black"
+    }).showToast();
 
   useEffect(() => {
     (async () => {
-
       if (!user) {
         const data = await getSession();
         if(data){
           setUser(data);
         }
       }
-
-
     })();
-
   }, [user])
  
   const handleLogout = (e) => {
-
     setUser("");
     sessionStorage.removeItem("sessionData");
+    toast("Sesión cerrada");
     navigate("/home");
   };
 

@@ -144,3 +144,8 @@
   font-size: xx-large;
   border-bottom: 1px solid rgba(0, 0, 0, 0.288);
 }
+
+.toast {
+  font-size: large;
+  border-radius: 10px;
+}
