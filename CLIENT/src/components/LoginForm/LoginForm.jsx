@@ -7,19 +7,29 @@ import Styles from "./LoginForm.module.css";
 import axios from "axios";
 import GoogleButton from "react-google-button";
 import { setSession } from "../../sessionUtils/jwtSession";
-import Toastify from 'toastify-js';
+import { useLocalStorage } from "../../Utils/useLocalStorage";
+import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
 
 const LoginForm = () => {
-  const [showPwd, setShowPwd] = useState(false);
+  const [showPwd, setShowPwd] = useLocalStorage(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const toast = (text) => Toastify({
-    text: text,
-    duration: 2000,
-    position: "center",
-    className: Styles.toast,
-    backgroundColor: "red"
+  const toast = (text) =>
+    Toastify({
+      text: text,
+      duration: 2000,
+      position: "center",
+      className: Styles.toast,
+      backgroundColor: "red",
+    }).showToast();
+  const toastCorrect = (text) =>
+    Toastify({
+      text: text,
+      duration: 2000,
+      position: "center",
+      className: Styles.toast,
+      backgroundColor: "green",
     }).showToast();
 
   /* login with user and password */
@@ -28,9 +38,11 @@ const LoginForm = () => {
       const res = await axios.post(`http://localhost:3001/login`, userInfo);
       sessionStorage.setItem("sessionData", JSON.stringify(res.data));
       if (res.data) {
-        //alert("Credenciales correctas")
-        navigate("/home");
-        //window.location.reload();
+        toastCorrect("Credenciales correctas");
+        setTimeout(() => {
+          navigate("/home");
+          window.location.reload();
+        }, 1000);
       }
     } catch (err) {
       console.log("incorrect");
@@ -85,7 +97,7 @@ const LoginForm = () => {
             return errors;
           }}
           onSubmit={(values, { resetForm }) => {
-            //resetForm();
+            resetForm();
             handleLogin(values);
           }}
         >
