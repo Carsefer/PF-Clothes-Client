@@ -9,7 +9,6 @@ import {
   getProductDetailReviews,
   addToFavorites,
   deleteFavorite,
-  deleteOneFavorite,
 } from "../../redux/actions";
 import Style from "./ProductDetail.module.css";
 import Comments from "../Comments/Comments";
@@ -25,9 +24,9 @@ const ProductDetail = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
-  const toast = (text, color="green") => Toastify({
+  const toast = (text, color="#32CD32") => Toastify({
     text: text,
-    duration: 3000,
+    duration: 1500,
     position: "center",
     className: Style.toast,
     backgroundColor: color
@@ -89,11 +88,8 @@ const ProductDetail = () => {
     }
   };
   const handleDelFav = () => {
-    dispatch(deleteFavorite(id)).then(() => {
-      dispatch(deleteOneFavorite(id, profileId));
-      toast("Producto eliminado de favoritos", "yellow");
-    }
-    );
+    dispatch(deleteFavorite(id, profileId));
+    toast("Producto eliminado de favoritos", "yellow");
   };
   const handleAddCart = () => {
     if (!us) {
@@ -139,19 +135,19 @@ const ProductDetail = () => {
                 .reduce((a, b) => a + b) === 0
             }
           >
-            <img className={Style.buttonImage} src={buttonCart}></img>
+            <img className={Style.buttonImage} src={buttonCart} alt="img not found"></img>
           </button>
 
           {!favorites.find((f) => f?.id === id) ? (
             <button className={Style.buttonfavDetail} onClick={() => handleFav()}>
-              <img className={Style.buttonImage} src={buttonFav}></img>
+              <img className={Style.buttonImage} src={buttonFav} alt="img not found"></img>
             </button>
           ) : (
             <button
               className={Style.buttonDeletefavDetail}
               onClick={() => handleDelFav()}
             >
-              <img className={Style.buttonImage} src={buttonDeleteFav}></img>
+              <img className={Style.buttonImage} src={buttonDeleteFav} alt="img not found"></img>
             </button>
           )}
         </div>

@@ -4,7 +4,6 @@ import {
   SEARCH_PRODUCT,
   GET_SIZES,
   ORDER_PRODUCTS_BY_NAME,
-  ORDER_PRODUCTS_BY_SCORE,
   FILTER_PRODUCTS,
   CREATE_USER,
   GET_PRODUCTS_CART,
@@ -87,19 +86,6 @@ const rootReducer = (state = initialState, action) => {
           }
         }),
       };
-    /* case ORDER_PRODUCTS_BY_SCORE:
-      const orderedProductsByScore =
-        action.payload === "ascendente"
-          ? state.products.sort((a, b) => {
-              return a.score - b.score;
-            })
-          : state.products.sort((a, b) => {
-              return b.score - a.score;
-            });
-      return {
-        ...state,
-        products: orderedProductsByScore,
-      }; */
     case FILTER_PRODUCTS:
       return {
         ...state,
@@ -121,7 +107,7 @@ const rootReducer = (state = initialState, action) => {
       let productInFav = state.favorites.find((f) => f.id === newFavorite.id);
       return !productInFav
         ? {
-            ...state,
+           ...state,
             favorites: [...state.favorites, newFavorite],
           }
         : state;
@@ -130,6 +116,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         favorites: delFav,
+      };
+    case GET_FAVORITES:
+      return {
+        ...state,
+         favorites: action.payload,
       };
     case LOGIN_USER:
       return {
@@ -198,11 +189,6 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         cart: action.payload,
-      };
-    case GET_FAVORITES:
-      return {
-        ...state,
-        favorites: action.payload,
       };
     case GET_SELL_DETAIL:
       return {
