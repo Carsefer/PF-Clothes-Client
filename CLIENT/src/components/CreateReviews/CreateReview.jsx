@@ -41,7 +41,7 @@ const CreateReview = ({id}) => {
 
     return (
         <div>
-            <h2>Realizar Reseña</h2>
+            <h1 className={Styles.MakeReviewTittle}>Realizar Reseña</h1>
             <div>
                 <Rating value={rating.value} onChange={(event, newvalue) => setRating({...rating, value: newvalue})} sx={{fontSize: '5rem',}}/>
             </div>
@@ -52,7 +52,7 @@ const CreateReview = ({id}) => {
                     errorhandle(e)
                 }}>
                     <textarea className={Styles.ReviewText} name="" id="" cols="30" rows="10" onChange={(evento) => handdleChange(evento)} placeholder={"Introduzca Reseña..."}></textarea>
-                    <input type="submit" value="Enviar"/>
+                    <input className={Styles.MakeReviewButton} type="submit" value="Enviar"/>
                 </form>
             </div>
         </div>

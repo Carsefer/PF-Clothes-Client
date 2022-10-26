@@ -104,144 +104,143 @@ const ProductDetail = () => {
   };
 
   return (
-    <div className={Style.detailsContainer}>
+    <div className={Style.ProductContainer}>
       <div className={Style.sectionDetails}>
-        <button className={Style.backButton} onClick={() => navigate("/home")}>
-          Atrás
-        </button>
-        <button
-          className={Style.buttonCartDetail}
-          onClick={() => handleAddCart()}
-          disabled={
-            filterBySize === "" ||
-            filterByColor === "" ||
-            detail.variants
-              ?.map(
-                (v) =>
-                  v.size === filterBySize &&
-                  v.color === filterByColor &&
-                  v.stock
-              )
-              .reduce((a, b) => a + b) === 0
-          }
-        >
-          <img src={buttonCart}></img>
-        </button>
-
-        {!favorites.find((f) => f?.id === id) ? (
-          <button className={Style.buttonfavDetail} onClick={() => handleFav()}>
-            <img src={buttonFav}></img>
+        <div className={Style.sectionDetailsButtons}>
+          <button className={Style.backButton} onClick={() => navigate("/home")}>
+            Atrás
           </button>
-        ) : (
           <button
-            className={Style.buttonDeletefavDetail}
-            onClick={() => handleDelFav()}
+            className={Style.buttonCartDetail}
+            onClick={() => handleAddCart()}
+            disabled={
+              filterBySize === "" ||
+              filterByColor === "" ||
+              detail.variants
+                ?.map(
+                  (v) =>
+                    v.size === filterBySize &&
+                    v.color === filterByColor &&
+                    v.stock
+                )
+                .reduce((a, b) => a + b) === 0
+            }
           >
-            <img src={buttonDeleteFav}></img>
+            <img className={Style.buttonImage} src={buttonCart}></img>
           </button>
-        )}
+
+          {!favorites.find((f) => f?.id === id) ? (
+            <button className={Style.buttonfavDetail} onClick={() => handleFav()}>
+              <img className={Style.buttonImage} src={buttonFav}></img>
+            </button>
+          ) : (
+            <button
+              className={Style.buttonDeletefavDetail}
+              onClick={() => handleDelFav()}
+            >
+              <img className={Style.buttonImage} src={buttonDeleteFav}></img>
+            </button>
+          )}
+        </div>
         <br />
-        <h1 className={Style.detailsTitle}>
-          {detail.name?.charAt(0).toUpperCase() + detail.name?.slice(1)}
-        </h1>
         <div className={Style.article__details}>
-          <div className={Style.articleDetailsImage}>
-            <img src={detail.image} alt="img not found" />
+          <div className={Style.articleDetailsImageContainer}>
+            <img className={Style.articleDetailsImage} src={detail.image} alt="img not found" />
           </div>
           <div className={Style.article_details_container}>
-            <p>Precio: ${detail.price}</p>
-            <p>
-              Seleccionar Talle:
-              <select
-                className={Style.FilterProductsSelect}
-                value={filterBySize}
-                onChange={(e) => handleSize(e)}
-              >
-                {[...new Set(detail.variants?.map((e) => e.size))].length >
-                1 ? (
-                  <option value="">Todos</option>
-                ) : (
-                  <p></p>
-                )}
-                {[...new Set(detail.variants?.map((e) => e.size))]?.map(
-                  (el) => {
-                    return <option value={el}>{el}</option>;
-                  }
-                )}
-              </select>
-            </p>
-            <p>
-              Seleccionar Color:
-              <select
-                className={Style.FilterProductsSelect}
-                value={filterByColor}
-                onChange={(e) => handleColor(e)}
-              >
-                {[...new Set(detail.variants?.map((e) => e.color))].length >
-                1 ? (
-                  <option value="">Todos</option>
-                ) : (
-                  <p></p>
-                )}
-                {[...new Set(detail.variants?.map((e) => e.color))]?.map(
-                  (el) => {
-                    return <option value={el}>{el}</option>;
-                  }
-                )}
-              </select>
-            </p>
-            {detail.brand ? <p>Marca: {detail.brand}</p> : <p></p>}
-            {detail.materials ? <p>Material: {detail.materials}</p> : <p></p>}
-            <p>
-              Stock:
-              {filterByColor && filterBySize ? (
-                <p>
-                  {detail.variants
-                    ?.map(
-                      (v) =>
-                        v.size === filterBySize &&
-                        v.color === filterByColor &&
-                        v.stock
-                    )
-                    .reduce((a, b) => a + b)}{" "}
-                  unidades
-                </p>
-              ) : filterBySize ? (
-                <p>
-                  {detail.variants
-                    ?.map((v) => v.size === filterBySize && v.stock)
-                    .reduce((a, b) => a + b)}{" "}
-                  unidades
-                </p>
-              ) : filterByColor ? (
-                <p>
-                  {detail.variants
-                    ?.map((v) => v.color === filterByColor && v.stock)
-                    .reduce((a, b) => a + b)}{" "}
-                  unidades
-                </p>
+            <h1 className={Style.detailsTitle}>
+              {detail.name?.charAt(0).toUpperCase() + detail.name?.slice(1)}
+            </h1>
+            <label id={Style.article_price} className={Style.article_label} htmlFor="">Precio: ${detail.price}</label>
+            <label className={Style.article_label} htmlFor="">Seleccionar Talle:</label>
+            <select
+              id={Style.FilterProductsSelectTalle}
+              className={Style.FilterProductsSelect}
+              value={filterBySize}
+              onChange={(e) => handleSize(e)}
+            >
+              {[...new Set(detail.variants?.map((e) => e.size))].length >
+              1 ? (
+                <option value="">Todos</option>
               ) : (
-                <p>
-                  {detail.variants?.map((v) => v.stock).reduce((a, b) => a + b)}{" "}
-                  unidades
-                </p>
+                <p></p>
               )}
-            </p>
+              {[...new Set(detail.variants?.map((e) => e.size))]?.map(
+                (el) => {
+                  return <option value={el}>{el}</option>;
+                }
+              )}
+            </select>
+            <label className={Style.article_label} htmlFor="">Seleccionar Color:</label>
+            <select
+              id={Style.FilterProductsSelectColor}
+              className={Style.FilterProductsSelect}
+              value={filterByColor}
+              onChange={(e) => handleColor(e)}
+            >
+              {[...new Set(detail.variants?.map((e) => e.color))].length >
+              1 ? (
+                <option value="">Todos</option>
+              ) : (
+                <p></p>
+              )}
+              {[...new Set(detail.variants?.map((e) => e.color))]?.map(
+                (el) => {
+                  return <option value={el}>{el}</option>;
+                }
+              )}
+            </select>
+            {detail.brand ? <label className={Style.article_label}>Marca: {detail.brand}</label> : null}
+            {detail.materials ? <label className={Style.article_label}>Material: {detail.materials}</label> : null}
+            <div className={Style.article__detail_stock}>
+              <label id={Style.article_labelStock} className={Style.article_label} htmlFor=""> Stock: 
+                {filterByColor && filterBySize ? (
+                  <label id={Style.article_labelStock} className={Style.article_label}>
+                    {detail.variants
+                      ?.map(
+                        (v) =>
+                          v.size === filterBySize &&
+                          v.color === filterByColor &&
+                          v.stock
+                      )
+                      .reduce((a, b) => a + b)}{" "}
+                    unidades
+                  </label>
+                ) : filterBySize ? (
+                  <label id={Style.article_labelStock} className={Style.article_label}>
+                    {detail.variants
+                      ?.map((v) => v.size === filterBySize && v.stock)
+                      .reduce((a, b) => a + b)}{" "}
+                    unidades
+                  </label>
+                ) : filterByColor ? (
+                  <label id={Style.article_labelStock} className={Style.article_label}>
+                    {detail.variants
+                      ?.map((v) => v.color === filterByColor && v.stock)
+                      .reduce((a, b) => a + b)}{" "}
+                    unidades
+                  </label>
+                ) : (
+                  <label id={Style.article_labelStock} className={Style.article_label}>
+                    {detail.variants?.map((v) => v.stock).reduce((a, b) => a + b)}{" "}
+                    unidades
+                  </label>
+                )}
+              </label>
+            </div>            
           </div>
-          <div>
+        </div>
+        <div>
             {!us ? (<></>) : (<CreateReview id={id}/>)}
-            <h2>Reseñas</h2>
+            <h1 className={Style.ProductDetailReviews}>Reseñas</h1>
             {reviews.length ? (
               reviews.map((r) => (
                 <Comments score={r.score} reviews={r.reviews} />
               ))
             ) : (
-              <div>
-                <a>No hay reseñas</a>
-              </div>
+              <h3>No hay reseñas</h3>
             )}
           </div>
-        </div>
       </div>
     </div>
   );
