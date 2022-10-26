@@ -1,12 +1,11 @@
 import React from "react";
 import Styles from "./Home.module.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filterProducts, emptyDetail } from "../../redux/actions";
 import Card from "../Card/Card";
 import NavBar from "../NavBar/NavBar";
 import { useLocalStorage } from "../../Utils/useLocalStorage";
-//import Orders from "../Orders/Orders";
 
 export default function Home() {
   const dispatch = useDispatch();

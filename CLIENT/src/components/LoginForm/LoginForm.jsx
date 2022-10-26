@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { loginUser, flushError } from "../../redux/actions";
+import React from "react";
 import { Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import Styles from "./LoginForm.module.css";
@@ -13,7 +11,6 @@ import "toastify-js/src/toastify.css";
 
 const LoginForm = () => {
   const [showPwd, setShowPwd] = useLocalStorage(false);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const toast = (text) =>
     Toastify({
@@ -29,7 +26,7 @@ const LoginForm = () => {
       duration: 2000,
       position: "center",
       className: Styles.toast,
-      backgroundColor: "green",
+      backgroundColor: "#32CD32",
     }).showToast();
 
   /* login with user and password */
