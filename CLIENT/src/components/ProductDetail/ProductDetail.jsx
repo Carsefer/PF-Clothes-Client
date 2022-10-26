@@ -9,8 +9,6 @@ import {
   getProductDetailReviews,
   addToFavorites,
   deleteFavorite,
-  deleteOneFavorite,
-  getFavorites
 } from "../../redux/actions";
 import Style from "./ProductDetail.module.css";
 import Comments from "../Comments/Comments";
@@ -77,7 +75,6 @@ const ProductDetail = () => {
     })();
     dispatch(getProductDetail(id));
     dispatch(getProductDetailReviews(id));
-    dispatch(getFavorites(us?.id));
   }, [info, dispatch, id]);
   const profileId = us?.id;
 
@@ -138,19 +135,19 @@ const ProductDetail = () => {
                 .reduce((a, b) => a + b) === 0
             }
           >
-            <img className={Style.buttonImage} src={buttonCart}></img>
+            <img className={Style.buttonImage} src={buttonCart} alt="img not found"></img>
           </button>
 
           {!favorites.find((f) => f?.id === id) ? (
             <button className={Style.buttonfavDetail} onClick={() => handleFav()}>
-              <img className={Style.buttonImage} src={buttonFav}></img>
+              <img className={Style.buttonImage} src={buttonFav} alt="img not found"></img>
             </button>
           ) : (
             <button
               className={Style.buttonDeletefavDetail}
               onClick={() => handleDelFav()}
             >
-              <img className={Style.buttonImage} src={buttonDeleteFav}></img>
+              <img className={Style.buttonImage} src={buttonDeleteFav} alt="img not found"></img>
             </button>
           )}
         </div>
