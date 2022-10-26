@@ -25,7 +25,7 @@ const ProductDetail = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
-  const toast = (text, color="green") => Toastify({
+  const toast = (text, color="#32CD32") => Toastify({
     text: text,
     duration: 3000,
     position: "center",
