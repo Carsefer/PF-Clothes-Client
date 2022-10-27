@@ -1,7 +1,6 @@
 import {
   GET_PRODUCTS,
   GET_PRODUCT_DETAIL,
-  SEARCH_PRODUCT,
   GET_SIZES,
   ORDER_PRODUCTS_BY_NAME,
   FILTER_PRODUCTS,
@@ -63,11 +62,6 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         productDetail: [],
-      };
-    case SEARCH_PRODUCT:
-      return {
-        ...state,
-        products: action.payload,
       };
     case GET_SIZES:
       return {
