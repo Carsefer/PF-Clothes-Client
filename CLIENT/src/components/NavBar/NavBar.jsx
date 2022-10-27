@@ -26,13 +26,19 @@ const NavBar = () => {
   let value = document.cookie.split("token=");
   //console.log(value);
   const [cookie] = useState(value[1]);
-  console.log(cookie);
+  //console.log(cookie);
 
   useEffect(() => {
     (async () => {
       if (!user) {
-        const res = await axios.get(`${process.env.REACT_APP_API || "http://localhost:3001"}`);
-        setUser(res.data);
+        try{
+          const res = await axios.get(`${process.env.REACT_APP_API || "http://localhost:3001"}/user/get?secret_token=${cookie}`);
+          console.log(res.data);
+          setUser(res.data.username);
+        }catch(err){
+          console.log(err.message);
+        }
+        
       }
     })();
   }, [user])
@@ -43,6 +49,8 @@ const NavBar = () => {
     toast("Sesión cerrada");
     navigate("/home");
   };
+
+  console.log(user);
 
   return (
     <nav className={Styles.NavbarHome}>
@@ -79,7 +87,7 @@ const NavBar = () => {
             <Link to="/home/stadistics">Estadísticas</Link>
             <div>
               {/* username */}
-              <p>{user.username}</p>
+              <p>{user}</p>
               <button
                 className={Styles.NavbarHomeButtons2}
                 onClick={(e) => {
