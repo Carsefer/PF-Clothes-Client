@@ -61,29 +61,32 @@ const ShoppingCart = () => {
       <NavBar />
       <div className={Style.containerShopping}>
         <h2>Carrito de Compras</h2>
-        <h3>Productos</h3>
         {cartList.length ? (
-          <article className="box">
-            <button onClick={() => dispatch(clearCart())}>
-              Limpiar Carrito
-            </button>
+          <div>
+            <h3>Productos</h3>
 
-            {cartList?.map((e) => (
-              <CartItem
-                key={e?.id + 1}
-                name={e?.name}
-                price={e?.price}
-                quantity="1"
-                image={e?.image}
-                delOneFromCart={() =>
-                  dispatch(delProductCart(e?.id, us?.id)).then(
-                    dispatch(delFromCart(e.id))
-                  )
-                }
-                delAllFromCart={() => dispatch(delFromCart(e.id, true))}
-              />
-            ))}
-          </article>
+            <article className="box">
+              <button onClick={() => dispatch(clearCart(us?.id))}>
+                Limpiar Carrito
+              </button>
+
+              {cartList?.map((e) => (
+                <CartItem
+                  key={e?.id + 1}
+                  name={e?.name}
+                  price={e?.price}
+                  quantity="1"
+                  image={e?.image}
+                  delOneFromCart={() =>
+                    dispatch(delProductCart(e?.id, us?.id)).then(
+                      dispatch(delFromCart(e.id))
+                    )
+                  }
+                  delAllFromCart={() => dispatch(delFromCart(e.id, true))}
+                />
+              ))}
+            </article>
+          </div>
         ) : (
           <p>
             Aun no tienes productos agregado al carrito.{" "}
