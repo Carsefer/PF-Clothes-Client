@@ -7,6 +7,8 @@ import FavItem from "../FavItem/FavItem.jsx";
 import {
   getFavorites,
   deleteFavorite,
+  deleteOneFavorite,
+  clearFavorites,
 } from "../../redux/actions/index.js";
 import Style from "./Favorites.module.css";
 import NavBar from "../NavBar/NavBar";
@@ -57,6 +59,11 @@ const Favorites = () => {
       <NavBar />
       <div className={Style.Container__Fav}>
         <div className={Style.containerFavorites}>
+          <div>
+            <button onClick={() => dispatch(clearFavorites(us?.id))}>
+              Limpiar Favoritos
+            </button>
+          </div>
           {favorites?.length ? (
             favorites?.map((cloth) => (
               <FavItem
@@ -66,7 +73,7 @@ const Favorites = () => {
                 title={cloth?.name[0].toUpperCase() + cloth?.name.substring(1)}
                 price={cloth?.price}
                 deleteFavorite={() => {
-                  dispatch(deleteFavorite(cloth?.id, us?.id))
+                  dispatch(deleteFavorite(cloth?.id, us?.id));
                 }}
               />
             ))
