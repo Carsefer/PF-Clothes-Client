@@ -182,10 +182,16 @@ export const addToFavorites = (id, profileId, token) => {
   };
 };
 
-export const deleteFavorite = (productId, profileId) => {
+export const deleteFavorite = (productId, profileId, token) => {
   return async (dispatch) => {
     await axios.delete(
-      `/user/favorites?productID=${productId}&profileID=${profileId}`
+      `/user/favorites?productID=${productId}&profileID=${profileId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     return dispatch({
       type: DELETE_FAVORITE,

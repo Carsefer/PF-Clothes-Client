@@ -1,7 +1,7 @@
 import { React, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Styles from "./NavBar.module.css";
-import Logo from "../images/express-fashion-stores.svg";
+import Logo from "../images/bitmap2.png";
 import Cart from "../images/cart.svg";
 import ButtonFav from "../images/buttonFavNav.svg";
 import Profile from "../images/profile.svg";
