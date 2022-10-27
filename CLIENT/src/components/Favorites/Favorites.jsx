@@ -58,11 +58,16 @@ const Favorites = () => {
       <NavBar />
       <div className={Style.Container__Fav}>
         <div className={Style.containerFavorites}>
-          <div>
-            <button onClick={() => dispatch(clearFavorites(us?.id))}>
-              Limpiar Favoritos
-            </button>
-          </div>
+          {favorites.length ? (
+            <div>
+              <button onClick={() => dispatch(clearFavorites(us?.id))}>
+                Limpiar Favoritos
+              </button>
+            </div>
+          ) : (
+            <p></p>
+          )}
+
           {favorites?.length ? (
             favorites?.map((cloth) => (
               <FavItem
