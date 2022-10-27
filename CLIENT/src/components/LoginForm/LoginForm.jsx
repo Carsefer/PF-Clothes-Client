@@ -26,10 +26,11 @@ const LoginForm = () => {
   const handleLogin = async (userInfo) => {
     try {
       const res = await axios.post(`http://localhost:3001/login`, userInfo);
+      console.log(res);
       sessionStorage.setItem("sessionData", JSON.stringify(res.data));
       if (res.data) {
         //alert("Credenciales correctas")
-        navigate("/home");
+        //navigate("/home");
         //window.location.reload();
       }
     } catch (err) {
