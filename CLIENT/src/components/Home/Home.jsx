@@ -1,37 +1,25 @@
 import React from "react";
 import Styles from "./Home.module.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filterProducts, emptyDetail } from "../../redux/actions";
-import { useContext } from "react";
-import { AppContext } from "../../context/AppContext";
 import Card from "../Card/Card";
 import NavBar from "../NavBar/NavBar";
-//import Orders from "../Orders/Orders";
+
+import { useLocalStorage } from "../../Utils/useLocalStorage";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const {
-    setPrice,
-    setSize,
-    setDemographic,
-    setColor,
-    setName,
-    setPage,
-    setOrderBy,
-    setSortBy,
-    price,
-    size,
-    demographic,
-    color,
-    name,
-    page,
-    orderBy,
-    sortBy,
-  } = useContext(AppContext);
 
-  //const [cant, setCant] = useState("");
-  //const [, setOrder] = useState("");
+  const [price, setPrice] = useLocalStorage("price", "");
+  const [size, setSize] = useLocalStorage("size", "");
+  const [demographic, setDemographic] = useLocalStorage("demographic", "");
+  const [color, setColor] = useLocalStorage("color", "");
+  const [name, setName] = useLocalStorage("name", "");
+  const [page, setPage] = useLocalStorage("page", 0);
+  const [orderBy, setOrderBy] = useLocalStorage("orderBy", "ASC");
+  const [sortBy, setSortBy] = useLocalStorage("sortBy", "name");
+
   useEffect(() => {
     dispatch(
       filterProducts(
@@ -45,6 +33,7 @@ export default function Home() {
         sortBy
       )
     );
+
     dispatch(emptyDetail());
   }, [dispatch, name, price, size, demographic, color, page, orderBy, sortBy]);
 
@@ -220,7 +209,7 @@ export default function Home() {
             </select>
 
             <input
-              class={Styles.FilterProductsHomeSelect}
+              className={Styles.FilterProductsHomeSelect}
               id="text"
               type="text"
               value={name}
@@ -242,7 +231,7 @@ export default function Home() {
               <option value="DESC">Descendente</option>
             </select>
             <button
-              class={Styles.FilterProductsHomeSelect}
+              className={Styles.FilterProductsHomeSelect}
               onClick={(e) => {
                 handleClickShowAll(e);
               }}
@@ -269,7 +258,7 @@ export default function Home() {
             >
               {"Anterior"}
             </button>
-            <button class="paginated_num">{page / 10}</button>
+            <button className="paginated_num">{page / 10}</button>
             <button
               onClick={(e) => {
                 next(e);

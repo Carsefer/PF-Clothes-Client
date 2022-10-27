@@ -7,15 +7,17 @@ import FavItem from "../FavItem/FavItem.jsx";
 import {
   getFavorites,
   deleteFavorite,
-  deleteOneFavorite,
+  clearFavorites,
 } from "../../redux/actions/index.js";
 import Style from "./Favorites.module.css";
 import NavBar from "../NavBar/NavBar";
 import { getSession } from "../../sessionUtils/jwtSession";
 const Favorites = () => {
+  
   const dispatch = useDispatch();
   const [info, setInfo] = useState("");
   const [us, setUs] = useState({});
+  const favorites = useSelector((state) => state?.favorites);
 
   const url = "http://localhost:3001/user/get";
   useEffect(() => {
@@ -46,18 +48,24 @@ const Favorites = () => {
           });
       }
     })();
-    const id = us.id;
+    const id = us?.id;
     dispatch(getFavorites(id));
   }, [info, dispatch, us.id]);
   console.log(us);
 
-  const favorites = useSelector((state) => state?.favorites);
 
   return (
     <>
       <NavBar />
       <div className={Style.Container__Fav}>
         <div className={Style.containerFavorites}>
+          {favorites?.length?
+          <div>
+            <button onClick={() => dispatch(clearFavorites(us?.id))}>
+              Limpiar Favoritos
+            </button>
+          </div>
+          : null};
           {favorites?.length ? (
             favorites?.map((cloth) => (
               <FavItem
@@ -67,9 +75,7 @@ const Favorites = () => {
                 title={cloth?.name[0].toUpperCase() + cloth?.name.substring(1)}
                 price={cloth?.price}
                 deleteFavorite={() => {
-                  dispatch(
-                    deleteOneFavorite(cloth?.id, us.id, info.token)
-                  ).then(dispatch(deleteFavorite(cloth?.id)));
+                  dispatch(deleteFavorite(cloth?.id, us?.id));
                 }}
               />
             ))
