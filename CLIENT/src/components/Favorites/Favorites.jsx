@@ -7,7 +7,6 @@ import FavItem from "../FavItem/FavItem.jsx";
 import {
   getFavorites,
   deleteFavorite,
-  deleteOneFavorite,
   clearFavorites,
 } from "../../redux/actions/index.js";
 import Style from "./Favorites.module.css";
