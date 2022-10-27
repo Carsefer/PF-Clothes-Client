@@ -23,9 +23,9 @@ const NavBar = () => {
     backgroundColor: "black"
     }).showToast();
   
-  let value = document.cookie.split("token=");
+  let value = document.cookie ? document.cookie.split("token=")  : getSession('sessionData');
   //console.log(value);
-  const [cookie] = useState(value[1]);
+  const cookie = Array.isArray(value) ? value[1] : value;
   //console.log(cookie);
 
   useEffect(() => {
@@ -46,6 +46,7 @@ const NavBar = () => {
   const handleLogout = (e) => {
     setUser("");
     sessionStorage.removeItem("sessionData");
+    document.cookie="token=;max-age=0";
     toast("Sesión cerrada");
     navigate("/home");
   };

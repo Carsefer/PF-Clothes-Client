@@ -9,6 +9,11 @@ import GoogleButton from "react-google-button";
 import { setSession } from "../../sessionUtils/jwtSession";
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";
+const wrapper = require('axios-cookiejar-support').wrapper;
+const CookieJar = require('tough-cookie').CookieJar;
+
+const jar = new CookieJar();
+const client = wrapper(axios.create({jar}));
 
 const LoginForm = () => {
   const [showPwd, setShowPwd] = useState(false);
@@ -24,7 +29,7 @@ const LoginForm = () => {
 
   /* login with user and password */
   const handleLogin = async (userInfo) => {
-    try {
+    /*try {
       const res = await axios.post(`http://localhost:3001/login`, userInfo);
       console.log(res);
       sessionStorage.setItem("sessionData", JSON.stringify(res.data));
@@ -36,7 +41,27 @@ const LoginForm = () => {
     } catch (err) {
       console.log("incorrect");
       toast("Credenciales incorrectas");
-    }
+    }*/
+    document.cookie = "";
+    sessionStorage.removeItem("sessionData");
+    await client.post('http://localhost:3001/login',{
+      username:userInfo.username,
+      password:userInfo.password
+    }).then(function(res){
+      console.log(res);
+      console.log(res.config.jar.toJSON())
+      if(res.data){
+        navigate("/home");
+        console.log(res.data);
+        setSession(res.data.token);
+      }
+      console.log(document.cookie);
+      fetchAuthUser();
+    }).catch(function(error){
+      console.log(error);
+    })
+
+    
   };
 
   /* loging with google */
@@ -53,7 +78,7 @@ const LoginForm = () => {
         (res) => {
           if (res.data) {
             console.log(res.data);
-            setSession(res.data);
+            //setSession(res.data);
           }
         },
         (err) => {
