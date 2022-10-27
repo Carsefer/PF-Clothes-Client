@@ -46,8 +46,9 @@ const Stadistics = () => {
             for (let i = 1; i <= 31; i++) {
                 let amount = 0
                 sellsHistory.forEach(sell => {
-                    sell.date === `${i}/${thisMonth}/${thisYear}` ?
-                    amount += 1 : null
+                   if (sell.date === `${i}/${thisMonth}/${thisYear}`) {
+                    amount += 1
+                   }
                 })
                 sellsDays.push(amount.toString())
             }
