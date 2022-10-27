@@ -36,10 +36,10 @@ const NavBar = () => {
 
   const handleLogout = (e) => {
     setUser("");
-
     sessionStorage.removeItem("sessionData");
     window.localStorage.clear();
     toast("Sesión cerrada");
+    window.location.reload();
     navigate("/home");
   };
 

@@ -47,7 +47,7 @@ const ShoppingCart = () => {
       }
     })();
     const id = us?.id;
-    dispatch(getCartProducts(id));
+    dispatch(getCartProducts(id, info.token));
   }, [info, dispatch, us?.id]);
   console.log(us);
   const cartList = useSelector((state) => state?.cart);
@@ -66,7 +66,7 @@ const ShoppingCart = () => {
           {cartList?.map((e) => (
             <CartItem
               key={e?.id + 1}
-              name={e?.name}
+              name={e?.name?.charAt(0).toUpperCase() + e.name?.slice(1)}
               price={e?.price}
               quantity="1"
               image={e?.image}

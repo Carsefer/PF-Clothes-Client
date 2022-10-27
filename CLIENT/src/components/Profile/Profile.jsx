@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 import { getSession } from "../../sessionUtils/jwtSession";
 
+
 export default function Profile() {
   const [info, setInfo] = useState("");
   const [us, setUs] = useState({});
