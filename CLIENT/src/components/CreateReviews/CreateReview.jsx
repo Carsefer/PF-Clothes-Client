@@ -4,12 +4,21 @@ import Styles from "./CreateReview.module.css"
 import { createReviewProduct } from '../../redux/actions';
 import { getSession } from "../../sessionUtils/jwtSession";
 import { useDispatch } from 'react-redux';
+import Toastify from 'toastify-js';
+import "toastify-js/src/toastify.css";
 
 const CreateReview = ({id}) => {
     const [rating, setRating] = useState({value: null, text: ""})
     const [info, setInfo] = useState("");
     const [error, setError] = useState("");
     const dispatch = useDispatch();
+    const toast = (text, color="#32CD32") => Toastify({
+        text: text,
+        duration: 1500,
+        position: "center",
+        className: Styles.toast,
+        backgroundColor: color
+        }).showToast();
 
     useEffect(() => {
         (async () => {
@@ -36,7 +45,7 @@ const CreateReview = ({id}) => {
             score: rating.value,
             reviews: rating.text
         }
-        dispatch(createReviewProduct(id, data, info.token)).then(alert("Reseña creada con exito").catch(alert("Algo salio mal")));
+        dispatch(createReviewProduct(id, data, info.token)).then(() => toast("Reseña creada con exito").catch(() => toast("Algo salio mal", "red")));
     }
 
     return (

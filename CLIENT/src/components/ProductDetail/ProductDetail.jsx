@@ -9,7 +9,6 @@ import {
   getProductDetailReviews,
   addToFavorites,
   deleteFavorite,
-  deleteOneFavorite,
 } from "../../redux/actions";
 import Style from "./ProductDetail.module.css";
 import Comments from "../Comments/Comments";
@@ -22,12 +21,13 @@ import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";
 
 const ProductDetail = () => {
+
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
-  const toast = (text, color="green") => Toastify({
+  const toast = (text, color="#32CD32") => Toastify({
     text: text,
-    duration: 3000,
+    duration: 1500,
     position: "center",
     className: Style.toast,
     backgroundColor: color
@@ -40,10 +40,7 @@ const ProductDetail = () => {
   const [info, setInfo] = useState("");
   const [us, setUs] = useState(null);
   const [filterBySize, setFilterBySize] = useLocalStorage("filterBySize", "");
-  const [filterByColor, setFilterByColor] = useLocalStorage(
-    "filterByColor",
-    ""
-  );
+  const [filterByColor, setFilterByColor] = useLocalStorage("filterByColor","");
 
   const url = "http://localhost:3001/user/get";
   useEffect(() => {
@@ -52,7 +49,6 @@ const ProductDetail = () => {
         const data = await getSession();
         setInfo(data);
       }
-
       if (info) {
         console.log("info before request", info);
         await axios
@@ -77,6 +73,7 @@ const ProductDetail = () => {
     dispatch(getProductDetail(id));
     dispatch(getProductDetailReviews(id));
   }, [info, dispatch, id]);
+
   const profileId = us?.id;
 
   const handleFav = () => {
@@ -88,18 +85,28 @@ const ProductDetail = () => {
       toast("Producto agregado a favoritos!");
     }
   };
+  
   const handleDelFav = () => {
-    dispatch(deleteFavorite(id)).then(() => {
-      dispatch(deleteOneFavorite(id, profileId));
-      toast("Producto eliminado de favoritos", "yellow");
-    }
-    );
+    dispatch(deleteFavorite(id, profileId));
+    toast("Producto eliminado de favoritos", "yellow");
   };
+
   const handleAddCart = () => {
     if (!us) {
       toast("Logueate para seguir tus productos favoritos!");
       return navigate("/login");
-    } else {
+    } 
+    if(filterBySize === "") return toast("Selecciona talle!", "yellow");
+    if(filterByColor === "") return toast("Selecciona color!", "yellow");
+    if (detail.variants
+      ?.map(
+        (v) =>
+          v.size === filterBySize &&
+          v.color === filterByColor &&
+          v.stock
+      )
+      .reduce((a, b) => a + b) === 0) toast("No hay stock!", "red");
+    else {
       dispatch(addToCart(id, profileId, info.token));
       toast("Producto agregado al carrito!");
     }
@@ -109,7 +116,6 @@ const ProductDetail = () => {
     e.preventDefault();
     setFilterBySize(e.target.value);
   };
-
   //FILTER COLOR
   const handleColor = (e) => {
     e.preventDefault();
@@ -126,32 +132,20 @@ const ProductDetail = () => {
           <button
             className={Style.buttonCartDetail}
             onClick={() => handleAddCart()}
-            disabled={
-              filterBySize === "" ||
-              filterByColor === "" ||
-              detail.variants
-                ?.map(
-                  (v) =>
-                    v.size === filterBySize &&
-                    v.color === filterByColor &&
-                    v.stock
-                )
-                .reduce((a, b) => a + b) === 0
-            }
           >
-            <img className={Style.buttonImage} src={buttonCart}></img>
+            <img className={Style.buttonImage} src={buttonCart} alt="img not found"></img>
           </button>
 
           {!favorites.find((f) => f?.id === id) ? (
             <button className={Style.buttonfavDetail} onClick={() => handleFav()}>
-              <img className={Style.buttonImage} src={buttonFav}></img>
+              <img className={Style.buttonImage} src={buttonFav} alt="img not found"></img>
             </button>
           ) : (
             <button
               className={Style.buttonDeletefavDetail}
               onClick={() => handleDelFav()}
             >
-              <img className={Style.buttonImage} src={buttonDeleteFav}></img>
+              <img className={Style.buttonImage} src={buttonDeleteFav} alt="img not found"></img>
             </button>
           )}
         </div>

@@ -1,10 +1,8 @@
 import {
   GET_PRODUCTS,
   GET_PRODUCT_DETAIL,
-  SEARCH_PRODUCT,
   GET_SIZES,
   ORDER_PRODUCTS_BY_NAME,
-  ORDER_PRODUCTS_BY_SCORE,
   FILTER_PRODUCTS,
   CREATE_USER,
   GET_PRODUCTS_CART,
@@ -23,6 +21,8 @@ import {
   GET_SELLS_HISTORY,
   GET_SELL_DETAIL,
   CREATE_REVIEW_PRODUCT,
+  BUY_PRODUCT,
+  CLEAR_FAVORITES,
 } from "../action-types";
 
 const initialState = {
@@ -37,6 +37,7 @@ const initialState = {
   cart: [],
   sellsHistory: [],
   sellDetail: {},
+  linkCompra: "",
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -62,11 +63,6 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         productDetail: [],
       };
-    case SEARCH_PRODUCT:
-      return {
-        ...state,
-        products: action.payload,
-      };
     case GET_SIZES:
       return {
         ...state,
@@ -87,19 +83,6 @@ const rootReducer = (state = initialState, action) => {
           }
         }),
       };
-    /* case ORDER_PRODUCTS_BY_SCORE:
-      const orderedProductsByScore =
-        action.payload === "ascendente"
-          ? state.products.sort((a, b) => {
-              return a.score - b.score;
-            })
-          : state.products.sort((a, b) => {
-              return b.score - a.score;
-            });
-      return {
-        ...state,
-        products: orderedProductsByScore,
-      }; */
     case FILTER_PRODUCTS:
       return {
         ...state,
@@ -130,6 +113,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         favorites: delFav,
+      };
+    case GET_FAVORITES:
+      return {
+        ...state,
+        favorites: action.payload,
       };
     case LOGIN_USER:
       return {
@@ -183,6 +171,12 @@ const rootReducer = (state = initialState, action) => {
     case CLEAR_CART:
       return {
         ...state,
+        cart: [],
+      };
+    case CLEAR_FAVORITES:
+      return {
+        ...state,
+        favorites: [],
       };
     case FLUSH_ERROR:
       return {
@@ -199,11 +193,6 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         cart: action.payload,
       };
-    case GET_FAVORITES:
-      return {
-        ...state,
-        favorites: action.payload,
-      };
     case GET_SELL_DETAIL:
       return {
         ...state,
@@ -211,7 +200,12 @@ const rootReducer = (state = initialState, action) => {
       };
     case CREATE_REVIEW_PRODUCT:
       return {
-        ...state
+        ...state,
+      };
+    case BUY_PRODUCT:
+      return {
+        ...state,
+        linkCompra: action.payload,
       };
     default:
       return state;

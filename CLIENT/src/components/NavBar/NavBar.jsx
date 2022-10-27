@@ -1,4 +1,4 @@
-import { React, useEffect, useState,useContext } from "react";
+import { React, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Styles from "./NavBar.module.css";
 import Logo from "../images/express-fashion-stores.svg";
@@ -9,18 +9,20 @@ import { getSession,validateUser } from "../../sessionUtils/jwtSession";
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";
 import axios from "axios";
-
+import { useLocalStorage } from "../../Utils/useLocalStorage";
+//import { FaWindows } from "react-icons/fa";
 
 
 const NavBar = () => {
-  const [user, setUser] = useState("");
+  const [user, setUser] = useLocalStorage("");
   const navigate = useNavigate();
-  const toast = (text) => Toastify({
-    text: text,
-    duration: 2000,
-    position: "center",
-    className: Styles.toast,
-    backgroundColor: "black"
+  const toast = (text) =>
+    Toastify({
+      text: text,
+      duration: 2000,
+      position: "center",
+      className: Styles.toast,
+      backgroundColor: "black",
     }).showToast();
   
   
@@ -28,6 +30,7 @@ const NavBar = () => {
   useEffect(() => {
     (async () => {
       if (!user) {
+
         const token = validateUser();
         try{
           const res = await axios.get(`${process.env.REACT_APP_API || "http://localhost:3001"}/user/get?secret_token=${token}`);
@@ -35,17 +38,19 @@ const NavBar = () => {
           setUser(res.data.username);
         }catch(err){
           console.log(err.message);
-        }
-        
       }
+    }
+
     })();
-  }, [user])
- 
+
+  }, [user, setUser]);
+
   const handleLogout = (e) => {
     setUser("");
-    sessionStorage.removeItem("sessionData");
     document.cookie="token=;max-age=0";
+    window.localStorage.clear();
     toast("Sesión cerrada");
+    window.location.reload();
     navigate("/home");
   };
 
@@ -60,7 +65,7 @@ const NavBar = () => {
         {/* si el usuario no esta logueado mostrar login y signup
                 en caso contrario mostrar el usuario logueado y boton de 
             cerrar sesion */}
-        {!user  ? (
+        {!user ? (
           <div className={Styles.NavbarHomeFormsButtonsContainer}>
             <Link to="/login">
               <button className={Styles.NavbarHomeButtons}>
@@ -75,13 +80,13 @@ const NavBar = () => {
           <>
             <Link to="/home">Inicio</Link>
             <Link to="/home/ShoppingCart">
-              <img className={Styles.CartIcon} src={Cart}></img>
+              <img className={Styles.CartIcon} src={Cart} alt="img not found"></img>
             </Link>
             <Link to="/home/Favorites">
-              <img className={Styles.FavIcon} src={ButtonFav} />
+              <img className={Styles.FavIcon} src={ButtonFav} alt="img not found" />
             </Link>
             <Link to="/home/profile">
-              <img className={Styles.ProfileFav} src={Profile}></img>
+              <img className={Styles.ProfileFav} src={Profile} alt="img not found"></img>
             </Link>
             <Link to="/home/stadistics">Estadísticas</Link>
             <div>
