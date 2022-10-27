@@ -8,6 +8,7 @@ import Profile from "../images/profile.svg";
 import { getSession } from "../../sessionUtils/jwtSession";
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";
+import axios from "axios";
 
 
 
@@ -21,14 +22,17 @@ const NavBar = () => {
     className: Styles.toast,
     backgroundColor: "black"
     }).showToast();
+  
+  let value = document.cookie.split("token=");
+  //console.log(value);
+  const [cookie] = useState(value[1]);
+  console.log(cookie);
 
   useEffect(() => {
     (async () => {
       if (!user) {
-        const data = await getSession();
-        if(data){
-          setUser(data);
-        }
+        const res = await axios.get(`${process.env.REACT_APP_API || "http://localhost:3001"}`);
+        setUser(res.data);
       }
     })();
   }, [user])

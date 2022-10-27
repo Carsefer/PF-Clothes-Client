@@ -42,7 +42,7 @@ const LoginForm = () => {
   const redirectToGoogleSSO = async () => {
     const googleLoginURL = `http://localhost:3001/login/google`;
     window.open(googleLoginURL, "_self");
-    fetchAuthUser();
+    //fetchAuthUser();
   };
 
   const fetchAuthUser = async () => {
