@@ -4,8 +4,11 @@ import {
   clearCart,
   delFromCart,
   delProductCart,
+  buyProduct,
 } from "../../redux/actions";
 import axios from "axios";
+import { Link } from "react-router-dom";
+
 import { useState, useEffect } from "react";
 import CartItem from "../CartItem/CartItem";
 import { getSession } from "../../sessionUtils/jwtSession";
@@ -16,6 +19,9 @@ const ShoppingCart = () => {
   const dispatch = useDispatch();
   const [info, setInfo] = useState("");
   const [us, setUs] = useState(null);
+
+  const cartList = useSelector((state) => state?.cart);
+  const compra = useSelector((state) => state.linkCompra);
 
   const url = "http://localhost:3001/user/get";
   useEffect(() => {
@@ -49,9 +55,6 @@ const ShoppingCart = () => {
     const id = us?.id;
     dispatch(getCartProducts(id));
   }, [info, dispatch, us?.id]);
-  console.log(us);
-  const cartList = useSelector((state) => state?.cart);
-  console.log(cartList);
 
   return (
     <>
@@ -59,26 +62,48 @@ const ShoppingCart = () => {
       <div className={Style.containerShopping}>
         <h2>Carrito de Compras</h2>
         <h3>Productos</h3>
+        {cartList.length ? (
+          <article className="box">
+            <button onClick={() => dispatch(clearCart())}>
+              Limpiar Carrito
+            </button>
 
-        <article className="box">
-          <button onClick={() => dispatch(clearCart())}>Limpiar Carrito</button>
-
-          {cartList?.map((e) => (
-            <CartItem
-              key={e?.id + 1}
-              name={e?.name}
-              price={e?.price}
-              quantity="1"
-              image={e?.image}
-              delOneFromCart={() =>
-                dispatch(delProductCart(e?.id, us?.id)).then(
-                  dispatch(delFromCart(e.id))
-                )
-              }
-              delAllFromCart={() => dispatch(delFromCart(e.id, true))}
-            />
-          ))}
-        </article>
+            {cartList?.map((e) => (
+              <CartItem
+                key={e?.id + 1}
+                name={e?.name}
+                price={e?.price}
+                quantity="1"
+                image={e?.image}
+                delOneFromCart={() =>
+                  dispatch(delProductCart(e?.id, us?.id)).then(
+                    dispatch(delFromCart(e.id))
+                  )
+                }
+                delAllFromCart={() => dispatch(delFromCart(e.id, true))}
+              />
+            ))}
+          </article>
+        ) : (
+          <p>
+            Aun no tienes productos agregado al carrito.{" "}
+            <Link to="/home">Encontralos!</Link>
+          </p>
+        )}
+        {cartList.length ? (
+          <div>
+            <button onClick={() => dispatch(buyProduct(cartList))}>
+              CARGAR PRODUCTOS
+            </button>
+            <a href={compra}>
+              <button disabled={!compra} onClick={() => dispatch(clearCart())}>
+                COMPRAR PRODUCTOS
+              </button>
+            </a>
+          </div>
+        ) : (
+          <p></p>
+        )}
       </div>
     </>
   );

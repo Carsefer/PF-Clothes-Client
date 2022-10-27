@@ -22,6 +22,7 @@ import {
   GET_SELLS_HISTORY,
   GET_SELL_DETAIL,
   CREATE_REVIEW_PRODUCT,
+  BUY_PRODUCT,
 } from "../action-types";
 
 const initialState = {
@@ -35,6 +36,7 @@ const initialState = {
   cart: [],
   sellsHistory: [],
   sellDetail: {},
+  linkCompra: "",
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -105,7 +107,7 @@ const rootReducer = (state = initialState, action) => {
       let productInFav = state.favorites.find((f) => f.id === newFavorite.id);
       return !productInFav
         ? {
-           ...state,
+            ...state,
             favorites: [...state.favorites, newFavorite],
           }
         : state;
@@ -118,7 +120,7 @@ const rootReducer = (state = initialState, action) => {
     case GET_FAVORITES:
       return {
         ...state,
-         favorites: action.payload,
+        favorites: action.payload,
       };
     case LOGIN_USER:
       return {
@@ -195,7 +197,12 @@ const rootReducer = (state = initialState, action) => {
       };
     case CREATE_REVIEW_PRODUCT:
       return {
-        ...state
+        ...state,
+      };
+    case BUY_PRODUCT:
+      return {
+        ...state,
+        linkCompra: action.payload,
       };
     default:
       return state;
