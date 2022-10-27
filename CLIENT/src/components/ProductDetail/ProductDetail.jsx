@@ -38,12 +38,13 @@ const ProductDetail = () => {
   const averageScore = () => {
     let average = 0;
     if (reviews.length) {
-      reviews.forEach((r) => {
-        average += r.score;
-      });
+      reviews.forEach(r => { average += r.score })
+      return (average / reviews.length)
+    } else {
+      return 0
     }
-    return average / reviews.length;
-  };
+  }
+
   const [info, setInfo] = useState("");
   const [user, setUser] = useState(null);
   const [filterBySize, setFilterBySize] = useLocalStorage("filterBySize", "");
@@ -282,13 +283,12 @@ const ProductDetail = () => {
               </label>
             </div>
           </div>
-          <div>
-            <h2>Reseñas</h2>
-            <h3>{averageScore()}</h3>
-          </div>
+        </div>
+        <div>
           <div>
             {!user ? <></> : <CreateReview id={id} />}
             <h1 className={Style.ProductDetailReviews}>Reseñas</h1>
+            <h3>{averageScore()}</h3>
             {reviews.length ? (
               reviews.map((r) => (
                 <Comments score={r.score} reviews={r.reviews} />
