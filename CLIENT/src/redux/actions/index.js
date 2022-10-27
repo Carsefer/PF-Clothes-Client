@@ -25,6 +25,7 @@ import {
   GET_SELL_DETAIL,
   CREATE_REVIEW_PRODUCT,
   BUY_PRODUCT,
+  CLEAR_FAVORITES,
 } from "../action-types";
 
 export const getProducts = () => {
@@ -257,7 +258,23 @@ export const delFromCart = (id, all = false) =>
     ? { type: REMOVE_ALL_FROM_CART, payload: id }
     : { type: REMOVE_ONE_FROM_CART, payload: id };
 
-export const clearCart = () => ({ type: CLEAR_CART });
+export const clearCart = (profileId) => {
+  return async (dispatch) => {
+    await axios.delete(`/user/shoppingcart?&profileID=${profileId}`);
+    return dispatch({
+      type: CLEAR_CART,
+    });
+  };
+};
+
+export const clearFavorites = (profileId) => {
+  return async (dispatch) => {
+    await axios.delete(`/user/favorites?&profileID=${profileId}`);
+    return dispatch({
+      type: CLEAR_FAVORITES,
+    });
+  };
+};
 
 export const flushError = () => {
   return async (dispatch) => {

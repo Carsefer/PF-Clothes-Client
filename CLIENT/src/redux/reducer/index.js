@@ -23,10 +23,12 @@ import {
   GET_SELL_DETAIL,
   CREATE_REVIEW_PRODUCT,
   BUY_PRODUCT,
+  CLEAR_FAVORITES,
 } from "../action-types";
 
 const initialState = {
   products: [],
+  productsAux: [],
   productDetail: [],
   productReviews: [],
   sizes: [],
@@ -45,6 +47,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         products: action.payload,
+        productsAux: action.payload,
       };
     case GET_PRODUCT_DETAIL:
       return {
@@ -174,6 +177,12 @@ const rootReducer = (state = initialState, action) => {
     case CLEAR_CART:
       return {
         ...state,
+        cart: [],
+      };
+    case CLEAR_FAVORITES:
+      return {
+        ...state,
+        favorites: [],
       };
     case FLUSH_ERROR:
       return {
