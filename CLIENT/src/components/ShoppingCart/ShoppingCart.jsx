@@ -33,7 +33,7 @@ const ShoppingCart = () => {
       }
     })();
 
-    dispatch(getCartProducts(user.id));
+    dispatch(getCartProducts(user?.id));
   }, [user, dispatch, user.id]);
 
   return (

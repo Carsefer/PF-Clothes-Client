@@ -13,7 +13,6 @@ import Style from "./Favorites.module.css";
 import NavBar from "../NavBar/NavBar";
 import { getSession } from "../../sessionUtils/jwtSession";
 const Favorites = () => {
-  
   const dispatch = useDispatch();
   const [info, setInfo] = useState("");
   const [us, setUs] = useState({});
@@ -53,19 +52,19 @@ const Favorites = () => {
   }, [info, dispatch, us.id]);
   console.log(us);
 
-
   return (
     <>
       <NavBar />
       <div className={Style.Container__Fav}>
         <div className={Style.containerFavorites}>
-          {favorites?.length?
-          <div>
-            <button onClick={() => dispatch(clearFavorites(us?.id))}>
-              Limpiar Favoritos
-            </button>
-          </div>
-          : null};
+          {favorites?.length ? (
+            <div>
+              <button onClick={() => dispatch(clearFavorites(us?.id))}>
+                Limpiar Favoritos
+              </button>
+            </div>
+          ) : null}
+          ;
           {favorites?.length ? (
             favorites?.map((cloth) => (
               <FavItem

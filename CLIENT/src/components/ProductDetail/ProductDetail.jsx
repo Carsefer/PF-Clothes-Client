@@ -66,14 +66,14 @@ const ProductDetail = () => {
   }, [info, dispatch, user, id]);
 
   const profileId = user?.id;
-  const token = info.token;
+  const token = info?.token;
 
   const handleFav = () => {
     if (!user) {
       toast("Logueate para seguir tus productos favoritos!");
       return navigate("/login");
     } else {
-      dispatch(addToFavorites(id, profileId, info.token));
+      dispatch(addToFavorites(id, profileId, token));
       toast("Producto agregado a favoritos!");
     }
   };
@@ -99,7 +99,7 @@ const ProductDetail = () => {
     )
       toast("No hay stock!", "red");
     else {
-      dispatch(addToCart(id, profileId, info.token));
+      dispatch(addToCart(id, profileId, token));
       toast("Producto agregado al carrito!");
     }
   };
