@@ -7,16 +7,16 @@ import {
   delProductCart,
   buyProduct,
 } from "../../redux/actions";
-import axios from "axios";
+//import axios from "axios";
 import { Link } from "react-router-dom";
 
 import { useState, useEffect } from "react";
 import CartItem from "../CartItem/CartItem";
-import { getSession } from "../../sessionUtils/jwtSession";
+//import { getSession } from "../../sessionUtils/jwtSession";
 import { getUserData } from "../../Utils/useLocalStorage";
 import Style from "./ShoppingCart.module.css";
 import NavBar from "../NavBar/NavBar";
-import { useLocalStorage } from "../../Utils/useLocalStorage";
+//import { useLocalStorage } from "../../Utils/useLocalStorage";
 
 const ShoppingCart = () => {
   const dispatch = useDispatch();

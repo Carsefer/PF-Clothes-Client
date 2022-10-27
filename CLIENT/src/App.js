@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import CreateStore from "./components/CreateStore/CreateStore";
 import CreateUser from "./components/CreateUser/CreateUser";
 import Favorites from "./components/Favorites/Favorites";
-import axios from "axios";
+//import axios from "axios";
 import { useEffect } from "react";
 import Home from "./components/Home/Home";
 import LandingHome from "./components/LandingHome/LandingHome";
