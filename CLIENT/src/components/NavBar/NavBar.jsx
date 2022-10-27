@@ -1,4 +1,4 @@
-import { React, useEffect } from "react";
+import { React, useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Styles from "./NavBar.module.css";
 import Logo from "../images/express-fashion-stores.svg";
@@ -9,6 +9,7 @@ import { getSession } from "../../sessionUtils/jwtSession";
 import { useLocalStorage } from "../../Utils/useLocalStorage";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
+import { FaWindows } from "react-icons/fa";
 
 const NavBar = () => {
   const [user, setUser] = useLocalStorage("");
@@ -35,10 +36,10 @@ const NavBar = () => {
 
   const handleLogout = (e) => {
     setUser("");
-
     sessionStorage.removeItem("sessionData");
     window.localStorage.clear();
     toast("Sesión cerrada");
+    window.location.reload();
     navigate("/home");
   };
 
@@ -66,13 +67,13 @@ const NavBar = () => {
           <>
             <Link to="/home">Inicio</Link>
             <Link to="/home/ShoppingCart">
-              <img className={Styles.CartIcon} src={Cart} alt="img not found"></img>
+              <img className={Styles.CartIcon} src={Cart}></img>
             </Link>
             <Link to="/home/Favorites">
-              <img className={Styles.FavIcon} src={ButtonFav} alt="img not found"/>
+              <img className={Styles.FavIcon} src={ButtonFav} />
             </Link>
             <Link to="/home/profile">
-              <img className={Styles.ProfileFav} src={Profile} alt="img not found"></img>
+              <img className={Styles.ProfileFav} src={Profile}></img>
             </Link>
             <Link to="/home/stadistics">Estadísticas</Link>
             <div>

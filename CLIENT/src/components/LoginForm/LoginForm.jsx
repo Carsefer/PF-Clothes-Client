@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import Styles from "./LoginForm.module.css";
@@ -10,7 +10,7 @@ import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
 
 const LoginForm = () => {
-  const [showPwd, setShowPwd] = useLocalStorage(false);
+  const [showPwd, setShowPwd] = useState(false);
   const navigate = useNavigate();
   const toast = (text) =>
     Toastify({
@@ -34,7 +34,26 @@ const LoginForm = () => {
     try {
       const res = await axios.post(`http://localhost:3001/login`, userInfo);
       sessionStorage.setItem("sessionData", JSON.stringify(res.data));
+
       if (res.data) {
+        await axios
+          .post(
+            "http://localhost:3001/user/get",
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${res.data.token}`,
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res.data);
+            window.localStorage.setItem("userData", JSON.stringify(res.data));
+          })
+
+          .catch((error) => {
+            console.log(error);
+          });
         toastCorrect("Credenciales correctas");
         setTimeout(() => {
           navigate("/home");

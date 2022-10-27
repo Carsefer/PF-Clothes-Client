@@ -70,7 +70,7 @@ const CreateStore = () => {
           };
           console.log(a);
 
-          dispatch(createStore(us.id, a))
+          dispatch(createStore(us.id, a, info.token))
             .then(function (res) {
               console.log(res);
               alert("Exitoso");

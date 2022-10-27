@@ -145,18 +145,9 @@ export const createUser = (data) => {
     }
   };
 };
-export const createStore = (id, data, token) => {
+export const createStore = (id, data) => {
   return async (dispatch) => {
-    const res = await axios.put(
-      `/user/${id}`,
-      data,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const res = await axios.patch(`/user/${id}`, data);
     return dispatch({
       type: CREATE_STORE,
       payload: res.data,

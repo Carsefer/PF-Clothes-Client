@@ -5,10 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { filterProducts, emptyDetail } from "../../redux/actions";
 import Card from "../Card/Card";
 import NavBar from "../NavBar/NavBar";
+
 import { useLocalStorage } from "../../Utils/useLocalStorage";
 
 export default function Home() {
   const dispatch = useDispatch();
+
   const [price, setPrice] = useLocalStorage("price", "");
   const [size, setSize] = useLocalStorage("size", "");
   const [demographic, setDemographic] = useLocalStorage("demographic", "");
@@ -31,6 +33,7 @@ export default function Home() {
         sortBy
       )
     );
+
     dispatch(emptyDetail());
   }, [dispatch, name, price, size, demographic, color, page, orderBy, sortBy]);
 
@@ -206,7 +209,7 @@ export default function Home() {
             </select>
 
             <input
-              class={Styles.FilterProductsHomeSelect}
+              className={Styles.FilterProductsHomeSelect}
               id="text"
               type="text"
               value={name}
@@ -228,7 +231,7 @@ export default function Home() {
               <option value="DESC">Descendente</option>
             </select>
             <button
-              class={Styles.FilterProductsHomeSelect}
+              className={Styles.FilterProductsHomeSelect}
               onClick={(e) => {
                 handleClickShowAll(e);
               }}
@@ -255,7 +258,7 @@ export default function Home() {
             >
               {"Anterior"}
             </button>
-            <button class="paginated_num">{page / 10}</button>
+            <button className="paginated_num">{page / 10}</button>
             <button
               onClick={(e) => {
                 next(e);
