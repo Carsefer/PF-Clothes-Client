@@ -3,7 +3,6 @@ import {
   GET_PRODUCTS,
   GET_PRODUCT_DETAIL,
   EMPTY_DETAIL,
-  SEARCH_PRODUCT,
   GET_SIZES,
   ORDER_PRODUCTS_BY_NAME,
   FILTER_PRODUCTS,
@@ -61,16 +60,6 @@ export const getProductDetailReviews = (id) => {
 export const emptyDetail = () => {
   return {
     type: EMPTY_DETAIL,
-  };
-};
-
-export const searchProduct = (name) => {
-  return async function (dispatch) {
-    const json = await axios.get(`/product/?search=${name}`);
-    dispatch({
-      type: SEARCH_PRODUCT,
-      payload: json.data,
-    });
   };
 };
 
