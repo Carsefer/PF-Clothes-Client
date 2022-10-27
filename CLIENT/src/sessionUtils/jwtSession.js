@@ -1,9 +1,9 @@
 // extraer token
 export const getSession = () =>
-  JSON.parse(sessionStorage.getItem("sessionData"));
+  JSON.parse(localStorage.getItem("sessionData"));
 
 export const setSession = (token) => 
-  sessionStorage.setItem("sessionData", JSON.stringify(token));
+  localStorage.setItem("sessionData", JSON.stringify(token));
 
 export const validateUser = () => {
   let value = document.cookie ? document.cookie.split("token=")  : getSession('sessionData');
