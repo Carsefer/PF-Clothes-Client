@@ -38,9 +38,9 @@ const ProductDetail = () => {
   const favorites = useSelector((state) => state.favorites);
   const averageScore = () => {
     let average = 0;
-    reviews.length ? reviews.forEach(r => {
-      average += r.score
-    }) : null
+    if (reviews.length) {
+      reviews.forEach(r => { average += r.score })
+    }
     return (average / reviews.length)
   }
 
