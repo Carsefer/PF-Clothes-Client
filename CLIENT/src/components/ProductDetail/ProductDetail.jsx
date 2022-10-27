@@ -40,8 +40,10 @@ const ProductDetail = () => {
     let average = 0;
     if (reviews.length) {
       reviews.forEach(r => { average += r.score })
+      return (average / reviews.length)
+    } else {
+      return 0
     }
-    return (average / reviews.length)
   }
 
   const [info, setInfo] = useState("");
@@ -245,11 +247,11 @@ const ProductDetail = () => {
           </div>
           <div>
             <h2>Reseñas</h2>
-            <h3>{averageScore()}</h3>
         </div>
         <div>
             {!us ? (<></>) : (<CreateReview id={id}/>)}
             <h1 className={Style.ProductDetailReviews}>Reseñas</h1>
+            <h3>{averageScore()}</h3>
             {reviews.length ? (
               reviews.map((r) => (
                 <Comments score={r.score} reviews={r.reviews} />
