@@ -21,6 +21,7 @@ import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";
 
 const ProductDetail = () => {
+
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -39,10 +40,7 @@ const ProductDetail = () => {
   const [info, setInfo] = useState("");
   const [us, setUs] = useState(null);
   const [filterBySize, setFilterBySize] = useLocalStorage("filterBySize", "");
-  const [filterByColor, setFilterByColor] = useLocalStorage(
-    "filterByColor",
-    ""
-  );
+  const [filterByColor, setFilterByColor] = useLocalStorage("filterByColor","");
 
   const url = "http://localhost:3001/user/get";
   useEffect(() => {
@@ -51,7 +49,6 @@ const ProductDetail = () => {
         const data = await getSession();
         setInfo(data);
       }
-
       if (info) {
         console.log("info before request", info);
         await axios
@@ -76,6 +73,7 @@ const ProductDetail = () => {
     dispatch(getProductDetail(id));
     dispatch(getProductDetailReviews(id));
   }, [info, dispatch, id]);
+
   const profileId = us?.id;
 
   const handleFav = () => {
@@ -87,15 +85,28 @@ const ProductDetail = () => {
       toast("Producto agregado a favoritos!");
     }
   };
+  
   const handleDelFav = () => {
     dispatch(deleteFavorite(id, profileId));
     toast("Producto eliminado de favoritos", "yellow");
   };
+
   const handleAddCart = () => {
     if (!us) {
       toast("Logueate para seguir tus productos favoritos!");
       return navigate("/login");
-    } else {
+    } 
+    if(filterBySize === "") return toast("Selecciona talle!", "yellow");
+    if(filterByColor === "") return toast("Selecciona color!", "yellow");
+    if (detail.variants
+      ?.map(
+        (v) =>
+          v.size === filterBySize &&
+          v.color === filterByColor &&
+          v.stock
+      )
+      .reduce((a, b) => a + b) === 0) toast("No hay stock!", "red");
+    else {
       dispatch(addToCart(id, profileId, info.token));
       toast("Producto agregado al carrito!");
     }
@@ -105,7 +116,6 @@ const ProductDetail = () => {
     e.preventDefault();
     setFilterBySize(e.target.value);
   };
-
   //FILTER COLOR
   const handleColor = (e) => {
     e.preventDefault();
@@ -122,18 +132,6 @@ const ProductDetail = () => {
           <button
             className={Style.buttonCartDetail}
             onClick={() => handleAddCart()}
-            disabled={
-              filterBySize === "" ||
-              filterByColor === "" ||
-              detail.variants
-                ?.map(
-                  (v) =>
-                    v.size === filterBySize &&
-                    v.color === filterByColor &&
-                    v.stock
-                )
-                .reduce((a, b) => a + b) === 0
-            }
           >
             <img className={Style.buttonImage} src={buttonCart} alt="img not found"></img>
           </button>
