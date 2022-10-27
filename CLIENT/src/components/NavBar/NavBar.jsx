@@ -5,7 +5,7 @@ import Logo from "../images/express-fashion-stores.svg";
 import Cart from "../images/cart.svg";
 import ButtonFav from "../images/buttonFavNav.svg";
 import Profile from "../images/profile.svg";
-import { getSession } from "../../sessionUtils/jwtSession";
+import { getSession,validateUser } from "../../sessionUtils/jwtSession";
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";
 import axios from "axios";
@@ -23,16 +23,14 @@ const NavBar = () => {
     backgroundColor: "black"
     }).showToast();
   
-  let value = document.cookie ? document.cookie.split("token=")  : getSession('sessionData');
-  //console.log(value);
-  const cookie = Array.isArray(value) ? value[1] : value;
-  //console.log(cookie);
+  
 
   useEffect(() => {
     (async () => {
       if (!user) {
+        const token = validateUser();
         try{
-          const res = await axios.get(`${process.env.REACT_APP_API || "http://localhost:3001"}/user/get?secret_token=${cookie}`);
+          const res = await axios.get(`${process.env.REACT_APP_API || "http://localhost:3001"}/user/get?secret_token=${token}`);
           console.log(res.data);
           setUser(res.data.username);
         }catch(err){

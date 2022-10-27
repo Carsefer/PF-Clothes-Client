@@ -42,7 +42,7 @@ const LoginForm = () => {
       console.log("incorrect");
       toast("Credenciales incorrectas");
     }*/
-    document.cookie = "";
+    document.cookie="token=;max-age=0";
     sessionStorage.removeItem("sessionData");
     await client.post('http://localhost:3001/login',{
       username:userInfo.username,
