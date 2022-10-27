@@ -26,6 +26,13 @@ const ProductDetail = () => {
   const detail = useSelector((state) => state.productDetail);
   const reviews = useSelector((state) => state.productReviews);
   const favorites = useSelector((state) => state.favorites);
+  const averageScore = () => {
+    let average = 0;
+    reviews.length ? reviews.forEach(r => {
+      average += r.score
+    }) : null
+    return (average / reviews.length)
+  }
 
   const [info, setInfo] = useState("");
   const [us, setUs] = useState({});
@@ -221,6 +228,7 @@ const ProductDetail = () => {
           </div>
           <div>
             <h2>Reseñas</h2>
+            <h3>{averageScore()}</h3>
             {reviews.length ? (
               reviews.map((r) => (
                 <Comments score={r.score} reviews={r.reviews} />
