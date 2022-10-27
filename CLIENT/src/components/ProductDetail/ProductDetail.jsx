@@ -36,6 +36,13 @@ const ProductDetail = () => {
   const detail = useSelector((state) => state.productDetail);
   const reviews = useSelector((state) => state.productReviews);
   const favorites = useSelector((state) => state.favorites);
+  const averageScore = () => {
+    let average = 0;
+    reviews.length ? reviews.forEach(r => {
+      average += r.score
+    }) : null
+    return (average / reviews.length)
+  }
 
   const [info, setInfo] = useState("");
   const [us, setUs] = useState(null);
@@ -236,6 +243,9 @@ const ProductDetail = () => {
               </label>
             </div>            
           </div>
+          <div>
+            <h2>Reseñas</h2>
+            <h3>{averageScore()}</h3>
         </div>
         <div>
             {!us ? (<></>) : (<CreateReview id={id}/>)}
@@ -248,6 +258,7 @@ const ProductDetail = () => {
               <h3>No hay reseñas</h3>
             )}
           </div>
+        </div>
       </div>
     </div>
   );
