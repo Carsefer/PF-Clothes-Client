@@ -1,47 +1,23 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 
 import NavBar from "../NavBar/NavBar";
 import Style from "./Profile.module.css";
 import { Link } from "react-router-dom";
 
-import { getSession } from "../../sessionUtils/jwtSession";
+import { getUserData } from "../../Utils/useLocalStorage";
 
 export default function Profile() {
-  const [info, setInfo] = useState("");
-  const [us, setUs] = useState({});
+  const [user, setUser] = useState("");
 
-  const url = "http://localhost:3001/user/get";
   useEffect(() => {
     (async () => {
-      if (!info) {
-        const data = await getSession();
-        setInfo(data);
-      }
-
-      if (info) {
-        console.log("info before request", info);
-        await axios
-          .post(
-            url,
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${info.token}`,
-              },
-            }
-          )
-          .then((res) => {
-            console.log(res.data);
-            setUs(res.data);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+      if (!user) {
+        const data = await getUserData();
+        setUser(data);
       }
     })();
-  }, [info]);
-  console.log(us);
+  }, [user]);
+  console.log(user);
   return (
     <>
       <NavBar />
@@ -50,14 +26,14 @@ export default function Profile() {
           <div className={Style.sectionContainer}>
             <div className={Style.profileInformation}>
               <h1>Datos: </h1>
-              <p>Nombre: {us.name}</p>
-              {us.storeName ? <p>Tienda: {us.storeName}</p> : null}
-              <p>Correo: {us.mail}</p>
-              <p>Telefono: {us.phone}</p>
-              <p>Localidad: {us.location}</p>
+              <p>Nombre: {user.name}</p>
+              {user.storeName ? <p>Tienda: {user.storeName}</p> : null}
+              <p>Correo: {user.mail}</p>
+              <p>Telefono: {user.phone}</p>
+              <p>Localidad: {user.location}</p>
             </div>
             <div>
-              {!us.storeName ? (
+              {!user.storeName ? (
                 <Link to="/home/createStore">
                   <button className={Style.buttonProfile}>Crear Tienda</button>
                 </Link>
@@ -67,11 +43,11 @@ export default function Profile() {
             </div>
             <img
               className={Style.pictureProfile}
-              src={us.profilePicture}
-              alt={us.username}
+              src={user.profilePicture}
+              alt={user.username}
             />
 
-            <h1 className={Style.titleUsername}>{us.username}</h1>
+            <h1 className={Style.titleusername}>{user.username}</h1>
           </div>
         </div>
       </div>
