@@ -1,12 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addToFavorite, deleteToFavorites } from "../../redux/actions";
 import CardStyles from "./Card.module.css";
 
-const Card = ({ img, title, price, id, inFavorites }) => {
-
-  const dispatch = useDispatch();
+const Card = ({ img, title, price, id }) => {
 
   return (
     <div className={CardStyles.CardProductHome}>
@@ -14,7 +10,6 @@ const Card = ({ img, title, price, id, inFavorites }) => {
         <div className={CardStyles.CardProductHomeLinkImgContainer}>
           <img
             className={CardStyles.CardProductHomeLinkProductImg}
-            /*className="w-25 p-3"*/
             src={img}
             alt="img not found"
           />

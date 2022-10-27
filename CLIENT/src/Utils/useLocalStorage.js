@@ -20,3 +20,9 @@ export function useLocalStorage(key, initialValue) {
   };
   return [storedValue, setValue];
 }
+
+export const setSession = (value) =>
+  window.localStorage.setItem("userData", JSON.stringify(value));
+
+export const getUserData = async () =>
+  await JSON.parse(window.localStorage.getItem("userData"));

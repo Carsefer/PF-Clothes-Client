@@ -32,7 +32,7 @@ const NavBar = () => {
         }
       }
     })();
-  }, [user]);
+  }, [user, setUser]);
 
   const handleLogout = (e) => {
     setUser("");

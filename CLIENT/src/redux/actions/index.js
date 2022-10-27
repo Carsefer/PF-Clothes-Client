@@ -6,7 +6,6 @@ import {
   SEARCH_PRODUCT,
   GET_SIZES,
   ORDER_PRODUCTS_BY_NAME,
-  ORDER_PRODUCTS_BY_SCORE,
   FILTER_PRODUCTS,
   LOGIN_USER,
   GET_PRODUCTS_CART,
@@ -16,7 +15,6 @@ import {
   GET_FAVORITES,
   ADD_TO_FAVORITES,
   DELETE_FAVORITE,
-  DELETE_ONE_FAVORITE,
   ADD_TO_CART,
   CLEAR_CART,
   REMOVE_ALL_FROM_CART,
@@ -26,6 +24,7 @@ import {
   GET_SELLS_HISTORY,
   GET_SELL_DETAIL,
   CREATE_REVIEW_PRODUCT,
+  BUY_PRODUCT,
 } from "../action-types";
 
 export const getProducts = () => {
@@ -91,15 +90,6 @@ export const orderProductsByName = (data) => {
   };
 };
 
-/* export const orderProductsByScore = (orden) => {
-  return async function (dispatch) {
-    dispatch({
-      type: ORDER_PRODUCTS_BY_SCORE,
-      payload: orden,
-    });
-  };
-}; */
-
 export const filterProducts = (
   name,
   price,
@@ -154,18 +144,9 @@ export const createUser = (data) => {
     }
   };
 };
-export const createStore = (id, data, token) => {
+export const createStore = (id, data) => {
   return async (dispatch) => {
-    const res = await axios.put(
-      `/user/${id}`,
-      data,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const res = await axios.patch(`/user/${id}`, data);
     return dispatch({
       type: CREATE_STORE,
       payload: res.data,
@@ -195,7 +176,7 @@ export const getFavorites = (id) => {
 
 export const addToFavorites = (id, profileId, token) => {
   return async (dispatch) => {
-    const res = await axios.put(
+    await axios.put(
       `/user/favorites?productID=${id}&profileID=${profileId}`,
       {},
       {
@@ -204,28 +185,21 @@ export const addToFavorites = (id, profileId, token) => {
         },
       }
     );
-
     return dispatch({
       type: ADD_TO_FAVORITES,
-      payload: res,
+      payload: id,
     });
   };
 };
 
-export const deleteFavorite = (id) => {
-  return {
-    type: DELETE_FAVORITE,
-    payload: id,
-  };
-};
-export const deleteOneFavorite = (productId, profileId) => {
+export const deleteFavorite = (productId, profileId) => {
   return async (dispatch) => {
-    const res = await axios.delete(
+    await axios.delete(
       `/user/favorites?productID=${productId}&profileID=${profileId}`
     );
     return dispatch({
-      type: DELETE_ONE_FAVORITE,
-      payload: res,
+      type: DELETE_FAVORITE,
+      payload: productId,
     });
   };
 };
@@ -307,10 +281,22 @@ export const getSellDetail = (idSell) => {
 
 export const createReviewProduct = (id, data, token) => {
   return async (dispatch) => {
-    const res = await axios.post(`/product/review/${id}`,data, {headers: {Authorization: `Bearer ${token}`,}});
+    const res = await axios.post(`/product/review/${id}`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     dispatch({
       type: CREATE_REVIEW_PRODUCT,
       payload: res.data,
     });
-  }
-}
+  };
+};
+
+export const buyProduct = (data) => {
+  return async function (dispatch) {
+    const link = await axios.post(`/generar`, data);
+    dispatch({
+      type: BUY_PRODUCT,
+      payload: link.data,
+    });
+  };
+};

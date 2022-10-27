@@ -3,7 +3,7 @@ import CreateStore from "./components/CreateStore/CreateStore";
 import CreateUser from "./components/CreateUser/CreateUser";
 import Favorites from "./components/Favorites/Favorites";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Home from "./components/Home/Home";
 import LandingHome from "./components/LandingHome/LandingHome";
 import Login from "./components/Login/Login";
@@ -15,54 +15,33 @@ import { getSession } from "./sessionUtils/jwtSession";
 import { useLocalStorage } from "./Utils/useLocalStorage";
 import {
   ProtectedRoute,
-  ProtectedRoutes,
+  //ProtectedRoutes,
 } from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
-  const [info, setInfo] = useLocalStorage("");
-  const [us, setUs] = useLocalStorage(null);
+  const [user, setUser] = useLocalStorage(null);
 
-  const url = "http://localhost:3001/user/get";
   useEffect(() => {
     (async () => {
-      if (!info) {
+      if (!user) {
         const data = await getSession();
-        setInfo(data);
-      }
-
-      if (info) {
-        console.log("info before request", info);
-        await axios
-          .post(
-            url,
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${info.token}`,
-              },
-            }
-          )
-          .then((res) => {
-            console.log(res.data);
-            setUs(res.data);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        if (data) {
+          setUser(data);
+        }
       }
     })();
-  }, [info]);
+  }, [user, setUser]);
+
   return (
     <Routes>
       <Route index element={<LandingHome />} />
       <Route exact path="/" element={<LandingHome />} />
       <Route exact path="/home" element={<Home />} />
-      <Route element={<ProtectedRoutes us={us} />}>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<CreateUser />} />
-      </Route>
-
-      <Route element={<ProtectedRoute us={us} />}>
+      {/* <Route element={<ProtectedRoutes us={us} />}> */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<CreateUser />} />
+      {/* </Route> */}
+      <Route element={<ProtectedRoute user={user} />}>
         <Route path="/home/Favorites" element={<Favorites />} />
         <Route path="/home/ShoppingCart" element={<ShoppingCart />} />
         <Route path="/home/profile" element={<Profile />} />
