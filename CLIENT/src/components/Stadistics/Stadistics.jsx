@@ -38,10 +38,21 @@ const Stadistics = () => {
     }
 
     const sellsForDays = () => {
-        const thisMonth = Date().split(" ")[1]
-        const thisYear = Date().split(" ")[3]
+        const today = new Date()
+        const thisMonth = today.getMonth() + 1
+        const thisYear = today.getFullYear()
         let sellsDays = []
-        /* sellsHistory.length ? sellsHistory.forEach() : null */
+        if (sellsHistory.length) {
+            for (let i = 1; i <= 31; i++) {
+                let amount = 0
+                sellsHistory.forEach(sell => {
+                    sell.date === `${i}/${thisMonth}/${thisYear}` ?
+                    amount += 1 : null
+                })
+                sellsDays.push(amount.toString())
+            }
+        }
+        return sellsDays
     }
 
     const randomSells = () => {
@@ -51,15 +62,15 @@ const Stadistics = () => {
 
     const sellsInProcess = () => {
         let auxSells = []
-        for (let i = 1; i <= 31; i++) {
+        const auxNum = parseInt(daysMonth().pop()) //ultimo día del mes (osea, la cantidad de días)
+        for (let i = 1; i <= auxNum; i++) {
             auxSells.push(randomSells())
         }
         return auxSells
     }
 
-    /* const days = ["22", "23", "24", "25", "26", "27"] */
     const days = daysMonth()
-    const sells = sellsInProcess()
+    const sells = sellsHistory.lentgh ? sellsForDays() : sellsInProcess()
 
     return (
         <div>
