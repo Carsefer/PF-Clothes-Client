@@ -2,47 +2,30 @@ import { useDispatch } from "react-redux";
 import { createStore } from "../../redux/actions";
 import { Formik } from "formik";
 import { useEffect, useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Styles from "./CreateStore.module.css";
-import axios from "axios";
 import { getSession } from "../../sessionUtils/jwtSession";
+import { getUserData } from "../../Utils/useLocalStorage";
 
 const CreateStore = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [info, setInfo] = useState("");
-  const [us, setUs] = useState({});
+  const [user, setUser] = useState({});
 
-  const url = "http://localhost:3001/user/get";
   useEffect(() => {
     (async () => {
       if (!info) {
-        const data = await getSession();
-        setInfo(data);
-      }
-
-      if (info) {
-        console.log("info before request", info);
-        await axios
-          .post(
-            url,
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${info.token}`,
-              },
-            }
-          )
-          .then((res) => {
-            console.log(res.data);
-            setUs(res.data);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        const token = await getSession();
+        const data = await getUserData();
+        setInfo(token);
+        setUser(data);
       }
     })();
   }, [info]);
+  const profileId = user?.id;
+  const token = info?.token;
 
   return (
     <div className={Styles.container1}>
@@ -61,7 +44,6 @@ const CreateStore = () => {
         }}
         onSubmit={(data, { resetForm }) => {
           let { storeName, banner, profilePicture, location } = data;
-
           const a = {
             storeName,
             banner,
@@ -70,17 +52,37 @@ const CreateStore = () => {
           };
           console.log(a);
 
-          dispatch(createStore(us.id, a, info.token))
+          dispatch(createStore(profileId, a, token))
             .then(function (res) {
               console.log(res);
               alert("Exitoso");
             })
-            .catch(function (res) {
-              console.log(res);
+            .then(async () => {
+              await axios
+                .post(
+                  "http://localhost:3001/user/get",
+                  {},
+                  {
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  }
+                )
+                .then((res) => {
+                  console.log(res.data);
+                  window.localStorage.setItem(
+                    "userData",
+                    JSON.stringify(res.data)
+                  );
+                })
+
+                .catch((error) => {
+                  console.log(error);
+                });
             });
           setTimeout(() => {
             resetForm();
-            navigate("/home/profile");
+            navigate("/home/profile").then(window.location.reload());
           }, 2000);
         }}
       >

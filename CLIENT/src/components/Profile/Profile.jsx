@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import NavBar from "../NavBar/NavBar";
 import Style from "./Profile.module.css";
 import { Link } from "react-router-dom";
-
 import { getUserData } from "../../Utils/useLocalStorage";
 
 export default function Profile() {

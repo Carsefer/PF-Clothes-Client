@@ -134,9 +134,13 @@ export const createUser = (data) => {
     }
   };
 };
-export const createStore = (id, data) => {
+export const createStore = (id, data, token) => {
   return async (dispatch) => {
-    const res = await axios.patch(`/user/${id}`, data);
+    const res = await axios.put(`/user/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return dispatch({
       type: CREATE_STORE,
       payload: res.data,
@@ -154,9 +158,17 @@ export const createPublication = () => {
   };
 };
 
-export const getFavorites = (id) => {
+export const getFavorites = (id, token) => {
   return async (dispatch) => {
-    const res = await axios.get(`/user/favorites?profileID=${id}`);
+    const res = await axios.get(
+      `/user/favorites?profileID=${id}`,
+
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return dispatch({
       type: GET_FAVORITES,
       payload: res.data,
@@ -186,7 +198,6 @@ export const deleteFavorite = (productId, profileId, token) => {
   return async (dispatch) => {
     await axios.delete(
       `/user/favorites?productID=${productId}&profileID=${profileId}`,
-      {},
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -211,6 +222,7 @@ export const addToCart = (id, profileId, token) => {
         },
       }
     );
+
     return dispatch({
       type: ADD_TO_CART,
       payload: res,
@@ -218,20 +230,30 @@ export const addToCart = (id, profileId, token) => {
   };
 };
 
-export const getCartProducts = (id) => {
+export const getCartProducts = (id, token) => {
   return async (dispatch) => {
-    const res = await axios.get(`/user/shoppingcart?profileID=${id}`);
+    const res = await axios.get(`/user/shoppingcart?profileID=${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return dispatch({
       type: GET_PRODUCTS_CART,
       payload: res.data,
     });
   };
 };
-export const delProductCart = (productId, profileId) => {
+export const delProductCart = (productId, profileId, token) => {
   return async (dispatch) => {
     const res = await axios.delete(
-      `/user/shoppingcart?productID=${productId}&profileID=${profileId}`
+      `/user/shoppingcart?productID=${productId}&profileID=${profileId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
+
     return dispatch({
       type: REMOVE_ONE_FROM_CART,
       payload: res,

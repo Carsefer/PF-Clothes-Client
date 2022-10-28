@@ -16,11 +16,13 @@ import CartItem from "../CartItem/CartItem";
 import { getUserData } from "../../Utils/useLocalStorage";
 import Style from "./ShoppingCart.module.css";
 import NavBar from "../NavBar/NavBar";
+import { getSession } from "../../sessionUtils/jwtSession";
 //import { useLocalStorage } from "../../Utils/useLocalStorage";
 
 const ShoppingCart = () => {
   const dispatch = useDispatch();
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState(null);
+  const [info, setInfo] = useState("");
 
   const cartList = useSelector((state) => state?.cart);
   const compra = useSelector((state) => state.linkCompra);
@@ -29,12 +31,14 @@ const ShoppingCart = () => {
     (async () => {
       if (!user) {
         const data = await getUserData();
+        const token = await getSession();
+        setInfo(token);
         setUser(data);
       }
     })();
 
-    dispatch(getCartProducts(user?.id));
-  }, [user, dispatch, user.id]);
+    dispatch(getCartProducts(user?.id, info?.token));
+  }, [user, dispatch, info]);
 
   return (
     <>

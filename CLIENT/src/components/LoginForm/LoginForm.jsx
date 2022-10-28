@@ -31,37 +31,43 @@ const LoginForm = () => {
 
   /* login with user and password */
   const handleLogin = async (userInfo) => {
-    document.cookie="token=;max-age=0";
+    document.cookie = "token=;max-age=0";
     window.localStorage.removeItem("sessionData");
-    await axios.post('http://localhost:3001/login',{
-      username:userInfo.username,
-      password:userInfo.password
-    }).then(function(res){
-      console.log(res);
-      if(res.data){
-        navigate("/home");
-        console.log(res.data);
-        setSession(res.data.token);
-      }
-      console.log(document.cookie);
-      fetchAuthUser();
-    }).catch(function(error){
-      console.log(error);
-    })
-
-    
+    await axios
+      .post("http://localhost:3001/login", {
+        username: userInfo.username,
+        password: userInfo.password,
+      })
+      .then(function (res) {
+        console.log(res);
+        if (res.data) {
+          navigate("/home");
+          console.log(res.data);
+          setSession(res?.data?.token);
+        }
+        console.log(document.cookie);
+        fetchAuthUser();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   /* loging with google */
   const redirectToGoogleSSO = async () => {
-    const googleLoginURL = `${process.env.REACT_APP_API || "http://localhost:3001"}/login/google`;
+    const googleLoginURL = `${
+      process.env.REACT_APP_API || "http://localhost:3001"
+    }/login/google`;
     window.open(googleLoginURL, "_self");
     //fetchAuthUser();
   };
 
   const fetchAuthUser = async () => {
     await axios
-      .get(`${process.env.REACT_APP_API || "http://localhost:3001"}/auth/user`, { withCredentials: true })
+      .get(
+        `${process.env.REACT_APP_API || "http://localhost:3001"}/auth/user`,
+        { withCredentials: true }
+      )
       .then(
         (res) => {
           if (res.data) {
