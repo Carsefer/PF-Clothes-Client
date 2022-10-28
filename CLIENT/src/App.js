@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import CreateStore from "./components/CreateStore/CreateStore";
 import CreateUser from "./components/CreateUser/CreateUser";
 import Favorites from "./components/Favorites/Favorites";
-//import axios from "axios";
+import axios from "axios";
 import { useEffect } from "react";
 import Home from "./components/Home/Home";
 import LandingHome from "./components/LandingHome/LandingHome";
@@ -12,22 +12,29 @@ import Profile from "./components/Profile/Profile";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import Stadistics from "./components/Stadistics/Stadistics";
 import Reset from './components/Reset/Reset';
-import { getSession } from "./sessionUtils/jwtSession";
+import { validateUser } from "./sessionUtils/jwtSession";
 import { useLocalStorage } from "./Utils/useLocalStorage";
 import {
   ProtectedRoute,
-  //ProtectedRoutes,
+  ProtectedRoutes,
 } from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
-  const [user, setUser] = useLocalStorage(null);
-
+  const [user, setUser] = useLocalStorage("userData");
   useEffect(() => {
     (async () => {
       if (!user) {
-        const data = await getSession();
-        if (data) {
-          setUser(data);
+        const token = validateUser();
+        try {
+          const res = await axios.get(
+            `${
+              process.env.REACT_APP_API || "http://localhost:3001"
+            }/user/get?secret_token=${token}`
+          );
+          console.log(res.data);
+          setUser(res.data);
+        } catch (err) {
+          console.log(err.message);
         }
       }
     })();
@@ -38,10 +45,10 @@ function App() {
       <Route index element={<LandingHome />} />
       <Route exact path="/" element={<LandingHome />} />
       <Route exact path="/home" element={<Home />} />
-      {/* <Route element={<ProtectedRoutes us={us} />}> */}
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<CreateUser />} />
-      {/* </Route> */}
+      <Route element={<ProtectedRoutes user={user} />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<CreateUser />} />
+      </Route>
       <Route element={<ProtectedRoute user={user} />}>
         <Route path="/home/Favorites" element={<Favorites />} />
         <Route path="/home/ShoppingCart" element={<ShoppingCart />} />

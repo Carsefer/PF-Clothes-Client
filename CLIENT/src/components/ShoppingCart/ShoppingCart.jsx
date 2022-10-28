@@ -7,22 +7,17 @@ import {
   delProductCart,
   buyProduct,
 } from "../../redux/actions";
-//import axios from "axios";
 import { Link } from "react-router-dom";
-
 import { useState, useEffect } from "react";
 import CartItem from "../CartItem/CartItem";
-//import { getSession } from "../../sessionUtils/jwtSession";
 import { getUserData } from "../../Utils/useLocalStorage";
 import Style from "./ShoppingCart.module.css";
 import NavBar from "../NavBar/NavBar";
-import { getSession } from "../../sessionUtils/jwtSession";
-//import { useLocalStorage } from "../../Utils/useLocalStorage";
+import { validateUser } from "../../sessionUtils/jwtSession";
 
 const ShoppingCart = () => {
   const dispatch = useDispatch();
   const [user, setUser] = useState(null);
-  const [info, setInfo] = useState("");
 
   const cartList = useSelector((state) => state?.cart);
   const compra = useSelector((state) => state.linkCompra);
@@ -31,14 +26,14 @@ const ShoppingCart = () => {
     (async () => {
       if (!user) {
         const data = await getUserData();
-        const token = await getSession();
-        setInfo(token);
         setUser(data);
       }
     })();
+    const token = validateUser();
 
-    dispatch(getCartProducts(user?.id, info?.token));
-  }, [user, dispatch, info]);
+    dispatch(getCartProducts(user?.id, token));
+  }, [user, dispatch]);
+  const token = validateUser();
 
   return (
     <>
@@ -49,7 +44,7 @@ const ShoppingCart = () => {
           <div>
             <h3>Productos</h3>
             <article className="box">
-              <button onClick={() => dispatch(clearCart(user?.id))}>
+              <button onClick={() => dispatch(clearCart(user?.id, token))}>
                 Limpiar Carrito
               </button>
 
@@ -61,7 +56,7 @@ const ShoppingCart = () => {
                   quantity="1"
                   image={e?.image}
                   delOneFromCart={() =>
-                    dispatch(delProductCart(e?.id, user?.id)).then(
+                    dispatch(delProductCart(e?.id, user?.id, token)).then(
                       dispatch(delFromCart(e.id))
                     )
                   }
