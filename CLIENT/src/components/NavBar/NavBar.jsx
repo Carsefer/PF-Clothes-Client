@@ -5,13 +5,11 @@ import Logo from "../images/bitmap2.png";
 import Cart from "../images/cart.svg";
 import ButtonFav from "../images/buttonFavNav.svg";
 import Profile from "../images/profile.svg";
-import { getSession,validateUser } from "../../sessionUtils/jwtSession";
-import Toastify from 'toastify-js';
-import "toastify-js/src/toastify.css";
-import axios from "axios";
+import { getSession } from "../../sessionUtils/jwtSession";
 import { useLocalStorage } from "../../Utils/useLocalStorage";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 //import { FaWindows } from "react-icons/fa";
-
 
 const NavBar = () => {
   const [user, setUser] = useLocalStorage("");
@@ -24,38 +22,26 @@ const NavBar = () => {
       className: Styles.toast,
       backgroundColor: "black",
     }).showToast();
-  
-  
 
   useEffect(() => {
     (async () => {
       if (!user) {
-
-        const token = validateUser();
-        try{
-          const res = await axios.get(`${process.env.REACT_APP_API || "http://localhost:3001"}/user/get?secret_token=${token}`);
-          console.log(res.data);
-          setUser(res.data.username);
-        }catch(err){
-          console.log(err.message);
+        const data = await getSession();
+        if (data) {
+          setUser(data);
+        }
       }
-    }
-
     })();
-
   }, [user, setUser]);
 
   const handleLogout = (e) => {
     setUser("");
-    document.cookie="token=;max-age=0";
-    window.localStorage.removeItem("sessionData");
+    sessionStorage.removeItem("sessionData");
     window.localStorage.clear();
     toast("Sesión cerrada");
     window.location.reload();
     navigate("/home");
   };
-
-  console.log(user);
 
   return (
     <nav className={Styles.NavbarHome}>
@@ -92,7 +78,7 @@ const NavBar = () => {
             <Link to="/home/stadistics">Estadísticas</Link>
             <div>
               {/* username */}
-              <p>{user}</p>
+              <p>{user.username}</p>
               <button
                 className={Styles.NavbarHomeButtons2}
                 onClick={(e) => {
