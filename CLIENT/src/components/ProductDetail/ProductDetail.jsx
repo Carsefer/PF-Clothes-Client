@@ -17,7 +17,7 @@ import buttonDeleteFav from "../images/buttonDeleteFav.svg";
 import CreateReview from "../CreateReviews/CreateReview";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
-import { getSession } from "../../sessionUtils/jwtSession";
+import { validateUser } from "../../sessionUtils/jwtSession";
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
@@ -38,14 +38,15 @@ const ProductDetail = () => {
   const averageScore = () => {
     let average = 0;
     if (reviews.length) {
-      reviews.forEach(r => { average += r.score })
-      return (average / reviews.length)
+      reviews.forEach((r) => {
+        average += r.score;
+      });
+      return average / reviews.length;
     } else {
-      return 0
+      return 0;
     }
-  }
+  };
 
-  const [info, setInfo] = useState("");
   const [user, setUser] = useState(null);
   const [filterBySize, setFilterBySize] = useLocalStorage("filterBySize", "");
   const [filterByColor, setFilterByColor] = useLocalStorage(
@@ -57,17 +58,15 @@ const ProductDetail = () => {
     (async () => {
       if (!user) {
         const data = await getUserData();
-        const token = await getSession();
         setUser(data);
-        setInfo(token);
       }
     })();
     dispatch(getProductDetail(id));
     dispatch(getProductDetailReviews(id));
-  }, [info, dispatch, user, id]);
+  }, [dispatch, user, id]);
 
   const profileId = user?.id;
-  const token = info?.token;
+  const token = validateUser();
 
   const handleFav = () => {
     if (!user) {

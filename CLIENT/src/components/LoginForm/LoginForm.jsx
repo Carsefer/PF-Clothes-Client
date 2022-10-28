@@ -31,63 +31,35 @@ const LoginForm = () => {
 
   /* login with user and password */
   const handleLogin = async (userInfo) => {
-    try {
-      const res = await axios.post(`http://localhost:3001/login`, userInfo);
-      sessionStorage.setItem("sessionData", JSON.stringify(res.data));
-
-      if (res.data) {
-        await axios
-          .post(
-            "http://localhost:3001/user/get",
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${res.data.token}`,
-              },
-            }
-          )
-          .then((res) => {
-            console.log(res.data);
-            window.localStorage.setItem("userData", JSON.stringify(res.data));
-          })
-
-          .catch((error) => {
-            console.log(error);
-          });
-        toastCorrect("Credenciales correctas");
-        setTimeout(() => {
-          navigate("/home");
-          window.location.reload();
-        }, 1000);
-      }
-    } catch (err) {
-      console.log("incorrect");
-      toast("Credenciales incorrectas");
-    }
+    document.cookie = "token=;max-age=0";
+    window.localStorage.removeItem("sessionData");
+    await axios
+      .post("http://localhost:3001/login", {
+        username: userInfo.username,
+        password: userInfo.password,
+      })
+      .then(function (res) {
+        console.log(res);
+        if (res.data) {
+          setSession(res.data.token);
+          toastCorrect("Credenciales correctas");
+          setTimeout(() => {
+            navigate("/home");
+            window.location.reload();
+          }, 1000);
+        }
+        console.log(document.cookie);
+      })
+      .catch(function (error) {
+        toast("Credenciales incorrectas");
+        console.log(error);
+      });
   };
 
   /* loging with google */
   const redirectToGoogleSSO = async () => {
     const googleLoginURL = `http://localhost:3001/login/google`;
     window.open(googleLoginURL, "_self");
-    fetchAuthUser();
-  };
-
-  const fetchAuthUser = async () => {
-    await axios
-      .get(`http://localhost:3001/auth/user`, { withCredentials: true })
-      .then(
-        (res) => {
-          if (res.data) {
-            console.log(res.data);
-            setSession(res.data);
-          }
-        },
-        (err) => {
-          console.log("no google user data");
-          console.log(err);
-        }
-      );
   };
 
   return (

@@ -5,33 +5,30 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Styles from "./CreateStore.module.css";
-import { getSession } from "../../sessionUtils/jwtSession";
+import { validateUser } from "../../sessionUtils/jwtSession";
 import { getUserData } from "../../Utils/useLocalStorage";
 
 const CreateStore = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [info, setInfo] = useState("");
-  const [user, setUser] = useState({});
-
+  const [user, setUser] = useState("");
   useEffect(() => {
     (async () => {
-      if (!info) {
-        const token = await getSession();
+      if (!user) {
         const data = await getUserData();
-        setInfo(token);
-        setUser(data);
+        setUser(data?.id);
       }
     })();
-  }, [info]);
-  const profileId = user?.id;
-  const token = info?.token;
+  }, [user]);
+
+  const token = validateUser();
 
   return (
     <div className={Styles.container1}>
       <h1 className={Styles.subtitle}>Crear una tienda</h1>
       <Formik
         initialValues={{
+          id: "",
           storeName: "",
           banner: "",
           profilePicture: "",
@@ -43,8 +40,10 @@ const CreateStore = () => {
           return errors;
         }}
         onSubmit={(data, { resetForm }) => {
-          let { storeName, banner, profilePicture, location } = data;
+          let { id, storeName, banner, profilePicture, location } = data;
+          id = user;
           const a = {
+            id,
             storeName,
             banner,
             profilePicture,
@@ -52,33 +51,26 @@ const CreateStore = () => {
           };
           console.log(a);
 
-          dispatch(createStore(profileId, a, token))
+          dispatch(createStore(token, a))
             .then(function (res) {
               console.log(res);
               alert("Exitoso");
             })
             .then(async () => {
-              await axios
-                .post(
-                  "http://localhost:3001/user/get",
-                  {},
-                  {
-                    headers: {
-                      Authorization: `Bearer ${token}`,
-                    },
-                  }
-                )
-                .then((res) => {
-                  console.log(res.data);
-                  window.localStorage.setItem(
-                    "userData",
-                    JSON.stringify(res.data)
-                  );
-                })
-
-                .catch((error) => {
-                  console.log(error);
-                });
+              try {
+                const res = await axios.get(
+                  `${
+                    process.env.REACT_APP_API || "http://localhost:3001"
+                  }/user/get?secret_token=${token}`
+                );
+                console.log(res.data);
+                window.localStorage.setItem(
+                  "userData",
+                  JSON.stringify(res.data)
+                );
+              } catch (err) {
+                console.log(err.message);
+              }
             });
           setTimeout(() => {
             resetForm();

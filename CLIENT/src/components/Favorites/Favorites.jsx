@@ -10,11 +10,10 @@ import {
 } from "../../redux/actions/index.js";
 import Style from "./Favorites.module.css";
 import NavBar from "../NavBar/NavBar";
-import { getSession } from "../../sessionUtils/jwtSession";
+import { validateUser } from "../../sessionUtils/jwtSession";
 import { getUserData } from "../../Utils/useLocalStorage.js";
 const Favorites = () => {
   const dispatch = useDispatch();
-  const [info, setInfo] = useState("");
   const [user, setUser] = useState(null);
   const favorites = useSelector((state) => state?.favorites);
 
@@ -22,17 +21,15 @@ const Favorites = () => {
     (async () => {
       if (!user) {
         const data = await getUserData();
-        const token = await getSession();
         setUser(data);
-        setInfo(token);
       }
     })();
     const id = user?.id;
-    const token = info?.token;
+    const token = validateUser();
     dispatch(getFavorites(id, token));
-  }, [info, dispatch, user]);
+  }, [dispatch, user]);
   const profileId = user?.id;
-  const token = info?.token;
+  const token = validateUser();
   console.log(token);
   return (
     <>
@@ -41,7 +38,9 @@ const Favorites = () => {
         <div className={Style.containerFavorites}>
           {favorites?.length ? (
             <div>
-              <button onClick={() => dispatch(clearFavorites(profileId))}>
+              <button
+                onClick={() => dispatch(clearFavorites(profileId, token))}
+              >
                 Limpiar Favoritos
               </button>
             </div>
