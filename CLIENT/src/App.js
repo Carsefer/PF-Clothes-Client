@@ -12,25 +12,25 @@ import Profile from "./components/Profile/Profile";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import Stadistics from "./components/Stadistics/Stadistics";
 import { getSession } from "./sessionUtils/jwtSession";
-import { useLocalStorage } from "./Utils/useLocalStorage";
+import { getUserData, useLocalStorage } from "./Utils/useLocalStorage";
 import {
   ProtectedRoute,
   //ProtectedRoutes,
 } from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
-  const [user, setUser] = useLocalStorage(null);
-
+  const [user, setUser] = useLocalStorage(true);
+  /* 
   useEffect(() => {
     (async () => {
       if (!user) {
-        const data = await getSession();
+          const data = await getUserData();
         if (data) {
           setUser(data);
         }
       }
     })();
-  }, [user, setUser]);
+  }, [user, setUser]); */
 
   return (
     <Routes>

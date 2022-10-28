@@ -8,11 +8,6 @@ import { setSession } from "../../sessionUtils/jwtSession";
 //import { useLocalStorage } from "../../Utils/useLocalStorage";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
-const wrapper = require("axios-cookiejar-support").wrapper;
-const CookieJar = require("tough-cookie").CookieJar;
-
-const jar = new CookieJar();
-const client = wrapper(axios.create({ jar }));
 
 const LoginForm = () => {
   const [showPwd, setShowPwd] = useState(false);
@@ -38,14 +33,13 @@ const LoginForm = () => {
   const handleLogin = async (userInfo) => {
     document.cookie = "token=;max-age=0";
     window.localStorage.removeItem("sessionData");
-    await client
+    await axios
       .post("http://localhost:3001/login", {
         username: userInfo.username,
         password: userInfo.password,
       })
       .then(function (res) {
         console.log(res);
-        console.log(res.config.jar.toJSON());
         if (res.data) {
           setSession(res.data.token);
           navigate("/home");

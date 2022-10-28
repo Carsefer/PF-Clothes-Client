@@ -48,6 +48,7 @@ const NavBar = () => {
   const handleLogout = (e) => {
     setUser("");
     document.cookie="token=;max-age=0";
+    window.localStorage.removeItem("sessionData");
     window.localStorage.clear();
     toast("Sesión cerrada");
     window.location.reload();
