@@ -83,7 +83,7 @@ const Stadistics = () => {
         sellsHistory.forEach(sell => {
             let product = products.find(s => s.productId === sell.productId)
             if (!product) {
-                products.push({productId: sell.productId, amount: 1})
+                products.push({productId: sell.productId, productInfo: sell.productInfo, amount: 1})
             } else {
                 let num = product.amount + 1
                 product.amount = num
@@ -129,7 +129,10 @@ const Stadistics = () => {
                         mostSelledProducts.length ? mostSelledProducts.map(s => {
                             return (
                                 <div>
-                                    <h2>{s.productId}</h2>
+                                    <h2>{s.productInfo.name}</h2>
+                                    <img src={s.productInfo.img} alt="foto" />
+                                    <h2>Vendidos:</h2>
+                                    <h2>{s.amount}</h2>
                                 </div>
                             )
                         }) : <div>Aquí se mostraran tus productos más vendidos</div>
