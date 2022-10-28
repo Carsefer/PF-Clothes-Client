@@ -5,8 +5,10 @@ import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
 
 const Reset = () => {
-    const handleLogin = (values) => {
-        alert("si");
+    const handleSubmit = ({email}) => {
+        console.log(email);
+        axios.post("http://localhost:3001/auth/forgot-password",{email})
+        .then(res => console.log(res),err => console.log(err));
     }
     return(
         <div>
@@ -29,7 +31,7 @@ const Reset = () => {
             }}
             onSubmit={(values, { resetForm }) => {
                 resetForm();
-                handleLogin(values);
+                handleSubmit(values);
             }}
             >
             {({
