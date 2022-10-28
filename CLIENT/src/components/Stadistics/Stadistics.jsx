@@ -112,10 +112,10 @@ const Stadistics = () => {
                     sellsHistory.length ? sellsHistory.map(sell => {
                         return (
                             <div>
-                                <img src={sell.img} alt="foto" />
-                                <h4>{sell.name}</h4>
-                                <p>{sell.buyer}</p>
-                                <p>{sell.location}</p>
+                                <img src={sell.productInfo.img} alt="foto" />
+                                <h4>{sell.productInfo.name}</h4>
+                                <p>{sell.productInfo.buyer}</p>
+                                <p>{sell.productInfo.location}</p>
                                 <Link to={`/sell/${sell.id}`}>
                                     <p>Más detalles de la compra</p>
                                 </Link>
