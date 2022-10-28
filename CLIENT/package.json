@@ -10,6 +10,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.1.2",
+    "axios-cookiejar-support": "^4.0.3",
     "boostrap": "^2.0.0",
     "bootstrap": "^5.2.2",
     "chart.js": "^3.9.1",
@@ -29,6 +30,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.4.1",
     "toastify-js": "^1.12.0",
+    "tough-cookie": "^4.1.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
