@@ -42,44 +42,24 @@ const LoginForm = () => {
         console.log(res);
         if (res.data) {
           setSession(res.data.token);
-          navigate("/home");
-          console.log(res.data);
+          toastCorrect("Credenciales correctas");
+          setTimeout(() => {
+            navigate("/home");
+            window.location.reload();
+          }, 1000);
         }
         console.log(document.cookie);
-        fetchAuthUser();
       })
       .catch(function (error) {
+        toast("Credenciales incorrectas");
         console.log(error);
       });
   };
 
   /* loging with google */
   const redirectToGoogleSSO = async () => {
-    const googleLoginURL = `${
-      process.env.REACT_APP_API || "http://localhost:3001"
-    }/login/google`;
+    const googleLoginURL = `http://localhost:3001/login/google`;
     window.open(googleLoginURL, "_self");
-    //fetchAuthUser();
-  };
-
-  const fetchAuthUser = async () => {
-    await axios
-      .get(
-        `${process.env.REACT_APP_API || "http://localhost:3001"}/auth/user`,
-        { withCredentials: true }
-      )
-      .then(
-        (res) => {
-          if (res.data) {
-            console.log(res.data);
-            //setSession(res.data);
-          }
-        },
-        (err) => {
-          console.log("no google user data");
-          console.log(err);
-        }
-      );
   };
 
   return (

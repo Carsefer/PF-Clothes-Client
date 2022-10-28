@@ -22,10 +22,9 @@ ChartJS.register(
     Filler
 )
 
-const SellsGraphic = () => {
+const SellsGraphic = ({ sells, days }) => {
 
-    const sells = ["5", "2", "7", "6", "4", "5"]
-    const labels = ["22", "23", "24", "25", "26", "27"]
+    const labels = days
 
     const data = {
         datasets: [
