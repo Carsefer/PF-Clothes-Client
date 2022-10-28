@@ -68,27 +68,14 @@ const LoginForm = () => {
 
   /* loging with google */
   const redirectToGoogleSSO = async () => {
-<<<<<<< HEAD
-    const googleLoginURL = `${
-      process.env.REACT_APP_API || "http://localhost:3001"
-    }/login/google`;
-=======
     const googleLoginURL = `http://localhost:3001/login/google`;
->>>>>>> bb5b2a352536b936bf3c1b3b181e58da3b541048
     window.open(googleLoginURL, "_self");
     fetchAuthUser();
   };
 
   const fetchAuthUser = async () => {
     await axios
-<<<<<<< HEAD
-      .get(
-        `${process.env.REACT_APP_API || "http://localhost:3001"}/auth/user`,
-        { withCredentials: true }
-      )
-=======
       .get(`http://localhost:3001/auth/user`, { withCredentials: true })
->>>>>>> bb5b2a352536b936bf3c1b3b181e58da3b541048
       .then(
         (res) => {
           if (res.data) {

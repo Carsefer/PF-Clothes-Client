@@ -90,11 +90,7 @@ const NavBar = () => {
             <Link to="/home/stadistics">Estadísticas</Link>
             <div>
               {/* username */}
-<<<<<<< HEAD
-              <p>{user?.username}</p>
-=======
               <p>{user.username}</p>
->>>>>>> bb5b2a352536b936bf3c1b3b181e58da3b541048
               <button
                 className={Styles.NavbarHomeButtons2}
                 onClick={(e) => {
