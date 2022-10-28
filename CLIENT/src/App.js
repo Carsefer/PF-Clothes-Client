@@ -11,7 +11,7 @@ import ProductDetail from "./components/ProductDetail/ProductDetail";
 import Profile from "./components/Profile/Profile";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import Stadistics from "./components/Stadistics/Stadistics";
-import Reset from './components/Reset/Reset';
+import Forgot from './components/Forgot/Forgot';
 import { validateUser } from "./sessionUtils/jwtSession";
 import { useLocalStorage } from "./Utils/useLocalStorage";
 import {
@@ -57,7 +57,7 @@ function App() {
         <Route path="/home/createStore" element={<CreateStore />} />
       </Route>
       <Route path="/home/product/:id" element={<ProductDetail />} />
-      <Route path="/reset" element={<Reset/>}/>
+      <Route path="/forgot" element={<Forgot/>}/>
     </Routes>
   );
 }

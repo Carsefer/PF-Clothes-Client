@@ -1,10 +1,10 @@
 import { Formik } from "formik";
-import Styles from './Reset.module.css';
+import Styles from './Forgot.module.css';
 import axios from "axios";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
 
-const Reset = () => {
+const Forgot = () => {
     const handleSubmit = ({email}) => {
         console.log(email);
         axios.post("http://localhost:3001/auth/forgot-password",{email})
@@ -82,4 +82,4 @@ const Reset = () => {
     );
 }
 
-export default Reset;
+export default Forgot;
