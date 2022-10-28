@@ -31,48 +31,69 @@ const LoginForm = () => {
 
   /* login with user and password */
   const handleLogin = async (userInfo) => {
-    document.cookie = "token=;max-age=0";
-    window.localStorage.removeItem("sessionData");
-    await axios
-      .post("http://localhost:3001/login", {
-        username: userInfo.username,
-        password: userInfo.password,
-      })
-      .then(function (res) {
-        console.log(res);
-        if (res.data) {
+    try {
+      const res = await axios.post(`http://localhost:3001/login`, userInfo);
+      sessionStorage.setItem("sessionData", JSON.stringify(res.data));
+
+      if (res.data) {
+        await axios
+          .post(
+            "http://localhost:3001/user/get",
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${res.data.token}`,
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res.data);
+            window.localStorage.setItem("userData", JSON.stringify(res.data));
+          })
+
+          .catch((error) => {
+            console.log(error);
+          });
+        toastCorrect("Credenciales correctas");
+        setTimeout(() => {
           navigate("/home");
-          console.log(res.data);
-          setSession(res?.data?.token);
-        }
-        console.log(document.cookie);
-        fetchAuthUser();
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+          window.location.reload();
+        }, 1000);
+      }
+    } catch (err) {
+      console.log("incorrect");
+      toast("Credenciales incorrectas");
+    }
   };
 
   /* loging with google */
   const redirectToGoogleSSO = async () => {
+<<<<<<< HEAD
     const googleLoginURL = `${
       process.env.REACT_APP_API || "http://localhost:3001"
     }/login/google`;
+=======
+    const googleLoginURL = `http://localhost:3001/login/google`;
+>>>>>>> bb5b2a352536b936bf3c1b3b181e58da3b541048
     window.open(googleLoginURL, "_self");
-    //fetchAuthUser();
+    fetchAuthUser();
   };
 
   const fetchAuthUser = async () => {
     await axios
+<<<<<<< HEAD
       .get(
         `${process.env.REACT_APP_API || "http://localhost:3001"}/auth/user`,
         { withCredentials: true }
       )
+=======
+      .get(`http://localhost:3001/auth/user`, { withCredentials: true })
+>>>>>>> bb5b2a352536b936bf3c1b3b181e58da3b541048
       .then(
         (res) => {
           if (res.data) {
             console.log(res.data);
-            //setSession(res.data);
+            setSession(res.data);
           }
         },
         (err) => {
