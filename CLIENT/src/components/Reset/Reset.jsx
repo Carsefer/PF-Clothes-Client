@@ -13,7 +13,7 @@ const Reset = () => {
              <div className={Styles.container}>
             <div className={Styles.header}></div>
             <div className={Styles.subtitle}>
-            <h2>Bienvenido devuelta.</h2>
+            <h2>Olvido de password</h2>
             </div>
             <Formik
             initialValues={{
