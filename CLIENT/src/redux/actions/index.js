@@ -25,6 +25,8 @@ import {
   CREATE_REVIEW_PRODUCT,
   BUY_PRODUCT,
   CLEAR_FAVORITES,
+  HISTORIAL_PRODUCT,
+  CLEAR_LINK,
 } from "../action-types";
 
 export const getProducts = () => {
@@ -300,6 +302,30 @@ export const buyProduct = (data) => {
     dispatch({
       type: BUY_PRODUCT,
       payload: link.data,
+    });
+  };
+};
+
+export const postHistorial = (id, data) => {
+  return async function () {
+    await axios.post(`/marketed/products/${id}`, data);
+  };
+};
+
+export const buyHistorial = (id) => {
+  return async function (dispatch) {
+    const compras = await axios.get(`marketed/all/${id}`);
+    dispatch({
+      type: HISTORIAL_PRODUCT,
+      payload: compras.data,
+    });
+  };
+};
+
+export const clearLink = () => {
+  return async function (dispatch) {
+    dispatch({
+      type: CLEAR_LINK,
     });
   };
 };

@@ -7,10 +7,15 @@ const CartItem = ({
   image,
   delOneFromCart,
   delAllFromCart,
+  size,
+  color,
+  demographic,
 }) => {
   return (
     <div style={{ borderBottom: "thin solid gray" }}>
-      <h4 className="NameCart">{name}</h4>
+      <h4 className="NameCart">
+        {name} {size} {color} {demographic}
+      </h4>
       <img className="imageCart" src={image} alt="img not found"></img>
       <h5 className="DetailCart">
         ${price}.00 x {quantity} = ${price * quantity}.00
