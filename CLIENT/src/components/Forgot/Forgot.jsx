@@ -5,10 +5,21 @@ import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
 
 const Forgot = () => {
+    const toastEmail = (text) =>
+    Toastify({
+      text: text,
+      duration: 2000,
+      position: "center",
+      className: Styles.toast,
+      backgroundColor: "#32CD32",
+    }).showToast()
     const handleSubmit = ({email}) => {
         console.log(email);
         axios.post(`${process.env.REACT_APP_API || "http://localhost:3001"}/auth/forgot-password`,{email})
-        .then(res => console.log(res),err => console.log(err));
+        .then(res => {
+            console.log(res);
+            toastEmail(res.data);
+        },err => console.log(err));
     }
     return(
         <div>
@@ -24,8 +35,8 @@ const Forgot = () => {
             validate={(value) => {
                 let errors = {};
 
-                if (!/.*/.test(value.email)) {
-                errors.email = "Ingrese un email";
+                if (!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(value.email)) {
+                errors.email = "Ingrese un email valido";
                 }
                 return errors;
             }}

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Formik } from "formik";
 import axios from "axios";
 import {useLocation, useNavigate} from "react-router-dom";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 
 import Styles from "./Reset.module.css";
 
@@ -10,6 +12,14 @@ const Reset = () => {
     const search = useLocation().search;
     const id = new URLSearchParams(search).get('user');
     const navigate = useNavigate();
+    const toastPass = (text) =>
+    Toastify({
+      text: text,
+      duration: 2000,
+      position: "center",
+      className: Styles.toast,
+      backgroundColor: "#32CD32",
+    }).showToast();
     const handleSubmit = (values) => {
         console.log(values);
         axios.put(`${process.env.REACT_APP_API || "http://localhost:3001"}/auth/reset-password`,
@@ -18,6 +28,7 @@ const Reset = () => {
             id:id,
         }).then(res => {
             console.log(res.data);
+            toastPass(res.data);
             navigate('/login');
         },err => console.log(err));
     }
