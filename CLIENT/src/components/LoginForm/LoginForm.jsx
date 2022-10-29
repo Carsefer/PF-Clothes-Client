@@ -34,7 +34,7 @@ const LoginForm = () => {
     document.cookie = "token=;max-age=0";
     window.localStorage.removeItem("sessionData");
     await axios
-      .post("http://localhost:3001/login", {
+      .post(`${process.env.REACT_APP_API || "http://localhost:3001"}/login`, {
         username: userInfo.username,
         password: userInfo.password,
       })
@@ -58,7 +58,7 @@ const LoginForm = () => {
 
   /* loging with google */
   const redirectToGoogleSSO = async () => {
-    const googleLoginURL = `http://localhost:3001/login/google`;
+    const googleLoginURL = `${process.env.REACT_APP_API || "http://localhost:3001"}/login/google`;
     window.open(googleLoginURL, "_self");
   };
 
