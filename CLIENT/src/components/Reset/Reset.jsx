@@ -1,11 +1,21 @@
 import { useState } from "react";
 import { Formik } from "formik";
+import axios from "axios";
+import {useLocation} from "react-router-dom";
+
 import Styles from "./Reset.module.css";
 
 const Reset = () => {
     const [showPwd, setShowPwd] = useState(false);
+    const search = useLocation().search;
+    const id = new URLSearchParams(search).get('user');
     const handleSubmit = (values) => {
-        console.log(values)
+        console.log(values);
+        axios.put(`${process.env.REACT_APP_API || "http://localhost:3001"}/auth/reset-password`,
+        {
+            password:values.newPassword,
+            id:id,
+        }).then(res => console.log(res.data),err => console.log(err));
     }
     return(
         <div className={Styles.container}>
