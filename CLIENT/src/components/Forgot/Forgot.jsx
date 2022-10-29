@@ -76,7 +76,7 @@ const Forgot = () => {
                     )}
                 </div>
                 {/* VALIDATIONS */}
-                {!/.*/.test(values.email) ? (
+                {!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(values.email) ? (
                     <button className={Styles.btnDisabled} disabled>
                     Enviar email
                     </button>
