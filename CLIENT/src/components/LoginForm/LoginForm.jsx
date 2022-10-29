@@ -171,7 +171,7 @@ const LoginForm = () => {
                 </div>
 
                 <div>
-                  <Link to="/#" className={Styles.fp}>
+                  <Link to="/forgot" className={Styles.fp}>
                     Olvido su contraseña?
                   </Link>
                 </div>
