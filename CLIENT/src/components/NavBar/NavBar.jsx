@@ -34,7 +34,7 @@ const NavBar = () => {
               process.env.REACT_APP_API || "http://localhost:3001"
             }/user/get?secret_token=${token}`
           );
-          setUser(res?.data?.username);
+          setUser(res.data);
         } catch (err) {
           console.log(err.message);
         }
@@ -99,7 +99,7 @@ const NavBar = () => {
             <Link to="/home/stadistics">Estadísticas</Link>
             <div>
               {/* username */}
-              <p>{user}</p>
+              <p>{user?.username}</p>
               <button
                 className={Styles.NavbarHomeButtons2}
                 onClick={(e) => {
