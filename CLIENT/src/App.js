@@ -11,6 +11,8 @@ import ProductDetail from "./components/ProductDetail/ProductDetail";
 import Profile from "./components/Profile/Profile";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import Stadistics from "./components/Stadistics/Stadistics";
+import Forgot from './components/Forgot/Forgot';
+import Reset from './components/Reset/Reset';
 import { validateUser } from "./sessionUtils/jwtSession";
 import { useLocalStorage } from "./Utils/useLocalStorage";
 import {
@@ -58,6 +60,8 @@ function App() {
         <Route path="/home/editUser" element={<EditUser />} />
       </Route>
       <Route path="/home/product/:id" element={<ProductDetail />} />
+      <Route path="/forgot" element={<Forgot/>}/>
+      <Route path="/reset" element={<Reset/>}/>
     </Routes>
   );
 }
