@@ -143,11 +143,11 @@ const Reset = () => {
               {!values.newPassword ||
                   values.confirm !== values.newPassword ? (
                 <button className={Styles.btnDisabled} disabled>
-                  Iniciar sesión
+                  Cambiar password
                 </button>
               ) : (
                 <button type="submit" className={Styles.submit}>
-                  Iniciar sesión
+                  Cambiar password
                 </button>
               )}
             </form>
