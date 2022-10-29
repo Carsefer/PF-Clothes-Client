@@ -45,11 +45,12 @@ const Reset = () => {
           validate={(value) => {
             let errors = {};
 
-            if (!/.*/.test(value.newPassword)) {
-              errors.newPassword = "Ingrese nueva password";
-            } else if (!value.confirm) {
-              errors.confirm = "confirmar password";
+            if (!value.newPassword.length) {
+              errors.newPassword = "Ingrese contraseña";
+            } else if (value.newPassword !== value.confirm || !value.confirm) {
+              errors.passwords = "La contraseña no coincide, inténtalo de nuevo";
             }
+
             return errors;
           }}
           onSubmit={(values, { resetForm }) => {
@@ -139,7 +140,8 @@ const Reset = () => {
                 </div>
               </div>
               {/* VALIDATIONS */}
-              {!/.*/.test(!values.newPassword) || !values.confirm ? (
+              {!values.newPassword ||
+                  values.confirm !== values.newPassword ? (
                 <button className={Styles.btnDisabled} disabled>
                   Iniciar sesión
                 </button>
