@@ -23,6 +23,8 @@ import {
   CREATE_REVIEW_PRODUCT,
   BUY_PRODUCT,
   CLEAR_FAVORITES,
+  HISTORIAL_PRODUCT,
+  CLEAR_LINK,
 } from "../action-types";
 
 const initialState = {
@@ -38,6 +40,7 @@ const initialState = {
   sellsHistory: [],
   sellDetail: {},
   linkCompra: "",
+  historial: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -206,6 +209,16 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         linkCompra: action.payload,
+      };
+    case HISTORIAL_PRODUCT:
+      return {
+        ...state,
+        historial: [state.historial, ...action.payload],
+      };
+    case CLEAR_LINK:
+      return {
+        ...state,
+        linkCompra: "",
       };
     default:
       return state;

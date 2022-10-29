@@ -6,6 +6,8 @@ import {
   delFromCart,
   delProductCart,
   buyProduct,
+  postHistorial,
+  clearLink,
 } from "../../redux/actions";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -35,6 +37,24 @@ const ShoppingCart = () => {
   }, [user, dispatch]);
   const token = validateUser();
 
+  console.log(cartList);
+
+  //COMPRAR (NO BORRAR)
+  // const handleCompra = (e) => {
+  //   e.preventDefault();
+  //   window.open(compra);
+  //   dispatch(postHistorial(user.id, cartList));
+  //   dispatch(clearCart(user?.id, token));
+  //   dispatch(clearLink());
+  // };
+
+  //COMPRAR
+  const handleCompra = (e) => {
+    e.preventDefault();
+    dispatch(postHistorial(user.id, cartList));
+    dispatch(clearCart(user?.id, token));
+  };
+
   return (
     <>
       <NavBar />
@@ -63,6 +83,7 @@ const ShoppingCart = () => {
                   delAllFromCart={() => dispatch(delFromCart(e.id, true))}
                   size={e.size}
                   color={e.color}
+                  demographic={e.demographic}
                 />
               ))}
             </article>
@@ -75,14 +96,15 @@ const ShoppingCart = () => {
         )}
         {cartList.length ? (
           <div>
-            <button onClick={() => dispatch(buyProduct(cartList))}>
+            {/* <button onClick={() => dispatch(buyProduct(cartList))}>
               CARGAR PRODUCTOS
-            </button>
-            <a href={compra}>
-              <button disabled={!compra} onClick={() => dispatch(clearCart())}>
+            </button> */}
+            {/* <a href={compra}>
+              <button disabled={!compra} onClick={(e) => handleCompra(e)}>
                 COMPRAR PRODUCTOS
               </button>
-            </a>
+            </a> */}
+            <button onClick={(e) => handleCompra(e)}>COMPRAR PRODUCTOS</button>
           </div>
         ) : (
           <p></p>
