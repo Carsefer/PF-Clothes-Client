@@ -1,26 +1,18 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Formik } from "formik";
-import { Link, useNavigate } from "react-router-dom";
-import Styles from "./LoginForm.module.css";
 import axios from "axios";
-import GoogleButton from "react-google-button";
-import { setSession } from "../../sessionUtils/jwtSession";
-//import { useLocalStorage } from "../../Utils/useLocalStorage";
+import {useLocation, useNavigate} from "react-router-dom";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
 
-const LoginForm = () => {
-  const [showPwd, setShowPwd] = useState(false);
-  const navigate = useNavigate();
-  const toast = (text) =>
-    Toastify({
-      text: text,
-      duration: 2000,
-      position: "center",
-      className: Styles.toast,
-      backgroundColor: "red",
-    }).showToast();
-  const toastCorrect = (text) =>
+import Styles from "./Reset.module.css";
+
+const Reset = () => {
+    const [showPwd, setShowPwd] = useState(false);
+    const search = useLocation().search;
+    const id = new URLSearchParams(search).get('user');
+    const navigate = useNavigate();
+    const toastPass = (text) =>
     Toastify({
       text: text,
       duration: 2000,
@@ -28,65 +20,42 @@ const LoginForm = () => {
       className: Styles.toast,
       backgroundColor: "#32CD32",
     }).showToast();
-
-  /* login with user and password */
-  const handleLogin = async (userInfo) => {
-    document.cookie = "token=;max-age=0";
-    window.localStorage.removeItem("sessionData");
-    await axios
-      .post(`${process.env.REACT_APP_API || "http://localhost:3001"}/login`, {
-        username: userInfo.username,
-        password: userInfo.password,
-      })
-      .then(function (res) {
-        console.log(res);
-        if (res.data) {
-          setSession(res.data.token);
-          toastCorrect("Credenciales correctas");
-          setTimeout(() => {
-            navigate("/home");
-            window.location.reload();
-          }, 1000);
-        }
-        console.log(document.cookie);
-      })
-      .catch(function (error) {
-        toast("Credenciales incorrectas");
-        console.log(error);
-      });
-  };
-
-  /* loging with google */
-  const redirectToGoogleSSO = async () => {
-    const googleLoginURL = `${process.env.REACT_APP_API || "http://localhost:3001"}/login/google`;
-    window.open(googleLoginURL, "_self");
-  };
-
-  return (
-    <>
-      <div className={Styles.container}>
-        <div className={Styles.header}></div>
+    const handleSubmit = (values) => {
+        console.log(values);
+        axios.put(`${process.env.REACT_APP_API || "http://localhost:3001"}/auth/reset-password`,
+        {
+            password:values.newPassword,
+            id:id,
+        }).then(res => {
+            console.log(res.data);
+            toastPass(res.data);
+            navigate('/login');
+        },err => console.log(err));
+    }
+    return(
+        <div className={Styles.container}>
         <div className={Styles.subtitle}>
-          <h2>Bienvenido devuelta.</h2>
+          <h2>Crear nueva password</h2>
         </div>
         <Formik
           initialValues={{
-            username: "",
-            password: "",
+            newPassword: "",
+            confirm: "",
           }}
           validate={(value) => {
             let errors = {};
 
-            if (!/^[a-zA-Z0-9_]+$/.test(value.username)) {
-              errors.username = "Ingrese un usuario";
-            } else if (!value.password) {
-              errors.password = "Ingrese contraseña";
+            if (!value.newPassword.length) {
+              errors.newPassword = "Ingrese contraseña";
+            } else if (value.newPassword !== value.confirm || !value.confirm) {
+              errors.passwords = "La contraseña no coincide, inténtalo de nuevo";
             }
+
             return errors;
           }}
           onSubmit={(values, { resetForm }) => {
             resetForm();
-            handleLogin(values);
+            handleSubmit(values);
           }}
         >
           {({
@@ -131,22 +100,22 @@ const LoginForm = () => {
               </div>
               <div className={Styles.entry}>
                 <input
-                  type="text"
-                  id="username"
-                  placeholder="Usuario"
-                  name="username"
+                  type={showPwd ? "text" : "password"}
+                  id="newPassword"
+                  placeholder="Nuevo Password"
+                  name="newPassword"
                   className={Styles.form1}
-                  value={values.username}
+                  value={values.newPassword}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   required
                   autoComplete="off"
                 />
 
-                {touched.username && errors.username && (
+                {touched.newPassword && errors.newPassword && (
                   <div className={Styles.errors}>
                     {" "}
-                    <span>{errors.username}</span>{" "}
+                    <span>{errors.newPassword}</span>{" "}
                   </div>
                 )}
 
@@ -156,55 +125,36 @@ const LoginForm = () => {
                       type={showPwd ? "text" : "password"}
                       placeholder="Contraseña"
                       className={Styles.form2}
-                      name="password"
-                      value={values.password}
+                      name="confirm"
+                      value={values.confirm}
                       onChange={handleChange}
                       onKeyUp={handleBlur}
                       onBlur={handleBlur}
                     />
-                    {touched.password && errors.password && (
+                    {touched.confirm && errors.confirm && (
                       <div className={Styles.errors}>
-                        <span>{errors.password}</span>
+                        <span>{errors.confirm}</span>
                       </div>
                     )}
                   </div>
                 </div>
-
-                <div>
-                  <Link to="/forgot" className={Styles.fp}>
-                    Olvido su contraseña?
-                  </Link>
-                </div>
-                <div className={Styles.remember}>
-                  <input type="checkbox" className={Styles.checkbox} />
-                  <label className={Styles.label}>Recordarme.</label>
-                </div>
               </div>
               {/* VALIDATIONS */}
-              {!/^[a-zA-Z0-9_]+$/.test(
-                values.email || !values.phone || !values.username
-              ) || !values.password ? (
+              {!values.newPassword ||
+                  values.confirm !== values.newPassword ? (
                 <button className={Styles.btnDisabled} disabled>
-                  Iniciar sesión
+                  Cambiar password
                 </button>
               ) : (
                 <button type="submit" className={Styles.submit}>
-                  Iniciar sesión
+                  Cambiar password
                 </button>
               )}
             </form>
           )}
         </Formik>
-        <GoogleButton onClick={redirectToGoogleSSO} />
-        <p className={Styles.LoginFormsFooter}>
-          No tiene cuenta?{" "}
-          <Link className={Styles.register} to="/register">
-            Crear cuenta.
-          </Link>{" "}
-        </p>
       </div>
-    </>
-  );
-};
+    );
+}
 
-export default LoginForm;
+export default Reset;
