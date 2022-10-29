@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
-
+import { useSelector, useDispatch } from "react-redux";
 import NavBar from "../NavBar/NavBar";
 import Style from "./Profile.module.css";
 import { Link } from "react-router-dom";
 import { getUserData } from "../../Utils/useLocalStorage";
+import { buyHistorial } from "../../redux/actions";
 
 export default function Profile() {
+  const dispatch = useDispatch();
+
   const [user, setUser] = useState("");
 
   useEffect(() => {
@@ -15,8 +18,11 @@ export default function Profile() {
         setUser(data);
       }
     })();
-  }, [user]);
-  console.log(user);
+    dispatch(buyHistorial(user.id));
+  }, [user, dispatch, user.id]);
+
+  const historial = useSelector((state) => state?.historial);
+
   return (
     <>
       <NavBar />
@@ -49,6 +55,28 @@ export default function Profile() {
             <h1 className={Style.titleusername}>{user.username}</h1>
           </div>
         </div>
+        <p>MIS COMPRAS </p>
+        {historial.length ? (
+          <p>
+            {historial?.map((el) => (
+              <div>
+                Nombre: {el.name}
+                Precio: {el.price}
+                Talle: {el.size}
+                Color: {el.color}
+                Demografia: {el.demographic}
+                Fecha: {el.date}
+                Estado: {el.status}
+                Cantidad: {el.amount}
+                <a href={`/Home/Product/${el.productoId}`}>
+                  <button>Comentar Producto</button>
+                </a>
+              </div>
+            ))}
+          </p>
+        ) : (
+          <p>Aun no tienes compras.</p>
+        )}
       </div>
     </>
   );

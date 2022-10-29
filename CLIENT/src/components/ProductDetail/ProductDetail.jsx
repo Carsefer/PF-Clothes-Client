@@ -92,19 +92,24 @@ const ProductDetail = () => {
     if (filterByColor === "") return toast("Selecciona color!", "yellow");
     if (
       detail.variants
-        ?.map(
-          (v) => {if(v.size === filterBySize && v.color === filterByColor && v.stock){
-            return v.stock} return false}
-        ).reduce((a, b) => a + b) === 0
+        ?.map((v) => {
+          if (v.size === filterBySize && v.color === filterByColor && v.stock) {
+            return v.stock;
+          }
+          return false;
+        })
+        .reduce((a, b) => a + b) === 0
     )
       toast("No hay stock!", "red");
     else {
-      const variantID = 
-        (detail.variants
-        ?.map(
-          (v) => {if(v.size === filterBySize && v.color === filterByColor && v.stock){
-            return v.id} return ""}
-        ).reduce((a, b) => a + b));
+      const variantID = detail.variants
+        ?.map((v) => {
+          if (v.size === filterBySize && v.color === filterByColor && v.stock) {
+            return v.id;
+          }
+          return "";
+        })
+        .reduce((a, b) => a + b);
       dispatch(addToCart(variantID, profileId, token));
       toast("Producto agregado al carrito!");
     }
