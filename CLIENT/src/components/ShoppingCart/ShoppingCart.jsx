@@ -61,6 +61,8 @@ const ShoppingCart = () => {
                     )
                   }
                   delAllFromCart={() => dispatch(delFromCart(e.id, true))}
+                  size={e.size}
+                  color={e.color}
                 />
               ))}
             </article>
