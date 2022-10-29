@@ -17,6 +17,7 @@ import {
   ProtectedRoute,
   ProtectedRoutes,
 } from "./components/ProtectedRoute/ProtectedRoute";
+import EditUser from "./components/EditUser/EditUser";
 
 function App() {
   const [user, setUser] = useLocalStorage("userData");
@@ -54,6 +55,7 @@ function App() {
         <Route path="/home/profile" element={<Profile />} />
         <Route path="/home/stadistics" element={<Stadistics />} />
         <Route path="/home/createStore" element={<CreateStore />} />
+        <Route path="/home/editUser" element={<EditUser />} />
       </Route>
       <Route path="/home/product/:id" element={<ProductDetail />} />
     </Routes>

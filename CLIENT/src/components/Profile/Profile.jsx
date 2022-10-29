@@ -36,6 +36,7 @@ export default function Profile() {
               <p>Correo: {user.mail}</p>
               <p>Telefono: {user.phone}</p>
               <p>Localidad: {user.location}</p>
+              <Link to="/home/editUser">Edit User</Link>
             </div>
             <div>
               {!user.storeName ? (
