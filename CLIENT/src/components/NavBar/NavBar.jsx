@@ -34,7 +34,6 @@ const NavBar = () => {
               process.env.REACT_APP_API || "http://localhost:3001"
             }/user/get?secret_token=${token}`
           );
-          console.log(res.data);
           setUser(res?.data?.username);
         } catch (err) {
           console.log(err.message);
@@ -52,8 +51,6 @@ const NavBar = () => {
     window.location.reload();
     navigate("/home");
   };
-
-  console.log(user);
 
   return (
     <nav className={Styles.NavbarHome}>
