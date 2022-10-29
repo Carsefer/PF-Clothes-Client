@@ -7,7 +7,7 @@ import "toastify-js/src/toastify.css";
 const Forgot = () => {
     const handleSubmit = ({email}) => {
         console.log(email);
-        axios.post("http://localhost:3001/auth/forgot-password",{email})
+        axios.post(`${process.env.REACT_APP_API || "http://localhost:3001"}/auth/forgot-password`,{email})
         .then(res => console.log(res),err => console.log(err));
     }
     return(
