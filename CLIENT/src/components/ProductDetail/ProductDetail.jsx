@@ -35,6 +35,8 @@ const ProductDetail = () => {
   const detail = useSelector((state) => state.productDetail);
   const reviews = useSelector((state) => state.productReviews);
   const favorites = useSelector((state) => state.favorites);
+  const historial = useSelector((state) => state?.historial);
+
   const averageScore = () => {
     let average = 0;
     if (reviews.length) {
@@ -292,13 +294,17 @@ const ProductDetail = () => {
                 )}
               </label>
             </div>
+            {reviews.length ? <p>Puntaje promedio: {averageScore()}</p> : <></>}
           </div>
         </div>
         <div>
           <div>
-            {!user ? <></> : <CreateReview id={id} />}
+            {historial?.filter((el) => el.productoId === id).length ? (
+              <CreateReview id={id} />
+            ) : (
+              <></>
+            )}
             <h1 className={Style.ProductDetailReviews}>Reseñas</h1>
-            <h3>{averageScore()}</h3>
             {reviews.length ? (
               reviews.map((r) => (
                 <Comments score={r.score} reviews={r.reviews} />
