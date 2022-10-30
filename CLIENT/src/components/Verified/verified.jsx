@@ -1,9 +1,15 @@
-import { useEffect,useState } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Verified = () => {
-
+    const navigate = useNavigate();
+    useEffect(() => {
+        setTimeout(() => {
+            navigate("/home");
+        },5000)
+    },[]);
     return(
-        <h1>verified</h1>
+        <h1>Thanks for verifying</h1>
     )
 }
 
