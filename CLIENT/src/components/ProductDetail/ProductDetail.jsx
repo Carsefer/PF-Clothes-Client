@@ -242,8 +242,8 @@ const ProductDetail = () => {
                 className={Style.article_label}
                 htmlFor=""
               >
-                {" "}
                 Stock:
+                {" "}
                 {filterByColor && filterBySize ? (
                   <label
                     id={Style.article_labelStock}

@@ -29,7 +29,6 @@ import {
 
 const initialState = {
   products: [],
-  productsAux: [],
   productDetail: [],
   productReviews: [],
   sizes: [],
@@ -49,7 +48,6 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         products: action.payload,
-        productsAux: action.payload,
       };
     case GET_PRODUCT_DETAIL:
       return {
