@@ -8,6 +8,7 @@ import {
   buyProduct,
   postHistorial,
   clearLink,
+  sendEmail,
 } from "../../redux/actions";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -52,6 +53,7 @@ const ShoppingCart = () => {
   const handleCompra = (e) => {
     e.preventDefault();
     dispatch(postHistorial(user.id, cartList));
+    dispatch(sendEmail(user?.mail, cartList));
     dispatch(clearCart(user?.id, token));
   };
 
