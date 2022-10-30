@@ -14,6 +14,7 @@ import Stadistics from "./components/Stadistics/Stadistics";
 import Forgot from './components/Forgot/Forgot';
 import Reset from './components/Reset/Reset';
 import Verified from "./components/Verified/verified";
+import NotVerified from "./components/NotVerified/NotVerified";
 import { validateUser } from "./sessionUtils/jwtSession";
 import { useLocalStorage } from "./Utils/useLocalStorage";
 import {
@@ -64,6 +65,7 @@ function App() {
       <Route path="/forgot" element={<Forgot/>}/>
       <Route path="/reset" element={<Reset/>}/>
       <Route path="/verified" element={<Verified/>}/>
+      <Route path="/not-verified" element={<NotVerified/>}/>
     </Routes>
   );
 }

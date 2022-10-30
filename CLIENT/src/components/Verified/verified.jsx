@@ -9,7 +9,7 @@ const Verified = () => {
         },5000)
     },[]);
     return(
-        <h1>Thanks for verifying</h1>
+        <h1>Gracias por verificar tu cuenta</h1>
     )
 }
 
