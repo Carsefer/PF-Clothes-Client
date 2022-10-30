@@ -85,7 +85,9 @@ const CreateUser = () => {
           dispatch(createUser(a))
             .then(function (res) {
               console.log(res);
-              toast("Usuario creado con éxito");
+              toast(`Usuario creado con éxito,
+              por favor verificar tu cuenta con el
+              mensaje enviado en tu correo electronico`);
             })
             .catch(function (res) {
               console.log(res);
