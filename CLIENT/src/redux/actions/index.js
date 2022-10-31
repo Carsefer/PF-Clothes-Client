@@ -228,7 +228,7 @@ export const delProductCart = (productId, profileId, token) => {
         payload: productId,
       });  
     } catch (error) {
-      alert(error);
+      alert(error.message);
     }
   };
 };
