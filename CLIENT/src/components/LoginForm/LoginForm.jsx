@@ -45,7 +45,7 @@ const LoginForm = () => {
           toastCorrect("Credenciales correctas");
           setTimeout(() => {
             navigate("/home");
-            window.location.reload();
+            //window.location.reload();
           }, 1000);
         }
         console.log(document.cookie);

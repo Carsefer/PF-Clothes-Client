@@ -1,28 +1,26 @@
+import React from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
+import { Link, useNavigate } from "react-router-dom";
 import {
   getCartProducts,
-  clearCart,
-  delFromCart,
   delProductCart,
+  clearCart,
   buyProduct,
   postHistorial,
   clearLink,
   sendEmail,
   sendEmailSellers,
 } from "../../redux/actions";
-import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
 import CartItem from "../CartItem/CartItem";
-import { getUserData } from "../../Utils/useLocalStorage";
 import Style from "./ShoppingCart.module.css";
 import NavBar from "../NavBar/NavBar";
+import { getUserData } from "../../Utils/useLocalStorage";
 import { validateUser } from "../../sessionUtils/jwtSession";
 
 const ShoppingCart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const [user, setUser] = useState(null);
 
   const cartList = useSelector((state) => state?.cart);
@@ -35,9 +33,9 @@ const ShoppingCart = () => {
         setUser(data);
       }
     })();
+    const id = user?.id;
     const token = validateUser();
-
-    dispatch(getCartProducts(user?.id, token));
+    dispatch(getCartProducts(id, token));
   }, [user, dispatch]);
   const token = validateUser();
 
@@ -63,7 +61,6 @@ const ShoppingCart = () => {
   };
 
   var repetidos = {};
-
   cartList.forEach(function (numero) {
     repetidos[numero.id] = (repetidos[numero.id] || 0) + 1;
   });

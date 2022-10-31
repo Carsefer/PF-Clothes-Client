@@ -1,17 +1,18 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import FavItem from "../FavItem/FavItem.jsx";
 import {
   getFavorites,
   deleteFavorite,
   clearFavorites,
 } from "../../redux/actions/index.js";
+import FavItem from "../FavItem/FavItem.jsx";
 import Style from "./Favorites.module.css";
 import NavBar from "../NavBar/NavBar";
 import { validateUser } from "../../sessionUtils/jwtSession";
 import { getUserData } from "../../Utils/useLocalStorage.js";
+
 const Favorites = () => {
   const dispatch = useDispatch();
   const [user, setUser] = useState(null);
@@ -31,6 +32,7 @@ const Favorites = () => {
   const profileId = user?.id;
   const token = validateUser();
   console.log(token);
+  
   return (
     <>
       <NavBar />
