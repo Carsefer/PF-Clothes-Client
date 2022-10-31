@@ -1,8 +1,8 @@
 import Rating from '@mui/material/Rating';
-import {useEffect, useState} from "react"
+import {useEffect, useState, useRef} from "react"
 import Styles from "./CreateReview.module.css"
 import { createReviewProduct } from '../../redux/actions';
-import { getSession } from "../../sessionUtils/jwtSession";
+import { getSession,validateUser } from "../../sessionUtils/jwtSession";
 import { useDispatch } from 'react-redux';
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";
@@ -12,6 +12,7 @@ const CreateReview = ({id}) => {
     const [info, setInfo] = useState("");
     const [error, setError] = useState("");
     const dispatch = useDispatch();
+    const textbox = useRef();
     const toast = (text, color="#32CD32") => Toastify({
         text: text,
         duration: 1500,
@@ -23,7 +24,7 @@ const CreateReview = ({id}) => {
     useEffect(() => {
         (async () => {
         if (!info) {
-            const data = await getSession();
+            const data = await validateUser();
             setInfo(data);
         }})();
     }, [info]);
@@ -45,7 +46,9 @@ const CreateReview = ({id}) => {
             score: rating.value,
             reviews: rating.text
         }
-        dispatch(createReviewProduct(id, data, info.token)).then(() => toast("Reseña creada con exito").catch(() => toast("Algo salio mal", "red")));
+        dispatch(createReviewProduct(id, data, info)).then(() => toast("Reseña creada con exito").catch(() => toast("Algo salio mal", "red")));
+        setRating({value:null,text:""});
+        textbox.current.value = "";
     }
 
     return (
@@ -60,7 +63,7 @@ const CreateReview = ({id}) => {
                     e.preventDefault();
                     errorhandle(e)
                 }}>
-                    <textarea className={Styles.ReviewText} name="" id="" cols="30" rows="10" onChange={(evento) => handdleChange(evento)} placeholder={"Introduzca Reseña..."}></textarea>
+                    <textarea className={Styles.ReviewText} ref={textbox} name="" id="" cols="30" rows="10" onChange={(evento) => handdleChange(evento)} placeholder={"Introduzca Reseña..."}></textarea>
                     <input className={Styles.MakeReviewButton} type="submit" value="Enviar"/>
                 </form>
             </div>
