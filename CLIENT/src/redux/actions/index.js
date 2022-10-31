@@ -286,7 +286,7 @@ export const getSellDetail = (idSell) => {
 export const createReviewProduct = (id, data, token) => {
   return async (dispatch) => {
     const res = await axios.post(
-      `/product/review/${id}&secret_token=${token}`,
+      `/product/review/${id}?secret_token=${token}`,
       data
     );
     dispatch({
