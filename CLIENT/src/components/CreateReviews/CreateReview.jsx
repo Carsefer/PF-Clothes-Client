@@ -45,7 +45,7 @@ const CreateReview = ({id}) => {
             score: rating.value,
             reviews: rating.text
         }
-        dispatch(createReviewProduct(id, data, info.token)).then(() => toast("Reseña creada con exito").catch(() => toast("Algo salio mal", "red")));
+        dispatch(createReviewProduct(id, data, info)).then(() => toast("Reseña creada con exito").catch(() => toast("Algo salio mal", "red")));
     }
 
     return (
