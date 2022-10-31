@@ -25,14 +25,21 @@ const CreateStore = () => {
 
   return (
     <div className={Styles.container1}>
-      <h1 className={Styles.subtitle}>Crear una tienda</h1>
+      <h1 className={Styles.subtitle}>Crear un Producto</h1>
       <Formik
         initialValues={{
           id: "",
-          storeName: "",
-          banner: "",
-          profilePicture: "",
-          location: "",
+          name: "",
+          image: "",
+          demographic: "",
+          price: 0,
+          variants: [
+            {
+              stock: 0,
+              color: "",
+              size: "",
+            },
+          ],
         }}
         validate={(value) => {
           let errors = {};
@@ -40,14 +47,15 @@ const CreateStore = () => {
           return errors;
         }}
         onSubmit={(data, { resetForm }) => {
-          let { id, storeName, banner, profilePicture, location } = data;
+          let { id, name, image, demographic, price, variants } = data;
           id = user;
           const a = {
             id,
-            storeName,
-            banner,
-            profilePicture,
-            location,
+            name,
+            image,
+            price,
+            demographic,
+            variants,
           };
           console.log(a);
 

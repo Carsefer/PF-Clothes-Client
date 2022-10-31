@@ -44,7 +44,6 @@ export default function Profile() {
               <p>Correo: {user.mail}</p>
               <p>Telefono: {user.phone}</p>
               <p>Localidad: {user.location}</p>
-              <Link to="/home/editUser">Edit User</Link>
             </div>
             <div>
               {!user.storeName ? (
@@ -52,7 +51,16 @@ export default function Profile() {
                   <button className={Style.buttonProfile}>Crear Tienda</button>
                 </Link>
               ) : (
-                <button className={Style.buttonProfile}>Editar</button>
+                <>
+                  <Link to="/home/editUser">
+                    <button className={Style.buttonProfile}>Editar</button>
+                  </Link>
+                  <Link to="/home/createProduct">
+                    <button className={Style.buttonProfile}>
+                      Crear Producto
+                    </button>
+                  </Link>
+                </>
               )}
             </div>
             <img
