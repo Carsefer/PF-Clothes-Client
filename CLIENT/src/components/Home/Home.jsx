@@ -42,9 +42,12 @@ export default function Home() {
         const data = await getUserData();
         setUser(data);
       }
+      if(user){
+        dispatch(buyHistorial(user.id));
+      }
     })();
-    dispatch(buyHistorial(user.id));
-  }, [dispatch, name, price, size, demographic, color, page, orderBy, sortBy,user,user.id]);
+    
+  }, [dispatch, name, price, size, demographic, color, page, orderBy, sortBy,user]);
 
   const allProducts = useSelector((state) => state.products);
   const results = useSelector((state) => state.productsStatus);
