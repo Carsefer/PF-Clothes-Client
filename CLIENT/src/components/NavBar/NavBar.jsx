@@ -48,7 +48,7 @@ const NavBar = () => {
     window.localStorage.removeItem("sessionData");
     window.localStorage.clear();
     toast("Sesión cerrada");
-    window.location.reload();
+    //window.location.reload();
     navigate("/home");
   };
 
