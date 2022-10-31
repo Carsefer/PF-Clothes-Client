@@ -35,6 +35,8 @@ const ProductDetail = () => {
   const detail = useSelector((state) => state.productDetail);
   const reviews = useSelector((state) => state.productReviews);
   const favorites = useSelector((state) => state.favorites);
+  const historial = useSelector((state) => state?.historial);
+
   const averageScore = () => {
     let average = 0;
     if (reviews.length) {
@@ -48,11 +50,8 @@ const ProductDetail = () => {
   };
 
   const [user, setUser] = useState(null);
-  const [filterBySize, setFilterBySize] = useLocalStorage("filterBySize", "");
-  const [filterByColor, setFilterByColor] = useLocalStorage(
-    "filterByColor",
-    ""
-  );
+  const [filterBySize, setFilterBySize] = useState("");
+  const [filterByColor, setFilterByColor] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -199,11 +198,8 @@ const ProductDetail = () => {
               value={filterBySize}
               onChange={(e) => handleSize(e)}
             >
-              {[...new Set(detail.variants?.map((e) => e.size))].length > 1 ? (
-                <option value="">Todos</option>
-              ) : (
-                <p></p>
-              )}
+              <option value="">Todos</option>
+
               {[...new Set(detail.variants?.map((e) => e.size))]?.map((el) => {
                 return <option value={el}>{el}</option>;
               })}
@@ -217,11 +213,8 @@ const ProductDetail = () => {
               value={filterByColor}
               onChange={(e) => handleColor(e)}
             >
-              {[...new Set(detail.variants?.map((e) => e.color))].length > 1 ? (
-                <option value="">Todos</option>
-              ) : (
-                <p></p>
-              )}
+              <option value="">Todos</option>
+
               {[...new Set(detail.variants?.map((e) => e.color))]?.map((el) => {
                 return <option value={el}>{el}</option>;
               })}
@@ -242,8 +235,7 @@ const ProductDetail = () => {
                 className={Style.article_label}
                 htmlFor=""
               >
-                Stock:
-                {" "}
+                Stock:{" "}
                 {filterByColor && filterBySize ? (
                   <label
                     id={Style.article_labelStock}
@@ -292,13 +284,17 @@ const ProductDetail = () => {
                 )}
               </label>
             </div>
+            {reviews.length ? <p>Puntaje promedio: {averageScore()}</p> : <></>}
           </div>
         </div>
         <div>
           <div>
-            {!user ? <></> : <CreateReview id={id} />}
+            {historial?.filter((el) => el.productoId === id).length ? (
+              <CreateReview id={id} />
+            ) : (
+              <></>
+            )}
             <h1 className={Style.ProductDetailReviews}>Reseñas</h1>
-            <h3>{averageScore()}</h3>
             {reviews.length ? (
               reviews.map((r) => (
                 <Comments score={r.score} reviews={r.reviews} />

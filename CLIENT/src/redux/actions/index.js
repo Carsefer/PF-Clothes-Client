@@ -224,7 +224,7 @@ export const delProductCart = (productId, profileId, token) => {
     );
     return dispatch({
       type: DEL_PRODUCT_CART,
-      payload: productId
+      payload: productId,
     });
   };
 };
@@ -288,7 +288,7 @@ export const getSellDetail = (idSell) => {
 export const createReviewProduct = (id, data, token) => {
   return async (dispatch) => {
     const res = await axios.post(
-      `/product/review/${id}&secret_token=${token}`,
+      `/product/review/${id}?secret_token=${token}`,
       data
     );
     dispatch({
@@ -329,5 +329,17 @@ export const clearLink = () => {
     dispatch({
       type: CLEAR_LINK,
     });
+  };
+};
+
+export const sendEmail = (data, productos) => {
+  return async function () {
+    await axios.post(`/auth/sendemail?mail=${data}`, productos);
+  };
+};
+
+export const sendEmailSellers = (data, productos) => {
+  return async function () {
+    await axios.post(`/auth/sendemailsellers?mail=${data}`, productos);
   };
 };
