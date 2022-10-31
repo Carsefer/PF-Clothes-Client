@@ -3,7 +3,7 @@ import CreateStore from "./components/CreateStore/CreateStore";
 import CreateUser from "./components/CreateUser/CreateUser";
 import Favorites from "./components/Favorites/Favorites";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Home from "./components/Home/Home";
 import LandingHome from "./components/LandingHome/LandingHome";
 import Login from "./components/Login/Login";
@@ -21,9 +21,10 @@ import {
   ProtectedRoutes,
 } from "./components/ProtectedRoute/ProtectedRoute";
 import EditUser from "./components/EditUser/EditUser";
+import { useLocalStorage } from "./Utils/useLocalStorage";
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useLocalStorage("userData");
   useEffect(() => {
     (async () => {
       if (!user) {

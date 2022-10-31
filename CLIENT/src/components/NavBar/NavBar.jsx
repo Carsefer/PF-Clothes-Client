@@ -48,6 +48,9 @@ const NavBar = () => {
     window.localStorage.clear();
     toast("Sesión cerrada");
     navigate("/home");
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   };
 
   return (

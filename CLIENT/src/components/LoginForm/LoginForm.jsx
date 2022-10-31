@@ -45,7 +45,7 @@ const LoginForm = () => {
           toastCorrect("Credenciales correctas");
           setTimeout(() => {
             navigate("/home");
-            //window.location.reload();
+            window.location.reload();
           }, 1000);
         }
         console.log(document.cookie);
@@ -58,7 +58,9 @@ const LoginForm = () => {
 
   /* loging with google */
   const redirectToGoogleSSO = async () => {
-    const googleLoginURL = `${process.env.REACT_APP_API || "http://localhost:3001"}/login/google`;
+    const googleLoginURL = `${
+      process.env.REACT_APP_API || "http://localhost:3001"
+    }/login/google`;
     window.open(googleLoginURL, "_self");
   };
 
