@@ -50,11 +50,8 @@ const ProductDetail = () => {
   };
 
   const [user, setUser] = useState(null);
-  const [filterBySize, setFilterBySize] = useLocalStorage("filterBySize", "");
-  const [filterByColor, setFilterByColor] = useLocalStorage(
-    "filterByColor",
-    ""
-  );
+  const [filterBySize, setFilterBySize] = useState("");
+  const [filterByColor, setFilterByColor] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -201,11 +198,8 @@ const ProductDetail = () => {
               value={filterBySize}
               onChange={(e) => handleSize(e)}
             >
-              {[...new Set(detail.variants?.map((e) => e.size))].length > 1 ? (
-                <option value="">Todos</option>
-              ) : (
-                <p></p>
-              )}
+              <option value="">Todos</option>
+
               {[...new Set(detail.variants?.map((e) => e.size))]?.map((el) => {
                 return <option value={el}>{el}</option>;
               })}
@@ -219,11 +213,8 @@ const ProductDetail = () => {
               value={filterByColor}
               onChange={(e) => handleColor(e)}
             >
-              {[...new Set(detail.variants?.map((e) => e.color))].length > 1 ? (
-                <option value="">Todos</option>
-              ) : (
-                <p></p>
-              )}
+              <option value="">Todos</option>
+
               {[...new Set(detail.variants?.map((e) => e.color))]?.map((el) => {
                 return <option value={el}>{el}</option>;
               })}
@@ -244,8 +235,7 @@ const ProductDetail = () => {
                 className={Style.article_label}
                 htmlFor=""
               >
-                Stock:
-                {" "}
+                Stock:{" "}
                 {filterByColor && filterBySize ? (
                   <label
                     id={Style.article_labelStock}
