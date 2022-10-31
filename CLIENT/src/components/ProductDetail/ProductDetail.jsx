@@ -66,7 +66,7 @@ const ProductDetail = () => {
     dispatch(getProductDetail(id));
     dispatch(getProductDetailReviews(id));
     dispatch(buyHistorial(user?.id));
-  }, [dispatch, user, id, reviews]);
+  }, [dispatch, user, id]);
 
   const profileId = user?.id;
   const token = validateUser();
