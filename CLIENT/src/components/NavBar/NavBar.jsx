@@ -13,7 +13,7 @@ import { useLocalStorage } from "../../Utils/useLocalStorage";
 //import { FaWindows } from "react-icons/fa";
 
 const NavBar = () => {
-  const [user, setUser] = useLocalStorage("");
+  const [user, setUser] = useLocalStorage("userData");
   const navigate = useNavigate();
   const toast = (text) =>
     Toastify({
@@ -45,11 +45,12 @@ const NavBar = () => {
   const handleLogout = (e) => {
     setUser("");
     document.cookie = "token=;max-age=0";
-    window.localStorage.removeItem("sessionData");
     window.localStorage.clear();
     toast("Sesión cerrada");
-    //window.location.reload();
     navigate("/home");
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   };
 
   return (

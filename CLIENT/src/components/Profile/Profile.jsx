@@ -77,12 +77,12 @@ export default function Profile() {
               }, [])
               .map((el) => (
                 <div>
-                  Nombre: {el.name}
+                  Prenda: {el.name}
                   Precio: {el.price}
                   Talle: {el.size}
                   Color: {el.color}
                   Demografia: {el.demographic}
-                  Fecha: {el.date}
+                  Fecha: {el.updatedAt.slice(0, 10)}
                   Estado: {el.status}
                   Cantidad: {repetidos[el.productoId]}
                   <a href={`/Home/Product/${el.productoId}`}>
