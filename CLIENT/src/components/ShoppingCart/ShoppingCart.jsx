@@ -10,7 +10,7 @@ import {
   clearLink,
   sendEmail,
 } from "../../redux/actions";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import CartItem from "../CartItem/CartItem";
 import { getUserData } from "../../Utils/useLocalStorage";
@@ -20,6 +20,8 @@ import { validateUser } from "../../sessionUtils/jwtSession";
 
 const ShoppingCart = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [user, setUser] = useState(null);
 
   const cartList = useSelector((state) => state?.cart);
@@ -38,8 +40,6 @@ const ShoppingCart = () => {
   }, [user, dispatch]);
   const token = validateUser();
 
-  console.log(cartList);
-
   //COMPRAR (NO BORRAR)
   // const handleCompra = (e) => {
   //   e.preventDefault();
@@ -55,6 +55,7 @@ const ShoppingCart = () => {
     dispatch(postHistorial(user.id, cartList));
     dispatch(sendEmail(user?.mail, cartList));
     dispatch(clearCart(user?.id, token));
+    navigate("/home");
   };
 
   return (
