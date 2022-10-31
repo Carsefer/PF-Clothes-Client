@@ -62,7 +62,7 @@ const ProductDetail = () => {
     })();
     dispatch(getProductDetail(id));
     dispatch(getProductDetailReviews(id));
-  }, [dispatch, user, id]);
+  }, [dispatch, user, id, reviews]);
 
   const profileId = user?.id;
   const token = validateUser();
@@ -128,10 +128,7 @@ const ProductDetail = () => {
     <div className={Style.ProductContainer}>
       <div className={Style.sectionDetails}>
         <div className={Style.sectionDetailsButtons}>
-          <button
-            className={Style.backButton}
-            onClick={() => navigate(-1)}
-          >
+          <button className={Style.backButton} onClick={() => navigate(-1)}>
             Atrás
           </button>
           <button
