@@ -1,24 +1,26 @@
+import React from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
+import { Link, useNavigate } from "react-router-dom";
 import {
   getCartProducts,
-  clearCart,
-  delFromCart,
   delProductCart,
+  clearCart,
   buyProduct,
   postHistorial,
   clearLink,
+  sendEmail,
+  sendEmailSellers,
 } from "../../redux/actions";
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
 import CartItem from "../CartItem/CartItem";
-import { getUserData } from "../../Utils/useLocalStorage";
 import Style from "./ShoppingCart.module.css";
 import NavBar from "../NavBar/NavBar";
+import { getUserData } from "../../Utils/useLocalStorage";
 import { validateUser } from "../../sessionUtils/jwtSession";
 
 const ShoppingCart = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
 
   const cartList = useSelector((state) => state?.cart);
@@ -31,9 +33,9 @@ const ShoppingCart = () => {
         setUser(data);
       }
     })();
+    const id = user?.id;
     const token = validateUser();
-
-    dispatch(getCartProducts(user?.id, token));
+    dispatch(getCartProducts(id, token));
   }, [user, dispatch]);
   const token = validateUser();
 
@@ -52,8 +54,16 @@ const ShoppingCart = () => {
   const handleCompra = (e) => {
     e.preventDefault();
     dispatch(postHistorial(user.id, cartList));
+    dispatch(sendEmail(user?.mail, cartList));
+    dispatch(sendEmailSellers(user?.mail, cartList));
     dispatch(clearCart(user?.id, token));
+    navigate("/home");
   };
+
+  var repetidos = {};
+  cartList.forEach(function (numero) {
+    repetidos[numero.id] = (repetidos[numero.id] || 0) + 1;
+  });
 
   return (
     <>
@@ -68,24 +78,31 @@ const ShoppingCart = () => {
                 Limpiar Carrito
               </button>
 
-              {cartList?.map((e) => (
-                <CartItem
-                  key={e?.id + 1}
-                  name={e?.name?.charAt(0).toUpperCase() + e.name?.slice(1)}
-                  price={e?.price}
-                  quantity="1"
-                  image={e?.image}
-                  delOneFromCart={() =>
-                    dispatch(delProductCart(e?.id, user?.id, token)).then(
-                      dispatch(delFromCart(e.id))
-                    )
+              {cartList
+                .reduce((arr, el) => {
+                  if (!arr.find((d) => d.id === el.id)) {
+                    arr.push(el);
                   }
-                  delAllFromCart={() => dispatch(delFromCart(e.id, true))}
-                  size={e.size}
-                  color={e.color}
-                  demographic={e.demographic}
-                />
-              ))}
+
+                  return arr;
+                }, [])
+                .map((e) => (
+                  <CartItem
+                    id={e?.id}
+                    key={e?.id + 1}
+                    name={e?.name?.charAt(0).toUpperCase() + e.name?.slice(1)}
+                    price={e?.price}
+                    quantity={repetidos[e?.id]}
+                    image={e?.image}
+                    delOneFromCart={() =>
+                      dispatch(delProductCart(e?.id, user?.id, token))
+                    }
+                    // delAllFromCart={() => dispatch(delFromCart(e.id, true))}
+                    size={e.size}
+                    color={e.color}
+                    demographic={e.demographic}
+                  />
+                ))}
             </article>
           </div>
         ) : (
@@ -93,6 +110,13 @@ const ShoppingCart = () => {
             Aun no tienes productos agregado al carrito.{" "}
             <Link to="/home">Encontralos!</Link>
           </p>
+        )}
+        {cartList.length ? (
+          <h1>
+            TOTAL: ${cartList?.map((el) => el.price).reduce((a, b) => a + b)}
+          </h1>
+        ) : (
+          <></>
         )}
         {cartList.length ? (
           <div>

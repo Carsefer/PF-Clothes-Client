@@ -23,6 +23,14 @@ export default function Profile() {
 
   const historial = useSelector((state) => state?.historial);
 
+  console.log(historial);
+
+  var repetidos = {};
+
+  historial.forEach(function (numero) {
+    repetidos[numero.productoId] = (repetidos[numero.productoId] || 0) + 1;
+  });
+
   return (
     <>
       <NavBar />
@@ -59,21 +67,29 @@ export default function Profile() {
         <p>MIS COMPRAS </p>
         {historial.length ? (
           <p>
-            {historial?.map((el) => (
-              <div>
-                Nombre: {el.name}
-                Precio: {el.price}
-                Talle: {el.size}
-                Color: {el.color}
-                Demografia: {el.demographic}
-                Fecha: {el.date}
-                Estado: {el.status}
-                Cantidad: {el.amount}
-                <a href={`/Home/Product/${el.productoId}`}>
-                  <button>Comentar Producto</button>
-                </a>
-              </div>
-            ))}
+            {historial
+              .reduce((arr, el) => {
+                if (!arr.find((d) => d.productoId === el.productoId)) {
+                  arr.push(el);
+                }
+
+                return arr;
+              }, [])
+              .map((el) => (
+                <div>
+                  Nombre: {el.name}
+                  Precio: {el.price}
+                  Talle: {el.size}
+                  Color: {el.color}
+                  Demografia: {el.demographic}
+                  Fecha: {el.date}
+                  Estado: {el.status}
+                  Cantidad: {repetidos[el.productoId]}
+                  <a href={`/Home/Product/${el.productoId}`}>
+                    <button>Comentar Producto</button>
+                  </a>
+                </div>
+              ))}
           </p>
         ) : (
           <p>Aun no tienes compras.</p>

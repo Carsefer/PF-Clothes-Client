@@ -5,7 +5,7 @@ import Logo from "../images/bitmap2.png";
 import Cart from "../images/cart.svg";
 import ButtonFav from "../images/buttonFavNav.svg";
 import Profile from "../images/profile.svg";
-import { getSession, validateUser } from "../../sessionUtils/jwtSession";
+import { validateUser } from "../../sessionUtils/jwtSession";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
 import axios from "axios";
@@ -48,7 +48,7 @@ const NavBar = () => {
     window.localStorage.removeItem("sessionData");
     window.localStorage.clear();
     toast("Sesión cerrada");
-    window.location.reload();
+    //window.location.reload();
     navigate("/home");
   };
 

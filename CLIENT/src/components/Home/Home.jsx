@@ -1,8 +1,9 @@
 import React from "react";
 import Styles from "./Home.module.css";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { filterProducts, emptyDetail } from "../../redux/actions";
+import { filterProducts, emptyDetail,buyHistorial } from "../../redux/actions";
+import { getUserData } from "../../Utils/useLocalStorage";
 import Card from "../Card/Card";
 import NavBar from "../NavBar/NavBar";
 
@@ -19,6 +20,7 @@ export default function Home() {
   const [page, setPage] = useLocalStorage("page", 0);
   const [orderBy, setOrderBy] = useLocalStorage("orderBy", "ASC");
   const [sortBy, setSortBy] = useLocalStorage("sortBy", "name");
+  const [user, setUser] = useState("");
 
   useEffect(() => {
     dispatch(
@@ -35,7 +37,17 @@ export default function Home() {
     );
 
     dispatch(emptyDetail());
-  }, [dispatch, name, price, size, demographic, color, page, orderBy, sortBy]);
+    (async () => {
+      if (!user) {
+        const data = await getUserData();
+        setUser(data);
+      }
+      if(user){
+        dispatch(buyHistorial(user.id));
+      }
+    })();
+    
+  }, [dispatch, name, price, size, demographic, color, page, orderBy, sortBy,user]);
 
   const allProducts = useSelector((state) => state.products);
   const results = useSelector((state) => state.productsStatus);

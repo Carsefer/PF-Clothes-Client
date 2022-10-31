@@ -18,6 +18,7 @@ import {
   CLEAR_CART,
   REMOVE_ALL_FROM_CART,
   REMOVE_ONE_FROM_CART,
+  DEL_PRODUCT_CART,
   GET_REVIEWS_PRODUCT_DETAIL,
   FLUSH_ERROR,
   GET_SELLS_HISTORY,
@@ -215,22 +216,23 @@ export const getCartProducts = (id, token) => {
     });
   };
 };
+
 export const delProductCart = (productId, profileId, token) => {
   return async (dispatch) => {
-    const res = await axios.delete(
+    await axios.delete(
       `/user/shoppingcart?productID=${productId}&profileID=${profileId}&secret_token=${token}`
     );
     return dispatch({
-      type: REMOVE_ONE_FROM_CART,
-      payload: res,
+      type: DEL_PRODUCT_CART,
+      payload: productId,
     });
   };
 };
 
-export const delFromCart = (id, all = false) =>
-  all
-    ? { type: REMOVE_ALL_FROM_CART, payload: id }
-    : { type: REMOVE_ONE_FROM_CART, payload: id };
+// export const delFromCart = (id, all = false) =>
+//   all
+//     ? { type: REMOVE_ALL_FROM_CART, payload: id }
+//     : { type: REMOVE_ONE_FROM_CART, payload: id };
 
 export const clearCart = (profileId, token) => {
   return async (dispatch) => {
@@ -286,7 +288,7 @@ export const getSellDetail = (idSell) => {
 export const createReviewProduct = (id, data, token) => {
   return async (dispatch) => {
     const res = await axios.post(
-      `/product/review/${id}&secret_token=${token}`,
+      `/product/review/${id}?secret_token=${token}`,
       data
     );
     dispatch({
@@ -327,5 +329,17 @@ export const clearLink = () => {
     dispatch({
       type: CLEAR_LINK,
     });
+  };
+};
+
+export const sendEmail = (data, productos) => {
+  return async function () {
+    await axios.post(`/auth/sendemail?mail=${data}`, productos);
+  };
+};
+
+export const sendEmailSellers = (data, productos) => {
+  return async function () {
+    await axios.post(`/auth/sendemailsellers?mail=${data}`, productos);
   };
 };
