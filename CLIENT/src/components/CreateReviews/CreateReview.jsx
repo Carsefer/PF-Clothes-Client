@@ -12,13 +12,14 @@ const CreateReview = ({id}) => {
     const [info, setInfo] = useState("");
     const [error, setError] = useState("");
     const dispatch = useDispatch();
+
     const toast = (text, color="#32CD32") => Toastify({
         text: text,
         duration: 1500,
         position: "center",
         className: Styles.toast,
         backgroundColor: color
-        }).showToast();
+    }).showToast();
 
     useEffect(() => {
         (async () => {
@@ -45,7 +46,7 @@ const CreateReview = ({id}) => {
             score: rating.value,
             reviews: rating.text
         }
-        dispatch(createReviewProduct(id, data, info.token)).then(() => toast("Reseña creada con exito").catch(() => toast("Algo salio mal", "red")));
+        dispatch(createReviewProduct(id, data, info)).then(() => toast("Reseña creada con exito").catch(() => toast("Algo salio mal", "red")));
     }
 
     return (

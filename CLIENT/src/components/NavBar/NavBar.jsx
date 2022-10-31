@@ -5,7 +5,7 @@ import Logo from "../images/bitmap2.png";
 import Cart from "../images/cart.svg";
 import ButtonFav from "../images/buttonFavNav.svg";
 import Profile from "../images/profile.svg";
-import { getSession, validateUser } from "../../sessionUtils/jwtSession";
+import { /*getSession,*/ validateUser } from "../../sessionUtils/jwtSession";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
 import axios from "axios";
@@ -74,7 +74,7 @@ const NavBar = () => {
           </div>
         ) : (
           <>
-            <Link to="/home">Inicio</Link>
+            <Link className={Styles.NavBarLinks} to="/home">Inicio</Link>
             <Link to="/home/ShoppingCart">
               <img
                 className={Styles.CartIcon}
@@ -96,7 +96,7 @@ const NavBar = () => {
                 alt="img not found"
               ></img>
             </Link>
-            <Link to="/home/stadistics">Estadísticas</Link>
+            <Link className={Styles.NavBarLinks} to="/home/stadistics">Estadísticas</Link>
             <div>
               {/* username */}
               <p>{user?.username}</p>

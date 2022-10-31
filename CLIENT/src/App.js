@@ -8,13 +8,13 @@ import Home from "./components/Home/Home";
 import LandingHome from "./components/LandingHome/LandingHome";
 import Login from "./components/Login/Login";
 import ProductDetail from "./components/ProductDetail/ProductDetail";
-import Profile from "./components/Profile/Profile";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import Stadistics from "./components/Stadistics/Stadistics";
 import Forgot from './components/Forgot/Forgot';
 import Reset from './components/Reset/Reset';
 import Verified from "./components/Verified/verified";
 import NotVerified from "./components/NotVerified/NotVerified";
+import ProfilePage from "./components/ProfilePage/ProfilePage";
 import { validateUser } from "./sessionUtils/jwtSession";
 import { useLocalStorage } from "./Utils/useLocalStorage";
 import {
@@ -56,7 +56,7 @@ function App() {
       <Route element={<ProtectedRoute user={user} />}>
         <Route path="/home/Favorites" element={<Favorites />} />
         <Route path="/home/ShoppingCart" element={<ShoppingCart />} />
-        <Route path="/home/profile" element={<Profile />} />
+        <Route path="/home/profile/*" element={<ProfilePage />}/>
         <Route path="/home/stadistics" element={<Stadistics />} />
         <Route path="/home/createStore" element={<CreateStore />} />
         <Route path="/home/editUser" element={<EditUser />} />
