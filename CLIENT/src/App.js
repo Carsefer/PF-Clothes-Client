@@ -49,10 +49,10 @@ function App() {
       <Route index element={<LandingHome />} />
       <Route exact path="/" element={<LandingHome />} />
       <Route exact path="/home" element={<Home />} />
-      <Route element={<ProtectedRoutes user={user} />}>
+      {/* <Route element={<ProtectedRoutes user={user} />}> */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<CreateUser />} />
-      </Route>
+      {/* </Route> */}
       <Route element={<ProtectedRoute user={user} />}>
         <Route path="/home/Favorites" element={<Favorites />} />
         <Route path="/home/ShoppingCart" element={<ShoppingCart />} />
