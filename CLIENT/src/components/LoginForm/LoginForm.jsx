@@ -67,7 +67,7 @@ const LoginForm = () => {
   /* loging with google */
   const redirectToGoogleSSO = async () => {
     if(verified === "not verified"){
-      toastCorrect("por favor completa la verificacion en el mail enviado");
+      toast("por favor completa la verificacion en el mail que te enviamos");
     }
     const googleLoginURL = `${
       process.env.REACT_APP_API || "http://localhost:3001"
