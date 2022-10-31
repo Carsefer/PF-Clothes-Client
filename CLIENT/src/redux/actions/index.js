@@ -28,6 +28,7 @@ import {
   CLEAR_FAVORITES,
   HISTORIAL_PRODUCT,
   CLEAR_LINK,
+  CLEAR_ACTIONS,
 } from "../action-types";
 
 export const getProducts = () => {
@@ -226,7 +227,7 @@ export const delProductCart = (productId, profileId, token) => {
       return dispatch({
         type: DEL_PRODUCT_CART,
         payload: productId,
-      });  
+      });
     } catch (error) {
       alert(error.message);
     }
@@ -345,5 +346,13 @@ export const sendEmail = (data, productos) => {
 export const sendEmailSellers = (data, productos) => {
   return async function () {
     await axios.post(`/auth/sendemailsellers?mail=${data}`, productos);
+  };
+};
+
+export const clearActions = () => {
+  return async function (dispatch) {
+    dispatch({
+      type: CLEAR_ACTIONS,
+    });
   };
 };
