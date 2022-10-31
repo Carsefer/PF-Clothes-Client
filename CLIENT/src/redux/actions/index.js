@@ -219,13 +219,17 @@ export const getCartProducts = (id, token) => {
 
 export const delProductCart = (productId, profileId, token) => {
   return async (dispatch) => {
-    await axios.delete(
-      `/user/shoppingcart?productID=${productId}&profileID=${profileId}&secret_token=${token}`
-    );
-    return dispatch({
-      type: DEL_PRODUCT_CART,
-      payload: productId,
-    });
+    try {
+      await axios.delete(
+        `/user/shoppingcart?productID=${productId}&profileID=${profileId}&secret_token=${token}`
+      );
+      return dispatch({
+        type: DEL_PRODUCT_CART,
+        payload: productId,
+      });  
+    } catch (error) {
+      alert(error.message);
+    }
   };
 };
 
