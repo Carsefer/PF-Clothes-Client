@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Formik } from "formik";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Styles from "./LoginForm.module.css";
 import axios from "axios";
 import GoogleButton from "react-google-button";
@@ -10,6 +10,8 @@ import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
 
 const LoginForm = () => {
+  const search = useLocation().search;
+  const verified = new URLSearchParams(search).get('google');
   const [showPwd, setShowPwd] = useState(false);
   const navigate = useNavigate();
   const toast = (text) =>
@@ -64,6 +66,9 @@ const LoginForm = () => {
 
   /* loging with google */
   const redirectToGoogleSSO = async () => {
+    if(verified === "not verified"){
+      toastCorrect("por favor completa la verificacion en el mail enviado");
+    }
     const googleLoginURL = `${
       process.env.REACT_APP_API || "http://localhost:3001"
     }/login/google`;
