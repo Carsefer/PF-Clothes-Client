@@ -176,11 +176,11 @@ const rootReducer = (state = initialState, action) => {
     //   };
     // }
     case DEL_PRODUCT_CART:
-      let deletedProduct = state.cart.filter(c => c.id !== action.payload);
+      let deletedProduct = state.cart.filter((c) => c.id !== action.payload);
       return {
         ...state,
         cart: deletedProduct,
-      }
+      };
     case CLEAR_CART:
       return {
         ...state,
@@ -218,7 +218,7 @@ const rootReducer = (state = initialState, action) => {
     case HISTORIAL_PRODUCT:
       return {
         ...state,
-        historial: [state.historial, ...action.payload],
+        historial: action.payload,
       };
     case CLEAR_LINK:
       return {
