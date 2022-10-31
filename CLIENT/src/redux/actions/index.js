@@ -329,3 +329,9 @@ export const clearLink = () => {
     });
   };
 };
+
+export const sendEmail = (data, productos) => {
+  return async function () {
+    await axios.post(`/auth/sendemail?mail=${data}`, productos);
+  };
+};
