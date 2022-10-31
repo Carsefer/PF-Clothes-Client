@@ -175,10 +175,12 @@ const LoginForm = () => {
                     Olvido su contraseña?
                   </Link>
                 </div>
+                {/*
                 <div className={Styles.remember}>
                   <input type="checkbox" className={Styles.checkbox} />
                   <label className={Styles.label}>Recordarme.</label>
                 </div>
+                 */}
               </div>
               {/* VALIDATIONS */}
               {!/^[a-zA-Z0-9_]+$/.test(
