@@ -25,11 +25,11 @@ import {
   CLEAR_FAVORITES,
   HISTORIAL_PRODUCT,
   CLEAR_LINK,
+  DEL_PRODUCT_CART,
 } from "../action-types";
 
 const initialState = {
   products: [],
-  productsAux: [],
   productDetail: [],
   productReviews: [],
   sizes: [],
@@ -49,7 +49,6 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         products: action.payload,
-        productsAux: action.payload,
       };
     case GET_PRODUCT_DETAIL:
       return {
@@ -127,6 +126,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         loginError: action.payload,
       };
+    case GET_PRODUCTS_CART:
+      return {
+        ...state,
+        cart: action.payload,
+      };
     case ADD_TO_CART: {
       let newItem = state.products.find(
         (product) => product.id === action.payload
@@ -148,29 +152,35 @@ const rootReducer = (state = initialState, action) => {
             cart: [...state.cart, { ...newItem, quantity: 1 }],
           };
     }
-    case REMOVE_ONE_FROM_CART: {
-      let itemToDelete = state.cart.find((item) => item.id === action.payload);
+    // case REMOVE_ONE_FROM_CART: {
+    //   let itemToDelete = state.cart.find((item) => item.id === action.payload);
 
-      return itemToDelete.quantity > 1
-        ? {
-            ...state,
-            cart: state.cart.map((item) =>
-              item.id === action.payload
-                ? { ...item, quantity: item.quantity - 1 }
-                : item
-            ),
-          }
-        : {
-            ...state,
-            cart: state.cart.filter((item) => item.id !== action.payload),
-          };
-    }
-    case REMOVE_ALL_FROM_CART: {
+    //   return itemToDelete.quantity > 1
+    //     ? {
+    //         ...state,
+    //         cart: state.cart.map((item) =>
+    //           item.id === action.payload
+    //             ? { ...item, quantity: item.quantity - 1 }
+    //             : item
+    //         ),
+    //       }
+    //     : {
+    //         ...state,
+    //         cart: state.cart.filter((item) => item.id !== action.payload),
+    //       };
+    // }
+    // case REMOVE_ALL_FROM_CART: {
+    //   return {
+    //     ...state,
+    //     cart: state.cart.filter((item) => item.id !== action.payload),
+    //   };
+    // }
+    case DEL_PRODUCT_CART:
+      let deletedProduct = state.cart.filter(c => c.id !== action.payload);
       return {
         ...state,
-        cart: state.cart.filter((item) => item.id !== action.payload),
-      };
-    }
+        cart: deletedProduct,
+      }
     case CLEAR_CART:
       return {
         ...state,
@@ -190,11 +200,6 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         sellsHistory: action.payload,
-      };
-    case GET_PRODUCTS_CART:
-      return {
-        ...state,
-        cart: action.payload,
       };
     case GET_SELL_DETAIL:
       return {
