@@ -134,7 +134,7 @@ const ProductDetail = () => {
         <div className={Style.sectionDetailsButtons}>
           <button
             className={Style.backButton}
-            onClick={() => navigate("/home")}
+            onClick={() => navigate(-1)}
           >
             Atrás
           </button>
