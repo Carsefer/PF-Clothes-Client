@@ -12,6 +12,8 @@ const CreateStore = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [user, setUser] = useState("");
+  const [image, setImage] = useState();
+
   useEffect(() => {
     (async () => {
       if (!user) {
@@ -22,7 +24,9 @@ const CreateStore = () => {
   }, [user]);
 
   const token = validateUser();
-
+  const handleImage = (e) => {
+    setImage(e);
+  };
   return (
     <div className={Styles.container1}>
       <h1 className={Styles.subtitle}>Crear una tienda</h1>
@@ -31,7 +35,7 @@ const CreateStore = () => {
           id: "",
           storeName: "",
           banner: "",
-          profilePicture: "",
+
           location: "",
         }}
         validate={(value) => {
@@ -40,16 +44,17 @@ const CreateStore = () => {
           return errors;
         }}
         onSubmit={(data, { resetForm }) => {
-          let { id, storeName, banner, profilePicture, location } = data;
-          id = user;
+          const formData = new FormData();
+          formData.append = ("image", image[0]);
           const a = {
-            id,
-            storeName,
-            banner,
-            profilePicture,
-            location,
+            id: user,
+            storeName: data.storeName,
+            banner: data.banner,
+            profilePicture: formData,
+            location: data.location,
           };
-          console.log(a);
+
+          console.log(formData);
 
           dispatch(createStore(token, a))
             .then(function (res) {
@@ -119,10 +124,10 @@ const CreateStore = () => {
                 <input
                   type="file"
                   id="profilePicture"
-                  name="profilePicture"
+                  name="profilePictures"
                   className={Styles.inputFile}
                   value={values.profilePicture}
-                  onChange={handleChange}
+                  onChange={(e) => handleImage(e.target.profilePictures)}
                   onBlur={handleBlur}
                   onKeyUp={handleBlur}
                   required

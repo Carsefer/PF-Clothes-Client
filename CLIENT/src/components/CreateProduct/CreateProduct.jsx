@@ -30,7 +30,7 @@ const CreateStore = () => {
         initialValues={{
           id: "",
           name: "",
-          image: "",
+          image: [],
           demographic: "",
           price: 0,
           variants: [
@@ -99,11 +99,11 @@ const CreateStore = () => {
               <div className={Styles.column}>
                 <input
                   type="text"
-                  id="storeName"
-                  placeholder="Nombre de la Tienda"
-                  name="storeName"
+                  id="name"
+                  placeholder="Nombre del producto"
+                  name="name"
                   className={Styles.form1}
-                  value={values.storeName}
+                  value={values.name}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   onKeyUp={handleBlur}
@@ -112,12 +112,13 @@ const CreateStore = () => {
                 />
 
                 <input
-                  type="text"
-                  id="location"
-                  placeholder="Localidad"
-                  name="location"
+                  type="file"
+                  id="image"
+                  placeholder="Imagenes"
+                  name="image"
+                  accept="image/png, image/jpeg"
                   className={Styles.form1}
-                  value={values.location}
+                  value={values.image}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   required
