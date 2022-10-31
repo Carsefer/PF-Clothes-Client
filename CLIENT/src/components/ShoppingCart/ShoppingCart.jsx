@@ -76,11 +76,9 @@ const ShoppingCart = () => {
                   quantity="1"
                   image={e?.image}
                   delOneFromCart={() =>
-                    dispatch(delProductCart(e?.id, user?.id, token)).then(
-                      dispatch(delFromCart(e.id))
-                    )
+                    dispatch(delProductCart(e?.id, user?.id, token))
                   }
-                  delAllFromCart={() => dispatch(delFromCart(e.id, true))}
+                  // delAllFromCart={() => dispatch(delFromCart(e.id, true))}
                   size={e.size}
                   color={e.color}
                   demographic={e.demographic}

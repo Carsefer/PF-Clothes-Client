@@ -21,9 +21,9 @@ const CartItem = ({
         ${price}.00 x {quantity} = ${price * quantity}.00
       </h5>
       <div className="ButtonsCart">
-        <button onClick={() => delOneFromCart(id)}>Eliminar Uno</button>
+        <button onClick={delOneFromCart}>Eliminar Uno</button>
         <br />
-        <button onClick={() => delAllFromCart(id, true)}>Eliminar Todos</button>
+        {/* <button onClick={() => delAllFromCart(id, true)}>Eliminar Todos</button> */}
         <br />
         <br />
       </div>
