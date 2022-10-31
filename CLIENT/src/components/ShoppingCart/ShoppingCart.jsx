@@ -91,6 +91,7 @@ const ShoppingCart = () => {
                 }, [])
                 .map((e) => (
                   <CartItem
+                    id={e?.id}
                     key={e?.id + 1}
                     name={e?.name?.charAt(0).toUpperCase() + e.name?.slice(1)}
                     price={e?.price}
