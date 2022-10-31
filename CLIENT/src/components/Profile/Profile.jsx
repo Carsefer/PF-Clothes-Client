@@ -22,6 +22,14 @@ export default function Profile() {
 
   const historial = useSelector((state) => state?.historial);
 
+  console.log(historial);
+
+  var repetidos = {};
+
+  historial.forEach(function (numero) {
+    repetidos[numero.productoId] = (repetidos[numero.productoId] || 0) + 1;
+  });
+
   return (
     <>
       <div className={Style.profileContainer}>

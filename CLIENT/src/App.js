@@ -10,18 +10,18 @@ import Login from "./components/Login/Login";
 import ProductDetail from "./components/ProductDetail/ProductDetail";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import Stadistics from "./components/Stadistics/Stadistics";
-import Forgot from './components/Forgot/Forgot';
-import Reset from './components/Reset/Reset';
+import Forgot from "./components/Forgot/Forgot";
+import Reset from "./components/Reset/Reset";
 import Verified from "./components/Verified/verified";
 import NotVerified from "./components/NotVerified/NotVerified";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 import { validateUser } from "./sessionUtils/jwtSession";
-import { useLocalStorage } from "./Utils/useLocalStorage";
 import {
   ProtectedRoute,
   ProtectedRoutes,
 } from "./components/ProtectedRoute/ProtectedRoute";
 import EditUser from "./components/EditUser/EditUser";
+import { useLocalStorage } from "./Utils/useLocalStorage";
 
 function App() {
   const [user, setUser] = useLocalStorage("userData");
@@ -62,10 +62,10 @@ function App() {
         <Route path="/home/editUser" element={<EditUser />} />
       </Route>
       <Route path="/home/product/:id" element={<ProductDetail />} />
-      <Route path="/forgot" element={<Forgot/>}/>
-      <Route path="/reset" element={<Reset/>}/>
-      <Route path="/verified" element={<Verified/>}/>
-      <Route path="/not-verified" element={<NotVerified/>}/>
+      <Route path="/forgot" element={<Forgot />} />
+      <Route path="/reset" element={<Reset />} />
+      <Route path="/verified" element={<Verified />} />
+      <Route path="/not-verified" element={<NotVerified />} />
     </Routes>
   );
 }

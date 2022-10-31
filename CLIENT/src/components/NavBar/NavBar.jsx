@@ -5,7 +5,7 @@ import Logo from "../images/bitmap2.png";
 import Cart from "../images/cart.svg";
 import ButtonFav from "../images/buttonFavNav.svg";
 import Profile from "../images/profile.svg";
-import { /*getSession,*/ validateUser } from "../../sessionUtils/jwtSession";
+import { validateUser } from "../../sessionUtils/jwtSession";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
 import axios from "axios";
@@ -13,7 +13,7 @@ import { useLocalStorage } from "../../Utils/useLocalStorage";
 //import { FaWindows } from "react-icons/fa";
 
 const NavBar = () => {
-  const [user, setUser] = useLocalStorage("");
+  const [user, setUser] = useLocalStorage("userData");
   const navigate = useNavigate();
   const toast = (text) =>
     Toastify({
@@ -45,11 +45,12 @@ const NavBar = () => {
   const handleLogout = (e) => {
     setUser("");
     document.cookie = "token=;max-age=0";
-    window.localStorage.removeItem("sessionData");
     window.localStorage.clear();
     toast("Sesión cerrada");
-    window.location.reload();
     navigate("/home");
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   };
 
   return (

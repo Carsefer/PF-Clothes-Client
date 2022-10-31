@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Formik } from "formik";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Styles from "./LoginForm.module.css";
 import axios from "axios";
 import GoogleButton from "react-google-button";
@@ -10,6 +10,8 @@ import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
 
 const LoginForm = () => {
+  const search = useLocation().search;
+  const verified = new URLSearchParams(search).get('google');
   const [showPwd, setShowPwd] = useState(false);
   const navigate = useNavigate();
   const toast = (text) =>
@@ -40,25 +42,42 @@ const LoginForm = () => {
       })
       .then(function (res) {
         console.log(res);
-        if (res.data) {
+
+        if(res.data && !res.data.token){
+          toast(res.data.message);
+        }
+        
+        if (res.data.token) {
           setSession(res.data.token);
-          toastCorrect("Credenciales correctas");
+          toastCorrect(res.data.message);
           setTimeout(() => {
             navigate("/home");
             window.location.reload();
           }, 1000);
         }
+
         console.log(document.cookie);
       })
       .catch(function (error) {
-        toast("Credenciales incorrectas");
-        console.log(error);
+        toast(error.response.data.message);
+        console.log(error.response);
       });
   };
 
   /* loging with google */
   const redirectToGoogleSSO = async () => {
-    const googleLoginURL = `${process.env.REACT_APP_API || "http://localhost:3001"}/login/google`;
+    if(verified === "not verified"){
+      toast(`por favor completa la verificacion en el mail que te enviamos,
+      en caso de ya haber completado la verificacion has caso omiso a esta notificacion`);
+    }
+    if(!verified){
+      toastCorrect(`se te enviara un mensaje de verificacion a tu cuenta la primera ves que te loguees 
+      con google, 
+    si ya hiciste el proceso de verificacion has caso omiso a esta notificacion`);
+    }
+    const googleLoginURL = `${
+      process.env.REACT_APP_API || "http://localhost:3001"
+    }/login/google`;
     window.open(googleLoginURL, "_self");
   };
 
@@ -175,10 +194,12 @@ const LoginForm = () => {
                     Olvido su contraseña?
                   </Link>
                 </div>
+                {/*
                 <div className={Styles.remember}>
                   <input type="checkbox" className={Styles.checkbox} />
                   <label className={Styles.label}>Recordarme.</label>
                 </div>
+                 */}
               </div>
               {/* VALIDATIONS */}
               {!/^[a-zA-Z0-9_]+$/.test(
