@@ -3,7 +3,7 @@ import CreateStore from "./components/CreateStore/CreateStore";
 import CreateUser from "./components/CreateUser/CreateUser";
 import Favorites from "./components/Favorites/Favorites";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Home from "./components/Home/Home";
 import LandingHome from "./components/LandingHome/LandingHome";
 import Login from "./components/Login/Login";
@@ -11,12 +11,11 @@ import ProductDetail from "./components/ProductDetail/ProductDetail";
 import Profile from "./components/Profile/Profile";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import Stadistics from "./components/Stadistics/Stadistics";
-import Forgot from './components/Forgot/Forgot';
-import Reset from './components/Reset/Reset';
+import Forgot from "./components/Forgot/Forgot";
+import Reset from "./components/Reset/Reset";
 import Verified from "./components/Verified/verified";
 import NotVerified from "./components/NotVerified/NotVerified";
 import { validateUser } from "./sessionUtils/jwtSession";
-import { useLocalStorage } from "./Utils/useLocalStorage";
 import {
   ProtectedRoute,
   ProtectedRoutes,
@@ -24,7 +23,7 @@ import {
 import EditUser from "./components/EditUser/EditUser";
 
 function App() {
-  const [user, setUser] = useLocalStorage("userData");
+  const [user, setUser] = useState(null);
   useEffect(() => {
     (async () => {
       if (!user) {
@@ -49,10 +48,10 @@ function App() {
       <Route index element={<LandingHome />} />
       <Route exact path="/" element={<LandingHome />} />
       <Route exact path="/home" element={<Home />} />
-      {/* <Route element={<ProtectedRoutes user={user} />}> */}
+      <Route element={<ProtectedRoutes user={user} />}>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<CreateUser />} />
-      {/* </Route> */}
+      </Route>
       <Route element={<ProtectedRoute user={user} />}>
         <Route path="/home/Favorites" element={<Favorites />} />
         <Route path="/home/ShoppingCart" element={<ShoppingCart />} />
@@ -62,10 +61,10 @@ function App() {
         <Route path="/home/editUser" element={<EditUser />} />
       </Route>
       <Route path="/home/product/:id" element={<ProductDetail />} />
-      <Route path="/forgot" element={<Forgot/>}/>
-      <Route path="/reset" element={<Reset/>}/>
-      <Route path="/verified" element={<Verified/>}/>
-      <Route path="/not-verified" element={<NotVerified/>}/>
+      <Route path="/forgot" element={<Forgot />} />
+      <Route path="/reset" element={<Reset />} />
+      <Route path="/verified" element={<Verified />} />
+      <Route path="/not-verified" element={<NotVerified />} />
     </Routes>
   );
 }
