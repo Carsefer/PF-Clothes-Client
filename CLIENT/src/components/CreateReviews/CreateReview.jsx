@@ -2,7 +2,7 @@ import Rating from '@mui/material/Rating';
 import {useEffect, useState} from "react"
 import Styles from "./CreateReview.module.css"
 import { createReviewProduct } from '../../redux/actions';
-import { getSession } from "../../sessionUtils/jwtSession";
+import { getSession,validateUser } from "../../sessionUtils/jwtSession";
 import { useDispatch } from 'react-redux';
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";
@@ -23,7 +23,7 @@ const CreateReview = ({id}) => {
     useEffect(() => {
         (async () => {
         if (!info) {
-            const data = await getSession();
+            const data = await validateUser();
             setInfo(data);
         }})();
     }, [info]);
@@ -46,6 +46,7 @@ const CreateReview = ({id}) => {
             reviews: rating.text
         }
         dispatch(createReviewProduct(id, data, info)).then(() => toast("Reseña creada con exito").catch(() => toast("Algo salio mal", "red")));
+        setRating({value:null,text:""});
     }
 
     return (
