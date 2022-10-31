@@ -224,7 +224,7 @@ export const delProductCart = (productId, profileId, token) => {
     );
     return dispatch({
       type: DEL_PRODUCT_CART,
-      payload: productId
+      payload: productId,
     });
   };
 };
@@ -335,5 +335,11 @@ export const clearLink = () => {
 export const sendEmail = (data, productos) => {
   return async function () {
     await axios.post(`/auth/sendemail?mail=${data}`, productos);
+  };
+};
+
+export const sendEmailSellers = (data, productos) => {
+  return async function () {
+    await axios.post(`/auth/sendemailsellers?mail=${data}`, productos);
   };
 };
