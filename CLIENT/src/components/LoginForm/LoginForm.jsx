@@ -40,19 +40,25 @@ const LoginForm = () => {
       })
       .then(function (res) {
         console.log(res);
-        if (res.data) {
+
+        if(res.data && !res.data.token){
+          toast(res.data.message);
+        }
+        
+        if (res.data.token) {
           setSession(res.data.token);
-          toastCorrect("Credenciales correctas");
+          toastCorrect(res.data.message);
           setTimeout(() => {
             navigate("/home");
             window.location.reload();
           }, 1000);
         }
+
         console.log(document.cookie);
       })
       .catch(function (error) {
-        toast("Credenciales incorrectas");
-        console.log(error);
+        toast(error.response.data.message);
+        console.log(error.response);
       });
   };
 
