@@ -74,13 +74,12 @@ const LoginForm = () => {
       toastCorrect(`se te enviara un mensaje de verificacion a tu cuenta la primera ves que te loguees 
       con google, 
     si ya hiciste el proceso de verificacion has caso omiso a esta notificacion`);
-    };
     }
     const googleLoginURL = `${
       process.env.REACT_APP_API || "http://localhost:3001"
     }/login/google`;
     window.open(googleLoginURL, "_self");
-    
+  };
 
   return (
     <>
