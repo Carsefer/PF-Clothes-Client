@@ -9,8 +9,9 @@ import {
   postHistorial,
   clearLink,
   sendEmail,
+  sendEmailSellers,
 } from "../../redux/actions";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import CartItem from "../CartItem/CartItem";
 import { getUserData } from "../../Utils/useLocalStorage";
@@ -20,6 +21,8 @@ import { validateUser } from "../../sessionUtils/jwtSession";
 
 const ShoppingCart = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [user, setUser] = useState(null);
 
   const cartList = useSelector((state) => state?.cart);
@@ -38,8 +41,6 @@ const ShoppingCart = () => {
   }, [user, dispatch]);
   const token = validateUser();
 
-  console.log(cartList);
-
   //COMPRAR (NO BORRAR)
   // const handleCompra = (e) => {
   //   e.preventDefault();
@@ -54,7 +55,9 @@ const ShoppingCart = () => {
     e.preventDefault();
     dispatch(postHistorial(user.id, cartList));
     dispatch(sendEmail(user?.mail, cartList));
+    dispatch(sendEmailSellers(user?.mail, cartList));
     dispatch(clearCart(user?.id, token));
+    navigate("/home");
   };
 
   return (
@@ -78,11 +81,9 @@ const ShoppingCart = () => {
                   quantity="1"
                   image={e?.image}
                   delOneFromCart={() =>
-                    dispatch(delProductCart(e?.id, user?.id, token)).then(
-                      dispatch(delFromCart(e.id))
-                    )
+                    dispatch(delProductCart(e?.id, user?.id, token))
                   }
-                  delAllFromCart={() => dispatch(delFromCart(e.id, true))}
+                  // delAllFromCart={() => dispatch(delFromCart(e.id, true))}
                   size={e.size}
                   color={e.color}
                   demographic={e.demographic}
