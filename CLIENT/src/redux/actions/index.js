@@ -265,12 +265,23 @@ export const flushError = () => {
   };
 };
 
-export const getSellsHistory = () => {
+export const getSellsHistory = (id) => {
   return async (dispatch) => {
-    const history = await axios.get("/sellsHistory");
+    const history = await axios.get(`/stores/sells/${id}`)
+      .then(response => response.data.map(s => {
+        const dateOfSell = s.created.split("T")[0]
+        return {
+          size: s.size,
+          price: s.price,
+          demographic: s.demographic,
+          date: dateOfSell,
+          location: s.location,
+          productId: s.productoId
+        }
+      }))
     dispatch({
       type: GET_SELLS_HISTORY,
-      payload: history.data,
+      payload: history,
     });
   };
 };

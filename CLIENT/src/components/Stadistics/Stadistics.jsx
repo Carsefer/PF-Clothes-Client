@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
-import { getSellsHistory } from "../../redux/actions/index.js"
+import React, { useEffect, useState } from 'react';
+import { getSellsHistory, getProducts } from "../../redux/actions/index.js"
+import { getUserData } from "../../Utils/useLocalStorage.js"
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import SellsGraphic from "../SellsGraphic/SellsGraphic.jsx"
@@ -7,12 +8,21 @@ import SellsGraphic from "../SellsGraphic/SellsGraphic.jsx"
 const Stadistics = () => {
 
     const dispatch = useDispatch()
+    const [user, setUser] = useState(null)
 
     useEffect(() => {
-        dispatch(getSellsHistory())
+        (async () => {
+            if (!user) {
+              const data = await getUserData();
+              setUser(data);
+            }
+          })();
+        dispatch(getSellsHistory(user.id))
+        dispatch(getProducts())
     }, [dispatch])
 
     const sellsHistory = useSelector(state => state.sellsHistory)
+    const products = useSelector(state => state.products)
 
     const listNumbers = (num) => {
         let numbers = [];
@@ -53,8 +63,8 @@ const Stadistics = () => {
                     day = i
                 }
                 sellsHistory.forEach(sell => {
-                    if (sell.date === `${day}/${thisMonth}/${thisYear}`) {
-                        amount += 1
+                    if (sell.date === `${thisYear}-${thisMonth}-${day}`) {
+                        amount++
                     }
                 })
                 sellsDays.push(amount.toString())
@@ -83,7 +93,7 @@ const Stadistics = () => {
         sellsHistory.forEach(sell => {
             let product = products.find(s => s.productId === sell.productId)
             if (!product) {
-                products.push({productId: sell.productId, productInfo: sell.productInfo, amount: 1})
+                products.push({productId: sell.productId, amount: 1})
             } else {
                 let num = product.amount + 1
                 product.amount = num
@@ -110,12 +120,13 @@ const Stadistics = () => {
                 />
                 {
                     sellsHistory.length ? sellsHistory.map(sell => {
+                        const productInfo = products.find(p => p.id === sell.productId)
                         return (
                             <div>
-                                <img src={sell.productInfo.img} alt="foto" />
-                                <h4>{sell.productInfo.name}</h4>
-                                <p>{sell.productInfo.buyer}</p>
-                                <p>{sell.productInfo.location}</p>
+                                <img src={productInfo.img} alt="foto" />
+                                <h4>{productInfo.name}</h4>
+                                <p>{sell.buyer || "Nombre del comprador"}</p>
+                                <p>{sell.location}</p>
                                 <Link to={`/sell/${sell.id}`}>
                                     <p>Más detalles de la compra</p>
                                 </Link>
@@ -127,10 +138,11 @@ const Stadistics = () => {
                     <h2>Productos más vendidos</h2>
                     {
                         mostSelledProducts.length ? mostSelledProducts.map(s => {
+                            const productInfo = products.find(p => p.id === s.productId)
                             return (
                                 <div>
-                                    <h2>{s.productInfo.name}</h2>
-                                    <img src={s.productInfo.img} alt="foto" />
+                                    <h2>{productInfo.name}</h2>
+                                    <img src={productInfo.img} alt="foto" />
                                     <h2>Vendidos:</h2>
                                     <h2>{s.amount}</h2>
                                 </div>
