@@ -14,8 +14,6 @@ import {
   LOGIN_USER,
   ADD_TO_CART,
   CLEAR_CART,
-  REMOVE_ALL_FROM_CART,
-  REMOVE_ONE_FROM_CART,
   GET_REVIEWS_PRODUCT_DETAIL,
   FLUSH_ERROR,
   GET_SELLS_HISTORY,
@@ -161,29 +159,7 @@ const rootReducer = (state = initialState, action) => {
             cart: [...state.cart, { ...newItem, quantity: 1 }],
           };
     }
-    case REMOVE_ONE_FROM_CART: {
-      let itemToDelete = state.cart.find((item) => item.id === action.payload);
 
-      return itemToDelete.quantity > 1
-        ? {
-            ...state,
-            cart: state.cart.map((item) =>
-              item.id === action.payload
-                ? { ...item, quantity: item.quantity - 1 }
-                : item
-            ),
-          }
-        : {
-            ...state,
-            cart: state.cart.filter((item) => item.id !== action.payload),
-          };
-    }
-    // case REMOVE_ALL_FROM_CART: {
-    //   return {
-    //     ...state,
-    //     cart: state.cart.filter((item) => item.id !== action.payload),
-    //   };
-    // }
     case DEL_PRODUCT_CART:
       let deletedProduct = state.cart.filter(
         (c) => c.variantID !== action.payload
