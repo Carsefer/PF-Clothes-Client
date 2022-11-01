@@ -12,7 +12,8 @@ const CreateStore = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [user, setUser] = useState("");
-  const [image, setImage] = useState();
+  const [file, setFile] = useState();
+  const [filename,setFilename] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -24,9 +25,14 @@ const CreateStore = () => {
   }, [user]);
 
   const token = validateUser();
-  const handleImage = (e) => {
-    setImage(e);
+
+  const saveFile = (e) => {
+    setFile(e.target.files[0]);
+    setFilename(e.target.files[0].name);
+    console.log(file);
+    console.log(filename);
   };
+
   return (
     <div className={Styles.container1}>
       <h1 className={Styles.subtitle}>Crear una tienda</h1>
@@ -45,7 +51,8 @@ const CreateStore = () => {
         }}
         onSubmit={(data, { resetForm }) => {
           const formData = new FormData();
-          formData.append = ("image", image[0]);
+          formData.append = ("file", file,filename);
+           console.log(formData);
           const a = {
             id: user,
             storeName: data.storeName,
@@ -54,7 +61,7 @@ const CreateStore = () => {
             location: data.location,
           };
 
-          console.log(formData);
+         
 
           dispatch(createStore(token, a))
             .then(function (res) {
@@ -127,7 +134,7 @@ const CreateStore = () => {
                   name="profilePictures"
                   className={Styles.inputFile}
                   value={values.profilePicture}
-                  onChange={(e) => handleImage(e.target.profilePictures)}
+                  onChange={(e) => saveFile(e)}
                   onBlur={handleBlur}
                   onKeyUp={handleBlur}
                   required
@@ -150,7 +157,7 @@ const CreateStore = () => {
                 />
 
                 <div>
-                  {!values.profilePicture ||
+                  {/*!values.profilePicture ||*/
                   !values.location ||
                   !values.banner ||
                   !values.storeName ? (
