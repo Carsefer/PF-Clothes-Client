@@ -11,6 +11,7 @@ const SellHistory = () => {
     const [user, setUser] = useState("");
 
     useEffect(() => {
+        console.log(user?.id);
         (async () => {
         if (!user) {
             const data = await getUserData();

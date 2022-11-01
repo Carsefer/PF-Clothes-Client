@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useEffect, useState } from "react";
 import { getUserData } from "../../Utils/useLocalStorage";
+import SellingCard from "../SellingCard/SellingCard";
 
 const SellingProducts = () => {
     const [user, setUser] = useState(null);
@@ -13,14 +14,30 @@ const SellingProducts = () => {
               const data = await getUserData();
               setUser(data);
             }
-            const res = await axios.get(`http://localhost:3001/user/onSell/${user?.id}`);
-            console.log(res);
-            setProducts(res);
+            axios.get(`http://localhost:3001/user/onSell/${user.id}`).then(res => {
+                setProducts(res.data)
+            })
         })();
     }, [user])
 
     return (
-        <h1>sad</h1>
+        <div>
+            {products.length ? (
+                products
+                    .map((el) => (
+                        <SellingCard
+                            id={el.id}
+                            name= {el.name}
+                            price= {el.price}
+                            size= {el.size}
+                            color= {el.color}
+                            demographic= {el.demographic}
+                        />
+                    ))
+                ) : (
+                <label>Aun no tienes productos en venta.</label>
+                )}
+        </div>
     );
 }
 
