@@ -195,12 +195,12 @@ export default function Home() {
               onChange={(e) => filterByDemographic(e)}
             >
               <option value="">Filtrar por Género</option>
-              <option value="adult male">Hombre</option>
-              <option value="adult female">Mujer</option>
-              <option value="teen male">Hombre adolescente</option>
-              <option value="teen female">Mujer adolescente</option>
-              <option value="little boy">Niño</option>
-              <option value="little girl">Niña</option>
+              <option value="Hombre">Hombre</option>
+              <option value="Mujer">Mujer</option>
+              <option value="Hombre adolescente">Hombre adolescente</option>
+              <option value="Mujera adolescente">Mujer adolescente</option>
+              <option value="Niño">Niño</option>
+              <option value="Niña">Niña</option>
             </select>
             <select
               className={Styles.FilterProductsHomeSelect}
