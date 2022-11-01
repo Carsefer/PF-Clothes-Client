@@ -26,6 +26,7 @@ import {
   GET_DEMOGRAPHICS,
   DEL_PRODUCT_CART,
   CLEAR_ACTIONS,
+  USER_REVIEWS,
 } from "../action-types";
 
 const initialState = {
@@ -33,6 +34,7 @@ const initialState = {
   demographic: [],
   productDetail: [],
   productReviews: [],
+  userReviews: [],
   sizes: [],
   productsStatus: "Cargando productos...",
   favorites: [],
@@ -216,6 +218,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         productReviews: [],
+      };
+    case USER_REVIEWS: 
+      return {
+        ...state,
+        userReviews: action.payload,
       };
     default:
       return state;

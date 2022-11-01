@@ -53,9 +53,7 @@ const CreateStore = () => {
             profilePicture : avatar,
           }).then((res) => {
             console.log(res);
-          })*/
-
-          let { storeName, location } = data;
+          })*/ let { storeName, location } = data;
 
           dispatch(
             createStore(token, {
@@ -90,7 +88,7 @@ const CreateStore = () => {
           setTimeout(() => {
             resetForm();
             navigate("/home/profile").then(window.location.reload());
-          }, 2000);
+          }, 4000);
         }}
       >
         {({
@@ -152,7 +150,7 @@ const CreateStore = () => {
                   required
                   autoComplete="off"
                 />
-                <img src={avatar} alt={"avatar"} />
+                <img src={avatar} alt={""} />
                 <>
                   <label>Banner</label>
                 </>
@@ -177,7 +175,7 @@ const CreateStore = () => {
                   required
                   autoComplete="off"
                 />
-                <img src={profileBanner} alt={"banner"} />
+                <img src={profileBanner} alt="" />
                 <div>
                   {!values.location || !values.storeName ? (
                     <div>

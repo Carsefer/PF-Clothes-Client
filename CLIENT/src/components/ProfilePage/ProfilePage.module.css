@@ -1,0 +1,34 @@
+.ProfilePage {
+    width: 100%;
+    height: 100vh;
+    background-color: #ffe3b3;
+    margin-top: 9.1%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+.profileLinksDiv {
+    top: 12%;
+    position: fixed;
+    width: 100%;
+    height: 7vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #31b189;
+    color: white;
+    text-decoration: none;
+    border-top: 1px solid white;
+}
+
+.profileLinks {
+    font-size: 14px;
+    color: #ffe3b3;
+    text-decoration: none;
+}
+
+.profileRoutes {
+    display: flex;
+    justify-content: center;
+}

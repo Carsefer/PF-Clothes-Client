@@ -31,6 +31,8 @@ import {
   CLEAR_ACTIONS,
   GET_DEMOGRAPHICS,
   CREATE_PRODUCT,
+  DELETE_PRODUCT,
+  USER_REVIEWS,
 } from "../action-types";
 
 export const getProducts = () => {
@@ -282,9 +284,9 @@ export const flushError = () => {
   };
 };
 
-export const getSellsHistory = () => {
+export const getSellsHistory = (id) => {
   return async (dispatch) => {
-    const history = await axios.get("/sellsHistory");
+    const history = await axios.get(`/user/sells/${id}`);
     dispatch({
       type: GET_SELLS_HISTORY,
       payload: history.data,
@@ -374,6 +376,22 @@ export const getDemographics = () => {
     dispatch({
       type: GET_DEMOGRAPHICS,
       payload: demographic.data,
+    });
+  };
+};
+
+export const deleteProduct = (id) => {
+  return async function () {
+    await axios.delete(`/activate/product/${id}`);
+  };
+};
+
+export const getUserReviews = (id) => {
+  return async function (dispatch) {
+    const data = await axios.get(`/user/review/${id}`);
+    dispatch({
+      type: USER_REVIEWS,
+      payload: data,
     });
   };
 };
