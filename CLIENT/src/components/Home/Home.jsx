@@ -1,8 +1,8 @@
 import React from "react";
 import Styles from "./Home.module.css";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { filterProducts, emptyDetail,buyHistorial } from "../../redux/actions";
+import { filterProducts, emptyDetail, buyHistorial } from "../../redux/actions";
 import { getUserData } from "../../Utils/useLocalStorage";
 import Card from "../Card/Card";
 import NavBar from "../NavBar/NavBar";
@@ -42,12 +42,22 @@ export default function Home() {
         const data = await getUserData();
         setUser(data);
       }
-      if(user){
+      if (user) {
         dispatch(buyHistorial(user.id));
       }
     })();
-    
-  }, [dispatch, name, price, size, demographic, color, page, orderBy, sortBy,user]);
+  }, [
+    dispatch,
+    name,
+    price,
+    size,
+    demographic,
+    color,
+    page,
+    orderBy,
+    sortBy,
+    user,
+  ]);
 
   const allProducts = useSelector((state) => state.products);
   const results = useSelector((state) => state.productsStatus);
@@ -185,12 +195,12 @@ export default function Home() {
               onChange={(e) => filterByDemographic(e)}
             >
               <option value="">Filtrar por Género</option>
-              <option value="adult male">Hombre</option>
-              <option value="adult female">Mujer</option>
-              <option value="teen male">Hombre adolescente</option>
-              <option value="teen female">Mujer adolescente</option>
-              <option value="little boy">Niño</option>
-              <option value="little girl">Niña</option>
+              <option value="Hombre">Hombre</option>
+              <option value="Mujer">Mujer</option>
+              <option value="Hombre adolescente">Hombre adolescente</option>
+              <option value="Mujera adolescente">Mujer adolescente</option>
+              <option value="Niño">Niño</option>
+              <option value="Niña">Niña</option>
             </select>
             <select
               className={Styles.FilterProductsHomeSelect}

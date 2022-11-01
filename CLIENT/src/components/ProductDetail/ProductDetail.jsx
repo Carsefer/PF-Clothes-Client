@@ -8,6 +8,8 @@ import {
   getProductDetailReviews,
   addToFavorites,
   deleteFavorite,
+  buyHistorial,
+  clearActions,
 } from "../../redux/actions";
 import Style from "./ProductDetail.module.css";
 import Comments from "../Comments/Comments";
@@ -37,13 +39,15 @@ const ProductDetail = () => {
   const favorites = useSelector((state) => state.favorites);
   const historial = useSelector((state) => state?.historial);
 
+  console.log(historial);
+
   const averageScore = () => {
     let average = 0;
     if (reviews.length) {
       reviews.forEach((r) => {
         average += r.score;
       });
-      return average / reviews.length;
+      return (average / reviews.length).toFixed(1);
     } else {
       return 0;
     }
@@ -61,7 +65,9 @@ const ProductDetail = () => {
       }
     })();
     dispatch(getProductDetail(id));
+    dispatch(clearActions());
     dispatch(getProductDetailReviews(id));
+    dispatch(buyHistorial(user?.id));
   }, [dispatch, user, id]);
 
   const profileId = user?.id;
@@ -130,7 +136,7 @@ const ProductDetail = () => {
         <div className={Style.sectionDetailsButtons}>
           <button
             className={Style.backButton}
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/home")}
           >
             Atrás
           </button>
