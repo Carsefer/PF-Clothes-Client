@@ -183,9 +183,9 @@ export default function Home() {
               <option value="XXXL">XXXL</option>
               <option value="XXL">XXL</option>
               <option value="XL">XL</option>
-              <option value="S">S</option>
-              <option value="M">M</option>
               <option value="L">L</option>
+              <option value="M">M</option>
+              <option value="S">S</option>
               <option value="XXS">XXS</option>
               <option value="XXXS">XXXS</option>
             </select>
@@ -219,15 +219,15 @@ export default function Home() {
               onChange={(e) => filterByColor(e)}
             >
               <option value="">Filtrar por Color</option>
-              <option value="Gris">Gris</option>
-              <option value="Negro">Negro</option>
-              <option value="Blanco">Blanco</option>
-              <option value="Azul">Azul</option>
-              <option value="Verde">Verde</option>{" "}
-              <option value="Rojo">Rojo</option>{" "}
               <option value="Amarillo">Amarillo</option>
-              <option value="Rosado">Rosado</option>{" "}
+              <option value="Azul">Azul</option>
+              <option value="Blanco">Blanco</option>
+              <option value="Gris">Gris</option>
               <option value="Marron">Marron</option>
+              <option value="Negro">Negro</option>
+              <option value="Rojo">Rojo</option>{" "}
+              <option value="Rosado">Rosado</option>{" "}
+              <option value="Verde">Verde</option>{" "}
             </select>
 
             <input

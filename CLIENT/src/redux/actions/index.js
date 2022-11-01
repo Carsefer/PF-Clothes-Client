@@ -29,6 +29,8 @@ import {
   HISTORIAL_PRODUCT,
   CLEAR_LINK,
   CLEAR_ACTIONS,
+  GET_DEMOGRAPHICS,
+  CREATE_PRODUCT,
   DELETE_PRODUCT,
   USER_REVIEWS,
 } from "../action-types";
@@ -140,11 +142,21 @@ export const createUser = (data) => {
     }
   };
 };
+
 export const createStore = (token, data) => {
   return async (dispatch) => {
-    const res = await axios.patch(`/user?secret_token=${token}`, data);
+    const res = await axios.post(`/user/update?secret_token=${token}`, data);
     return dispatch({
       type: CREATE_STORE,
+      payload: res.data,
+    });
+  };
+};
+export const createProduct = (token, data) => {
+  return async (dispatch) => {
+    const res = await axios.post(`/product?secret_token=${token}`, data);
+    return dispatch({
+      type: CREATE_PRODUCT,
       payload: res.data,
     });
   };
@@ -236,10 +248,10 @@ export const delProductCart = (productId, profileId, token) => {
   };
 };
 
-// export const delFromCart = (id, all = false) =>
-//   all
-//     ? { type: REMOVE_ALL_FROM_CART, payload: id }
-//     : { type: REMOVE_ONE_FROM_CART, payload: id };
+export const delFromCart = (id, all = false) =>
+  all
+    ? { type: REMOVE_ALL_FROM_CART, payload: id }
+    : { type: REMOVE_ONE_FROM_CART, payload: id };
 
 export const clearCart = (profileId, token) => {
   return async (dispatch) => {
@@ -274,10 +286,21 @@ export const flushError = () => {
 
 export const getSellsHistory = (id) => {
   return async (dispatch) => {
-    const history = await axios.get(`/user/sells/${id}`);
+    const history = await axios.get(`/stores/sells/${id}`)
+      .then(response => response.data.map(s => {
+        const dateOfSell = s.created.split("T")[0]
+        return {
+          size: s.size,
+          price: s.price,
+          demographic: s.demographic,
+          date: dateOfSell,
+          location: s.location,
+          productId: s.productoId
+        }
+      }))
     dispatch({
       type: GET_SELLS_HISTORY,
-      payload: history.data,
+      payload: history,
     });
   };
 };
@@ -358,12 +381,21 @@ export const clearActions = () => {
     });
   };
 };
+export const getDemographics = () => {
+  return async function (dispatch) {
+    const demographic = await axios.get(`/demographics`);
+    dispatch({
+      type: GET_DEMOGRAPHICS,
+      payload: demographic.data,
+    });
+  };
+};
 
 export const deleteProduct = (id) => {
   return async function () {
-    await axios.delete(`/activate/product/${id}`)
-  }
-}
+    await axios.delete(`/activate/product/${id}`);
+  };
+};
 
 export const getUserReviews = (id) => {
   return async function (dispatch) {
@@ -372,5 +404,5 @@ export const getUserReviews = (id) => {
       type: USER_REVIEWS,
       payload: data,
     });
-  }
-}
+  };
+};

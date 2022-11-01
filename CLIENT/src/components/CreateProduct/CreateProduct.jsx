@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { createStore } from "../../redux/actions";
+import { createProduct } from "../../redux/actions";
 import { Formik } from "formik";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -7,11 +7,16 @@ import { useNavigate } from "react-router-dom";
 import Styles from "./CreateProduct.module.css";
 import { validateUser } from "../../sessionUtils/jwtSession";
 import { getUserData } from "../../Utils/useLocalStorage";
+import { demographic, colorsList, sizesList } from "./index.js";
 
 const CreateStore = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [user, setUser] = useState("");
+  const [productImage, setProductImage] = useState("");
+  const [colors, setColor] = useState("");
+  const [sizes, setSize] = useState("");
+
   useEffect(() => {
     (async () => {
       if (!user) {
@@ -19,20 +24,34 @@ const CreateStore = () => {
         setUser(data?.id);
       }
     })();
-  }, [user]);
-
+  }, [user, dispatch]);
   const token = validateUser();
+
+  const handleDelete = (el) => {
+    setSize(sizes.filter((s) => s !== el));
+  };
+  const handleDeleteColor = (el) => {
+    setColor(colors.filter((s) => s !== el));
+  };
+
+  const handleSelect = (e) => {
+    if (e.target.name === "size") {
+      setSize(e.target.value);
+    } else if (e.target.name === "color") {
+      setColor(e.target.value);
+    }
+  };
 
   return (
     <div className={Styles.container1}>
-      <h1 className={Styles.subtitle}>Crear una tienda</h1>
+      <h1 className={Styles.subtitle}>Crear un Producto</h1>
       <Formik
         initialValues={{
           id: "",
-          storeName: "",
-          banner: "",
-          profilePicture: "",
-          location: "",
+          name: "",
+          demographic: "",
+          price: 0,
+          stock: 0,
         }}
         validate={(value) => {
           let errors = {};
@@ -40,38 +59,30 @@ const CreateStore = () => {
           return errors;
         }}
         onSubmit={(data, { resetForm }) => {
-          let { id, storeName, banner, profilePicture, location } = data;
+          let { id, name, demographic, price, stock } = data;
           id = user;
+
+          const variants = [
+            {
+              stock: stock,
+              color: colors,
+              size: sizes,
+            },
+          ];
           const a = {
             id,
-            storeName,
-            banner,
-            profilePicture,
-            location,
+            name,
+            image: productImage,
+            price,
+            demographic,
+            variants,
           };
           console.log(a);
 
-          dispatch(createStore(token, a))
-            .then(function (res) {
-              console.log(res);
-              alert("Exitoso");
-            })
-            .then(async () => {
-              try {
-                const res = await axios.get(
-                  `${
-                    process.env.REACT_APP_API || "http://localhost:3001"
-                  }/user/get?secret_token=${token}`
-                );
-                console.log(res.data);
-                window.localStorage.setItem(
-                  "userData",
-                  JSON.stringify(res.data)
-                );
-              } catch (err) {
-                console.log(err.message);
-              }
-            });
+          dispatch(createProduct(token, a)).then(function (res) {
+            console.log(res);
+            alert("Exitoso");
+          });
           setTimeout(() => {
             resetForm();
             navigate("/home/profile").then(window.location.reload());
@@ -91,73 +102,151 @@ const CreateStore = () => {
               <div className={Styles.column}>
                 <input
                   type="text"
-                  id="storeName"
-                  placeholder="Nombre de la Tienda"
-                  name="storeName"
+                  id="name"
+                  placeholder="Nombre del producto"
+                  name="name"
                   className={Styles.form1}
-                  value={values.storeName}
+                  value={values.name}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   onKeyUp={handleBlur}
                   required
                   autoComplete="off"
                 />
-
-                <input
-                  type="text"
-                  id="location"
-                  placeholder="Localidad"
-                  name="location"
-                  className={Styles.form1}
-                  value={values.location}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  required
-                  autoComplete="off"
-                />
-                <label>Foto de perfil</label>
+                <label>Imagen del producto</label>
                 <input
                   type="file"
-                  id="profilePicture"
-                  name="profilePicture"
-                  className={Styles.inputFile}
-                  value={values.profilePicture}
-                  onChange={handleChange}
+                  id="image"
+                  placeholder="Imagenes"
+                  name="image"
+                  accept="image/png, image/jpeg"
+                  className={Styles.form1}
+                  value={values.image}
+                  onChange={(e) => {
+                    e.preventDefault();
+                    const reader = new FileReader();
+                    reader.readAsDataURL(e.target.files[0]);
+                    reader.onloadend = () => {
+                      let imageData = reader.result;
+                      setProductImage(imageData);
+                    };
+                  }}
                   onBlur={handleBlur}
-                  onKeyUp={handleBlur}
                   required
                   autoComplete="off"
                 />
-                <>
-                  <label>Banner</label>
-                </>
+                <img src={productImage} alt="" />
+                <p>Precio</p>
                 <input
-                  type="file"
-                  id="banner"
-                  name="banner"
-                  className={Styles.inputFile}
-                  value={values.banner}
+                  type="range"
+                  id="price"
+                  name="price"
+                  className={Styles.range}
+                  value={values.price}
+                  min="0"
+                  max="100"
                   onChange={handleChange}
                   onBlur={handleBlur}
                   onKeyUp={handleBlur}
                   required
                   autoComplete="off"
                 />
+                <p className={Styles.output}>{values.price}$</p>
+                <p>Cantidad</p>
 
+                <input
+                  type="range"
+                  id="stock"
+                  name="stock"
+                  className={Styles.range}
+                  value={values.stock}
+                  min="0"
+                  max="100"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  onKeyUp={handleBlur}
+                  required
+                  autoComplete="off"
+                />
+                <p className={Styles.output}>{values.stock}</p>
+
+                <select
+                  name="demographic"
+                  className="select"
+                  onChange={handleChange}
+                >
+                  <option className="option" value="*" disabled selected hidden>
+                    Demografia
+                  </option>
+                  {demographic?.map((demo) => (
+                    <option
+                      className="option"
+                      value={demo}
+                      onChange={handleChange}
+                    >
+                      {demo}
+                    </option>
+                  ))}
+                </select>
+                <select name="size" onChange={handleSelect}>
+                  <option className="option" value="" disabled selected hidden>
+                    Talles
+                  </option>
+                  {sizesList.map((s) => (
+                    <option key={s} value={s} onChange={handleChange}>
+                      {s}
+                    </option>
+                  ))}
+                </select>
+                {/*   <div className="select-option">
+                  {sizes?.map((d) => (
+                    <div key={d} className="div-delete">
+                      <p>{d}</p>
+                      <button
+                        className="btn-delete"
+                        name="size"
+                        onClick={() => handleDelete(d)}
+                      >
+                        X
+                      </button>
+                    </div>
+                  ))}
+                </div> */}
+                <select name="color" onChange={handleSelect}>
+                  <option className="option" value="" disabled selected hidden>
+                    Colores
+                  </option>
+                  {colorsList.map((c) => (
+                    <option key={c} value={c} onChange={handleChange}>
+                      {c}
+                    </option>
+                  ))}
+                </select>
+                {/*  <div className="select-option">
+                  {colors?.map((e) => (
+                    <div key={e} className="div-delete">
+                      <p>{e}</p>
+                      <button
+                        className="btn-delete"
+                        name="size"
+                        onClick={() => handleDeleteColor(e)}
+                      >
+                        X
+                      </button>
+                    </div>
+                  ))}
+                </div> */}
                 <div>
-                  {!values.profilePicture ||
-                  !values.location ||
-                  !values.banner ||
-                  !values.storeName ? (
+                  {!values.name || !values.price ? (
                     <div>
                       <button className={Styles.btnDisabled2} disabled>
-                        Crear tienda
+                        Crear producto
                       </button>
                     </div>
                   ) : (
                     <div>
                       <button type="submit" className={Styles.submit2}>
-                        Crear tienda
+                        Crear producto
                       </button>
                     </div>
                   )}
