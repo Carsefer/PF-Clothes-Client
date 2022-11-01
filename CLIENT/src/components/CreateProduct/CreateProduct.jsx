@@ -144,7 +144,7 @@ const CreateStore = () => {
                   className={Styles.range}
                   value={values.price}
                   min="0"
-                  max="500"
+                  max="100"
                   onChange={handleChange}
                   onBlur={handleBlur}
                   onKeyUp={handleBlur}
