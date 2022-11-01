@@ -26,6 +26,7 @@ import {
   HISTORIAL_PRODUCT,
   CLEAR_LINK,
   DEL_PRODUCT_CART,
+  CLEAR_ACTIONS,
 } from "../action-types";
 
 const initialState = {
@@ -224,6 +225,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         linkCompra: "",
+      };
+    case CLEAR_ACTIONS:
+      return {
+        ...state,
+        productReviews: [],
       };
     default:
       return state;
