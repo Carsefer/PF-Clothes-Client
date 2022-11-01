@@ -27,12 +27,14 @@ import {
   CLEAR_LINK,
   DEL_PRODUCT_CART,
   CLEAR_ACTIONS,
+  USER_REVIEWS,
 } from "../action-types";
 
 const initialState = {
   products: [],
   productDetail: [],
   productReviews: [],
+  userReviews: [],
   sizes: [],
   productsStatus: "Cargando productos...",
   favorites: [],
@@ -230,6 +232,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         productReviews: [],
+      };
+    case USER_REVIEWS: 
+      return {
+        ...state,
+        userReviews: action.payload,
       };
     default:
       return state;

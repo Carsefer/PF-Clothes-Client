@@ -75,7 +75,7 @@ const NavBar = () => {
           </div>
         ) : (
           <>
-            <Link to="/home">Inicio</Link>
+            <Link className={Styles.NavBarLinks} to="/home">Inicio</Link>
             <Link to="/home/ShoppingCart">
               <img
                 className={Styles.CartIcon}
@@ -97,7 +97,7 @@ const NavBar = () => {
                 alt="img not found"
               ></img>
             </Link>
-            <Link to="/home/stadistics">Estadísticas</Link>
+            <Link className={Styles.NavBarLinks} to="/home/stadistics">Estadísticas</Link>
             <div>
               {/* username */}
               <p>{user?.username}</p>
