@@ -14,6 +14,7 @@ const CreateStore = () => {
   const [user, setUser] = useState("");
   const [file, setFile] = useState();
   const [filename,setFilename] = useState("");
+  const [image,setImage] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -29,9 +30,31 @@ const CreateStore = () => {
   const saveFile = (e) => {
     setFile(e.target.files[0]);
     setFilename(e.target.files[0].name);
-    console.log(file);
+    console.log(e.target.files);
     console.log(filename);
+    previewFiles(file);
   };
+
+  const previewFiles = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImage(reader.result);
+      
+    }
+    console.log(image);
+  }
+
+  const handleSubmit = async (data) => {
+    const res = axios.post(`/user/image`,{
+      image: image,
+    })
+    try{
+      console.log(res);
+    }catch(err){
+      console.log(err);
+    }
+  }
 
   return (
     <div className={Styles.container1}>
@@ -41,7 +64,6 @@ const CreateStore = () => {
           id: "",
           storeName: "",
           banner: "",
-
           location: "",
         }}
         validate={(value) => {
@@ -50,20 +72,10 @@ const CreateStore = () => {
           return errors;
         }}
         onSubmit={(data, { resetForm }) => {
-          const formData = new FormData();
-          formData.append = ("file", file,filename);
-           console.log(formData);
-          const a = {
-            id: user,
-            storeName: data.storeName,
-            banner: data.banner,
-            profilePicture: formData,
-            location: data.location,
-          };
 
-         
-
-          dispatch(createStore(token, a))
+          handleSubmit(data);
+          
+          /*dispatch(createStore(token, a))
             .then(function (res) {
               console.log(res);
               alert("Exitoso");
@@ -87,8 +99,9 @@ const CreateStore = () => {
           setTimeout(() => {
             resetForm();
             navigate("/home/profile").then(window.location.reload());
-          }, 2000);
-        }}
+          }, 2000);*/
+        }
+      }
       >
         {({
           handleSubmit,
@@ -179,6 +192,7 @@ const CreateStore = () => {
           </form>
         )}
       </Formik>
+      <img src={image} alt={""}/>
     </div>
   );
 };
