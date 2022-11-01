@@ -67,12 +67,12 @@ const LoginForm = () => {
   /* loging with google */
   const redirectToGoogleSSO = async () => {
     if(verified === "not verified"){
-      toast(`por favor completa la verificacion en el mail que te enviamos,
-      en caso de ya haber completado la verificacion has caso omiso a esta notificacion`);
+      toast(`Por favor completa la verificación en el mail que te enviamos,
+       en caso de ya haber completado la verificacion has caso omiso a esta notificación`);
     }
     if(!verified){
-      toastCorrect(`se te enviara un mensaje de verificacion a tu cuenta la primera ves que te loguees 
-      con google, 
+      toastCorrect(`Se te enviara un mensaje de verificación a tu cuenta la primera vez que te loguées 
+      con Google, 
     si ya hiciste el proceso de verificacion has caso omiso a esta notificacion`);
     }
     const googleLoginURL = `${
