@@ -26,6 +26,7 @@ import {
   GET_DEMOGRAPHICS,
   DEL_PRODUCT_CART,
   CLEAR_ACTIONS,
+  GET_SELLS_HISTORY_STADISTICS,
   USER_REVIEWS,
 } from "../action-types";
 
@@ -41,6 +42,7 @@ const initialState = {
   loginError: null,
   cart: [],
   sellsHistory: [],
+  sellsStadistics: [],
   sellDetail: {},
   linkCompra: "",
   historial: [],
@@ -190,6 +192,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         sellsHistory: action.payload,
       };
+    case GET_SELLS_HISTORY_STADISTICS:
+      return {
+        ...state,
+        sellsStadistics: action.payload,
+      };
     case GET_SELL_DETAIL:
       return {
         ...state,
@@ -219,7 +226,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         productReviews: [],
       };
-    case USER_REVIEWS: 
+    case USER_REVIEWS:
       return {
         ...state,
         userReviews: action.payload,

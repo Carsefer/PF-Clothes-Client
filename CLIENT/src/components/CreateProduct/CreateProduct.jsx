@@ -2,7 +2,6 @@ import { useDispatch } from "react-redux";
 import { createProduct } from "../../redux/actions";
 import { Formik } from "formik";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Styles from "./CreateProduct.module.css";
 import { validateUser } from "../../sessionUtils/jwtSession";
@@ -26,13 +25,6 @@ const CreateStore = () => {
     })();
   }, [user, dispatch]);
   const token = validateUser();
-
-  const handleDelete = (el) => {
-    setSize(sizes.filter((s) => s !== el));
-  };
-  const handleDeleteColor = (el) => {
-    setColor(colors.filter((s) => s !== el));
-  };
 
   const handleSelect = (e) => {
     if (e.target.name === "size") {
@@ -135,7 +127,13 @@ const CreateStore = () => {
                   required
                   autoComplete="off"
                 />
-                <img src={productImage} alt="" />
+                <div className={Styles.articleDetailsImageContainer}>
+                  <img
+                    className={Styles.articleDetailsImage}
+                    src={productImage}
+                    alt=""
+                  />
+                </div>
                 <p>Precio</p>
                 <input
                   type="range"
