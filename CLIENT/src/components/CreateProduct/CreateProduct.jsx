@@ -13,8 +13,9 @@ const CreateStore = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [user, setUser] = useState("");
-  const [colors, setColor] = useState([]);
-  const [sizes, setSize] = useState([]);
+  const [productImage, setProductImage] = useState("");
+  const [colors, setColor] = useState("");
+  const [sizes, setSize] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -35,9 +36,9 @@ const CreateStore = () => {
 
   const handleSelect = (e) => {
     if (e.target.name === "size") {
-      setSize([...sizes, e.target.value]);
+      setSize(e.target.value);
     } else if (e.target.name === "color") {
-      setColor([...colors, e.target.value]);
+      setColor(e.target.value);
     }
   };
 
@@ -48,12 +49,9 @@ const CreateStore = () => {
         initialValues={{
           id: "",
           name: "",
-          image: [],
           demographic: "",
           price: 0,
           stock: 0,
-          color: [],
-          size: [],
         }}
         validate={(value) => {
           let errors = {};
@@ -61,22 +59,20 @@ const CreateStore = () => {
           return errors;
         }}
         onSubmit={(data, { resetForm }) => {
-          let { id, name, image, demographic, price, stock, color, size } =
-            data;
+          let { id, name, demographic, price, stock } = data;
           id = user;
-          color = colors;
-          size = sizes;
+
           const variants = [
             {
-              stock,
-              color: color,
-              size: size,
+              stock: stock,
+              color: colors,
+              size: sizes,
             },
           ];
           const a = {
             id,
             name,
-            image,
+            image: productImage,
             price,
             demographic,
             variants,
@@ -117,7 +113,7 @@ const CreateStore = () => {
                   required
                   autoComplete="off"
                 />
-                <label>Imagenes del producto</label>
+                <label>Imagen del producto</label>
                 <input
                   type="file"
                   id="image"
@@ -126,11 +122,20 @@ const CreateStore = () => {
                   accept="image/png, image/jpeg"
                   className={Styles.form1}
                   value={values.image}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    e.preventDefault();
+                    const reader = new FileReader();
+                    reader.readAsDataURL(e.target.files[0]);
+                    reader.onloadend = () => {
+                      let imageData = reader.result;
+                      setProductImage(imageData);
+                    };
+                  }}
                   onBlur={handleBlur}
                   required
                   autoComplete="off"
                 />
+                <img src={productImage} alt="" />
                 <p>Precio</p>
                 <input
                   type="range"
@@ -193,7 +198,7 @@ const CreateStore = () => {
                     </option>
                   ))}
                 </select>
-                <div className="select-option">
+                {/*   <div className="select-option">
                   {sizes?.map((d) => (
                     <div key={d} className="div-delete">
                       <p>{d}</p>
@@ -206,7 +211,7 @@ const CreateStore = () => {
                       </button>
                     </div>
                   ))}
-                </div>
+                </div> */}
                 <select name="color" onChange={handleSelect}>
                   <option className="option" value="" disabled selected hidden>
                     Colores
@@ -217,7 +222,7 @@ const CreateStore = () => {
                     </option>
                   ))}
                 </select>
-                <div className="select-option">
+                {/*  <div className="select-option">
                   {colors?.map((e) => (
                     <div key={e} className="div-delete">
                       <p>{e}</p>
@@ -230,9 +235,9 @@ const CreateStore = () => {
                       </button>
                     </div>
                   ))}
-                </div>
+                </div> */}
                 <div>
-                  {!values.name || !values.image || !values.price ? (
+                  {!values.name || !values.price ? (
                     <div>
                       <button className={Styles.btnDisabled2} disabled>
                         Crear producto
