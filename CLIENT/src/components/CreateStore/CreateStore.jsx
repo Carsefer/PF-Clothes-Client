@@ -14,7 +14,7 @@ const CreateStore = () => {
   const [user, setUser] = useState("");
   const [file, setFile] = useState();
   const [filename,setFilename] = useState("");
-  const [image,setImage] = useState("");
+  const [avatar,setAvatar] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -39,15 +39,16 @@ const CreateStore = () => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      setImage(reader.result);
+      setAvatar(reader.result);
       
     }
-    console.log(image);
+    console.log(avatar);
   }
 
   const handleSubmit = async (data) => {
     const res = axios.post(`/user/image`,{
-      image: image,
+
+      profilePicture: avatar,
     })
     try{
       console.log(res);
@@ -55,6 +56,8 @@ const CreateStore = () => {
       console.log(err);
     }
   }
+
+  console.log(user);
 
   return (
     <div className={Styles.container1}>
@@ -73,7 +76,17 @@ const CreateStore = () => {
         }}
         onSubmit={(data, { resetForm }) => {
 
-          handleSubmit(data);
+          //handleSubmit(data);
+          let {storeName,banner,location} = data;
+          axios.post(`/user/update?secret_token=${token}`,{
+            id:user,
+            storeName,
+            banner,
+            location,
+            profilePicture : avatar,
+          }).then((res) => {
+            console.log(res);
+          })
           
           /*dispatch(createStore(token, a))
             .then(function (res) {
@@ -147,7 +160,21 @@ const CreateStore = () => {
                   name="profilePictures"
                   className={Styles.inputFile}
                   value={values.profilePicture}
-                  onChange={(e) => saveFile(e)}
+                  onChange={async (e) => {
+                    /*setFile(e.target.files[0]);
+                    setFilename(e.target.files[0].name);
+                    console.log(e.target.files);
+                    console.log(file);
+                    previewFiles(file);*/
+                    e.preventDefault();
+                    const reader = new FileReader();
+                    reader.readAsDataURL(e.target.files[0]);
+                    reader.onloadend = () => {
+                      let avatarData = reader.result;
+                      setAvatar(avatarData); 
+                    }
+                    console.log(avatar);
+                  }}
                   onBlur={handleBlur}
                   onKeyUp={handleBlur}
                   required
@@ -192,7 +219,7 @@ const CreateStore = () => {
           </form>
         )}
       </Formik>
-      <img src={image} alt={""}/>
+      <img src={avatar} alt={""}/>
     </div>
   );
 };
