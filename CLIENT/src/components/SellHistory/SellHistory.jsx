@@ -15,11 +15,12 @@ const SellHistory = () => {
     (async () => {
       if (!user) {
         const data = await getUserData();
-        setUser(data);
+        setUser(data?.id);
       }
     })();
-    dispatch(getSellsHistory(user.id));
-  }, [user, dispatch, user.id]);
+
+    dispatch(getSellsHistory(user));
+  }, [user, dispatch]);
 
   const historial = useSelector((state) => state?.sellsHistory);
 
@@ -41,15 +42,15 @@ const SellHistory = () => {
           }, [])
           .map((el) => (
             <HistoryCard
-              id={el.productoId}
-              name={el.name}
-              price={el.price}
-              size={el.size}
-              color={el.color}
-              demographic={el.demographic}
-              date={el.updatedAt.slice(0, 10)}
-              status={el.status}
-              amount={repetidos[el.productoId]}
+              id={el?.productoId}
+              name={el?.name}
+              price={el?.price}
+              size={el?.size}
+              color={el?.color}
+              demographic={el?.demographic}
+              date={el?.updatedAt?.slice(0, 10)}
+              status={el?.status}
+              amount={repetidos[el?.productoId]}
             />
           ))
       ) : (
