@@ -94,7 +94,7 @@ const ShoppingCart = () => {
                     price={e?.price}
                     quantity={repetidos[e?.id]}
                     image={e?.image}
-                    delOneFromCart={() =>
+                    delProductCart={() =>
                       dispatch(delProductCart(e?.id, user?.id, token))
                     }
                     // delAllFromCart={() => dispatch(delFromCart(e.id, true))}

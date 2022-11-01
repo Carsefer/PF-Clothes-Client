@@ -9,6 +9,7 @@ import {
   addToFavorites,
   deleteFavorite,
   buyHistorial,
+  clearActions,
 } from "../../redux/actions";
 import Style from "./ProductDetail.module.css";
 import Comments from "../Comments/Comments";
@@ -64,6 +65,7 @@ const ProductDetail = () => {
       }
     })();
     dispatch(getProductDetail(id));
+    dispatch(clearActions());
     dispatch(getProductDetailReviews(id));
     dispatch(buyHistorial(user?.id));
   }, [dispatch, user, id]);
