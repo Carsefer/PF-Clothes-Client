@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   getCartProducts,
   delProductCart,
+  delFromCart,
   clearCart,
   buyProduct,
   postHistorial,
@@ -80,7 +81,7 @@ const ShoppingCart = () => {
 
               {cartList
                 .reduce((arr, el) => {
-                  if (!arr.find((d) => d.id === el.id)) {
+                  if (!arr.find((d) => d.variantID === el.variantID)) {
                     arr.push(el);
                   }
 
@@ -88,14 +89,14 @@ const ShoppingCart = () => {
                 }, [])
                 .map((e) => (
                   <CartItem
-                    id={e?.id}
+                    id={e?.variantID}
                     key={e?.id + 1}
                     name={e?.name?.charAt(0).toUpperCase() + e.name?.slice(1)}
                     price={e?.price}
                     quantity={repetidos[e?.id]}
                     image={e?.image}
                     delProductCart={() =>
-                      dispatch(delProductCart(e?.id, user?.id, token))
+                      dispatch(delProductCart(e?.variantID, user?.id, token))
                     }
                     // delAllFromCart={() => dispatch(delFromCart(e.id, true))}
                     size={e.size}

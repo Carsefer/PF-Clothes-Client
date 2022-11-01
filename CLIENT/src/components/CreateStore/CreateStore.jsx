@@ -12,6 +12,9 @@ const CreateStore = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [user, setUser] = useState("");
+  const [avatar, setAvatar] = useState("");
+  const [profileBanner, setProfileBanner] = useState("");
+
   useEffect(() => {
     (async () => {
       if (!user) {
@@ -23,6 +26,8 @@ const CreateStore = () => {
 
   const token = validateUser();
 
+  console.log(user);
+
   return (
     <div className={Styles.container1}>
       <h1 className={Styles.subtitle}>Crear una tienda</h1>
@@ -30,8 +35,6 @@ const CreateStore = () => {
         initialValues={{
           id: "",
           storeName: "",
-          banner: "",
-          profilePicture: "",
           location: "",
         }}
         validate={(value) => {
@@ -40,22 +43,27 @@ const CreateStore = () => {
           return errors;
         }}
         onSubmit={(data, { resetForm }) => {
-          let { id, storeName, banner, profilePicture, location } = data;
-          id = user;
-          const a = {
-            id,
+          //handleSubmit(data);
+          /*let {storeName,location} = data;
+          axios.post(`/user/update?secret_token=${token}`,{
+            id:user,
             storeName,
-            banner,
-            profilePicture,
+            banner:profileBanner,
             location,
-          };
-          console.log(a);
+            profilePicture : avatar,
+          }).then((res) => {
+            console.log(res);
+          })*/ let { storeName, location } = data;
 
-          dispatch(createStore(token, a))
-            .then(function (res) {
-              console.log(res);
-              alert("Exitoso");
+          dispatch(
+            createStore(token, {
+              id: user,
+              storeName,
+              banner: profileBanner,
+              location,
+              profilePicture: avatar,
             })
+          )
             .then(async () => {
               try {
                 const res = await axios.get(
@@ -71,11 +79,16 @@ const CreateStore = () => {
               } catch (err) {
                 console.log(err.message);
               }
+            })
+            .then(function (res) {
+              console.log(res);
+              alert("Exitoso");
             });
+
           setTimeout(() => {
             resetForm();
             navigate("/home/profile").then(window.location.reload());
-          }, 2000);
+          }, 4000);
         }}
       >
         {({
@@ -119,15 +132,25 @@ const CreateStore = () => {
                 <input
                   type="file"
                   id="profilePicture"
-                  name="profilePicture"
+                  name="profilePictures"
                   className={Styles.inputFile}
                   value={values.profilePicture}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    e.preventDefault();
+                    const reader = new FileReader();
+                    reader.readAsDataURL(e.target.files[0]);
+                    reader.onloadend = () => {
+                      let avatarData = reader.result;
+                      setAvatar(avatarData);
+                    };
+                    console.log(avatar);
+                  }}
                   onBlur={handleBlur}
                   onKeyUp={handleBlur}
                   required
                   autoComplete="off"
                 />
+                <img src={avatar} alt={""} />
                 <>
                   <label>Banner</label>
                 </>
@@ -137,18 +160,24 @@ const CreateStore = () => {
                   name="banner"
                   className={Styles.inputFile}
                   value={values.banner}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    e.preventDefault();
+                    const reader = new FileReader();
+                    reader.readAsDataURL(e.target.files[0]);
+                    reader.onloadend = () => {
+                      let bannerData = reader.result;
+                      setProfileBanner(bannerData);
+                    };
+                    console.log(profileBanner);
+                  }}
                   onBlur={handleBlur}
                   onKeyUp={handleBlur}
                   required
                   autoComplete="off"
                 />
-
+                <img src={profileBanner} alt="" />
                 <div>
-                  {!values.profilePicture ||
-                  !values.location ||
-                  !values.banner ||
-                  !values.storeName ? (
+                  {!values.location || !values.storeName ? (
                     <div>
                       <button className={Styles.btnDisabled2} disabled>
                         Crear tienda

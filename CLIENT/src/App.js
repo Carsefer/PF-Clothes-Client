@@ -22,6 +22,7 @@ import {
 } from "./components/ProtectedRoute/ProtectedRoute";
 import EditUser from "./components/EditUser/EditUser";
 import { useLocalStorage } from "./Utils/useLocalStorage";
+import CreateProduct from "./components/CreateProduct/CreateProduct";
 
 function App() {
   const [user, setUser] = useLocalStorage("userData");
@@ -60,6 +61,7 @@ function App() {
         <Route path="/home/stadistics" element={<Stadistics />} />
         <Route path="/home/createStore" element={<CreateStore />} />
         <Route path="/home/editUser" element={<EditUser />} />
+        <Route path="/home/createProduct" element={<CreateProduct />} />
       </Route>
       <Route path="/home/product/:id" element={<ProductDetail />} />
       <Route path="/forgot" element={<Forgot />} />

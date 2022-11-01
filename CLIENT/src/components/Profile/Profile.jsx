@@ -26,7 +26,16 @@ export default function Profile() {
                   <button className={Style.buttonProfile}>Crear Tienda</button>
                 </Link>
               ) : (
-                <button className={Style.buttonProfile}>Editar</button>
+                <>
+                  <Link to="/home/editUser">
+                    <button className={Style.buttonProfile}>Editar</button>
+                  </Link>
+                  <Link to="/home/createProduct">
+                    <button className={Style.buttonProfile}>
+                      Crear Producto
+                    </button>
+                  </Link>
+                </>
               )}
             </div>
             <img
@@ -37,13 +46,12 @@ export default function Profile() {
             <h1 className={Style.titleusername}>{user.username}</h1>
           </div>
           <div className={Style.profileInformation}>
-              <h1>Datos: </h1>
-              <p>Nombre: {user.name}</p>
-              {user.storeName ? <p>Tienda: {user.storeName}</p> : null}
-              <p>Correo: {user.mail}</p>
-              <p>Telefono: {user.phone}</p>
-              <p>Localidad: {user.location}</p>
-              <Link to="/home/editUser">Edit User</Link>
+            <h1>Datos: </h1>
+            <p>Nombre: {user.name}</p>
+            {user.storeName ? <p>Tienda: {user.storeName}</p> : null}
+            <p>Correo: {user.mail}</p>
+            <p>Telefono: {user.phone}</p>
+            <p>Localidad: {user.location}</p>
           </div>
         </div>
       </div>
