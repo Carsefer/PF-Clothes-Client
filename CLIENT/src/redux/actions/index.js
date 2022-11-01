@@ -139,13 +139,7 @@ export const createUser = (data) => {
 };
 export const createStore = (token, data) => {
   return async (dispatch) => {
-    //const res = await axios.patch(`/user?secret_token=${token}`, data);
-    const res = axios({
-      method:"patch",
-      url:`/user?secret_token=${token}`,
-      data:data,
-      headers:{"Content-Type":"multipart/form-data"}
-    });
+    const res = await axios.post(`/user/update?secret_token=${token}`,data);
     return dispatch({
       type: CREATE_STORE,
       payload: res.data,

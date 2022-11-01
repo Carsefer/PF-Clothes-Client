@@ -67,7 +67,7 @@ const CreateStore = () => {
         onSubmit={(data, { resetForm }) => {
 
           //handleSubmit(data);
-          let {storeName,location} = data;
+          /*let {storeName,location} = data;
           axios.post(`/user/update?secret_token=${token}`,{
             id:user,
             storeName,
@@ -76,9 +76,17 @@ const CreateStore = () => {
             profilePicture : avatar,
           }).then((res) => {
             console.log(res);
-          })
+          })*/
+
+          let {storeName,location} = data;
           
-          /*dispatch(createStore(token, a))
+          dispatch(createStore(token, {
+            id:user,
+            storeName,
+            banner:profileBanner,
+            location,
+            profilePicture:avatar,
+          },))
             .then(function (res) {
               console.log(res);
               alert("Exitoso");
@@ -102,7 +110,7 @@ const CreateStore = () => {
           setTimeout(() => {
             resetForm();
             navigate("/home/profile").then(window.location.reload());
-          }, 2000);*/
+          }, 2000);
         }
       }
       >
