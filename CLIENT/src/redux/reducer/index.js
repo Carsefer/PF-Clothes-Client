@@ -25,12 +25,14 @@ import {
   CLEAR_FAVORITES,
   HISTORIAL_PRODUCT,
   CLEAR_LINK,
+  GET_DEMOGRAPHICS,
   DEL_PRODUCT_CART,
   CLEAR_ACTIONS,
 } from "../action-types";
 
 const initialState = {
   products: [],
+  demographic: [],
   productDetail: [],
   productReviews: [],
   sizes: [],
@@ -51,6 +53,12 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         products: action.payload,
       };
+    case GET_DEMOGRAPHICS: {
+      return {
+        ...state,
+        demographic: action.payload,
+      };
+    }
     case GET_PRODUCT_DETAIL:
       return {
         ...state,
@@ -177,7 +185,9 @@ const rootReducer = (state = initialState, action) => {
     //   };
     // }
     case DEL_PRODUCT_CART:
-      let deletedProduct = state.cart.filter((c) => c.id !== action.payload);
+      let deletedProduct = state.cart.filter(
+        (c) => c.variantID !== action.payload
+      );
       return {
         ...state,
         cart: deletedProduct,

@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { createStore } from "../../redux/actions";
+import { createProduct } from "../../redux/actions";
 import { Formik } from "formik";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -7,14 +7,15 @@ import { useNavigate } from "react-router-dom";
 import Styles from "./CreateProduct.module.css";
 import { validateUser } from "../../sessionUtils/jwtSession";
 import { getUserData } from "../../Utils/useLocalStorage";
+import { demographic, colorsList, sizesList } from "./index.js";
 
 const CreateStore = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [user, setUser] = useState("");
-  const [stock, setStock] = useState(0);
-  const [color, setColor] = useState("");
-  const [size, setSize] = useState("");
+  const [colors, setColor] = useState([]);
+  const [sizes, setSize] = useState([]);
+
   useEffect(() => {
     (async () => {
       if (!user) {
@@ -22,11 +23,22 @@ const CreateStore = () => {
         setUser(data?.id);
       }
     })();
-  }, [user]);
-
+  }, [user, dispatch]);
   const token = validateUser();
-  const Change = (event) => {
-    setStock(event.target.value);
+
+  const handleDelete = (el) => {
+    setSize(sizes.filter((s) => s !== el));
+  };
+  const handleDeleteColor = (el) => {
+    setColor(colors.filter((s) => s !== el));
+  };
+
+  const handleSelect = (e) => {
+    if (e.target.name === "size") {
+      setSize([...sizes, e.target.value]);
+    } else if (e.target.name === "color") {
+      setColor([...colors, e.target.value]);
+    }
   };
 
   return (
@@ -39,13 +51,9 @@ const CreateStore = () => {
           image: [],
           demographic: "",
           price: 0,
-          variants: [
-            {
-              stock: stock,
-              color: color,
-              size: size,
-            },
-          ],
+          stock: 0,
+          color: [],
+          size: [],
         }}
         validate={(value) => {
           let errors = {};
@@ -53,9 +61,18 @@ const CreateStore = () => {
           return errors;
         }}
         onSubmit={(data, { resetForm }) => {
-          let { id, name, image, demographic, price, variants } = data;
+          let { id, name, image, demographic, price, stock, color, size } =
+            data;
           id = user;
-
+          color = colors;
+          size = sizes;
+          const variants = [
+            {
+              stock,
+              color: color,
+              size: size,
+            },
+          ];
           const a = {
             id,
             name,
@@ -66,27 +83,10 @@ const CreateStore = () => {
           };
           console.log(a);
 
-          dispatch(createStore(token, a))
-            .then(function (res) {
-              console.log(res);
-              alert("Exitoso");
-            })
-            .then(async () => {
-              try {
-                const res = await axios.get(
-                  `${
-                    process.env.REACT_APP_API || "http://localhost:3001"
-                  }/user/get?secret_token=${token}`
-                );
-                console.log(res.data);
-                window.localStorage.setItem(
-                  "userData",
-                  JSON.stringify(res.data)
-                );
-              } catch (err) {
-                console.log(err.message);
-              }
-            });
+          dispatch(createProduct(token, a)).then(function (res) {
+            console.log(res);
+            alert("Exitoso");
+          });
           setTimeout(() => {
             resetForm();
             navigate("/home/profile").then(window.location.reload());
@@ -131,7 +131,7 @@ const CreateStore = () => {
                   required
                   autoComplete="off"
                 />
-
+                <p>Precio</p>
                 <input
                   type="range"
                   id="price"
@@ -146,41 +146,93 @@ const CreateStore = () => {
                   required
                   autoComplete="off"
                 />
-                <label className={Styles.output}>{values.price}$</label>
+                <p className={Styles.output}>{values.price}$</p>
+                <p>Cantidad</p>
+
                 <input
                   type="range"
                   id="stock"
                   name="stock"
                   className={Styles.range}
-                  value={stock}
+                  value={values.stock}
                   min="0"
                   max="100"
-                  onChange={Change}
-                  onBlur={handleBlur}
-                  onKeyUp={handleBlur}
-                  required
-                  autoComplete="off"
-                />
-                <label className={Styles.output}>{stock}$</label>
-
-                <input
-                  type="text"
-                  id="demographic"
-                  name="banner"
-                  className={Styles.inputFile}
-                  value={values.demographic}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   onKeyUp={handleBlur}
                   required
                   autoComplete="off"
                 />
+                <p className={Styles.output}>{values.stock}</p>
 
+                <select
+                  name="demographic"
+                  className="select"
+                  onChange={handleChange}
+                >
+                  <option className="option" value="*" disabled selected hidden>
+                    Demografia
+                  </option>
+                  {demographic?.map((demo) => (
+                    <option
+                      className="option"
+                      value={demo}
+                      onChange={handleChange}
+                    >
+                      {demo}
+                    </option>
+                  ))}
+                </select>
+                <select name="size" onChange={handleSelect}>
+                  <option className="option" value="" disabled selected hidden>
+                    Talles
+                  </option>
+                  {sizesList.map((s) => (
+                    <option key={s} value={s} onChange={handleChange}>
+                      {s}
+                    </option>
+                  ))}
+                </select>
+                <div className="select-option">
+                  {sizes?.map((d) => (
+                    <div key={d} className="div-delete">
+                      <p>{d}</p>
+                      <button
+                        className="btn-delete"
+                        name="size"
+                        onClick={() => handleDelete(d)}
+                      >
+                        X
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <select name="color" onChange={handleSelect}>
+                  <option className="option" value="" disabled selected hidden>
+                    Colores
+                  </option>
+                  {colorsList.map((c) => (
+                    <option key={c} value={c} onChange={handleChange}>
+                      {c}
+                    </option>
+                  ))}
+                </select>
+                <div className="select-option">
+                  {colors?.map((e) => (
+                    <div key={e} className="div-delete">
+                      <p>{e}</p>
+                      <button
+                        className="btn-delete"
+                        name="size"
+                        onClick={() => handleDeleteColor(e)}
+                      >
+                        X
+                      </button>
+                    </div>
+                  ))}
+                </div>
                 <div>
-                  {!values.profilePicture ||
-                  !values.location ||
-                  !values.banner ||
-                  !values.storeName ? (
+                  {!values.name || !values.image || !values.price ? (
                     <div>
                       <button className={Styles.btnDisabled2} disabled>
                         Crear producto

@@ -29,6 +29,8 @@ import {
   HISTORIAL_PRODUCT,
   CLEAR_LINK,
   CLEAR_ACTIONS,
+  GET_DEMOGRAPHICS,
+  CREATE_PRODUCT,
 } from "../action-types";
 
 export const getProducts = () => {
@@ -138,6 +140,7 @@ export const createUser = (data) => {
     }
   };
 };
+
 export const createStore = (token, data) => {
   return async (dispatch) => {
     //const res = await axios.patch(`/user?secret_token=${token}`, data);
@@ -149,6 +152,15 @@ export const createStore = (token, data) => {
     });
     return dispatch({
       type: CREATE_STORE,
+      payload: res.data,
+    });
+  };
+};
+export const createProduct = (token, data) => {
+  return async (dispatch) => {
+    const res = await axios.post(`/product?secret_token=${token}`, data);
+    return dispatch({
+      type: CREATE_PRODUCT,
       payload: res.data,
     });
   };
@@ -359,6 +371,15 @@ export const clearActions = () => {
   return async function (dispatch) {
     dispatch({
       type: CLEAR_ACTIONS,
+    });
+  };
+};
+export const getDemographics = () => {
+  return async function (dispatch) {
+    const demographic = await axios.get(`/demographics`);
+    dispatch({
+      type: GET_DEMOGRAPHICS,
+      payload: demographic.data,
     });
   };
 };
