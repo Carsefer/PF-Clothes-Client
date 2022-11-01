@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getSellsHistory, getProducts } from "../../redux/actions/index.js"
 import { getUserData } from "../../Utils/useLocalStorage.js"
+import { validateUser } from '../../sessionUtils/jwtSession.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import SellsGraphic from "../SellsGraphic/SellsGraphic.jsx"
@@ -17,11 +18,18 @@ const Stadistics = () => {
               setUser(data);
             }
           })();
-        dispatch(getSellsHistory(user.id))
+        const token = validateUser()
+        const id = user?.id;
+        console.log(token);
+        console.log(id)
+        if (user !== null) {
+            dispatch(getSellsHistory(id))
+        }
         dispatch(getProducts())
     }, [dispatch])
 
     const sellsHistory = useSelector(state => state.sellsHistory)
+    console.log(sellsHistory);
     const products = useSelector(state => state.products)
 
     const listNumbers = (num) => {
@@ -73,16 +81,16 @@ const Stadistics = () => {
         return sellsDays
     }
 
-    const randomSells = () => {
+    /* const randomSells = () => {
         let randomSell = Math.floor(Math.random() * 10)
         return randomSell
-    }
+    } */
 
     const sellsInProcess = () => {
         let auxSells = []
         const auxNum = parseInt(daysMonth().pop()) //ultimo día del mes (osea, la cantidad de días)
         for (let i = 1; i <= auxNum; i++) {
-            auxSells.push(randomSells())
+            auxSells.push("0")
         }
         return auxSells
     }
@@ -108,7 +116,6 @@ const Stadistics = () => {
 
     const mostSelledProducts = mostSellProducts()
     const days = daysMonth()
-    const sells = sellsHistory.lentgh ? sellsForDays() : sellsInProcess()
 
     return (
         <div>
@@ -116,20 +123,20 @@ const Stadistics = () => {
             <div>
                 <SellsGraphic 
                     days={days}
-                    sells={sells}
+                    sells={sellsHistory.lentgh ? sellsForDays() : sellsInProcess()}
                 />
                 {
                     sellsHistory.length ? sellsHistory.map(sell => {
                         const productInfo = products.find(p => p.id === sell.productId)
                         return (
                             <div>
-                                <img src={productInfo.img} alt="foto" />
+                                <img src={productInfo.image[0]} alt="foto" />
                                 <h4>{productInfo.name}</h4>
-                                <p>{sell.buyer || "Nombre del comprador"}</p>
+                                {/* <p>{sell.buyer || "Nombre del comprador"}</p> */}
                                 <p>{sell.location}</p>
-                                <Link to={`/sell/${sell.id}`}>
+                                {/* <Link to={`/sell/${sell.id}`}>
                                     <p>Más detalles de la compra</p>
-                                </Link>
+                                </Link> */}
                             </div>
                         )
                     }) : <h2>Aquí van a aparecer las ventas que hayas realizado</h2>
@@ -142,7 +149,7 @@ const Stadistics = () => {
                             return (
                                 <div>
                                     <h2>{productInfo.name}</h2>
-                                    <img src={productInfo.img} alt="foto" />
+                                    <img src={productInfo.image[0]} alt="foto" />
                                     <h2>Vendidos:</h2>
                                     <h2>{s.amount}</h2>
                                 </div>
