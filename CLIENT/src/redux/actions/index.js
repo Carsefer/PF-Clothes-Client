@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   GET_PRODUCTS,
   GET_PRODUCT_DETAIL,
+  GET_SELLS_HISTORY_STADISTICS,
   EMPTY_DETAIL,
   GET_SIZES,
   ORDER_PRODUCTS_BY_NAME,
@@ -286,21 +287,10 @@ export const flushError = () => {
 
 export const getSellsHistory = (id) => {
   return async (dispatch) => {
-    const history = await axios.get(`/stores/sells/${id}`)
-      .then(response => response.data.map(s => {
-        const dateOfSell = s.created.split("T")[0]
-        return {
-          size: s.size,
-          price: s.price,
-          demographic: s.demographic,
-          date: dateOfSell,
-          location: s.location,
-          productId: s.productoId
-        }
-      }))
+    const history = await axios.get(`/user/sells/${id}`);
     dispatch({
       type: GET_SELLS_HISTORY,
-      payload: history,
+      payload: history.data,
     });
   };
 };
@@ -396,7 +386,29 @@ export const deleteProduct = (id) => {
     await axios.delete(`/activate/product/${id}`);
   };
 };
-
+export const getSellsHistoryStadistics = (id) => {
+  return async (dispatch) => {
+    const historyStadiscic = await axios
+      .get(`/stores/sells/${id}`)
+      .then((response) =>
+        response.data.map((s) => {
+          const dateOfSell = s.created.split("T")[0];
+          return {
+            size: s.size,
+            price: s.price,
+            demographic: s.demographic,
+            date: dateOfSell,
+            location: s.location,
+            productId: s.productoId,
+          };
+        })
+      );
+    dispatch({
+      type: GET_SELLS_HISTORY_STADISTICS,
+      payload: historyStadiscic,
+    });
+  };
+};
 export const getUserReviews = (id) => {
   return async function (dispatch) {
     const data = await axios.get(`/user/review/${id}`);
