@@ -12,6 +12,9 @@ const CreateStore = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [user, setUser] = useState("");
+  const [stock, setStock] = useState(0);
+  const [color, setColor] = useState("");
+  const [size, setSize] = useState("");
   useEffect(() => {
     (async () => {
       if (!user) {
@@ -22,6 +25,9 @@ const CreateStore = () => {
   }, [user]);
 
   const token = validateUser();
+  const Change = (event) => {
+    setStock(event.target.value);
+  };
 
   return (
     <div className={Styles.container1}>
@@ -35,9 +41,9 @@ const CreateStore = () => {
           price: 0,
           variants: [
             {
-              stock: 0,
-              color: "",
-              size: "",
+              stock: stock,
+              color: color,
+              size: size,
             },
           ],
         }}
@@ -49,6 +55,7 @@ const CreateStore = () => {
         onSubmit={(data, { resetForm }) => {
           let { id, name, image, demographic, price, variants } = data;
           id = user;
+
           const a = {
             id,
             name,
@@ -110,7 +117,7 @@ const CreateStore = () => {
                   required
                   autoComplete="off"
                 />
-
+                <label>Imagenes del producto</label>
                 <input
                   type="file"
                   id="image"
@@ -124,28 +131,44 @@ const CreateStore = () => {
                   required
                   autoComplete="off"
                 />
-                <label>Foto de perfil</label>
+
                 <input
-                  type="file"
-                  id="profilePicture"
-                  name="profilePicture"
-                  className={Styles.inputFile}
-                  value={values.profilePicture}
+                  type="range"
+                  id="price"
+                  name="price"
+                  className={Styles.range}
+                  value={values.price}
+                  min="0"
+                  max="500"
                   onChange={handleChange}
                   onBlur={handleBlur}
                   onKeyUp={handleBlur}
                   required
                   autoComplete="off"
                 />
-                <>
-                  <label>Banner</label>
-                </>
+                <label className={Styles.output}>{values.price}$</label>
                 <input
-                  type="file"
-                  id="banner"
+                  type="range"
+                  id="stock"
+                  name="stock"
+                  className={Styles.range}
+                  value={stock}
+                  min="0"
+                  max="100"
+                  onChange={Change}
+                  onBlur={handleBlur}
+                  onKeyUp={handleBlur}
+                  required
+                  autoComplete="off"
+                />
+                <label className={Styles.output}>{stock}$</label>
+
+                <input
+                  type="text"
+                  id="demographic"
                   name="banner"
                   className={Styles.inputFile}
-                  value={values.banner}
+                  value={values.demographic}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   onKeyUp={handleBlur}
@@ -160,13 +183,13 @@ const CreateStore = () => {
                   !values.storeName ? (
                     <div>
                       <button className={Styles.btnDisabled2} disabled>
-                        Crear tienda
+                        Crear producto
                       </button>
                     </div>
                   ) : (
                     <div>
                       <button type="submit" className={Styles.submit2}>
-                        Crear tienda
+                        Crear producto
                       </button>
                     </div>
                   )}

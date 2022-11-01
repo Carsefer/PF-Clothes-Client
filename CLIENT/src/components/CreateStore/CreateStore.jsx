@@ -13,7 +13,7 @@ const CreateStore = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState("");
   const [file, setFile] = useState();
-  const [filename,setFilename] = useState("");
+  const [filename, setFilename] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -41,7 +41,6 @@ const CreateStore = () => {
           id: "",
           storeName: "",
           banner: "",
-
           location: "",
         }}
         validate={(value) => {
@@ -51,8 +50,8 @@ const CreateStore = () => {
         }}
         onSubmit={(data, { resetForm }) => {
           const formData = new FormData();
-          formData.append = ("file", file,filename);
-           console.log(formData);
+          formData.append = ("file", file, filename);
+          console.log(formData);
           const a = {
             id: user,
             storeName: data.storeName,
@@ -60,8 +59,6 @@ const CreateStore = () => {
             profilePicture: formData,
             location: data.location,
           };
-
-         
 
           dispatch(createStore(token, a))
             .then(function (res) {
@@ -133,7 +130,7 @@ const CreateStore = () => {
                   id="profilePicture"
                   name="profilePictures"
                   className={Styles.inputFile}
-                  value={values.profilePicture}
+                  value={file}
                   onChange={(e) => saveFile(e)}
                   onBlur={handleBlur}
                   onKeyUp={handleBlur}
@@ -157,22 +154,22 @@ const CreateStore = () => {
                 />
 
                 <div>
-                  {/*!values.profilePicture ||*/
-                  !values.location ||
-                  !values.banner ||
-                  !values.storeName ? (
-                    <div>
-                      <button className={Styles.btnDisabled2} disabled>
-                        Crear tienda
-                      </button>
-                    </div>
-                  ) : (
-                    <div>
-                      <button type="submit" className={Styles.submit2}>
-                        Crear tienda
-                      </button>
-                    </div>
-                  )}
+                  {
+                    /*!values.profilePicture ||*/
+                    !values.location || !values.banner || !values.storeName ? (
+                      <div>
+                        <button className={Styles.btnDisabled2} disabled>
+                          Crear tienda
+                        </button>
+                      </div>
+                    ) : (
+                      <div>
+                        <button type="submit" className={Styles.submit2}>
+                          Crear tienda
+                        </button>
+                      </div>
+                    )
+                  }
                 </div>
               </div>
             </div>

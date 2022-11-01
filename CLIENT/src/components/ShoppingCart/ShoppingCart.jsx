@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   getCartProducts,
   delProductCart,
+  delFromCart,
   clearCart,
   buyProduct,
   postHistorial,

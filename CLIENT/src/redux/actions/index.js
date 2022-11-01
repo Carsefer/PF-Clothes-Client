@@ -141,10 +141,10 @@ export const createStore = (token, data) => {
   return async (dispatch) => {
     //const res = await axios.patch(`/user?secret_token=${token}`, data);
     const res = axios({
-      method:"patch",
-      url:`/user?secret_token=${token}`,
-      data:data,
-      headers:{"Content-Type":"multipart/form-data"}
+      method: "patch",
+      url: `/user?secret_token=${token}`,
+      data: data,
+      headers: { "Content-Type": "multipart/form-data" },
     });
     return dispatch({
       type: CREATE_STORE,
@@ -232,17 +232,17 @@ export const delProductCart = (productId, profileId, token) => {
       return dispatch({
         type: DEL_PRODUCT_CART,
         payload: productId,
-      });  
+      });
     } catch (error) {
       alert(error.message);
     }
   };
 };
 
-// export const delFromCart = (id, all = false) =>
-//   all
-//     ? { type: REMOVE_ALL_FROM_CART, payload: id }
-//     : { type: REMOVE_ONE_FROM_CART, payload: id };
+export const delFromCart = (id, all = false) =>
+  all
+    ? { type: REMOVE_ALL_FROM_CART, payload: id }
+    : { type: REMOVE_ONE_FROM_CART, payload: id };
 
 export const clearCart = (profileId, token) => {
   return async (dispatch) => {
