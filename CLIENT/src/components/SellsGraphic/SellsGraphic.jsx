@@ -29,14 +29,23 @@ const SellsGraphic = ({ sells, days }) => {
     const data = {
         datasets: [
             {
-                label: "Gráfica de ventas",
-                data: sells
+                label: "Ventas de este mes",
+                data: sells,
+                borderColor: "#31b189",
+                pointBackgroundColor: "#31b189",
+                backgroundColor: "#7ace674c"
             },
         ],
         labels
     }
     const options = {
-        responsive: true
+        fill: true,
+        responsive: true,
+        scales: {
+            y: {
+                min: 0,
+            },
+        },
     }
 
     return (
