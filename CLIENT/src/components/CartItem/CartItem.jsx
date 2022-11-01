@@ -13,7 +13,7 @@ const CartItem = ({
   demographic,
 }) => {
   return (
-    <div style={{ borderBottom: "thin solid gray" }}>
+    <div className="cartItem">
       <h4 className="NameCart">
         {name} {size} {color} {demographic}
       </h4>

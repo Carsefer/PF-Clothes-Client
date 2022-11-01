@@ -10,12 +10,14 @@ import {
   deleteFavorite,
   buyHistorial,
   clearActions,
+  deleteProduct,
 } from "../../redux/actions";
 import Style from "./ProductDetail.module.css";
 import Comments from "../Comments/Comments";
 import buttonCart from "../images/cart.svg";
 import buttonFav from "../images/buttonFav.svg";
 import buttonDeleteFav from "../images/buttonDeleteFav.svg";
+import buttonDelete from "../images/Delete.svg";
 import CreateReview from "../CreateReviews/CreateReview";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
@@ -119,6 +121,12 @@ const ProductDetail = () => {
       toast("Producto agregado al carrito!");
     }
   };
+
+  const handleDesactivate = () => {
+    dispatch(deleteProduct(id)).then(toast("Producto desactivado"));
+    navigate("/home");
+  }
+
   //FILTER ACTIVITY
   const handleSize = (e) => {
     e.preventDefault();
@@ -174,6 +182,10 @@ const ProductDetail = () => {
               ></img>
             </button>
           )}
+          {user?.isModerator ? (
+          <button className={Style.buttonDeleteDetail} onClick={() => handleDesactivate(id)}>
+          <img id={Style.TrashImage} className={Style.buttonImage} src={buttonDelete} alt="img not found"></img>
+          </button>) : (null)}
         </div>
         <br />
         <div className={Style.article__details}>

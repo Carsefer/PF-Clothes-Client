@@ -29,6 +29,10 @@ import {
   HISTORIAL_PRODUCT,
   CLEAR_LINK,
   CLEAR_ACTIONS,
+  GET_DEMOGRAPHICS,
+  CREATE_PRODUCT,
+  DELETE_PRODUCT,
+  USER_REVIEWS,
 } from "../action-types";
 
 export const getProducts = () => {
@@ -138,11 +142,21 @@ export const createUser = (data) => {
     }
   };
 };
+
 export const createStore = (token, data) => {
   return async (dispatch) => {
-    const res = await axios.patch(`/user?secret_token=${token}`, data);
+    const res = await axios.post(`/user/update?secret_token=${token}`, data);
     return dispatch({
       type: CREATE_STORE,
+      payload: res.data,
+    });
+  };
+};
+export const createProduct = (token, data) => {
+  return async (dispatch) => {
+    const res = await axios.post(`/product?secret_token=${token}`, data);
+    return dispatch({
+      type: CREATE_PRODUCT,
       payload: res.data,
     });
   };
@@ -234,10 +248,10 @@ export const delProductCart = (productId, profileId, token) => {
   };
 };
 
-// export const delFromCart = (id, all = false) =>
-//   all
-//     ? { type: REMOVE_ALL_FROM_CART, payload: id }
-//     : { type: REMOVE_ONE_FROM_CART, payload: id };
+export const delFromCart = (id, all = false) =>
+  all
+    ? { type: REMOVE_ALL_FROM_CART, payload: id }
+    : { type: REMOVE_ONE_FROM_CART, payload: id };
 
 export const clearCart = (profileId, token) => {
   return async (dispatch) => {
@@ -364,6 +378,31 @@ export const clearActions = () => {
   return async function (dispatch) {
     dispatch({
       type: CLEAR_ACTIONS,
+    });
+  };
+};
+export const getDemographics = () => {
+  return async function (dispatch) {
+    const demographic = await axios.get(`/demographics`);
+    dispatch({
+      type: GET_DEMOGRAPHICS,
+      payload: demographic.data,
+    });
+  };
+};
+
+export const deleteProduct = (id) => {
+  return async function () {
+    await axios.delete(`/activate/product/${id}`);
+  };
+};
+
+export const getUserReviews = (id) => {
+  return async function (dispatch) {
+    const data = await axios.get(`/user/review/${id}`);
+    dispatch({
+      type: USER_REVIEWS,
+      payload: data,
     });
   };
 };
