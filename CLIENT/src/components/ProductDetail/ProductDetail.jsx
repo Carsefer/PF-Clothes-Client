@@ -172,6 +172,7 @@ const ProductDetail = () => {
               ></img>
             </button>
           )}
+          {user?.isModerator ? (<label>Moderador</label>) : (<label>No Moderador</label>)}
         </div>
         <br />
         <div className={Style.article__details}>
