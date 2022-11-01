@@ -183,9 +183,9 @@ export default function Home() {
               <option value="XXXL">XXXL</option>
               <option value="XXL">XXL</option>
               <option value="XL">XL</option>
-              <option value="S">S</option>
-              <option value="M">M</option>
               <option value="L">L</option>
+              <option value="M">M</option>
+              <option value="S">S</option>
               <option value="XXS">XXS</option>
               <option value="XXXS">XXXS</option>
             </select>
