@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getUserData } from "../../Utils/useLocalStorage";
 import { buyHistorial } from "../../redux/actions";
 import HistoryCard from "../HistoryCard/HistoryCard";
+import Styles from "./BuyPage.module.css";
 
 const BuyPage = () => {
     const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const BuyPage = () => {
     });
 
     return (
-        <div>
+        <div className={Styles.BuyPage}>
             {historial.length ? (
                 historial
                     .reduce((arr, el) => {

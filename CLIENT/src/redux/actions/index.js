@@ -29,6 +29,8 @@ import {
   HISTORIAL_PRODUCT,
   CLEAR_LINK,
   CLEAR_ACTIONS,
+  DELETE_PRODUCT,
+  USER_REVIEWS,
 } from "../action-types";
 
 export const getProducts = () => {
@@ -270,9 +272,9 @@ export const flushError = () => {
   };
 };
 
-export const getSellsHistory = () => {
+export const getSellsHistory = (id) => {
   return async (dispatch) => {
-    const history = await axios.get("/sellsHistory");
+    const history = await axios.get(`/user/sells/${id}`);
     dispatch({
       type: GET_SELLS_HISTORY,
       payload: history.data,
@@ -356,3 +358,19 @@ export const clearActions = () => {
     });
   };
 };
+
+export const deleteProduct = (id) => {
+  return async function () {
+    await axios.delete(`/activate/product/${id}`)
+  }
+}
+
+export const getUserReviews = (id) => {
+  return async function (dispatch) {
+    const data = await axios.get(`/user/review/${id}`);
+    dispatch({
+      type: USER_REVIEWS,
+      payload: data,
+    });
+  }
+}

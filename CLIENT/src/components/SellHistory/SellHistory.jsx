@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserData } from "../../Utils/useLocalStorage";
 import { getSellsHistory } from "../../redux/actions";
+import HistoryCard from "../HistoryCard/HistoryCard"
 
 const SellHistory = () => {
     const dispatch = useDispatch();

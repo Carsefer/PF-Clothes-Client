@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Styles from "./HistoryCard.module.css"
 
 const HistoryCard = ({img, name, price, id, date, status, amount, size, color, demographic}) => {
     
     return (
-        <div>
+        <div className={Styles.HistoryCard}>
             <Link to={`/Home/Product/${id}`}>
                 <div>
                 <img

@@ -1,11 +1,10 @@
 .profileContainer {
-  width: 100%;
+  width: 90%;
   background-color: white;
   display: flex;
   justify-content: center;
 }
 
 .sectionProfile {
-  width: 90%;
-  background-color: #ffe3b3;
+  display: flex;
 }

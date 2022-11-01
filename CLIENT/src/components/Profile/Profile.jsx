@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import Style from "./Profile.module.css";
 import { Link } from "react-router-dom";
 import { getUserData } from "../../Utils/useLocalStorage";
-import { buyHistorial } from "../../redux/actions";
 
 export default function Profile() {
-  const dispatch = useDispatch();
-
   const [user, setUser] = useState("");
 
   useEffect(() => {
@@ -17,18 +13,7 @@ export default function Profile() {
         setUser(data);
       }
     })();
-    dispatch(buyHistorial(user.id));
-  }, [user, dispatch, user.id]);
-
-  const historial = useSelector((state) => state?.historial);
-
-  console.log(historial);
-
-  var repetidos = {};
-
-  historial.forEach(function (numero) {
-    repetidos[numero.productoId] = (repetidos[numero.productoId] || 0) + 1;
-  });
+  }, [user, user.id]);
 
   return (
     <>
