@@ -1,5 +1,3 @@
-.Home{}
-
 .ProductsHomeContainer {
   display: flex;
   flex-direction: row;
@@ -26,6 +24,7 @@
 }
 
 .FilterProductsHome {
+  justify-content: center;
   display: flex;
   flex-direction: row;
   margin-bottom: 0.5%;
@@ -43,4 +42,10 @@
 
 .FilterProductsHomeSelect:hover {
   cursor: pointer;
+}
+
+.HomePaginado {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }

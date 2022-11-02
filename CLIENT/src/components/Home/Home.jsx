@@ -262,7 +262,7 @@ export default function Home() {
             </button>
           </div>
 
-          <div>
+          <div className={Styles.HomePaginado}>
             <button
               onClick={(e) => {
                 start(e);
