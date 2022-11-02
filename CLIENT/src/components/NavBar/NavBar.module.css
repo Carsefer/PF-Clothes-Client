@@ -93,6 +93,7 @@
 }
 
 .Username {
+  text-align: center;
   font-size: larger;
   text-decoration: double;
   color: #ffe3b3;
