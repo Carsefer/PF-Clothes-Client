@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import Styles from "./CreateStore.module.css";
 import { validateUser } from "../../sessionUtils/jwtSession";
 import { getUserData } from "../../Utils/useLocalStorage";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 
 const CreateStore = () => {
   const dispatch = useDispatch();
@@ -14,6 +16,14 @@ const CreateStore = () => {
   const [user, setUser] = useState("");
   const [avatar, setAvatar] = useState("");
   const [profileBanner, setProfileBanner] = useState("");
+  const toast = (text) =>
+    Toastify({
+      text: text,
+      duration: 2000,
+      position: "center",
+      className: Styles.toast,
+      backgroundColor: "#32CD32",
+    }).showToast();
 
   useEffect(() => {
     (async () => {
@@ -82,7 +92,7 @@ const CreateStore = () => {
             })
             .then(function (res) {
               console.log(res);
-              alert("Exitoso");
+              toast("Tienda creada exitosamente");
             });
 
           setTimeout(() => {
