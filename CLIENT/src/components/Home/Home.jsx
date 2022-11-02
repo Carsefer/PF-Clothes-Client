@@ -239,12 +239,14 @@ export default function Home() {
               onChange={(e) => filterByName(e)}
             />
             {/* <Orders setOrder={setOrder} /> */}
-            <b> ORDENAR POR:</b>
-            <select name="sort" value={sortBy} onChange={(e) => changeSort(e)}>
+            <label className={Styles.OrderBy}> ORDENAR POR:</label>
+            <select id={Styles.OrderBySelect} className={Styles.FilterProductsHomeSelect} name="sort" value={sortBy} onChange={(e) => changeSort(e)}>
               <option value="name">Nombre</option>
               <option value="price">Precio</option>
             </select>
             <select
+              id={Styles.OrderBySelect}
+              className={Styles.FilterProductsHomeSelect}
               name="order"
               value={orderBy}
               onChange={(e) => changeOrder(e)}

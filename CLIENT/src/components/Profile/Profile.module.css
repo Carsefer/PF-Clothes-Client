@@ -20,6 +20,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 #EditButton {
@@ -39,10 +40,19 @@
   color: white;
 }
 
+.pictureProfileDiv {
+  display: flex;
+  justify-content: center;    
+  width: 500px;
+  height: 500px;
+}
+
 .pictureProfile {
-  margin: 5% 5% 0% 5%;
-  border: 2px solid rgb(0, 0, 0);
+  max-width: 100%;
+  height: 100%;
+  object-fit:cover;
   border-radius: 100%;
+  border: 5px solid black;
 }
 
 .titleusername {

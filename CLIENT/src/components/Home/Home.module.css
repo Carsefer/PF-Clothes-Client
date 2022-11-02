@@ -44,6 +44,20 @@
   cursor: pointer;
 }
 
+.OrderBy {
+  margin-left: 1%;
+  margin-right: 0.5%;
+  margin-top: 1vh;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+#OrderBySelect {
+  margin: 0%;
+  margin-right: 0.5%;
+}
+
 .HomePaginado {
   display: flex;
   flex-direction: row;

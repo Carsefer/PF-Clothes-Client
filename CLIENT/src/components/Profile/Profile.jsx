@@ -42,14 +42,16 @@ export default function Profile() {
                   </Link>
                 </div>
               )}
-            </div>
-            <img
-              className={Styles.pictureProfile}
-              src={user?.profilePicture}
-              alt={user.username}
-            />
-            <h1 className={Styles.titleusername}>{user.username}</h1>
+            </div>  
           </div>
+          <div className={Styles.pictureProfileDiv}>
+              <img
+                className={Styles.pictureProfile}
+                src={user?.profilePicture}
+                alt={user.username}
+              />
+            </div>
+            <h1 className={Styles.titleusername}>{user.username}</h1>
           <div className={Styles.profileInformation}>
             <h1 className={Styles.InformationTittle}>Datos</h1>
             <label className={Styles.InfoProfileLabel}>
