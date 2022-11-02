@@ -34,10 +34,13 @@
   margin: 1%;
   border-radius: 5px;
   background-color: #31b189;
+  color: #ffe3b3;
+  transition: 0.3s;
 }
 
 .buttonProfile:hover {
   color: white;
+  background-color: #41cea1;
 }
 
 .pictureProfileDiv {
