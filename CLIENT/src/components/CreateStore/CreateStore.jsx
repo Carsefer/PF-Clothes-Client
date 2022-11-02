@@ -184,7 +184,7 @@ const CreateStore = () => {
                 <div className={Styles.articleDetailsImageContainer}>
                   <img
                     className={Styles.articleDetailsImage}
-                    src={avatar}
+                    src={profileBanner}
                     alt=""
                   />
                 </div>

@@ -131,6 +131,7 @@
 .range {
   width: 300px;
   margin: 18px 0;
+  -webkit-appearance: none;
 }
 
 .output {
@@ -163,6 +164,7 @@
   height: 20px;
   width: 20px;
   margin-top: -7px;
+  -webkit-appearance: none;
 }
 .articleDetailsImageContainer {
   display: flex;
