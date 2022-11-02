@@ -9,6 +9,7 @@ import { getUserData } from "../../Utils/useLocalStorage";
 import { demographic, colorsList, sizesList } from "./index.js";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
+import * as Yup from 'yup';
 
 const CreateStore = () => {
   const dispatch = useDispatch();
@@ -44,6 +45,23 @@ const CreateStore = () => {
     }
   };
 
+  const SUPPORTED_FORMATS = [
+    "image/jpg",
+    "image/jpeg",
+    "image/png",
+  ]
+
+  const createSchema = Yup.object().shape({
+    name: Yup.string()
+    .min(2,'Ingrese un Nombre')
+    .max(15,'hasta 15 caracteres permitidos')
+    .required(),
+    image:Yup.mixed()
+    .required()
+    .test("FILE_FORMAT","formatos validos jpg, jpeg y png.",
+    value => value || (value && !SUPPORTED_FORMATS.includes(value.type))),
+  });
+
   return (
     <div className={Styles.container1}>
       <h1 className={Styles.subtitle}>Crear un Producto</h1>
@@ -51,15 +69,12 @@ const CreateStore = () => {
         initialValues={{
           id: "",
           name: "",
+          image:null,
           demographic: "",
           price: 0,
           stock: 0,
         }}
-        validate={(value) => {
-          let errors = {};
-
-          return errors;
-        }}
+        validationSchema={createSchema}
         onSubmit={(data, { resetForm }) => {
           let { id, name, demographic, price, stock } = data;
           id = user;
@@ -115,6 +130,12 @@ const CreateStore = () => {
                   required
                   autoComplete="off"
                 />
+                {touched.name && errors.name && (
+                  <div className={Styles.error}>
+                    {" "}
+                    <span>{errors.name}</span>{" "}
+                  </div>
+                )}
                 <label>Imagen del producto</label>
                 <input
                   type="file"
@@ -144,6 +165,12 @@ const CreateStore = () => {
                     alt=""
                   />
                 </div>
+                {touched.image && errors.image && (
+                  <div className={Styles.error}>
+                    {" "}
+                    <span>{errors.image}</span>{" "}
+                  </div>
+                )}
                 <p>Precio</p>
                 <input
                   type="range"
