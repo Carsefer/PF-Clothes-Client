@@ -91,6 +91,24 @@
   margin-bottom: 20px;
   cursor: pointer;
 }
+.articleDetailsImageContainer {
+  display: flex;
+  justify-content: center;
+  width: 80%;
+  height: 25vh;
+  margin-left: 25px;
+  background-color: rgba(0, 0, 0, 0.055);
+  border-radius: 30px;
+  margin-top: 10px;
+  padding: 3%;
+  border: 5px solid #31b189;
+}
+
+.articleDetailsImage {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
 
 .submit2 {
   padding: 0 24px;
@@ -104,4 +122,9 @@
   font-weight: 350;
   margin-top: 15px;
   cursor: pointer;
+}
+
+.toast {
+  font-size: large;
+  border-radius: 10px;
 }

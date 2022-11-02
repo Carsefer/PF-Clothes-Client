@@ -18,7 +18,7 @@ const SellingCard = ({ img, name, price, id, size, color, demographic, isActivat
     }).showToast();
 
   const handleDesactivate = () => {
-    dispatch(deleteProduct(id)).then(toast("Producto desactivado"));
+    dispatch(deleteProduct(id)).then(toast("Producto desactivado","yellow"));
   };
 
   return (

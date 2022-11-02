@@ -84,6 +84,7 @@ const LoginForm = () => {
   return (
     <>
       <div className={Styles.container}>
+        <button onClick={() => navigate("/home")}>Atrás</button>
         <div className={Styles.header}></div>
         <div className={Styles.subtitle}>
           <h2>Bienvenido devuelta.</h2>
