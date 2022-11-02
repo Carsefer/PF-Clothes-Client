@@ -34,7 +34,6 @@ import {
   CLEAR_ACTIONS,
   GET_DEMOGRAPHICS,
   CREATE_PRODUCT,
-  DELETE_PRODUCT,
   USER_REVIEWS,
 } from "../action-types";
 
