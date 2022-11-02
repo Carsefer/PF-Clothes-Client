@@ -7,3 +7,8 @@
     display: flex;
     flex-direction: column;
 }
+
+.BuyPageTittle {
+    font-size: xx-large;
+    text-align: center;
+}

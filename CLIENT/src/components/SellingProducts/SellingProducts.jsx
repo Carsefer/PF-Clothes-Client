@@ -3,6 +3,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { getUserData } from "../../Utils/useLocalStorage";
 import SellingCard from "../SellingCard/SellingCard";
+import Styles from "./SellingProducts.module.css"
 
 const SellingProducts = () => {
   const [user, setUser] = useState(null);
@@ -23,6 +24,7 @@ const SellingProducts = () => {
 
   return (
     <div>
+      <h1 className={Styles.SellProductsTittle}>Productos</h1>
       {products.length ? (
         products.map((el) => (
           <SellingCard

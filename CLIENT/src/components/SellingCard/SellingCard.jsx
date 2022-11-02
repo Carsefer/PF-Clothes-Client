@@ -6,7 +6,7 @@ import Styles from "./SellingCard.module.css";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
 
-const SellingCard = ({ img, name, price, id, size, color, demographic }) => {
+const SellingCard = ({ img, name, price, id, size, color, demographic, isActivate }) => {
   const dispatch = useDispatch();
   const toast = (text, color = "#32CD32") =>
     Toastify({
@@ -22,8 +22,8 @@ const SellingCard = ({ img, name, price, id, size, color, demographic }) => {
   };
 
   return (
-    <div className={Styles.SellingCard}>
-      <Link to={`/Home/Product/${id}`}>
+    <div className={Styles.SellingCardDiv}>
+      <Link className={Styles.SellingCard} to={`/Home/Product/${id}`}>
         <div>
           <img
             className={Styles.SellingCardImg}
@@ -31,16 +31,13 @@ const SellingCard = ({ img, name, price, id, size, color, demographic }) => {
             alt="img not found"
           />
         </div>
-        <div>
-          <h3>
-            {name} {size} {color}
-          </h3>
-          <h3>Precio: ${price}</h3>
-          <h3>Demografia: {demographic}</h3>
+        <div className={Styles.SellingCardText}>
+          <h3 className={Styles.SellingCardName}>{name} {size} {color}</h3>
+          <p className={Styles.SellingCardData}>Precio: ${price}   Demografia: {demographic}</p>
         </div>
       </Link>
       <button>Modificar</button>
-      <button onClick={() => handleDesactivate()}>Eliminar</button>
+      {!isActivate ? <button onClick={() => handleDesactivate()}>Desactivar</button> : <button>Activar</button>}
     </div>
   );
 };
