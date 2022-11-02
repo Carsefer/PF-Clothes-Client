@@ -7,6 +7,7 @@ import { getUserData } from "../../Utils/useLocalStorage.js";
 import { validateUser } from "../../sessionUtils/jwtSession.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import NavBar from "../NavBar/NavBar.jsx";
 import SellsGraphic from "../SellsGraphic/SellsGraphic.jsx";
 
 const Stadistics = () => {
@@ -124,12 +125,15 @@ const Stadistics = () => {
 
   return (
     <div>
-      <button
-            /* className={Style.backButton} */
+      <div>
+        <NavBar />
+      </div>
+      {/* <button
+             className={Style.backButton} 
             onClick={() => navigate("/home")}
           >
             Atrás
-          </button>
+          </button> */}
       <h1>Panel de Control</h1>
       <div>
         {
