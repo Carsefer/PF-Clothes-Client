@@ -90,11 +90,11 @@ const ShoppingCart = () => {
                 }, [])
                 .map((e) => (
                   <CartItem
-                    id={e?.variantID}
+                    id={e?.id}
                     key={e?.id + 1}
                     name={e?.name?.charAt(0).toUpperCase() + e.name?.slice(1)}
                     price={e?.price}
-                    quantity={repetidos[e?.id]}
+                    quantity={repetidos[e?.variantID]}
                     image={e?.image}
                     delProductCart={() =>
                       dispatch(delProductCart(e?.variantID, user?.id, token))
