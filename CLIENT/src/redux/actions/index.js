@@ -146,6 +146,7 @@ export const createUser = (data) => {
 };
 
 export const createStore = (token, data) => {
+
   return async (dispatch) => {
     const res = await axios.post(`/user/update?secret_token=${token}`, data);
     return dispatch({
