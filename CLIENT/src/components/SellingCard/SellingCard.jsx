@@ -1,7 +1,8 @@
 import React from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { deleteProduct } from "../../redux/actions";
+import { deleteProduct, emptyDetail } from "../../redux/actions";
 import Styles from "./SellingCard.module.css";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
@@ -16,6 +17,10 @@ const SellingCard = ({ img, name, price, id, size, color, demographic, isActivat
       className: Styles.toast,
       backgroundColor: color,
     }).showToast();
+
+  useEffect(() => {
+    dispatch(emptyDetail());
+  },[dispatch]); 
 
   const handleDesactivate = () => {
     dispatch(deleteProduct(id)).then(toast("Producto desactivado","yellow"));
@@ -32,7 +37,7 @@ const SellingCard = ({ img, name, price, id, size, color, demographic, isActivat
           />
         </div>
         <div className={Styles.SellingCardText}>
-          <h3 className={Styles.SellingCardName}>{name} {size} {color}</h3>
+          <h3 className={Styles.SellingCardName}>{name[0].toUpperCase()+name.substring(1)} {size} {color}</h3>
           <p className={Styles.SellingCardData}>Precio: ${price}   Demografia: {demographic}</p>
         </div>
       </Link>
