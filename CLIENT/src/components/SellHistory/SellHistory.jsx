@@ -35,26 +35,19 @@ const SellHistory = () => {
     <div>
       <h1 className={Styles.SellHistoryTittle}>Ventas</h1>
       {historial.length ? (
-        historial
-          .reduce((arr, el) => {
-            if (!arr.find((d) => d.productoId === el.productoId)) {
-              arr.push(el);
-            }
-            return arr;
-          }, [])
-          .map((el) => (
-            <HistoryCard
-              id={el?.productoId}
-              name={el?.name}
-              price={el?.price}
-              size={el?.size}
-              color={el?.color}
-              demographic={el?.demographic}
-              date={el?.updatedAt?.slice(0, 10)}
-              status={el?.status}
-              amount={repetidos[el?.productoId]}
-            />
-          ))
+        historial.map((el) => (
+          <HistoryCard
+            id={el?.productoId}
+            name={el?.name}
+            price={el?.price}
+            size={el?.size}
+            color={el?.color}
+            demographic={el?.demographic}
+            date={el?.updatedAt?.slice(0, 10)}
+            status={el?.status}
+            amount={"1"}
+          />
+        ))
       ) : (
         <label>Aun no tienes ventas.</label>
       )}

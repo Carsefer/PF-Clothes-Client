@@ -31,7 +31,7 @@ const BuyPage = () => {
   var repetidos = {};
 
   historial?.forEach(function (numero) {
-    repetidos[numero.productoId] = (repetidos[numero.productoId] || 0) + 1;
+    repetidos[numero.variantId] = (repetidos[numero.variantId] || 0) + 1;
   });
 
   return (
@@ -40,7 +40,7 @@ const BuyPage = () => {
       {historial.length ? (
         historial
           ?.reduce((arr, el) => {
-            if (!arr.find((d) => d.productoId === el.productoId)) {
+            if (!arr.find((d) => d.variantId === el.variantId)) {
               arr.push(el);
             }
             return arr;
@@ -55,7 +55,7 @@ const BuyPage = () => {
               demographic={el?.demographic}
               date={el?.updatedAt.slice(0, 10)}
               status={el?.status}
-              amount={repetidos[el?.productoId]}
+              amount={repetidos[el?.variantId]}
             />
           ))
       ) : (
