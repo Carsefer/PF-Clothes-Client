@@ -19,6 +19,7 @@ const CreateUser = () => {
 
   return (
     <div className={Styles.container1}>
+      <button onClick={() => navigate("/home")}>Atrás</button>
       <h1 className={Styles.subtitle}>Registrar usuario</h1>
       <Formik
         initialValues={{
