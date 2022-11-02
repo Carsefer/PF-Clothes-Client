@@ -28,7 +28,12 @@ export default function Profile() {
               ) : (
                 <div>
                   <Link to="/home/editUser">
-                    <button id={Styles.EditButton} className={Styles.buttonProfile}>EDITAR</button>
+                    <button
+                      id={Styles.EditButton}
+                      className={Styles.buttonProfile}
+                    >
+                      EDITAR
+                    </button>
                   </Link>
                   <Link to="/home/createProduct">
                     <button className={Styles.buttonProfile}>
@@ -39,19 +44,31 @@ export default function Profile() {
               )}
             </div>
             <img
-                className={Styles.pictureProfile}
-                src={user.profilePicture}
-                alt={user.username}
-            />     
+              className={Styles.pictureProfile}
+              src={user?.profilePicture}
+              alt={user.username}
+            />
             <h1 className={Styles.titleusername}>{user.username}</h1>
           </div>
           <div className={Styles.profileInformation}>
             <h1 className={Styles.InformationTittle}>Datos</h1>
-            <label className={Styles.InfoProfileLabel}>Nombre: {user.name}</label>
-            {user.storeName ? <label className={Styles.InfoProfileLabel}>Tienda: {user.storeName}</label> : null}
-            <label className={Styles.InfoProfileLabel}>Correo: {user.mail}</label>
-            <label className={Styles.InfoProfileLabel}>Telefono: {user.phone}</label>
-            <label className={Styles.InfoProfileLabel}>Localidad: {user.location}</label>
+            <label className={Styles.InfoProfileLabel}>
+              Nombre: {user.name}
+            </label>
+            {user.storeName ? (
+              <label className={Styles.InfoProfileLabel}>
+                Tienda: {user.storeName}
+              </label>
+            ) : null}
+            <label className={Styles.InfoProfileLabel}>
+              Correo: {user.mail}
+            </label>
+            <label className={Styles.InfoProfileLabel}>
+              Telefono: {user.phone}
+            </label>
+            <label className={Styles.InfoProfileLabel}>
+              Localidad: {user.location}
+            </label>
           </div>
         </div>
       </div>

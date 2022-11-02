@@ -28,6 +28,7 @@ const ProfilePage = () => {
                 <Link id={location.pathname === "/home/profile/stadistics" ? Styles.Selected : Styles.NotSelected} 
                     className={Styles.profileLinks} to="/home/stadistics">ESTADISTICAS
                 </Link>
+
             </div>
             <div className={Styles.profileRoutes}>
                 <Routes>

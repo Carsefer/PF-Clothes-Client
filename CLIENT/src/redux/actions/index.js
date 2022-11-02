@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   GET_PRODUCTS,
   MODIFY_PRODUCT,
+  MODIFY_USER,
   GET_PRODUCT_DETAIL,
   GET_SELLS_HISTORY_STADISTICS,
   EMPTY_DETAIL,
@@ -318,9 +319,9 @@ export const createReviewProduct = (id, data, token) => {
   };
 };
 
-export const buyProduct = (data) => {
+export const buyProduct = (id, data) => {
   return async function (dispatch) {
-    const link = await axios.post(`/generar`, data);
+    const link = await axios.post(`/generar/${id}`, data);
     dispatch({
       type: BUY_PRODUCT,
       payload: link.data,
@@ -386,6 +387,15 @@ export const deleteProduct = (id) => {
     await axios.delete(`/activate/product/${id}`);
   };
 };
+export const modifyUser = (token, data) => {
+  return async (dispatch) => {
+    const res = await axios.patch(`/user?secret_token=${token}`, data);
+    return dispatch({
+      type: MODIFY_USER,
+      payload: res.data,
+    });
+  };
+};
 
 export const modifyProduct = (token, data) => {
   return async (dispatch) => {
@@ -399,7 +409,7 @@ export const modifyProduct = (token, data) => {
 export const getSellsHistoryStadistics = (id) => {
   return async (dispatch) => {
     const historyStadiscic = await axios
-      .get(`/stores/sells/${id}`)
+      .get(`/users/sells/${id}`)
       .then((response) =>
         response.data.map((s) => {
           const dateOfSell = s.created.split("T")[0];

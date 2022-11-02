@@ -15,6 +15,7 @@ import Reset from "./components/Reset/Reset";
 import Verified from "./components/Verified/verified";
 import NotVerified from "./components/NotVerified/NotVerified";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
+import NotFound from "./components/NotFound/NotFound";
 import { validateUser } from "./sessionUtils/jwtSession";
 import {
   ProtectedRoute,
@@ -70,6 +71,7 @@ function App() {
       <Route path="/reset" element={<Reset />} />
       <Route path="/verified" element={<Verified />} />
       <Route path="/not-verified" element={<NotVerified />} />
+      <Route path="*" element={<NotFound/>} />
     </Routes>
   );
 }

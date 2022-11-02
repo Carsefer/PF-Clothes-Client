@@ -24,8 +24,8 @@ const CartItem = ({
       <h4 className="NameCart">
         {name} {size} {color} {demographic}
       </h4>
-      <Link to= {`/home/product/${id}`} >
-      <img className="imageCart" src={image} alt="img not found"></img>
+      <Link to={`/home/product/${id}`}>
+        <img className="imageCart" src={image} alt="img not found"></img>
       </Link>
       <h5 className="DetailCart">
         ${price}.00 x {quantity} = ${price * quantity}.00
