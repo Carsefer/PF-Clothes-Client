@@ -3,6 +3,22 @@
   min-height: 100vh;
   background-color: #ffe3b3;
 }
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #31b189;
+}
+.NavbarHomeLogo {
+  width: 60vh;
+  padding-top: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-left: 32%;
+}
 
 .sectionDetails {
   padding-top: 2%;
@@ -48,7 +64,7 @@
   margin-right: 2%;
 }
 
-.buttonDeleteDetail{
+.buttonDeleteDetail {
   border: 1px #31b189;
   background-color: transparent;
   margin-left: 2%;
@@ -82,8 +98,8 @@
 }
 
 .articleDetailsImage {
-  max-width:100%;
-  max-height:100%;
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
 }
 
@@ -159,5 +175,5 @@
 .toast {
   font-size: large;
   border-radius: 10px;
-  color: black
+  color: black;
 }

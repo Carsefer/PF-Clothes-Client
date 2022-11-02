@@ -20,7 +20,8 @@ import { validateUser } from "../../sessionUtils/jwtSession";
 
 const ShoppingCart = () => {
   const dispatch = useDispatch();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState("");
+  const [email, setEmail] = useState("");
 
   const cartList = useSelector((state) => state?.cart);
   const compra = useSelector((state) => state.linkCompra);
@@ -29,10 +30,11 @@ const ShoppingCart = () => {
     (async () => {
       if (!user) {
         const data = await getUserData();
-        setUser(data);
+        setUser(data?.id);
+        setEmail(data?.mail);
       }
     })();
-    const id = user?.id;
+    const id = user;
     const token = validateUser();
     dispatch(getCartProducts(id, token));
   }, [user, dispatch]);
@@ -44,25 +46,25 @@ const ShoppingCart = () => {
   // const handleCompra = (e) => {
   //   e.preventDefault();
   //   window.open(compra);
-  //   dispatch(postHistorial(user.id, cartList));
-  //   dispatch(clearCart(user?.id, token));
+  //   dispatch(postHistorial(user, cartList));
+  //   dispatch(clearCart(user, token));
   //   dispatch(clearLink());
   // };
 
   //COMPRAR
   const handleCompra = (e) => {
     e.preventDefault();
-    //window.location.href = compra;
-    dispatch(postHistorial(user.id, cartList));
-    dispatch(sendEmail(user?.mail, cartList));
-    // dispatch(sendEmailSellers(user?.mail, cartList));
-    dispatch(clearCart(user?.id, token));
+    window.location.href = compra;
+    dispatch(postHistorial(user, cartList));
+    dispatch(sendEmail(email, cartList));
+    dispatch(sendEmailSellers(email, cartList));
+    dispatch(clearCart(user, token));
     dispatch(clearLink());
   };
 
   var repetidos = {};
   cartList.forEach(function (numero) {
-    repetidos[numero.id] = (repetidos[numero.id] || 0) + 1;
+    repetidos[numero.variantID] = (repetidos[numero.variantID] || 0) + 1;
   });
 
   return (
@@ -74,7 +76,7 @@ const ShoppingCart = () => {
           <div>
             <h3>Productos</h3>
             <article className="box">
-              <button onClick={() => dispatch(clearCart(user?.id, token))}>
+              <button onClick={() => dispatch(clearCart(user, token))}>
                 Limpiar Carrito
               </button>
 
@@ -88,14 +90,14 @@ const ShoppingCart = () => {
                 }, [])
                 .map((e) => (
                   <CartItem
-                    id={e?.variantID}
+                    id={e?.id}
                     key={e?.id + 1}
                     name={e?.name?.charAt(0).toUpperCase() + e.name?.slice(1)}
                     price={e?.price}
-                    quantity={repetidos[e?.id]}
+                    quantity={repetidos[e?.variantID]}
                     image={e?.image}
                     delProductCart={() =>
-                      dispatch(delProductCart(e?.variantID, user?.id, token))
+                      dispatch(delProductCart(e?.variantID, user, token))
                     }
                     size={e.size}
                     color={e.color}
@@ -119,13 +121,13 @@ const ShoppingCart = () => {
         )}
         {cartList.length ? (
           <div>
-            {/* <button onClick={() => dispatch(buyProduct(user?.id, cartList))}>
+            <button onClick={() => dispatch(buyProduct(user, cartList))}>
               CARGAR PRODUCTOS
-            </button> */}
-            {/* <button disabled={!compra} onClick={(e) => handleCompra(e)}>
+            </button>
+            <button disabled={!compra} onClick={(e) => handleCompra(e)}>
               COMPRAR PRODUCTOS
-            </button> */}
-            <button onClick={(e) => handleCompra(e)}>COMPRAR PRODUCTOS</button>
+            </button>
+            {/*             <button onClick={(e) => handleCompra(e)}>COMPRAR PRODUCTOS</button> */}
           </div>
         ) : (
           <p></p>
