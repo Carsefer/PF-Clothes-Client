@@ -74,7 +74,7 @@ const ProductDetail = () => {
     })();
     setTimeout(() => {
       setLoading(true);
-    }, 100);
+    }, 500);
     dispatch(getProductDetail(id));
     setLoading(false);
     dispatch(clearActions());
