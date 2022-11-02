@@ -11,6 +11,7 @@ import {
   clearLink,
   sendEmail,
   sendEmailSellers,
+  deleteRegister,
 } from "../../redux/actions";
 import CartItem from "../CartItem/CartItem";
 import Style from "./ShoppingCart.module.css";
@@ -37,6 +38,7 @@ const ShoppingCart = () => {
     const id = user;
     const token = validateUser();
     dispatch(getCartProducts(id, token));
+    dispatch(deleteRegister(id));
   }, [user, dispatch]);
   const token = validateUser();
 

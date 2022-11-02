@@ -392,7 +392,7 @@ export const activateProduct = (id) => {
   return async function () {
     await axios.put(`/activate/product/${id}`);
   };
-}
+};
 
 export const modifyUser = (token, data) => {
   return async (dispatch) => {
@@ -445,5 +445,11 @@ export const getUserReviews = (id) => {
       type: USER_REVIEWS,
       payload: data,
     });
+  };
+};
+
+export const deleteRegister = (id) => {
+  return async function () {
+    const data = await axios.delete(`/marketed/clean/${id}`);
   };
 };
