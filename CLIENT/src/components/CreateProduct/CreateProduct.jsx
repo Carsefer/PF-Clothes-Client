@@ -7,6 +7,8 @@ import Styles from "./CreateProduct.module.css";
 import { validateUser } from "../../sessionUtils/jwtSession";
 import { getUserData } from "../../Utils/useLocalStorage";
 import { demographic, colorsList, sizesList } from "./index.js";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 
 const CreateStore = () => {
   const dispatch = useDispatch();
@@ -15,6 +17,14 @@ const CreateStore = () => {
   const [productImage, setProductImage] = useState("");
   const [colors, setColor] = useState("");
   const [sizes, setSize] = useState("");
+  const toast = (text) =>
+    Toastify({
+      text: text,
+      duration: 2000,
+      position: "center",
+      className: Styles.toast,
+      backgroundColor: "#32CD32",
+    }).showToast();
 
   useEffect(() => {
     (async () => {
@@ -73,7 +83,7 @@ const CreateStore = () => {
 
           dispatch(createProduct(token, a)).then(function (res) {
             console.log(res);
-            alert("Exitoso");
+            toast("Producto creado exitosamente");
           });
           setTimeout(() => {
             resetForm();
