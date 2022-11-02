@@ -54,7 +54,7 @@ const ShoppingCart = () => {
   //COMPRAR
   const handleCompra = (e) => {
     e.preventDefault();
-    window.location.href = compra;
+    //window.location.href = compra;
     dispatch(postHistorial(user.id, cartList));
     // dispatch(sendEmail(user?.mail, cartList));
     // dispatch(sendEmailSellers(user?.mail, cartList));
@@ -122,12 +122,13 @@ const ShoppingCart = () => {
         )}
         {cartList.length ? (
           <div>
-            <button onClick={() => dispatch(buyProduct(user?.id, cartList))}>
+            {/* <button onClick={() => dispatch(buyProduct(user?.id, cartList))}>
               CARGAR PRODUCTOS
-            </button>
-            <button disabled={!compra} onClick={(e) => handleCompra(e)}>
+            </button> */}
+            {/* <button disabled={!compra} onClick={(e) => handleCompra(e)}>
               COMPRAR PRODUCTOS
-            </button>
+            </button> */}
+            <button onClick={(e) => handleCompra(e)}>COMPRAR PRODUCTOS</button>
           </div>
         ) : (
           <p></p>
