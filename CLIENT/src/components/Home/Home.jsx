@@ -266,6 +266,7 @@ export default function Home() {
 
           <div className={Styles.HomePaginado}>
             <button
+              className={Styles.PageButtons}
               onClick={(e) => {
                 start(e);
               }}
@@ -274,6 +275,7 @@ export default function Home() {
               {"Comienzo"}
             </button>
             <button
+              className={Styles.PageButtons}
               value={page}
               onClick={(e) => {
                 prev(e);
@@ -282,8 +284,9 @@ export default function Home() {
             >
               {"Anterior"}
             </button>
-            <button className="paginated_num">{page / 10}</button>
+            <button className={Styles.PageButtons}>{page / 10}</button>
             <button
+              className={Styles.PageButtons}
               onClick={(e) => {
                 next(e);
               }}

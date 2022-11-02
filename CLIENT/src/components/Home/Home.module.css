@@ -20,7 +20,6 @@
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
-  overflow-y: scroll;
 }
 
 .FilterProductsHome {
@@ -62,4 +61,20 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+
+.PageButtons {
+  font-size: small;
+  border-radius: 5px;
+  border: 5px solid #31b189;
+  background-color: #31b189;
+  color: white;
+  margin-left: 0.1%;
+  margin-right: 0.1%;
+  transition: 0.5s;
+}
+
+.PageButtons:hover {
+  background-color: #328a6e;
+  border: 5px solid #328a6e;
 }
