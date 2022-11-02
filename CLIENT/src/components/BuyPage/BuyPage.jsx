@@ -15,11 +15,11 @@ const BuyPage = () => {
     (async () => {
       if (!user) {
         const data = await getUserData();
-        setUser(data);
+        setUser(data?.id);
       }
     })();
-    dispatch(buyHistorial(user?.id));
-  }, [user, dispatch, user.id]);
+    dispatch(buyHistorial(user));
+  }, [user, dispatch]);
 
   // const historial = useSelector((state) =>
   //   state?.historial.filter((el) => el.pagado === true)
@@ -31,7 +31,7 @@ const BuyPage = () => {
   var repetidos = {};
 
   historial?.forEach(function (numero) {
-    repetidos[numero.variantId] = (repetidos[numero.variantId] || 0) + 1;
+    repetidos[numero?.variantId] = (repetidos[numero?.variantId] || 0) + 1;
   });
 
   return (
@@ -40,7 +40,7 @@ const BuyPage = () => {
       {historial.length ? (
         historial
           ?.reduce((arr, el) => {
-            if (!arr.find((d) => d.variantId === el.variantId)) {
+            if (!arr.find((d) => d?.variantId === el?.variantId)) {
               arr.push(el);
             }
             return arr;
