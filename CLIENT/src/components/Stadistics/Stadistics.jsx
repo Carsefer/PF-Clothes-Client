@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 //import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar/NavBar.jsx";
 import SellsGraphic from "../SellsGraphic/SellsGraphic.jsx";
+import Styles from "./Stadistics.module.css"
 
 const Stadistics = () => {
   const dispatch = useDispatch();
@@ -124,10 +125,7 @@ const Stadistics = () => {
   const days = daysMonth();
 
   return (
-    <div>
-      <div>
-        <NavBar />
-      </div>
+    <div className={Styles.StadisticsComponent}>
       {/* <button
              className={Style.backButton} 
             onClick={() => navigate("/home")}
