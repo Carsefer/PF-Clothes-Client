@@ -15,6 +15,7 @@ const SellingProducts = () => {
         setUser(data);
       }
       axios.get(`http://localhost:3001/user/onSell/${user.id}`).then((res) => {
+        console.log(res)
         setProducts(res.data);
       });
     })();
@@ -25,6 +26,7 @@ const SellingProducts = () => {
       {products.length ? (
         products.map((el) => (
           <SellingCard
+            img={el.image[0]}
             id={el.id}
             name={el.name}
             price={el.price}
