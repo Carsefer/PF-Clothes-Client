@@ -11,7 +11,7 @@ import {
   deleteFavorite,
   buyHistorial,
   clearActions,
-  deleteProduct,
+  deactivateProduct,
 } from "../../redux/actions";
 import Style from "./ProductDetail.module.css";
 import Comments from "../Comments/Comments";
@@ -134,7 +134,7 @@ const ProductDetail = () => {
   };
 
   const handleDesactivate = () => {
-    dispatch(deleteProduct(id)).then(toast("Producto desactivado"));
+    dispatch(deactivateProduct(id)).then(toast("Producto desactivado"));
     navigate("/home");
   };
 

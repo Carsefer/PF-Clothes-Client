@@ -382,11 +382,18 @@ export const getDemographics = () => {
   };
 };
 
-export const deleteProduct = (id) => {
+export const deactivateProduct = (id) => {
   return async function () {
     await axios.delete(`/activate/product/${id}`);
   };
 };
+
+export const activateProduct = (id) => {
+  return async function () {
+    await axios.put(`/activate/product/${id}`);
+  };
+}
+
 export const modifyUser = (token, data) => {
   return async (dispatch) => {
     const res = await axios.patch(`/user?secret_token=${token}`, data);
@@ -406,6 +413,7 @@ export const modifyProduct = (token, data) => {
     });
   };
 };
+
 export const getSellsHistoryStadistics = (id) => {
   return async (dispatch) => {
     const historyStadiscic = await axios
@@ -429,6 +437,7 @@ export const getSellsHistoryStadistics = (id) => {
     });
   };
 };
+
 export const getUserReviews = (id) => {
   return async function (dispatch) {
     const data = await axios.get(`/user/review/${id}`);
