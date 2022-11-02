@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { getUserData, useLocalStorage } from "../../Utils/useLocalStorage";
+import { getUserData } from "../../Utils/useLocalStorage";
 import {
   getProductDetail,
   addToCart,
@@ -125,7 +125,7 @@ const ProductDetail = () => {
   const handleDesactivate = () => {
     dispatch(deleteProduct(id)).then(toast("Producto desactivado"));
     navigate("/home");
-  }
+  };
 
   //FILTER ACTIVITY
   const handleSize = (e) => {
@@ -183,9 +183,18 @@ const ProductDetail = () => {
             </button>
           )}
           {user?.isModerator ? (
-          <button className={Style.buttonDeleteDetail} onClick={() => handleDesactivate(id)}>
-          <img id={Style.TrashImage} className={Style.buttonImage} src={buttonDelete} alt="img not found"></img>
-          </button>) : (null)}
+            <button
+              className={Style.buttonDeleteDetail}
+              onClick={() => handleDesactivate(id)}
+            >
+              <img
+                id={Style.TrashImage}
+                className={Style.buttonImage}
+                src={buttonDelete}
+                alt="img not found"
+              ></img>
+            </button>
+          ) : null}
         </div>
         <br />
         <div className={Style.article__details}>

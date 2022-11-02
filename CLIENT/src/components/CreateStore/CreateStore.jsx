@@ -150,7 +150,13 @@ const CreateStore = () => {
                   required
                   autoComplete="off"
                 />
-                <img src={avatar} alt={""} />
+                <div className={Styles.articleDetailsImageContainer}>
+                  <img
+                    className={Styles.articleDetailsImage}
+                    src={avatar}
+                    alt=""
+                  />
+                </div>
                 <>
                   <label>Banner</label>
                 </>
@@ -175,7 +181,13 @@ const CreateStore = () => {
                   required
                   autoComplete="off"
                 />
-                <img src={profileBanner} alt="" />
+                <div className={Styles.articleDetailsImageContainer}>
+                  <img
+                    className={Styles.articleDetailsImage}
+                    src={avatar}
+                    alt=""
+                  />
+                </div>
                 <div>
                   {!values.location || !values.storeName ? (
                     <div>

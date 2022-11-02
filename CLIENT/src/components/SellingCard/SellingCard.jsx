@@ -3,15 +3,24 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { deleteProduct } from "../../redux/actions";
 import Styles from "./SellingCard.module.css";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
 
-const SellingCard = ({ name, price, id, size, color, demographic }) => {
+const SellingCard = ({
+  name,
+  price,
+  id,
+  size,
+  color,
+  demographic,
+  isActivate,
+}) => {
   const [img, seImg] = useState();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const toast = (text, color = "#32CD32") =>
     Toastify({
       text: text,
@@ -49,7 +58,9 @@ const SellingCard = ({ name, price, id, size, color, demographic }) => {
           <h3>Demografia: {demographic}</h3>
         </div>
       </Link>
-      <button>Modificar</button>
+      <Link to={`/home/editProduct/${id}`}>
+        <button>Modificar</button>
+      </Link>
       <button onClick={() => handleDesactivate()}>Eliminar</button>
     </div>
   );

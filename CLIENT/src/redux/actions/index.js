@@ -1,6 +1,7 @@
 import axios from "axios";
 import {
   GET_PRODUCTS,
+  MODIFY_PRODUCT,
   GET_PRODUCT_DETAIL,
   GET_SELLS_HISTORY_STADISTICS,
   EMPTY_DETAIL,
@@ -384,6 +385,16 @@ export const getDemographics = () => {
 export const deleteProduct = (id) => {
   return async function () {
     await axios.delete(`/activate/product/${id}`);
+  };
+};
+
+export const modifyProduct = (token, data) => {
+  return async (dispatch) => {
+    const res = await axios.patch(`/product?secret_token=${token}`, data);
+    return dispatch({
+      type: MODIFY_PRODUCT,
+      payload: res.data,
+    });
   };
 };
 export const getSellsHistoryStadistics = (id) => {
