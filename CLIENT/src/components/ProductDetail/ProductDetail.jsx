@@ -160,10 +160,7 @@ const ProductDetail = () => {
       <div className={Style.ProductContainer}>
         <div className={Style.sectionDetails}>
           <div className={Style.sectionDetailsButtons}>
-            <button
-              className={Style.backButton}
-              onClick={() => navigate("/home")}
-            >
+            <button className={Style.backButton} onClick={() => navigate(-1)}>
               Atrás
             </button>
             <button
@@ -215,7 +212,6 @@ const ProductDetail = () => {
             ) : null}
           </div>
           <br />
-
           <div className={Style.article__details}>
             <div className={Style.articleDetailsImageContainer}>
               <img
