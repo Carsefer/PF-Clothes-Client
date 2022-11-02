@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { deleteProduct, emptyDetail } from "../../redux/actions";
+import { deactivateProduct, emptyDetail, activateProduct } from "../../redux/actions";
 import Styles from "./SellingCard.module.css";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
@@ -23,8 +23,12 @@ const SellingCard = ({ img, name, price, id, size, color, demographic, isActivat
   },[dispatch]); 
 
   const handleDesactivate = () => {
-    dispatch(deleteProduct(id)).then(toast("Producto desactivado","yellow"));
+    dispatch(deactivateProduct(id)).then(toast("Producto desactivado","yellow"));
   };
+
+  const handleActivate = () => {
+    dispatch(activateProduct(id)).then(toast("Producto activado"));
+  }
 
   return (
     <div className={Styles.SellingCardDiv}>
@@ -44,7 +48,7 @@ const SellingCard = ({ img, name, price, id, size, color, demographic, isActivat
       <Link to={`/home/editProduct/${id}`}>
       <button>Modificar</button>
       </Link>
-      {!isActivate ? <button onClick={() => handleDesactivate()}>Desactivar</button> : <button>Activar</button>}
+      {!isActivate ? <button onClick={() => handleDesactivate()}>Desactivar</button> : <button onClick={() => handleActivate()}>Activar</button>}
     </div>
   );
 };
