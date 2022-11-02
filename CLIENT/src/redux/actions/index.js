@@ -319,9 +319,9 @@ export const createReviewProduct = (id, data, token) => {
   };
 };
 
-export const buyProduct = (data) => {
+export const buyProduct = (id, data) => {
   return async function (dispatch) {
-    const link = await axios.post(`/generar`, data);
+    const link = await axios.post(`/generar/${id}`, data);
     dispatch({
       type: BUY_PRODUCT,
       payload: link.data,
