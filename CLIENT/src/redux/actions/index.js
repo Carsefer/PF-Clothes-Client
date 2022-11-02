@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   GET_PRODUCTS,
   MODIFY_PRODUCT,
+  MODIFY_USER,
   GET_PRODUCT_DETAIL,
   GET_SELLS_HISTORY_STADISTICS,
   EMPTY_DETAIL,
@@ -146,7 +147,6 @@ export const createUser = (data) => {
 };
 
 export const createStore = (token, data) => {
-
   return async (dispatch) => {
     const res = await axios.post(`/user/update?secret_token=${token}`, data);
     return dispatch({
@@ -386,6 +386,15 @@ export const getDemographics = () => {
 export const deleteProduct = (id) => {
   return async function () {
     await axios.delete(`/activate/product/${id}`);
+  };
+};
+export const modifyUser = (token, data) => {
+  return async (dispatch) => {
+    const res = await axios.patch(`/user?secret_token=${token}`, data);
+    return dispatch({
+      type: MODIFY_USER,
+      payload: res.data,
+    });
   };
 };
 

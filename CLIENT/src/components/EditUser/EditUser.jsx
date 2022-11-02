@@ -1,15 +1,24 @@
 import { useDispatch } from "react-redux";
-import { createStore } from "../../redux/actions";
+import { createStore, modifyUser } from "../../redux/actions";
 import { Formik } from "formik";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 import { validateUser } from "../../sessionUtils/jwtSession";
 import { getUserData } from "../../Utils/useLocalStorage";
 import Styles from "./EditUser.module.css";
 
 const EditUser = () => {
+  const toast = (text) =>
+    Toastify({
+      text: text,
+      duration: 2000,
+      position: "center",
+      className: Styles.toast,
+      backgroundColor: "#32CD32",
+    }).showToast();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [user, setUser] = useState("");
@@ -52,31 +61,25 @@ const EditUser = () => {
           };
           console.log(a);
 
-          dispatch(createStore(token, a))
-            .then(function (res) {
-              console.log(res);
-              alert("Exitoso");
-            })
-            .then(async () => {
-              try {
-                const res = await axios.get(
-                  `${
-                    process.env.REACT_APP_API || "http://localhost:3001"
-                  }/user/get?secret_token=${token}`
-                );
-                console.log(res.data);
-                window.localStorage.setItem(
-                  "userData",
-                  JSON.stringify(res.data)
-                );
-              } catch (err) {
-                console.log(err.message);
-              }
-            });
+          dispatch(modifyUser(token, a)).then(async () => {
+            try {
+              const res = await axios.get(
+                `${
+                  process.env.REACT_APP_API || "http://localhost:3001"
+                }/user/get?secret_token=${token}`
+              );
+              console.log(res.data);
+              window.localStorage.setItem("userData", JSON.stringify(res.data));
+            } catch (err) {
+              console.log(err.message);
+            }
+          });
+
           setTimeout(() => {
+            toast("Exitoso");
             resetForm();
             navigate("/home/profile").then(window.location.reload());
-          }, 2000);
+          }, 200);
         }}
       >
         {({
@@ -116,7 +119,7 @@ const EditUser = () => {
                   required
                   autoComplete="off"
                 />
-                
+
                 <input
                   type="text"
                   id="phone"
@@ -130,9 +133,7 @@ const EditUser = () => {
                   required
                   autoComplete="off"
                 />
-                <>
-                 
-                </>
+                <></>
                 <input
                   type="text"
                   id="username"
@@ -148,22 +149,11 @@ const EditUser = () => {
                 />
 
                 <div>
-                  {!values.mail ||
-                  !values.phone ||
-                  !values.username ||
-                  !values.name ? (
-                    <div>
-                      <button className={Styles.btnDisabled22} disabled>
-                        Editar Usuario
-                      </button>
-                    </div>
-                  ) : (
-                    <div>
-                      <button type="submit" className={Styles.submit22}>
-                        Editar Usuario
-                      </button>
-                    </div>
-                  )}
+                  <div>
+                    <button type="submit" className={Styles.submit22}>
+                      Editar Usuario
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

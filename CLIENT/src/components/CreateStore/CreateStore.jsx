@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { createStore } from "../../redux/actions";
 import { Formik } from "formik";
@@ -7,12 +5,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Styles from "./CreateStore.module.css";
-
 import { validateUser } from "../../sessionUtils/jwtSession";
 import { getUserData } from "../../Utils/useLocalStorage";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
-
 
 const CreateStore = () => {
   const dispatch = useDispatch();
@@ -42,39 +38,6 @@ const CreateStore = () => {
 
   console.log(user);
 
-
-  const url = "http://localhost:3001/user/get";
-  useEffect(() => {
-    (async () => {
-      if (!info) {
-        const data = await getSession();
-        setInfo(data);
-      }
-
-      if (info) {
-        console.log("info before request", info);
-        await axios
-          .post(
-            url,
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${info.token}`,
-              },
-            }
-          )
-          .then((res) => {
-            console.log(res.data);
-            setUs(res.data);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-    })();
-  }, [info]);
-  console.log(us);
-  const id = us?.id;
   return (
     <div className={Styles.container1}>
       <h1 className={Styles.subtitle}>Crear una tienda</h1>
@@ -126,7 +89,6 @@ const CreateStore = () => {
               } catch (err) {
                 console.log(err.message);
               }
-
             })
             .then(function (res) {
               console.log(res);
@@ -232,7 +194,7 @@ const CreateStore = () => {
                 <div className={Styles.articleDetailsImageContainer}>
                   <img
                     className={Styles.articleDetailsImage}
-                    src={avatar}
+                    src={profileBanner}
                     alt=""
                   />
                 </div>
