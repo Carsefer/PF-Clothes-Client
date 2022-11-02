@@ -54,11 +54,12 @@ const ShoppingCart = () => {
   //COMPRAR
   const handleCompra = (e) => {
     e.preventDefault();
+    window.location.href = compra;
     dispatch(postHistorial(user.id, cartList));
-    dispatch(sendEmail(user?.mail, cartList));
-    dispatch(sendEmailSellers(user?.mail, cartList));
+    // dispatch(sendEmail(user?.mail, cartList));
+    // dispatch(sendEmailSellers(user?.mail, cartList));
     dispatch(clearCart(user?.id, token));
-    navigate("/home");
+    dispatch(clearLink());
   };
 
   var repetidos = {};
@@ -121,15 +122,12 @@ const ShoppingCart = () => {
         )}
         {cartList.length ? (
           <div>
-            {/* <button onClick={() => dispatch(buyProduct(cartList))}>
+            <button onClick={() => dispatch(buyProduct(user?.id, cartList))}>
               CARGAR PRODUCTOS
-            </button> */}
-            {/* <a href={compra}>
-              <button disabled={!compra} onClick={(e) => handleCompra(e)}>
-                COMPRAR PRODUCTOS
-              </button>
-            </a> */}
-            <button onClick={(e) => handleCompra(e)}>COMPRAR PRODUCTOS</button>
+            </button>
+            <button disabled={!compra} onClick={(e) => handleCompra(e)}>
+              COMPRAR PRODUCTOS
+            </button>
           </div>
         ) : (
           <p></p>

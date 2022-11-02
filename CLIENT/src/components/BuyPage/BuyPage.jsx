@@ -21,19 +21,22 @@ const BuyPage = () => {
     dispatch(buyHistorial(user?.id));
   }, [user, dispatch, user.id]);
 
-  const historial = useSelector((state) => state?.historial);
+  const historial = useSelector((state) =>
+    state?.historial.filter((el) => el.pagado === true)
+  );
+  console.log(historial);
 
   var repetidos = {};
 
-  historial.forEach(function (numero) {
+  historial?.forEach(function (numero) {
     repetidos[numero.productoId] = (repetidos[numero.productoId] || 0) + 1;
   });
 
   return (
     <div className={Styles.BuyPage}>
-      {historial.length ? (
+      {historial?.length ? (
         historial
-          .reduce((arr, el) => {
+          ?.reduce((arr, el) => {
             if (!arr.find((d) => d.productoId === el.productoId)) {
               arr.push(el);
             }

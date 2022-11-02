@@ -39,8 +39,9 @@ const ProductDetail = () => {
   const detail = useSelector((state) => state.productDetail);
   const reviews = useSelector((state) => state.productReviews);
   const favorites = useSelector((state) => state.favorites);
-  const historial = useSelector((state) => state?.historial);
-
+  const historial = useSelector((state) =>
+    state?.historial.filter((el) => el.pagado === true)
+  );
   console.log(historial);
 
   const averageScore = () => {
