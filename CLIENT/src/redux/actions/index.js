@@ -382,11 +382,18 @@ export const getDemographics = () => {
   };
 };
 
-export const deleteProduct = (id) => {
+export const deactivateProduct = (id) => {
   return async function () {
     await axios.delete(`/activate/product/${id}`);
   };
 };
+
+export const activateProduct = (id) => {
+  return async function () {
+    await axios.put(`/activate/product/${id}`);
+  };
+};
+
 export const modifyUser = (token, data) => {
   return async (dispatch) => {
     const res = await axios.patch(`/user?secret_token=${token}`, data);
@@ -406,10 +413,11 @@ export const modifyProduct = (token, data) => {
     });
   };
 };
+
 export const getSellsHistoryStadistics = (id) => {
   return async (dispatch) => {
     const historyStadiscic = await axios
-      .get(`/stores/sells/${id}`)
+      .get(`/users/sells/${id}`)
       .then((response) =>
         response.data.map((s) => {
           const dateOfSell = s.created.split("T")[0];
@@ -429,6 +437,7 @@ export const getSellsHistoryStadistics = (id) => {
     });
   };
 };
+
 export const getUserReviews = (id) => {
   return async function (dispatch) {
     const data = await axios.get(`/user/review/${id}`);
@@ -436,5 +445,11 @@ export const getUserReviews = (id) => {
       type: USER_REVIEWS,
       payload: data,
     });
+  };
+};
+
+export const deleteRegister = (id) => {
+  return async function () {
+    const data = await axios.delete(`/marketed/clean/${id}`);
   };
 };

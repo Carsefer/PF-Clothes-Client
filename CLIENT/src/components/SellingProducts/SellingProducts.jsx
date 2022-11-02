@@ -40,7 +40,7 @@ const SellingProducts = () => {
             price={el?.price}
             size={el?.size}
             color={el?.color}
-            isActivate={el?.isActivate}
+            isActive={el?.isActive}
             demographic={el?.demographic}
           />
         ))
