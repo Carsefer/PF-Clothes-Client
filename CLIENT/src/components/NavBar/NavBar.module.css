@@ -92,6 +92,12 @@
   margin-top: -30px;
 }
 
+.Username {
+  font-size: larger;
+  text-decoration: double;
+  color: #ffe3b3;
+}
+
 .toast {
   font-size: large;
   border-radius: 10px;

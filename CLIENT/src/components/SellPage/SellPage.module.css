@@ -5,6 +5,7 @@
     flex-direction: column;
     border-radius: 25px;
     padding: 0% 1% 0% 1%;
+    box-shadow: 0.3em 0.3em 0.7em #00000015;
 }
 
 .SellpageLinks {
