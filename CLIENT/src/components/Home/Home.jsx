@@ -2,7 +2,9 @@ import React from "react";
 import Styles from "./Home.module.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { filterProducts, emptyDetail, buyHistorial } from "../../redux/actions";
+import { setSession } from "../../sessionUtils/jwtSession";
 import { getUserData } from "../../Utils/useLocalStorage";
 import Card from "../Card/Card";
 import NavBar from "../NavBar/NavBar";
@@ -11,6 +13,8 @@ import { useLocalStorage } from "../../Utils/useLocalStorage";
 
 export default function Home() {
   const dispatch = useDispatch();
+  const search = useLocation().search;
+  const gtoken = new URLSearchParams(search).get('gtoken');
 
   const [price, setPrice] = useLocalStorage("price", "");
   const [size, setSize] = useLocalStorage("size", "");
@@ -23,6 +27,9 @@ export default function Home() {
   const [user, setUser] = useState("");
 
   useEffect(() => {
+    if(gtoken){
+     setSession(gtoken); 
+    }
     dispatch(
       filterProducts(
         name,
