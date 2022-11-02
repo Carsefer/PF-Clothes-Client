@@ -98,7 +98,7 @@ const NavBar = () => {
               ></img>
             </Link>
             {/* <Link className={Styles.NavBarLinks} to="/home/stadistics">Estadísticas</Link> */}
-            <div>
+            <div className={Styles.Session}>
               {/* username */}
               <label className={Styles.Username}>{user?.username}</label>
               <button
