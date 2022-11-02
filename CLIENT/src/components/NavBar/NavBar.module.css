@@ -26,6 +26,11 @@
   color: #ffe3b3;
   text-decoration: none;
 }
+.NavBarLinks:hover{
+  font-size: 16px;
+  color: white;
+  text-decoration: none;
+}
 .CartIcon {
   margin-top: 10px;
   margin-right: -60px;
