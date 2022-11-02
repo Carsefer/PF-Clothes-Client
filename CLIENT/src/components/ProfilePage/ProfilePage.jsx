@@ -22,7 +22,7 @@ const ProfilePage = () => {
                 <Link id={location.pathname === "/home/profile/buys" ? Styles.Selected : Styles.NotSelected} 
                     className={Styles.profileLinks} to="/home/profile/buys">COMPRAS
                 </Link>
-                <Link id={location.pathname === "/home/profile/sells" ? Styles.Selected : Styles.NotSelected} 
+                <Link id={location.pathname === "/home/profile/sells" || location.pathname === "/home/profile/sells/products" ? Styles.Selected : Styles.NotSelected} 
                     className={Styles.profileLinks} to="/home/profile/sells">VENTAS
                 </Link>
                 <Link id={location.pathname === "/home/profile/stadistics" ? Styles.Selected : Styles.NotSelected} 
