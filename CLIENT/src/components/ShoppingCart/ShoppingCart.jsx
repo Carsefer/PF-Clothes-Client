@@ -94,7 +94,7 @@ const ShoppingCart = () => {
                     key={e?.id + 1}
                     name={e?.name?.charAt(0).toUpperCase() + e.name?.slice(1)}
                     price={e?.price}
-                    quantity={repetidos[e?.variantID]}
+                    quantity={repetidos[e?.id]}
                     image={e?.image}
                     delProductCart={() =>
                       dispatch(delProductCart(e?.variantID, user?.id, token))
