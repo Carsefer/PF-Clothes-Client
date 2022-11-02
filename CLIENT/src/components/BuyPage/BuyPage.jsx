@@ -36,7 +36,7 @@ const BuyPage = () => {
 
   return (
     <div className={Styles.BuyPage}>
-      <h1 className={Styles.BuyPageTittle}>Historial Compra</h1>{" "}
+      <h1 className={Styles.BuyPageTittle}>Historial Compra</h1>
       {historial?.length ? (
         historial
           ?.reduce((arr, el) => {
