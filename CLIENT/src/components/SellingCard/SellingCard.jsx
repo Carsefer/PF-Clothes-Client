@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { deleteProduct } from "../../redux/actions";
 import Styles from "./SellingCard.module.css";
 import Toastify from "toastify-js";
@@ -8,6 +8,7 @@ import "toastify-js/src/toastify.css";
 
 const SellingCard = ({ img, name, price, id, size, color, demographic, isActivate }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const toast = (text, color = "#32CD32") =>
     Toastify({
       text: text,
@@ -36,7 +37,9 @@ const SellingCard = ({ img, name, price, id, size, color, demographic, isActivat
           <p className={Styles.SellingCardData}>Precio: ${price}   Demografia: {demographic}</p>
         </div>
       </Link>
+      <Link to={`/home/editProduct/${id}`}>
       <button>Modificar</button>
+      </Link>
       {!isActivate ? <button onClick={() => handleDesactivate()}>Desactivar</button> : <button>Activar</button>}
     </div>
   );
