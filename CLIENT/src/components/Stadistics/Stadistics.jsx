@@ -6,11 +6,13 @@ import {
 import { getUserData } from "../../Utils/useLocalStorage.js";
 import { validateUser } from "../../sessionUtils/jwtSession.js";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import NavBar from "../NavBar/NavBar.jsx";
 import SellsGraphic from "../SellsGraphic/SellsGraphic.jsx";
 
 const Stadistics = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -123,20 +125,39 @@ const Stadistics = () => {
 
   return (
     <div>
+      <div>
+        <NavBar />
+      </div>
+      {/* <button
+             className={Style.backButton} 
+            onClick={() => navigate("/home")}
+          >
+            Atrás
+          </button> */}
       <h1>Panel de Control</h1>
       <div>
-        <SellsGraphic
-          days={days}
-          sells={sellsHistory.lentgh ? sellsForDays() : sellsInProcess()}
-        />
+        {
+          sellsHistory.length ? (
+            <SellsGraphic
+              days={days}
+              sells={sellsForDays()}
+            />
+          ) : (
+            <SellsGraphic
+              days={days}
+              sells={sellsInProcess()}
+            />
+          )
+        }
         {sellsHistory.length ? (
           sellsHistory.map((sell) => {
             const productInfo = products.find((p) => p.id === sell.productId);
             return (
               <div>
-                <img src={productInfo?.image[0]} alt="foto" />
+                {/* <img src={productInfo?.image[0]} alt="foto" /> */}
                 <h4>{productInfo?.name}</h4>
                 {/* <p>{sell.buyer || "Nombre del comprador"}</p> */}
+                <p>Talle: {sell?.size}</p>
                 <p>{sell?.location}</p>
                 {/* <Link to={`/sell/${sell.id}`}>
                                     <p>Más detalles de la compra</p>
@@ -155,7 +176,7 @@ const Stadistics = () => {
               return (
                 <div>
                   <h2>{productInfo?.name}</h2>
-                  <img src={productInfo?.image[0]} alt="foto" />
+                  {/* <img src={productInfo?.image[0]} alt="foto" /> */}
                   <h2>Vendidos:</h2>
                   <h2>{s.amount}</h2>
                 </div>
