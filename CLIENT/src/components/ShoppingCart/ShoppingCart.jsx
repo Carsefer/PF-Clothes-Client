@@ -124,7 +124,7 @@ const ShoppingCart = () => {
         )}
         {cartList.length ? (
           <div>
-            <button onClick={() => dispatch(buyProduct(user?.id, cartList))}>
+            <button onClick={() => dispatch(buyProduct(user, cartList))}>
               CARGAR PRODUCTOS
             </button>
             <button disabled={!compra} onClick={(e) => handleCompra(e)}>
