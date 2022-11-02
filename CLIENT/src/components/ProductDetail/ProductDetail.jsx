@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { getUserData } from "../../Utils/useLocalStorage";
+import Logo from "../images/bitmap2.png";
 import {
   getProductDetail,
   addToCart,
@@ -74,7 +75,7 @@ const ProductDetail = () => {
     })();
     setTimeout(() => {
       setLoading(true);
-    }, 500);
+    }, 300);
     dispatch(getProductDetail(id));
     setLoading(false);
     dispatch(clearActions());
@@ -148,7 +149,12 @@ const ProductDetail = () => {
     setFilterByColor(e.target.value);
   };
   if (load === false) {
-    return <p>{results}</p>;
+    return (
+      <div className={Style.ProductContainer}>
+        <img className={Style.NavbarHomeLogo} src={Logo} alt="logo" />
+        <h1 className={Style.loading}>{results}</h1>;
+      </div>
+    );
   } else {
     return (
       <div className={Style.ProductContainer}>
