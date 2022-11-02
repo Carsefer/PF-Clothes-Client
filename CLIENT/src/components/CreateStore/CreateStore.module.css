@@ -123,3 +123,8 @@
   margin-top: 15px;
   cursor: pointer;
 }
+
+.toast {
+  font-size: large;
+  border-radius: 10px;
+}
