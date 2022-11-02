@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import CardStyles from "./Card.module.css";
 
 const Card = ({ img, title, price, id }) => {
-
-
   return (
     <div className={CardStyles.CardProductHome}>
       <Link

@@ -34,6 +34,7 @@ import {
   CLEAR_ACTIONS,
   GET_DEMOGRAPHICS,
   CREATE_PRODUCT,
+  DELETE_PRODUCT,
   USER_REVIEWS,
 } from "../action-types";
 
@@ -146,7 +147,6 @@ export const createUser = (data) => {
 };
 
 export const createStore = (token, data) => {
-
   return async (dispatch) => {
     const res = await axios.post(`/user/update?secret_token=${token}`, data);
     return dispatch({
