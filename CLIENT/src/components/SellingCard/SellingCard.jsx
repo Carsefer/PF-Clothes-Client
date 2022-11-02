@@ -6,9 +6,11 @@ import { deactivateProduct, emptyDetail, activateProduct } from "../../redux/act
 import Styles from "./SellingCard.module.css";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
+import { useState } from "react";
 
-const SellingCard = ({ img, name, price, id, size, color, demographic, isActivate }) => {
+const SellingCard = ({ img, name, price, id, size, color, demographic, isActive }) => {
   const dispatch = useDispatch();
+  const [isAct, setAct] = useState(isActive)
   const toast = (text, color = "#32CD32") =>
     Toastify({
       text: text,
@@ -24,10 +26,12 @@ const SellingCard = ({ img, name, price, id, size, color, demographic, isActivat
 
   const handleDesactivate = () => {
     dispatch(deactivateProduct(id)).then(toast("Producto desactivado","yellow"));
+    setAct(false)
   };
 
   const handleActivate = () => {
     dispatch(activateProduct(id)).then(toast("Producto activado"));
+    setAct(true);
   }
 
   return (
@@ -48,7 +52,7 @@ const SellingCard = ({ img, name, price, id, size, color, demographic, isActivat
       <Link to={`/home/editProduct/${id}`}>
       <button>Modificar</button>
       </Link>
-      {!isActivate ? <button onClick={() => handleDesactivate()}>Desactivar</button> : <button onClick={() => handleActivate()}>Activar</button>}
+      {isAct ? (<button onClick={() => handleDesactivate()}>Desactivar</button>) : (<button onClick={() => handleActivate()}>Activar</button>)}
     </div>
   );
 };
