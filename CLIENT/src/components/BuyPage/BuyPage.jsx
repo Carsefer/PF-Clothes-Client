@@ -37,7 +37,7 @@ const BuyPage = () => {
   return (
     <div className={Styles.BuyPage}>
       <h1 className={Styles.BuyPageTittle}>Historial Compra</h1>
-      {historial?.length ? (
+      {historial.length ? (
         historial
           ?.reduce((arr, el) => {
             if (!arr.find((d) => d.productoId === el.productoId)) {
