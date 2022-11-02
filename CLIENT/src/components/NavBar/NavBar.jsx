@@ -97,7 +97,7 @@ const NavBar = () => {
                 alt="img not found"
               ></img>
             </Link>
-            <Link className={Styles.NavBarLinks} to="/home/stadistics">Estadísticas</Link>
+            {/* <Link className={Styles.NavBarLinks} to="/home/stadistics">Estadísticas</Link> */}
             <div>
               {/* username */}
               <label className={Styles.Username}>{user?.username}</label>
