@@ -100,7 +100,7 @@ const NavBar = () => {
             <Link className={Styles.NavBarLinks} to="/home/stadistics">Estadísticas</Link>
             <div>
               {/* username */}
-              <p>{user?.username}</p>
+              <label className={Styles.Username}>{user?.username}</label>
               <button
                 className={Styles.NavbarHomeButtons2}
                 onClick={(e) => {

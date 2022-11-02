@@ -16,22 +16,18 @@ const HistoryCard = ({name, price, id, date, status, amount, size, color, demogr
     }, img)
     
     return (
-        <div className={Styles.HistoryCard}>
-            <Link to={`/Home/Product/${id}`}>
+        <div className={Styles.HistoryCardDiv}>
+            <Link className={Styles.HistoryCard} to={`/Home/Product/${id}`}>
                 <div>
-                <img
-                    className={Styles.HistoryCardImg}
-                    src={img}
-                    alt="img not found"
-                />
+                    <img
+                        className={Styles.HistoryCardImg}
+                        src={img}
+                        alt="img not found"
+                    />
                 </div>
-                <div>
-                <h3>{name} {size} {color}</h3>
-                <h3>Precio: ${price}</h3>
-                <h3>Demografia: {demographic}</h3>
-                <h3>Cantidad: {amount}</h3>
-                <h3>Fecha: {date}</h3>
-                <h3>Estado: {status}</h3>
+                <div className={Styles.HistoryCardText}>
+                    <h3 className={Styles.HistoryCardName}>{name} {size} {color}</h3>
+                    <p className={Styles.HistoryCardData}>Precio: ${price}     Demografia: {demographic}       Cantidad: {amount}      Fecha: {date}       Estado: {status}</p>
                 </div>
             </Link>
         </div>

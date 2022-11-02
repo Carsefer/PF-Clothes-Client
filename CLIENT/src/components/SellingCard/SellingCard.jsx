@@ -1,7 +1,4 @@
-import axios from "axios";
 import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { deleteProduct } from "../../redux/actions";
@@ -9,16 +6,7 @@ import Styles from "./SellingCard.module.css";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
 
-const SellingCard = ({
-  name,
-  price,
-  id,
-  size,
-  color,
-  demographic,
-  isActivate,
-}) => {
-  const [img, seImg] = useState();
+const SellingCard = ({ img, name, price, id, size, color, demographic, isActivate }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const toast = (text, color = "#32CD32") =>
@@ -30,19 +18,13 @@ const SellingCard = ({
       backgroundColor: color,
     }).showToast();
 
-  useEffect(() => {
-    (async () => {
-      const res = await axios.get(`http://localhost:3001/product/${id}`);
-      seImg(res.data.image);
-    })();
-  }, img);
-
   const handleDesactivate = () => {
     dispatch(deleteProduct(id)).then(toast("Producto desactivado"));
   };
+
   return (
-    <div className={Styles.SellingCard}>
-      <Link to={`/Home/Product/${id}`}>
+    <div className={Styles.SellingCardDiv}>
+      <Link className={Styles.SellingCard} to={`/Home/Product/${id}`}>
         <div>
           <img
             className={Styles.SellingCardImg}
@@ -50,18 +32,15 @@ const SellingCard = ({
             alt="img not found"
           />
         </div>
-        <div>
-          <h3>
-            {name} {size} {color}
-          </h3>
-          <h3>Precio: ${price}</h3>
-          <h3>Demografia: {demographic}</h3>
+        <div className={Styles.SellingCardText}>
+          <h3 className={Styles.SellingCardName}>{name} {size} {color}</h3>
+          <p className={Styles.SellingCardData}>Precio: ${price}   Demografia: {demographic}</p>
         </div>
       </Link>
       <Link to={`/home/editProduct/${id}`}>
-        <button>Modificar</button>
+      <button>Modificar</button>
       </Link>
-      <button onClick={() => handleDesactivate()}>Eliminar</button>
+      {!isActivate ? <button onClick={() => handleDesactivate()}>Desactivar</button> : <button>Activar</button>}
     </div>
   );
 };

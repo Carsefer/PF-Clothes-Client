@@ -1,17 +1,14 @@
 import { Link } from "react-router-dom";
 import "./CartItem.css";
 
-const CartItem = ({
-  id,
-  name,
-  price,
-  quantity,
-  image,
-  delProductCart,
-  size,
-  color,
-  demographic,
-}) => {
+const CartItem = ({id,name,price,quantity,image,delProductCart,size,color,demographic,}) => {
+
+  /*const ingles = (color) => {
+    if(color === "Rosado") {
+      return "Pink"
+    }
+  }*/
+
   return (
     <div className="cartItem">
       <h4 className="NameCart">

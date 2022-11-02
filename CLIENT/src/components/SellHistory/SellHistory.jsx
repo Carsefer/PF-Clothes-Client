@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getUserData } from "../../Utils/useLocalStorage";
 import { getSellsHistory } from "../../redux/actions";
 import HistoryCard from "../HistoryCard/HistoryCard";
+import Styles from "./SellHistory.module.css"
 
 const SellHistory = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ const SellHistory = () => {
 
   return (
     <div>
+      <h1 className={Styles.SellHistoryTittle}>Ventas</h1>
       {historial.length ? (
         historial
           .reduce((arr, el) => {

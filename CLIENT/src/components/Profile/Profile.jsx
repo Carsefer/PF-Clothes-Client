@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Style from "./Profile.module.css";
+import Styles from "./Profile.module.css";
 import { Link } from "react-router-dom";
 import { getUserData } from "../../Utils/useLocalStorage";
 
@@ -17,41 +17,41 @@ export default function Profile() {
 
   return (
     <>
-      <div className={Style.profileContainer}>
-        <div className={Style.sectionProfile}>
-          <div className={Style.sectionContainer}>
-            <div>
+      <div className={Styles.profileContainer}>
+        <div className={Styles.sectionProfile}>
+          <div className={Styles.sectionContainer}>
+            <div className={Styles.ProfileButtonsDiv}>
               {!user.storeName ? (
                 <Link to="/home/createStore">
-                  <button className={Style.buttonProfile}>Crear Tienda</button>
+                  <button className={Styles.buttonProfile}>CREAR TIENDA</button>
                 </Link>
               ) : (
-                <>
+                <div>
                   <Link to="/home/editUser">
-                    <button className={Style.buttonProfile}>Editar</button>
+                    <button id={Styles.EditButton} className={Styles.buttonProfile}>EDITAR</button>
                   </Link>
                   <Link to="/home/createProduct">
-                    <button className={Style.buttonProfile}>
-                      Crear Producto
+                    <button className={Styles.buttonProfile}>
+                      CREAR PRODUCTO
                     </button>
                   </Link>
-                </>
+                </div>
               )}
             </div>
             <img
-              className={Style.pictureProfile}
-              src={user.profilePicture}
-              alt={user.username}
-            />
-            <h1 className={Style.titleusername}>{user.username}</h1>
+                className={Styles.pictureProfile}
+                src={user.profilePicture}
+                alt={user.username}
+            />     
+            <h1 className={Styles.titleusername}>{user.username}</h1>
           </div>
-          <div className={Style.profileInformation}>
-            <h1>Datos: </h1>
-            <p>Nombre: {user.name}</p>
-            {user.storeName ? <p>Tienda: {user.storeName}</p> : null}
-            <p>Correo: {user.mail}</p>
-            <p>Telefono: {user.phone}</p>
-            <p>Localidad: {user.location}</p>
+          <div className={Styles.profileInformation}>
+            <h1 className={Styles.InformationTittle}>Datos</h1>
+            <label className={Styles.InfoProfileLabel}>Nombre: {user.name}</label>
+            {user.storeName ? <label className={Styles.InfoProfileLabel}>Tienda: {user.storeName}</label> : null}
+            <label className={Styles.InfoProfileLabel}>Correo: {user.mail}</label>
+            <label className={Styles.InfoProfileLabel}>Telefono: {user.phone}</label>
+            <label className={Styles.InfoProfileLabel}>Localidad: {user.location}</label>
           </div>
         </div>
       </div>

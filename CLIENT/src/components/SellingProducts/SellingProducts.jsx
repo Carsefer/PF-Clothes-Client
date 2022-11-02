@@ -3,6 +3,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { getUserData } from "../../Utils/useLocalStorage";
 import SellingCard from "../SellingCard/SellingCard";
+import Styles from "./SellingProducts.module.css"
 
 const SellingProducts = () => {
   const [user, setUser] = useState(null);
@@ -15,6 +16,7 @@ const SellingProducts = () => {
         setUser(data);
       }
       axios.get(`http://localhost:3001/user/onSell/${user.id}`).then((res) => {
+        console.log(res)
         setProducts(res.data);
       });
     })();
@@ -22,9 +24,11 @@ const SellingProducts = () => {
 
   return (
     <div>
+      <h1 className={Styles.SellProductsTittle}>Productos</h1>
       {products.length ? (
         products.map((el) => (
           <SellingCard
+            img={el.image[0]}
             id={el.id}
             name={el.name}
             price={el.price}
