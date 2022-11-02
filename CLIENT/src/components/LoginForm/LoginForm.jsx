@@ -1,28 +1,84 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { loginUser, flushError } from "../../redux/actions";
 import { Formik } from "formik";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Styles from "./LoginForm.module.css";
 import axios from "axios";
+import GoogleButton from "react-google-button";
+import { setSession } from "../../sessionUtils/jwtSession";
+//import { useLocalStorage } from "../../Utils/useLocalStorage";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 
 const LoginForm = () => {
+  const search = useLocation().search;
+  const verified = new URLSearchParams(search).get('google');
   const [showPwd, setShowPwd] = useState(false);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const toast = (text) =>
+    Toastify({
+      text: text,
+      duration: 2000,
+      position: "center",
+      className: Styles.toast,
+      backgroundColor: "red",
+    }).showToast();
+  const toastCorrect = (text) =>
+    Toastify({
+      text: text,
+      duration: 2000,
+      position: "center",
+      className: Styles.toast,
+      backgroundColor: "#32CD32",
+    }).showToast();
 
+  /* login with user and password */
   const handleLogin = async (userInfo) => {
-    try {
-      const res = await axios.post(`http://localhost:3001/login`, userInfo);
-      sessionStorage.setItem("sessionData", JSON.stringify(res.data));
-      if (res.data) {
-        alert("Credenciales correctas");
-        navigate("/home");
-      }
-    } catch (err) {
-      console.log("incorrect");
-      alert("Credenciales incorrectas");
+    document.cookie = "token=;max-age=0";
+    window.localStorage.removeItem("sessionData");
+    await axios
+      .post(`${process.env.REACT_APP_API || "http://localhost:3001"}/login`, {
+        username: userInfo.username,
+        password: userInfo.password,
+      })
+      .then(function (res) {
+        console.log(res);
+
+        if(res.data && !res.data.token){
+          toast(res.data.message);
+        }
+        
+        if (res.data.token) {
+          setSession(res.data.token);
+          toastCorrect(res.data.message);
+          setTimeout(() => {
+            navigate("/home");
+            window.location.reload();
+          }, 1000);
+        }
+
+        console.log(document.cookie);
+      })
+      .catch(function (error) {
+        toast(error.response.data.message);
+        console.log(error.response);
+      });
+  };
+
+  /* loging with google */
+  const redirectToGoogleSSO = async () => {
+    if(verified === "not verified"){
+      toast(`Por favor completa la verificación en el mail que te enviamos,
+       en caso de ya haber completado la verificacion has caso omiso a esta notificación`);
     }
+    if(!verified){
+      toastCorrect(`Se te enviara un mensaje de verificación a tu cuenta la primera vez que te loguées 
+      con Google, 
+    si ya hiciste el proceso de verificacion has caso omiso a esta notificacion`);
+    }
+    const googleLoginURL = `${
+      process.env.REACT_APP_API || "http://localhost:3001"
+    }/login/google`;
+    window.open(googleLoginURL, "_self");
   };
 
   return (
@@ -61,10 +117,7 @@ const LoginForm = () => {
             handleBlur,
           }) => (
             <form className={Styles.formulario} onSubmit={handleSubmit}>
-              <div
-                className={Styles.eye2}
-                onClick={() => setShowPwd(!showPwd)}
-              >
+              <div className={Styles.eye2} onClick={() => setShowPwd(!showPwd)}>
                 {showPwd ? (
                   <svg
                     className={Styles.pwdicon}
@@ -137,14 +190,16 @@ const LoginForm = () => {
                 </div>
 
                 <div>
-                  <Link to="/#" className={Styles.fp}>
+                  <Link to="/forgot" className={Styles.fp}>
                     Olvido su contraseña?
                   </Link>
                 </div>
+                {/*
                 <div className={Styles.remember}>
                   <input type="checkbox" className={Styles.checkbox} />
                   <label className={Styles.label}>Recordarme.</label>
                 </div>
+                 */}
               </div>
               {/* VALIDATIONS */}
               {!/^[a-zA-Z0-9_]+$/.test(
@@ -161,6 +216,7 @@ const LoginForm = () => {
             </form>
           )}
         </Formik>
+        <GoogleButton onClick={redirectToGoogleSSO} />
         <p className={Styles.LoginFormsFooter}>
           No tiene cuenta?{" "}
           <Link className={Styles.register} to="/register">

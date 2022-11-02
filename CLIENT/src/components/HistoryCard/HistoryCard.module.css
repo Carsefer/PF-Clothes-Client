@@ -1,0 +1,34 @@
+.HistoryCardDiv {
+    margin-top: 1%;
+    margin-bottom: 1%;
+    padding: 2%;
+    border-radius: 25px;
+    background-color: rgba(0, 0, 0, 0.055);
+    border: 4px solid #31b189;
+}
+
+.HistoryCard {
+    display: flex;
+    text-decoration: none;
+    color: black;
+}
+
+.HistoryCard:hover {
+    color: #31b189;
+}
+
+.HistoryCardImg {
+    width: 80px;
+}
+
+.HistoryCardText {
+    margin-left: 1%;
+}
+
+.HistoryCardName {
+    font-size: 26px;
+}
+
+.HistoryCardData {
+    font-size: 14px;
+}

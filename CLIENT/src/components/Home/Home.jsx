@@ -2,37 +2,26 @@ import React from "react";
 import Styles from "./Home.module.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { filterProducts, emptyDetail } from "../../redux/actions";
-import { useContext } from "react";
-import { AppContext } from "../../context/AppContext";
+import { filterProducts, emptyDetail, buyHistorial } from "../../redux/actions";
+import { getUserData } from "../../Utils/useLocalStorage";
 import Card from "../Card/Card";
 import NavBar from "../NavBar/NavBar";
-//import Orders from "../Orders/Orders";
+
+import { useLocalStorage } from "../../Utils/useLocalStorage";
 
 export default function Home() {
   const dispatch = useDispatch();
 
-  const {
-    setPrice,
-    setSize,
-    setDemographic,
-    setColor,
-    setName,
-    setPage,
-    setOrderBy,
-    setSortBy,
-    price,
-    size,
-    demographic,
-    color,
-    name,
-    page,
-    orderBy,
-    sortBy,
-  } = useContext(AppContext);
+  const [price, setPrice] = useLocalStorage("price", "");
+  const [size, setSize] = useLocalStorage("size", "");
+  const [demographic, setDemographic] = useLocalStorage("demographic", "");
+  const [color, setColor] = useLocalStorage("color", "");
+  const [name, setName] = useLocalStorage("name", "");
+  const [page, setPage] = useLocalStorage("page", 0);
+  const [orderBy, setOrderBy] = useLocalStorage("orderBy", "ASC");
+  const [sortBy, setSortBy] = useLocalStorage("sortBy", "name");
+  const [user, setUser] = useState("");
 
-  //const [cant, setCant] = useState("");
-  //const [, setOrder] = useState("");
   useEffect(() => {
     dispatch(
       filterProducts(
@@ -46,8 +35,29 @@ export default function Home() {
         sortBy
       )
     );
+
     dispatch(emptyDetail());
-  }, [dispatch, name, price, size, demographic, color, page, orderBy, sortBy]);
+    (async () => {
+      if (!user) {
+        const data = await getUserData();
+        setUser(data);
+      }
+      if (user) {
+        dispatch(buyHistorial(user.id));
+      }
+    })();
+  }, [
+    dispatch,
+    name,
+    price,
+    size,
+    demographic,
+    color,
+    page,
+    orderBy,
+    sortBy,
+    user,
+  ]);
 
   const allProducts = useSelector((state) => state.products);
   const results = useSelector((state) => state.productsStatus);
@@ -173,27 +183,25 @@ export default function Home() {
               <option value="XXXL">XXXL</option>
               <option value="XXL">XXL</option>
               <option value="XL">XL</option>
-              <option value="S">S</option>
-              <option value="M">M</option>
               <option value="L">L</option>
+              <option value="M">M</option>
+              <option value="S">S</option>
               <option value="XXS">XXS</option>
               <option value="XXXS">XXXS</option>
             </select>
-
             <select
               className={Styles.FilterProductsHomeSelect}
               value={demographic}
               onChange={(e) => filterByDemographic(e)}
             >
               <option value="">Filtrar por Género</option>
-              <option value="adult male">Hombre</option>
-              <option value="adult female">Mujer</option>
-              <option value="teen male">Hombre adolescente</option>
-              <option value="teen female">Mujer adolescente</option>
-              <option value="little boy">Niño</option>
-              <option value="little girl">Niña</option>
+              <option value="Hombre">Hombre</option>
+              <option value="Mujer">Mujer</option>
+              <option value="Hombre adolescente">Hombre adolescente</option>
+              <option value="Mujera adolescente">Mujer adolescente</option>
+              <option value="Niño">Niño</option>
+              <option value="Niña">Niña</option>
             </select>
-
             <select
               className={Styles.FilterProductsHomeSelect}
               value={price}
@@ -205,22 +213,25 @@ export default function Home() {
               <option value="75">hasta 75$</option>
               <option value="100">hasta 100$</option>
             </select>
-
             <select
               className={Styles.FilterProductsHomeSelect}
               value={color}
               onChange={(e) => filterByColor(e)}
             >
               <option value="">Filtrar por Color</option>
-              <option value="Gris">Gris</option>
-              <option value="Negro">Negro</option>
-              <option value="Blanco">Blanco</option>
-              <option value="Azul">Azul</option>
               <option value="Amarillo">Amarillo</option>
+              <option value="Azul">Azul</option>
+              <option value="Blanco">Blanco</option>
+              <option value="Gris">Gris</option>
+              <option value="Marron">Marron</option>
+              <option value="Negro">Negro</option>
+              <option value="Rojo">Rojo</option>{" "}
+              <option value="Rosado">Rosado</option>{" "}
+              <option value="Verde">Verde</option>{" "}
             </select>
 
             <input
-              class={Styles.FilterProductsHomeSelect}
+              className={Styles.FilterProductsHomeSelect}
               id="text"
               type="text"
               value={name}
@@ -228,7 +239,7 @@ export default function Home() {
               onChange={(e) => filterByName(e)}
             />
             {/* <Orders setOrder={setOrder} /> */}
-            <b> Order by:</b>
+            <b> ORDENAR POR:</b>
             <select name="sort" value={sortBy} onChange={(e) => changeSort(e)}>
               <option value="name">Nombre</option>
               <option value="price">Precio</option>
@@ -242,7 +253,7 @@ export default function Home() {
               <option value="DESC">Descendente</option>
             </select>
             <button
-              class={Styles.FilterProductsHomeSelect}
+              className={Styles.FilterProductsHomeSelect}
               onClick={(e) => {
                 handleClickShowAll(e);
               }}
@@ -269,7 +280,7 @@ export default function Home() {
             >
               {"Anterior"}
             </button>
-            <button class="paginated_num">{page / 10}</button>
+            <button className="paginated_num">{page / 10}</button>
             <button
               onClick={(e) => {
                 next(e);

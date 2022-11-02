@@ -1,83 +1,337 @@
-import React, { useEffect } from "react";
-import { FaCartPlus } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
+import { getUserData } from "../../Utils/useLocalStorage";
 import {
   getProductDetail,
   addToCart,
   getProductDetailReviews,
   addToFavorites,
   deleteFavorite,
+  buyHistorial,
+  clearActions,
+  deleteProduct,
 } from "../../redux/actions";
 import Style from "./ProductDetail.module.css";
 import Comments from "../Comments/Comments";
+import buttonCart from "../images/cart.svg";
+import buttonFav from "../images/buttonFav.svg";
+import buttonDeleteFav from "../images/buttonDeleteFav.svg";
+import buttonDelete from "../images/Delete.svg";
+import CreateReview from "../CreateReviews/CreateReview";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
+import { validateUser } from "../../sessionUtils/jwtSession";
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    dispatch(getProductDetail(id));
-    dispatch(getProductDetailReviews(id));
-  }, [dispatch, id]);
+  const toast = (text, color = "#32CD32") =>
+    Toastify({
+      text: text,
+      duration: 1500,
+      position: "center",
+      className: Style.toast,
+      backgroundColor: color,
+    }).showToast();
 
   const detail = useSelector((state) => state.productDetail);
   const reviews = useSelector((state) => state.productReviews);
   const favorites = useSelector((state) => state.favorites);
+  // const historial = useSelector((state) =>
+  //   state?.historial.filter((el) => el.pagado === true)
+  // );
 
-  console.log("hola");
-  console.log(reviews);
+  const historial = useSelector((state) => state?.historial);
+
+  console.log(historial);
+
+  const averageScore = () => {
+    let average = 0;
+    if (reviews.length) {
+      reviews.forEach((r) => {
+        average += r.score;
+      });
+      return (average / reviews.length).toFixed(1);
+    } else {
+      return 0;
+    }
+  };
+
+  const [user, setUser] = useState(null);
+  const [filterBySize, setFilterBySize] = useState("");
+  const [filterByColor, setFilterByColor] = useState("");
+
+  useEffect(() => {
+    (async () => {
+      if (!user) {
+        const data = await getUserData();
+        setUser(data);
+      }
+    })();
+    dispatch(getProductDetail(id));
+    dispatch(clearActions());
+    dispatch(getProductDetailReviews(id));
+    dispatch(buyHistorial(user?.id));
+  }, [dispatch, user, id]);
+
+  const profileId = user?.id;
+  const token = validateUser();
 
   const handleFav = () => {
-    dispatch(addToFavorites(id));
-    alert("Producto agregado a favoritos!");
-  };
-  const handleDelFav = () => {
-    dispatch(deleteFavorite(id));
-    alert("Producto eliminado de favoritos");
+    if (!user) {
+      toast("Logueate para seguir tus productos favoritos!");
+      return navigate("/login");
+    } else {
+      dispatch(addToFavorites(id, profileId, token));
+      toast("Producto agregado a favoritos!");
+    }
   };
 
-  const sizes = detail.variants?.map( v => v.size).join(", ");
-  const colors = detail.variants?.map( v => v.color).join(", ");
-  const stock = detail.variants?.map( v => v.stock).reduce((a,b) => a + b);
+  const handleDelFav = () => {
+    dispatch(deleteFavorite(id, profileId, token));
+    toast("Producto eliminado de favoritos", "yellow");
+  };
+
+  const handleAddCart = () => {
+    if (!user) {
+      toast("Logueate para seguir tus productos favoritos!");
+      return navigate("/login");
+    }
+    if (filterBySize === "") return toast("Selecciona talle!", "yellow");
+    if (filterByColor === "") return toast("Selecciona color!", "yellow");
+    if (
+      detail.variants
+        ?.map((v) => {
+          if (v.size === filterBySize && v.color === filterByColor && v.stock) {
+            return v.stock;
+          }
+          return false;
+        })
+        .reduce((a, b) => a + b) === 0
+    )
+      toast("No hay stock!", "red");
+    else {
+      const variantID = detail.variants
+        ?.map((v) => {
+          if (v.size === filterBySize && v.color === filterByColor && v.stock) {
+            return v.id;
+          }
+          return "";
+        })
+        .reduce((a, b) => a + b);
+      dispatch(addToCart(variantID, profileId, token));
+      toast("Producto agregado al carrito!");
+    }
+  };
+
+  const handleDesactivate = () => {
+    dispatch(deleteProduct(id)).then(toast("Producto desactivado"));
+    navigate("/home");
+  };
+
+  //FILTER ACTIVITY
+  const handleSize = (e) => {
+    e.preventDefault();
+    setFilterBySize(e.target.value);
+  };
+  //FILTER COLOR
+  const handleColor = (e) => {
+    e.preventDefault();
+    setFilterByColor(e.target.value);
+  };
 
   return (
-    <div className={Style.detailsContainer}>
+    <div className={Style.ProductContainer}>
       <div className={Style.sectionDetails}>
-        <button onClick={() => dispatch(addToCart(id))}>
-          <FaCartPlus />
-          Agregar
-        </button>
-        {!favorites.find((f) => f.id === id) ? (
-          <button onClick={handleFav}>Agregar a favoritos</button>
-        ) : (
-          <button onClick={handleDelFav}>Eliminar de favoritos</button>
-        )}
+        <div className={Style.sectionDetailsButtons}>
+          <button
+            className={Style.backButton}
+            onClick={() => navigate("/home")}
+          >
+            Atrás
+          </button>
+          <button
+            className={Style.buttonCartDetail}
+            onClick={() => handleAddCart()}
+          >
+            <img
+              className={Style.buttonImage}
+              src={buttonCart}
+              alt="img not found"
+            ></img>
+          </button>
+
+          {!favorites.find((f) => f?.id === id) ? (
+            <button
+              className={Style.buttonfavDetail}
+              onClick={() => handleFav()}
+            >
+              <img
+                className={Style.buttonImage}
+                src={buttonFav}
+                alt="img not found"
+              ></img>
+            </button>
+          ) : (
+            <button
+              className={Style.buttonDeletefavDetail}
+              onClick={() => handleDelFav()}
+            >
+              <img
+                className={Style.buttonImage}
+                src={buttonDeleteFav}
+                alt="img not found"
+              ></img>
+            </button>
+          )}
+          {user?.isModerator ? (
+            <button
+              className={Style.buttonDeleteDetail}
+              onClick={() => handleDesactivate(id)}
+            >
+              <img
+                id={Style.TrashImage}
+                className={Style.buttonImage}
+                src={buttonDelete}
+                alt="img not found"
+              ></img>
+            </button>
+          ) : null}
+        </div>
         <br />
-        <h1 className={Style.detailsTitle}>{detail.name?.charAt(0).toUpperCase() + detail.name?.slice(1)}</h1>
         <div className={Style.article__details}>
-          <div className={Style.articleDetailsImage}>
-            <img src={detail.image} alt="img not found" />
+          <div className={Style.articleDetailsImageContainer}>
+            <img
+              className={Style.articleDetailsImage}
+              src={detail.image}
+              alt="img not found"
+            />
           </div>
           <div className={Style.article_details_container}>
-            <p>Precio: ${detail.price}</p>
-            <p>Talles: {sizes}</p>
-            <p>Marca: {detail.brand?detail.brand:" - "}</p>
-            <p>Color: {colors}</p>
-            <p>Material: {detail.materials?detail.materials:" - "}</p>
-            <p>Quedan {stock} unidades disponibles</p>
+            <h1 className={Style.detailsTitle}>
+              {detail.name?.charAt(0).toUpperCase() + detail.name?.slice(1)}
+            </h1>
+            <label
+              id={Style.article_price}
+              className={Style.article_label}
+              htmlFor=""
+            >
+              Precio: ${detail.price}
+            </label>
+            <label className={Style.article_label} htmlFor="">
+              Seleccionar Talle:
+            </label>
+            <select
+              id={Style.FilterProductsSelectTalle}
+              className={Style.FilterProductsSelect}
+              value={filterBySize}
+              onChange={(e) => handleSize(e)}
+            >
+              <option value="">Todos</option>
+
+              {[...new Set(detail.variants?.map((e) => e.size))]?.map((el) => {
+                return <option value={el}>{el}</option>;
+              })}
+            </select>
+            <label className={Style.article_label} htmlFor="">
+              Seleccionar Color:
+            </label>
+            <select
+              id={Style.FilterProductsSelectColor}
+              className={Style.FilterProductsSelect}
+              value={filterByColor}
+              onChange={(e) => handleColor(e)}
+            >
+              <option value="">Todos</option>
+
+              {[...new Set(detail.variants?.map((e) => e.color))]?.map((el) => {
+                return <option value={el}>{el}</option>;
+              })}
+            </select>
+            {detail.brand ? (
+              <label className={Style.article_label}>
+                Marca: {detail.brand}
+              </label>
+            ) : null}
+            {detail.materials ? (
+              <label className={Style.article_label}>
+                Material: {detail.materials}
+              </label>
+            ) : null}
+            <div className={Style.article__detail_stock}>
+              <label
+                id={Style.article_labelStock}
+                className={Style.article_label}
+                htmlFor=""
+              >
+                Stock:{" "}
+                {filterByColor && filterBySize ? (
+                  <label
+                    id={Style.article_labelStock}
+                    className={Style.article_label}
+                  >
+                    {detail.variants
+                      ?.map(
+                        (v) =>
+                          v.size === filterBySize &&
+                          v.color === filterByColor &&
+                          v.stock
+                      )
+                      .reduce((a, b) => a + b)}{" "}
+                    unidades
+                  </label>
+                ) : filterBySize ? (
+                  <label
+                    id={Style.article_labelStock}
+                    className={Style.article_label}
+                  >
+                    {detail.variants
+                      ?.map((v) => v.size === filterBySize && v.stock)
+                      .reduce((a, b) => a + b)}{" "}
+                    unidades
+                  </label>
+                ) : filterByColor ? (
+                  <label
+                    id={Style.article_labelStock}
+                    className={Style.article_label}
+                  >
+                    {detail.variants
+                      ?.map((v) => v.color === filterByColor && v.stock)
+                      .reduce((a, b) => a + b)}{" "}
+                    unidades
+                  </label>
+                ) : (
+                  <label
+                    id={Style.article_labelStock}
+                    className={Style.article_label}
+                  >
+                    {detail.variants
+                      ?.map((v) => v.stock)
+                      .reduce((a, b) => a + b)}{" "}
+                    unidades
+                  </label>
+                )}
+              </label>
+            </div>
+            {reviews.length ? <p>Puntaje promedio: {averageScore()}</p> : <></>}
           </div>
+        </div>
+        <div>
           <div>
-            <h2>Reseñas</h2>
+            {historial?.filter((el) => el.productoId === id).length ? (
+              <CreateReview id={id} />
+            ) : (
+              <></>
+            )}
+            <h1 className={Style.ProductDetailReviews}>Reseñas</h1>
             {reviews.length ? (
               reviews.map((r) => (
                 <Comments score={r.score} reviews={r.reviews} />
               ))
             ) : (
-              <div>
-                <p>No hay reseñas</p>
-              </div>
+              <h3>No hay reseñas</h3>
             )}
           </div>
         </div>
@@ -87,12 +341,3 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
-
-/*
-{reviews.map((r) => (
-  <Comments 
-    score = {r.score}
-    review = {r.review}
-  />
-))}
-<Comments/>*/

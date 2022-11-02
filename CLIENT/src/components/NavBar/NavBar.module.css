@@ -17,12 +17,36 @@
 }
 
 .NavbarHomeLogo {
-  width: 30vh;
+  width: 25vh;
   margin: 0;
 }
 
+.NavBarLinks{
+  font-size: 16px;
+  color: #ffe3b3;
+  text-decoration: none;
+}
 .CartIcon {
-  margin-top: 0px;
+  margin-top: 10px;
+  margin-right: -60px;
+  padding-left: 6px;
+  display: flex;
+  width: 40px;
+}
+.ProfileFav {
+  margin-top: 18px;
+  margin-right: -20px;
+  padding-left: 4px;
+  display: flex;
+  margin-right: 40px;
+  width: 40px;
+}
+
+.FavIcon {
+  display: flex;
+  margin-top: 12px;
+  padding-left: 8px;
+  width: 40px;
 }
 
 .NavbarHomeFormsButtonsContainer {
@@ -46,6 +70,19 @@
   text-align: center;
   transition: all 0.2s ease-in;
 }
+.NavbarHomeButtons2 {
+  display: flex;
+  margin-top: 10px;
+  padding: 0px 10px;
+  border: 1px solid #ffe3b3;
+  border-radius: 10px;
+  font-size: 10px;
+  color: black;
+  z-index: 1;
+  background-color: #ffe3b3;
+  text-align: center;
+  transition: all 0.2s ease-in;
+}
 
 .NavbarHomeButtons:hover {
   color: #31b189;
@@ -53,4 +90,16 @@
 }
 .NavBarText {
   margin-top: -30px;
+}
+
+.Username {
+  font-size: larger;
+  text-decoration: double;
+  color: #ffe3b3;
+}
+
+.toast {
+  font-size: large;
+  border-radius: 10px;
+  color: #31b189;
 }

@@ -1,32 +1,140 @@
+import React from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addToCart, clearCart, delFromCart } from "../../redux/actions";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  getCartProducts,
+  delProductCart,
+  delFromCart,
+  clearCart,
+  buyProduct,
+  postHistorial,
+  clearLink,
+  sendEmail,
+  sendEmailSellers,
+} from "../../redux/actions";
 import CartItem from "../CartItem/CartItem";
+import Style from "./ShoppingCart.module.css";
+import NavBar from "../NavBar/NavBar";
+import { getUserData } from "../../Utils/useLocalStorage";
+import { validateUser } from "../../sessionUtils/jwtSession";
 
 const ShoppingCart = () => {
-  const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const detail = useSelector((state) => state.productDetail);
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
 
-  const { products, cart } = state;
+  const cartList = useSelector((state) => state?.cart);
+  const compra = useSelector((state) => state.linkCompra);
+
+  useEffect(() => {
+    (async () => {
+      if (!user) {
+        const data = await getUserData();
+        setUser(data);
+      }
+    })();
+    const id = user?.id;
+    const token = validateUser();
+    dispatch(getCartProducts(id, token));
+  }, [user, dispatch]);
+  const token = validateUser();
+
+  console.log(cartList);
+
+  //COMPRAR (NO BORRAR)
+  // const handleCompra = (e) => {
+  //   e.preventDefault();
+  //   window.open(compra);
+  //   dispatch(postHistorial(user.id, cartList));
+  //   dispatch(clearCart(user?.id, token));
+  //   dispatch(clearLink());
+  // };
+
+  //COMPRAR
+  const handleCompra = (e) => {
+    e.preventDefault();
+    //window.location.href = compra;
+    dispatch(postHistorial(user.id, cartList));
+    dispatch(sendEmail(user?.mail, cartList));
+    // dispatch(sendEmailSellers(user?.mail, cartList));
+    dispatch(clearCart(user?.id, token));
+    dispatch(clearLink());
+  };
+
+  var repetidos = {};
+  cartList.forEach(function (numero) {
+    repetidos[numero.id] = (repetidos[numero.id] || 0) + 1;
+  });
 
   return (
-    <div>
-      <h2>Carrito de Compras</h2>
-      <h3>Productos</h3>
+    <>
+      <NavBar />
+      <div className={Style.containerShopping}>
+        <h2>Carrito de Compras</h2>
+        {cartList.length ? (
+          <div>
+            <h3>Productos</h3>
+            <article className="box">
+              <button onClick={() => dispatch(clearCart(user?.id, token))}>
+                Limpiar Carrito
+              </button>
 
-      <article className="box">
-        <button onClick={() => dispatch(clearCart())}>Limpiar Carrito</button>
+              {cartList
+                .reduce((arr, el) => {
+                  if (!arr.find((d) => d.variantID === el.variantID)) {
+                    arr.push(el);
+                  }
 
-        {cart.map((item, index) => (
-          <CartItem
-            key={index}
-            data={item}
-            delOneFromCart={() => dispatch(delFromCart(item.id))}
-            delAllFromCart={() => dispatch(delFromCart(item.id, true))}
-          />
-        ))}
-      </article>
-    </div>
+                  return arr;
+                }, [])
+                .map((e) => (
+                  <CartItem
+                    id={e?.variantID}
+                    key={e?.id + 1}
+                    name={e?.name?.charAt(0).toUpperCase() + e.name?.slice(1)}
+                    price={e?.price}
+                    quantity={repetidos[e?.id]}
+                    image={e?.image}
+                    delProductCart={() =>
+                      dispatch(delProductCart(e?.variantID, user?.id, token))
+                    }
+                    // delAllFromCart={() => dispatch(delFromCart(e.id, true))}
+                    size={e.size}
+                    color={e.color}
+                    demographic={e.demographic}
+                  />
+                ))}
+            </article>
+          </div>
+        ) : (
+          <p>
+            Aun no tienes productos agregado al carrito.{" "}
+            <Link to="/home">Encontralos!</Link>
+          </p>
+        )}
+        {cartList.length ? (
+          <h1>
+            TOTAL: ${cartList?.map((el) => el.price).reduce((a, b) => a + b)}
+          </h1>
+        ) : (
+          <></>
+        )}
+        {cartList.length ? (
+          <div>
+            {/* <button onClick={() => dispatch(buyProduct(user?.id, cartList))}>
+              CARGAR PRODUCTOS
+            </button> */}
+            {/* <button disabled={!compra} onClick={(e) => handleCompra(e)}>
+              COMPRAR PRODUCTOS
+            </button> */}
+            <button onClick={(e) => handleCompra(e)}>COMPRAR PRODUCTOS</button>
+          </div>
+        ) : (
+          <p></p>
+        )}
+      </div>
+    </>
   );
 };
 

@@ -1,12 +1,11 @@
 import {
   GET_PRODUCTS,
   GET_PRODUCT_DETAIL,
-  SEARCH_PRODUCT,
   GET_SIZES,
   ORDER_PRODUCTS_BY_NAME,
-  ORDER_PRODUCTS_BY_SCORE,
   FILTER_PRODUCTS,
   CREATE_USER,
+  GET_PRODUCTS_CART,
   CREATE_PUBLICATION,
   EMPTY_DETAIL,
   GET_FAVORITES,
@@ -15,24 +14,38 @@ import {
   LOGIN_USER,
   ADD_TO_CART,
   CLEAR_CART,
-  REMOVE_ALL_FROM_CART,
-  REMOVE_ONE_FROM_CART,
   GET_REVIEWS_PRODUCT_DETAIL,
   FLUSH_ERROR,
-  GET_SELLS_HISTORY
+  GET_SELLS_HISTORY,
+  GET_SELL_DETAIL,
+  CREATE_REVIEW_PRODUCT,
+  BUY_PRODUCT,
+  CLEAR_FAVORITES,
+  HISTORIAL_PRODUCT,
+  CLEAR_LINK,
+  GET_DEMOGRAPHICS,
+  DEL_PRODUCT_CART,
+  CLEAR_ACTIONS,
+  GET_SELLS_HISTORY_STADISTICS,
+  USER_REVIEWS,
 } from "../action-types";
 
 const initialState = {
   products: [],
-  productsAux: [],
+  demographic: [],
   productDetail: [],
   productReviews: [],
+  userReviews: [],
   sizes: [],
-  productsStatus: "loading",
+  productsStatus: "Cargando productos...",
   favorites: [],
   loginError: null,
   cart: [],
-  sellsHistory: []
+  sellsHistory: [],
+  sellsStadistics: [],
+  sellDetail: {},
+  linkCompra: "",
+  historial: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -41,8 +54,13 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         products: action.payload,
-        productsAux: action.payload,
       };
+    case GET_DEMOGRAPHICS: {
+      return {
+        ...state,
+        demographic: action.payload,
+      };
+    }
     case GET_PRODUCT_DETAIL:
       return {
         ...state,
@@ -57,11 +75,6 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         productDetail: [],
-      };
-    case SEARCH_PRODUCT:
-      return {
-        ...state,
-        products: action.payload,
       };
     case GET_SIZES:
       return {
@@ -83,25 +96,12 @@ const rootReducer = (state = initialState, action) => {
           }
         }),
       };
-    /* case ORDER_PRODUCTS_BY_SCORE:
-      const orderedProductsByScore =
-        action.payload === "ascendente"
-          ? state.products.sort((a, b) => {
-              return a.score - b.score;
-            })
-          : state.products.sort((a, b) => {
-              return b.score - a.score;
-            });
-      return {
-        ...state,
-        products: orderedProductsByScore,
-      }; */
     case FILTER_PRODUCTS:
       return {
         ...state,
         productsStatus: !action.payload.length
-          ? "No se encontraron productos con este filtro"
-          : "loading",
+          ? "No se encontraron productos"
+          : "Cargando productos...",
         products: action.payload,
       };
     case CREATE_USER:
@@ -112,11 +112,6 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
       };
-    // case GET_FAVORITES:
-    //   return {
-    //     ...state,
-    //     favorites: action.payload,
-    //   };
     case ADD_TO_FAVORITES:
       let newFavorite = state.products.find((p) => p.id === action.payload);
       let productInFav = state.favorites.find((f) => f.id === newFavorite.id);
@@ -132,10 +127,20 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         favorites: delFav,
       };
+    case GET_FAVORITES:
+      return {
+        ...state,
+        favorites: action.payload,
+      };
     case LOGIN_USER:
       return {
         ...state,
         loginError: action.payload,
+      };
+    case GET_PRODUCTS_CART:
+      return {
+        ...state,
+        cart: action.payload,
       };
     case ADD_TO_CART: {
       let newItem = state.products.find(
@@ -158,32 +163,24 @@ const rootReducer = (state = initialState, action) => {
             cart: [...state.cart, { ...newItem, quantity: 1 }],
           };
     }
-    case REMOVE_ONE_FROM_CART: {
-      let itemToDelete = state.cart.find((item) => item.id === action.payload);
 
-      return itemToDelete.quantity > 1
-        ? {
-            ...state,
-            cart: state.cart.map((item) =>
-              item.id === action.payload
-                ? { ...item, quantity: item.quantity - 1 }
-                : item
-            ),
-          }
-        : {
-            ...state,
-            cart: state.cart.filter((item) => item.id !== action.payload),
-          };
-    }
-    case REMOVE_ALL_FROM_CART: {
+    case DEL_PRODUCT_CART:
+      let deletedProduct = state.cart.filter(
+        (c) => c.variantID !== action.payload
+      );
       return {
         ...state,
-        cart: state.cart.filter((item) => item.id !== action.payload),
+        cart: deletedProduct,
       };
-    }
     case CLEAR_CART:
       return {
         ...state,
+        cart: [],
+      };
+    case CLEAR_FAVORITES:
+      return {
+        ...state,
+        favorites: [],
       };
     case FLUSH_ERROR:
       return {
@@ -193,8 +190,47 @@ const rootReducer = (state = initialState, action) => {
     case GET_SELLS_HISTORY:
       return {
         ...state,
-        sellsHistory: action.payload
-      }
+        sellsHistory: action.payload,
+      };
+    case GET_SELLS_HISTORY_STADISTICS:
+      return {
+        ...state,
+        sellsStadistics: action.payload,
+      };
+    case GET_SELL_DETAIL:
+      return {
+        ...state,
+        sellDetail: action.payload,
+      };
+    case CREATE_REVIEW_PRODUCT:
+      return {
+        ...state,
+      };
+    case BUY_PRODUCT:
+      return {
+        ...state,
+        linkCompra: action.payload,
+      };
+    case HISTORIAL_PRODUCT:
+      return {
+        ...state,
+        historial: action.payload,
+      };
+    case CLEAR_LINK:
+      return {
+        ...state,
+        linkCompra: "",
+      };
+    case CLEAR_ACTIONS:
+      return {
+        ...state,
+        productReviews: [],
+      };
+    case USER_REVIEWS:
+      return {
+        ...state,
+        userReviews: action.payload,
+      };
     default:
       return state;
   }

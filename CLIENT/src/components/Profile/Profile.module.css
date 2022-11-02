@@ -1,48 +1,74 @@
-.sectionContainer {
-  width: 80%;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-
-  padding-bottom: 320px;
-
-  transition: all 800ms;
-  border-radius: 10px;
-}
 .profileContainer {
-  margin-top: 96px;
-  background-color: rgba(103, 103, 103, 0.615);
-  width: 90%;
+  width: 50%;
+  background-color: white;
   display: flex;
   justify-content: center;
-  margin-left: 90px;
+  border-radius: 25px;
+  padding: 1%;
+  box-shadow: 0.3em 0.3em 1em #0000003d;
 }
 
-.titleUsername {
-  font-size: 50px;
+.sectionProfile {
+  width: 100%;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-  justify-content: flex-start;
+.sectionContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
-.pictureProfile {
-  margin-top: 50px;
-  margin-left: 1px;
-  width: 20%;
-  height: 100%;
-  border-radius: 80%;
+
+#EditButton {
+  width: 10%;
 }
+
 .buttonProfile {
-  margin-top: 20px;
-  width: 100px;
-  height: 60px;
+  width: 15%;
+  height: 5vh;
+  border: 1px;
+  margin: 1%;
+  border-radius: 5px;
+  background-color: #31b189;
 }
-.profileContainer {
-  margin-bottom: 100px;
+
+.buttonProfile:hover {
+  color: white;
+}
+
+.pictureProfile {
+  margin: 5% 5% 0% 5%;
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 100%;
+}
+
+.titleusername {
+  text-decoration: underline;
+  text-align: center;
+  font-size: 72px;
+  margin-bottom: 5%;
 }
 
 .profileInformation {
+  width: 80%;
+  border-radius: 25px;
+  display: flex;
   flex-direction: column;
-  position: absolute;
-  margin-left: 35%;
+}
+
+.InformationTittle {
+  color: #31b189;
+  font-size: 50px;
+  text-align: center;
+  border-bottom: 5px solid #31b189;
+  margin-bottom: 2%;
+}
+
+.InfoProfileLabel {
+  color: #31b189;
+  margin: 2% 5%;
+  font-size: x-large;
 }

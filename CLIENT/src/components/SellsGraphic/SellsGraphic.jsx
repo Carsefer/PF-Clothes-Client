@@ -22,22 +22,30 @@ ChartJS.register(
     Filler
 )
 
-const SellsGraphic = () => {
+const SellsGraphic = ({ sells, days }) => {
 
-    const sells = ["5", "2", "7", "6", "4", "5"]
-    const labels = ["22", "23", "24", "25", "26", "27"]
+    const labels = days
 
     const data = {
         datasets: [
             {
-                label: "Gráfica de ventas",
-                data: sells
+                label: "Ventas de este mes",
+                data: sells,
+                borderColor: "#31b189",
+                pointBackgroundColor: "#31b189",
+                backgroundColor: "#7ace674c"
             },
         ],
         labels
     }
     const options = {
-        responsive: true
+        fill: true,
+        responsive: true,
+        scales: {
+            y: {
+                min: 0,
+            },
+        },
     }
 
     return (
