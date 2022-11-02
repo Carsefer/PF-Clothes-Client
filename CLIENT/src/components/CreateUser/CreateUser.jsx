@@ -40,7 +40,7 @@ const CreateUser = () => {
             errors.username = "Ingrese nombre de usuario";
           } else if (value.username.length < 6 || value.username.length > 15){
             errors.username = "Longitud valida desde 6 caracteres hasta 15 caracteres";
-          } else if (!/^[A-Za-z0-9][A-Za-z0-9_]{6,15}$/.test(value.username)){
+          } else if (!/[A-Za-z0-9_]{6,15}$/.test(value.username)){
             errors.username = `nombre de usuario invalido debe iniciar con caracteres
             alfanumericos y solamente puede contener guiones bajos en le nombre de usuario`;
           } else if (!value.name.length) {
@@ -255,7 +255,7 @@ const CreateUser = () => {
                   </div>
                 )}
                 <div>
-                  {!/^[A-Za-z][A-Za-z0-9_]{6,15}$/.test(values.username) || 
+                  {!/[A-Za-z0-9_]{6,15}$/.test(values.username) || 
                   !/[A-Za-z]$/.test(values.name) ||
                   !/[A-Za-z]$/.test(values.lastname) ||
                   !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
