@@ -1,13 +1,16 @@
 import React from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { deleteProduct } from "../../redux/actions";
+import { deactivateProduct, emptyDetail, activateProduct } from "../../redux/actions";
 import Styles from "./SellingCard.module.css";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
+import { useState } from "react";
 
-const SellingCard = ({ img, name, price, id, size, color, demographic, isActivate }) => {
+const SellingCard = ({ img, name, price, id, size, color, demographic, isActive }) => {
   const dispatch = useDispatch();
+  const [isAct, setAct] = useState(isActive)
   const toast = (text, color = "#32CD32") =>
     Toastify({
       text: text,
@@ -17,9 +20,19 @@ const SellingCard = ({ img, name, price, id, size, color, demographic, isActivat
       backgroundColor: color,
     }).showToast();
 
+  useEffect(() => {
+    dispatch(emptyDetail());
+  },[dispatch]); 
+
   const handleDesactivate = () => {
-    dispatch(deleteProduct(id)).then(toast("Producto desactivado"));
+    dispatch(deactivateProduct(id)).then(toast("Producto desactivado","yellow"));
+    setAct(false)
   };
+
+  const handleActivate = () => {
+    dispatch(activateProduct(id)).then(toast("Producto activado"));
+    setAct(true);
+  }
 
   return (
     <div className={Styles.SellingCardDiv}>
@@ -32,14 +45,14 @@ const SellingCard = ({ img, name, price, id, size, color, demographic, isActivat
           />
         </div>
         <div className={Styles.SellingCardText}>
-          <h3 className={Styles.SellingCardName}>{name} {size} {color}</h3>
+          <h3 className={Styles.SellingCardName}>{name[0].toUpperCase()+name.substring(1)} {size} {color}</h3>
           <p className={Styles.SellingCardData}>Precio: ${price}   Demografia: {demographic}</p>
         </div>
       </Link>
       <Link to={`/home/editProduct/${id}`}>
       <button>Modificar</button>
       </Link>
-      {!isActivate ? <button onClick={() => handleDesactivate()}>Desactivar</button> : <button>Activar</button>}
+      {isAct ? (<button onClick={() => handleDesactivate()}>Desactivar</button>) : (<button onClick={() => handleActivate()}>Activar</button>)}
     </div>
   );
 };

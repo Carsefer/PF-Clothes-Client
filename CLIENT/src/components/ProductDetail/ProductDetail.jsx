@@ -11,7 +11,7 @@ import {
   deleteFavorite,
   buyHistorial,
   clearActions,
-  deleteProduct,
+  deactivateProduct,
 } from "../../redux/actions";
 import Style from "./ProductDetail.module.css";
 import Comments from "../Comments/Comments";
@@ -41,11 +41,11 @@ const ProductDetail = () => {
   const detail = useSelector((state) => state.productDetail);
   const reviews = useSelector((state) => state.productReviews);
   const favorites = useSelector((state) => state.favorites);
-  // const historial = useSelector((state) =>
-  //   state?.historial.filter((el) => el.pagado === true)
-  // );
+  const historial = useSelector((state) =>
+    state?.historial.filter((el) => el.pagado === true)
+  );
   const [load, setLoading] = useState(false);
-  const historial = useSelector((state) => state?.historial);
+  //const historial = useSelector((state) => state?.historial);
   const results = useSelector((state) => state.Status);
 
   console.log(historial);
@@ -134,7 +134,7 @@ const ProductDetail = () => {
   };
 
   const handleDesactivate = () => {
-    dispatch(deleteProduct(id)).then(toast("Producto desactivado"));
+    dispatch(deactivateProduct(id)).then(toast("Producto desactivado"));
     navigate("/home");
   };
 

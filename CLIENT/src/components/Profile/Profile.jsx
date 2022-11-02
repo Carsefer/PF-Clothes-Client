@@ -22,9 +22,21 @@ export default function Profile() {
           <div className={Styles.sectionContainer}>
             <div className={Styles.ProfileButtonsDiv}>
               {!user.storeName ? (
-                <Link to="/home/createStore">
-                  <button className={Styles.buttonProfile}>CREAR TIENDA</button>
-                </Link>
+                <div>
+                  <Link to="/home/editUser">
+                    <button
+                      id={Styles.EditButton}
+                      className={Styles.buttonProfile}
+                    >
+                      EDITAR
+                    </button>
+                  </Link>
+                  <Link to="/home/createStore">
+                    <button className={Styles.buttonProfile}>
+                      CREAR TIENDA
+                    </button>
+                  </Link>
+                </div>
               ) : (
                 <div>
                   <Link to="/home/editUser">

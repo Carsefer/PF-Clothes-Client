@@ -26,10 +26,24 @@
 .profileLinks {
     font-size: 14px;
     color: #ffe3b3;
+    padding: 2vh;
+    text-align:center;
     text-decoration: none;
+    width: 17vh;
+    height: 6.9vh;
+    border-radius: 8px;
+}
+
+.profileLinks:hover {
+    color: white;
 }
 
 .profileRoutes {
     display: flex;
     justify-content: center;
+}
+
+#Selected {
+    color: white;
+    background-color: #39a180;
 }
