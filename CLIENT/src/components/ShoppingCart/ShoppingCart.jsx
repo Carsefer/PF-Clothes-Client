@@ -56,7 +56,7 @@ const ShoppingCart = () => {
     e.preventDefault();
     window.location.href = compra;
     dispatch(postHistorial(user, cartList));
-    dispatch(sendEmail(email, cartList));
+    //dispatch(sendEmail(email, cartList));
     //dispatch(sendEmailSellers(email, cartList));
     dispatch(clearCart(user, token));
     dispatch(clearLink());

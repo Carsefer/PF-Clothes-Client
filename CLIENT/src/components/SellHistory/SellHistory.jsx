@@ -23,31 +23,40 @@ const SellHistory = () => {
     dispatch(getSellsHistory(user));
   }, [user, dispatch]);
 
-  const historial = useSelector((state) => state?.sellsHistory);
+  const historial = useSelector((state) =>
+    state?.sellsHistory.filter((el) => el.pagado === true)
+  );
 
   var repetidos = {};
 
   historial.forEach(function (numero) {
-    repetidos[numero.productoId] = (repetidos[numero.productoId] || 0) + 1;
+    repetidos[numero.variantId] = (repetidos[numero.variantId] || 0) + 1;
   });
 
   return (
     <div>
       <h1 className={Styles.SellHistoryTittle}>Ventas</h1>
       {historial.length ? (
-        historial.map((el) => (
-          <HistoryCard
-            id={el?.productoId}
-            name={el?.name}
-            price={el?.price}
-            size={el?.size}
-            color={el?.color}
-            demographic={el?.demographic}
-            date={el?.updatedAt?.slice(0, 10)}
-            status={el?.status}
-            amount={"1"}
-          />
-        ))
+        historial
+          ?.reduce((arr, el) => {
+            if (!arr.find((d) => d?.variantId === el?.variantId)) {
+              arr.push(el);
+            }
+            return arr;
+          }, [])
+          .map((el) => (
+            <HistoryCard
+              id={el?.productoId}
+              name={el?.name}
+              price={el?.price}
+              size={el?.size}
+              color={el?.color}
+              demographic={el?.demographic}
+              date={el?.updatedAt?.slice(0, 10)}
+              status={el?.status}
+              amount={repetidos[el?.variantId]}
+            />
+          ))
       ) : (
         <label>Aun no tienes ventas.</label>
       )}
