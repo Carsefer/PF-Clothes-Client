@@ -34,8 +34,8 @@ const ProfilePage = () => {
                 <Routes>
                     <Route index element = {<Profile/>} />
                     <Route path="/buys" element={<BuyPage/>} />
-                    <Route path="/sells/*" element={<SellPage/>} />
-                    <Route path="stadistics" element={<Stadistics/>} />
+                    <Route path="/sells/*" element={<SellPage/>} /> 
+                    <Route path="/stadistics" element={<Stadistics/>} />
                 </Routes>
             </div>
         </div>
