@@ -6,11 +6,13 @@ import {
 import { getUserData } from "../../Utils/useLocalStorage.js";
 import { validateUser } from "../../sessionUtils/jwtSession.js";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
+import NavBar from "../NavBar/NavBar.jsx";
 import SellsGraphic from "../SellsGraphic/SellsGraphic.jsx";
 
 const Stadistics = () => {
   const dispatch = useDispatch();
+  // const navigate = useNavigate();
   const [user, setUser] = useState(null);
 
   useEffect(() => {

@@ -15,27 +15,34 @@ const BuyPage = () => {
     (async () => {
       if (!user) {
         const data = await getUserData();
-        setUser(data);
+        setUser(data?.id);
       }
     })();
-    dispatch(buyHistorial(user?.id));
-  }, [user, dispatch, user.id]);
+    dispatch(buyHistorial(user));
+  }, [user, dispatch]);
+
+  // const historial = useSelector((state) =>
+  // state?.historial.filter((el) => el.pagado === true)
+  //);
 
   const historial = useSelector((state) => state?.historial);
+  const historialFilter = historial.filter((el) => el.pagado === true);
+
+  console.log(historial);
 
   var repetidos = {};
 
-  historial.forEach(function (numero) {
-    repetidos[numero.productoId] = (repetidos[numero.productoId] || 0) + 1;
+  historial?.forEach(function (numero) {
+    repetidos[numero?.variantId] = (repetidos[numero?.variantId] || 0) + 1;
   });
 
   return (
     <div className={Styles.BuyPage}>
       <h1 className={Styles.BuyPageTittle}>Historial Compra</h1>
-      {historial.length ? (
-        historial
-          .reduce((arr, el) => {
-            if (!arr.find((d) => d.productoId === el.productoId)) {
+      {historialFilter.length ? (
+        historialFilter
+          ?.reduce((arr, el) => {
+            if (!arr.find((d) => d?.variantId === el?.variantId)) {
               arr.push(el);
             }
             return arr;
@@ -50,7 +57,7 @@ const BuyPage = () => {
               demographic={el?.demographic}
               date={el?.updatedAt.slice(0, 10)}
               status={el?.status}
-              amount={repetidos[el?.productoId]}
+              amount={repetidos[el?.variantId]}
             />
           ))
       ) : (

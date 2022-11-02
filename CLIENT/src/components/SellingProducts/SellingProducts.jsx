@@ -3,7 +3,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { getUserData } from "../../Utils/useLocalStorage";
 import SellingCard from "../SellingCard/SellingCard";
-import Styles from "./SellingProducts.module.css"
+import Styles from "./SellingProducts.module.css";
 
 const SellingProducts = () => {
   const [user, setUser] = useState(null);
@@ -13,12 +13,18 @@ const SellingProducts = () => {
     (async () => {
       if (!user) {
         const data = await getUserData();
-        setUser(data);
+        setUser(data?.id);
       }
-      axios.get(`http://localhost:3001/user/onSell/${user.id}`).then((res) => {
-        console.log(res)
-        setProducts(res.data);
-      });
+      axios
+        .get(
+          `${
+            process.env.REACT_APP_API || `http://localhost:3001`
+          }/user/onSell/${user}`
+        )
+        .then((res) => {
+          console.log(res);
+          setProducts(res.data);
+        });
     })();
   }, [user]);
 
@@ -28,14 +34,14 @@ const SellingProducts = () => {
       {products.length ? (
         products.map((el) => (
           <SellingCard
-            img={el.image[0]}
-            id={el.id}
-            name={el.name}
-            price={el.price}
-            size={el.size}
-            color={el.color}
-            isActivate={el.isActivate}
-            demographic={el.demographic}
+            img={el?.image[0]}
+            id={el?.id}
+            name={el?.name}
+            price={el?.price}
+            size={el?.size}
+            color={el?.color}
+            isActivate={el?.isActivate}
+            demographic={el?.demographic}
           />
         ))
       ) : (

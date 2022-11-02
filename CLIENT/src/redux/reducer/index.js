@@ -38,6 +38,7 @@ const initialState = {
   userReviews: [],
   sizes: [],
   productsStatus: "Cargando productos...",
+  Status: "Cargando...",
   favorites: [],
   loginError: null,
   cart: [],
