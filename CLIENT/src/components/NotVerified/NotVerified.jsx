@@ -1,4 +1,3 @@
-import {useEffect} from "react";
 import { Formik } from "formik";
 import Styles from './NotVerified.module.css';
 import axios from "axios";

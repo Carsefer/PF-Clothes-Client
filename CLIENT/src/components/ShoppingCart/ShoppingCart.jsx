@@ -1,11 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   getCartProducts,
   delProductCart,
-  delFromCart,
   clearCart,
   buyProduct,
   postHistorial,
@@ -21,7 +20,6 @@ import { validateUser } from "../../sessionUtils/jwtSession";
 
 const ShoppingCart = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [user, setUser] = useState(null);
 
   const cartList = useSelector((state) => state?.cart);
@@ -99,7 +97,6 @@ const ShoppingCart = () => {
                     delProductCart={() =>
                       dispatch(delProductCart(e?.variantID, user?.id, token))
                     }
-                    // delAllFromCart={() => dispatch(delFromCart(e.id, true))}
                     size={e.size}
                     color={e.color}
                     demographic={e.demographic}

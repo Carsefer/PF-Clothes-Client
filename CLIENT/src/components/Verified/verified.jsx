@@ -7,7 +7,7 @@ const Verified = () => {
     setTimeout(() => {
       navigate("/home");
     }, 5000);
-  }, []);
+  }, [navigate]);
   return <h1>Gracias por verificar tu cuenta</h1>;
 };
 

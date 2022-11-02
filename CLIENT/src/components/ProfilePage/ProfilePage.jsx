@@ -15,6 +15,7 @@ const ProfilePage = () => {
                 <Link className={Styles.profileLinks} to="/home/profile">PERFIL</Link>
                 <Link className={Styles.profileLinks} to="/home/profile/buys">COMPRAS</Link>
                 <Link className={Styles.profileLinks} to="/home/profile/sells">VENTAS</Link>
+                <Link className={Styles.profileLinks} to="/home/stadistics">ESTADISTICAS</Link>
             </div>
             <div className={Styles.profileRoutes}>
                 <Routes>
