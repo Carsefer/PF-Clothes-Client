@@ -64,7 +64,7 @@ const ShoppingCart = () => {
 
   var repetidos = {};
   cartList.forEach(function (numero) {
-    repetidos[numero.id] = (repetidos[numero.id] || 0) + 1;
+    repetidos[numero.variantID] = (repetidos[numero.variantID] || 0) + 1;
   });
 
   return (
@@ -94,7 +94,7 @@ const ShoppingCart = () => {
                     key={e?.id + 1}
                     name={e?.name?.charAt(0).toUpperCase() + e.name?.slice(1)}
                     price={e?.price}
-                    quantity={repetidos[e?.id]}
+                    quantity={repetidos[e?.variantID]}
                     image={e?.image}
                     delProductCart={() =>
                       dispatch(delProductCart(e?.variantID, user?.id, token))
