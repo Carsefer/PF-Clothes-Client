@@ -22,10 +22,12 @@ const BuyPage = () => {
   }, [user, dispatch]);
 
   // const historial = useSelector((state) =>
-  //   state?.historial.filter((el) => el.pagado === true)
-  // );
+  // state?.historial.filter((el) => el.pagado === true)
+  //);
 
   const historial = useSelector((state) => state?.historial);
+  const historialFilter = historial.filter((el) => el.pagado === true);
+
   console.log(historial);
 
   var repetidos = {};
@@ -37,8 +39,8 @@ const BuyPage = () => {
   return (
     <div className={Styles.BuyPage}>
       <h1 className={Styles.BuyPageTittle}>Historial Compra</h1>
-      {historial.length ? (
-        historial
+      {historialFilter.length ? (
+        historialFilter
           ?.reduce((arr, el) => {
             if (!arr.find((d) => d?.variantId === el?.variantId)) {
               arr.push(el);
