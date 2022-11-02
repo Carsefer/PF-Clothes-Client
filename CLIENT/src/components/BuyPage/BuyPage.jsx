@@ -15,11 +15,12 @@ const BuyPage = () => {
     (async () => {
       if (!user) {
         const data = await getUserData();
-        setUser(data);
+        setUser(data?.id);
       }
     })();
-    dispatch(buyHistorial(user?.id));
-  }, [user, dispatch, user.id]);
+
+    dispatch(buyHistorial(user));
+  }, [user, dispatch]);
 
   // const historial = useSelector((state) =>
   //   state?.historial.filter((el) => el.pagado === true)
@@ -37,7 +38,7 @@ const BuyPage = () => {
   return (
     <div className={Styles.BuyPage}>
       <h1 className={Styles.BuyPageTittle}>Historial Compra</h1>
-      {historial.length ? (
+      {historial?.length ? (
         historial
           ?.reduce((arr, el) => {
             if (!arr.find((d) => d.productoId === el.productoId)) {

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getUserData } from "../../Utils/useLocalStorage";
 import { getSellsHistory } from "../../redux/actions";
 import HistoryCard from "../HistoryCard/HistoryCard";
-import Styles from "./SellHistory.module.css"
+import Styles from "./SellHistory.module.css";
 
 const SellHistory = () => {
   const dispatch = useDispatch();
