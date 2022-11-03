@@ -223,13 +223,13 @@ const EditUser = () => {
                   !values.mail ? (
                     <div>
                       <button className={Styles.btnDisabled22} disabled>
-                        Editar producto
+                        Editar usuario 
                       </button>
                     </div>
                   ) : (
                     <div>
                       <button type="submit" className={Styles.submit22}>
-                        Editar producto
+                        Editar usuario 
                       </button>
                     </div>
                   )}
