@@ -30,6 +30,7 @@ const EditProduct = () => {
 
   return (
     <div className={Styles.container1}>
+      <button onClick={() => navigate(-1)}>Atrás</button>
       <h1 className={Styles.subtitle}>Editar producto</h1>
       <h3> {detail.name?.charAt(0).toUpperCase() + detail.name?.slice(1)}</h3>
       <div className={Styles.articleDetailsImageContainer}>
@@ -113,7 +114,9 @@ const EditProduct = () => {
                   </div>
                 )}
 
-                <p>Precio</p>
+                <label className={Styles.article_label} htmlFor="">
+                  Precio
+                </label>
                 <input
                   type="range"
                   id="price"
@@ -129,7 +132,9 @@ const EditProduct = () => {
                   autoComplete="off"
                 />
                 <p className={Styles.output}>{values.price}$</p>
-                <p>Cantidad</p>
+                <label className={Styles.article_label} htmlFor="">
+                  Cantidad
+                </label>
 
                 <input
                   type="range"
@@ -146,36 +151,54 @@ const EditProduct = () => {
                   autoComplete="off"
                 />
                 <p className={Styles.output}>{values.stock}</p>
-
-                <select
-                  name="demographic"
-                  className="select"
-                  onChange={handleChange}
-                >
-                  <option className="option" value="*" disabled selected hidden>
-                    Demografia
-                  </option>
-                  {demographic?.map((demo) => (
+                <div className={Styles.SelectContainer}>
+                  <select
+                    id={Styles.FilterProductsSelectColor}
+                    className={Styles.FilterProductsSelect}
+                    name="demographic"
+                    onChange={handleChange}
+                  >
                     <option
                       className="option"
-                      value={demo}
-                      onChange={handleChange}
+                      value="*"
+                      disabled
+                      selected
+                      hidden
                     >
-                      {demo}
+                      Demografia
                     </option>
-                  ))}
-                </select>
-                <select name="size" onChange={handleSelect}>
-                  <option className="option" value="" disabled selected hidden>
-                    Talles
-                  </option>
-                  {sizesList.map((s) => (
-                    <option key={s} value={s} onChange={handleChange}>
-                      {s}
+                    {demographic?.map((demo) => (
+                      <option
+                        className="option"
+                        value={demo}
+                        onChange={handleChange}
+                      >
+                        {demo}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    name="size"
+                    id={Styles.FilterProductsSelectColor}
+                    className={Styles.FilterProductsSelect}
+                    onChange={handleSelect}
+                  >
+                    <option
+                      className="option"
+                      value=""
+                      disabled
+                      selected
+                      hidden
+                    >
+                      Talles
                     </option>
-                  ))}
-                </select>
-                {/*   <div className="select-option">
+                    {sizesList.map((s) => (
+                      <option key={s} value={s} onChange={handleChange}>
+                        {s}
+                      </option>
+                    ))}
+                  </select>
+                  {/*   <div className="select-option">
                   {sizes?.map((d) => (
                     <div key={d} className="div-delete">
                       <p>{d}</p>
@@ -189,17 +212,27 @@ const EditProduct = () => {
                     </div>
                   ))}
                 </div> */}
-                <select name="color" onChange={handleSelect}>
-                  <option className="option" value="" disabled selected hidden>
-                    Colores
-                  </option>
-                  {colorsList.map((c) => (
-                    <option key={c} value={c} onChange={handleChange}>
-                      {c}
+                  <select
+                    name="color"
+                    className={Styles.FilterProductsSelect}
+                    onChange={handleSelect}
+                  >
+                    <option
+                      className="option"
+                      value=""
+                      disabled
+                      selected
+                      hidden
+                    >
+                      Colores
                     </option>
-                  ))}
-                </select>
-                {/*  <div className="select-option">
+                    {colorsList.map((c) => (
+                      <option key={c} value={c} onChange={handleChange}>
+                        {c}
+                      </option>
+                    ))}
+                  </select>
+                  {/*  <div className="select-option">
                   {colors?.map((e) => (
                     <div key={e} className="div-delete">
                       <p>{e}</p>
@@ -213,6 +246,7 @@ const EditProduct = () => {
                     </div>
                   ))}
                 </div> */}
+                </div>
                 <div>
                   {!values.name || !values.price ? (
                     <div>

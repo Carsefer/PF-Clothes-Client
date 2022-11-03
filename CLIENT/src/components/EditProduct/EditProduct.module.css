@@ -128,6 +128,44 @@
   top: 0;
   opacity: 0;
 }
+.FilterProductsSelect {
+  cursor: pointer;
+  color: #f7f7f7;
+  font-size: 16px;
+  margin-top: 5px;
+  height: 20%;
+
+  border-radius: 5px;
+  border: 5px solid #31b189;
+  background-color: #31b189;
+}
+
+#FilterProductsSelectTalle {
+  width: 30%;
+}
+
+#FilterProductsSelectColor {
+  width: 50%;
+}
+
+.FilterProductsSelectOptions:hover {
+  background-color: aqua;
+}
+.SelectContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.article_label {
+  margin-top: 1%;
+  font-size: 20px;
+}
+
+.formControl {
+  margin-top: 1%;
+  font-size: 12px;
+}
 .range {
   width: 300px;
   margin: 18px 0;
