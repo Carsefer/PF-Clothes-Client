@@ -60,6 +60,9 @@ const ShoppingCart = () => {
 
   //COMPRAR
   const handleCompra = (e) => {
+    setTimeout(() => {
+      setLoading(true);
+    }, 300);
     e.preventDefault();
     window.location.href = compra;
     dispatch(postHistorial(user, cartList));
@@ -67,9 +70,6 @@ const ShoppingCart = () => {
     //dispatch(sendEmailSellers(email, cartList));
     dispatch(clearCart(user, token));
     dispatch(clearLink());
-    setTimeout(() => {
-      setLoading(true);
-    }, 300);
   };
 
   var repetidos = {};

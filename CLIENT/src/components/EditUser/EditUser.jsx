@@ -35,6 +35,9 @@ const EditUser = () => {
 
   return (
     <div className={Styles.container11}>
+      <button className={Styles.BackButtons} onClick={() => navigate(-1)}>
+        Atrás
+      </button>
       <h1 className={Styles.subtitle1}>Datos :</h1>
       <Formik
         initialValues={{

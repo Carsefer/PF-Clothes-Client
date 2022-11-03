@@ -39,6 +39,9 @@ const CreateStore = () => {
 
   return (
     <div className={Styles.container1}>
+      <button className={Styles.BackButtons} onClick={() => navigate(-1)}>
+        Atrás
+      </button>
       <h1 className={Styles.subtitle}>Crear una tienda</h1>
       <Formik
         initialValues={{
@@ -123,7 +126,6 @@ const CreateStore = () => {
                   required
                   autoComplete="off"
                 />
-
                 <input
                   type="text"
                   id="location"
@@ -136,12 +138,14 @@ const CreateStore = () => {
                   required
                   autoComplete="off"
                 />
-                <label>Foto de perfil</label>
+                <label className={Styles.article_label} htmlFor="">
+                  Foto de perfil
+                </label>{" "}
                 <input
                   type="file"
                   id="profilePicture"
                   name="profilePictures"
-                  className={Styles.inputFile}
+                  className={`${Styles.formControl} form-control`}
                   value={values.profilePicture}
                   onChange={(e) => {
                     e.preventDefault();
@@ -165,7 +169,6 @@ const CreateStore = () => {
                     alt=""
                   />
                 </div>
-
                 <div>
                   {!values.location || !values.storeName ? (
                     <div>

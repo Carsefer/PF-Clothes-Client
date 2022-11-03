@@ -30,7 +30,10 @@ const EditProduct = () => {
 
   return (
     <div className={Styles.container1}>
-      <button onClick={() => navigate(-1)}>Atrás</button>
+      <button className={Styles.BackButtons} onClick={() => navigate(-1)}>
+        Atrás
+      </button>
+
       <h1 className={Styles.subtitle}>Editar producto</h1>
       <h3> {detail.name?.charAt(0).toUpperCase() + detail.name?.slice(1)}</h3>
       <div className={Styles.articleDetailsImageContainer}>
