@@ -56,7 +56,7 @@ const ShoppingCart = () => {
   //COMPRAR
   const handleCompra = (e) => {
     e.preventDefault();
-    //window.location.href = compra;
+    window.location.href = compra;
     dispatch(postHistorial(user, cartList));
     //dispatch(sendEmail(email, cartList));
     //dispatch(sendEmailSellers(email, cartList));
@@ -108,9 +108,9 @@ const ShoppingCart = () => {
             </article>
           </div>
         ) : (
-          <p>
+          <p className={Style.NoCart}>
             Aun no tienes productos agregado al carrito.{" "}
-            <Link to="/home">Encontralos!</Link>
+            <Link className={Style.CartLink} to="/home">Encontralos!</Link>
           </p>
         )}
         {cartList.length ? (
@@ -122,7 +122,13 @@ const ShoppingCart = () => {
         )}
         {cartList.length ? (
           <div>
-            {<button className={Style.CleanCartButtons}  onClick={(e) => handleCompra(e)}>COMPRAR PRODUCTOS</button>}
+            <button className={Style.CleanCartButtons} onClick={() => dispatch(buyProduct(user, cartList))}>
+              CARGAR PRODUCTOS
+            </button>
+            <button className={Style.CleanCartButtons} disabled={!compra} onClick={(e) => handleCompra(e)}>
+              COMPRAR PRODUCTOS
+            </button>
+            {/*<button className={Style.CleanCartButtons}  onClick={(e) => handleCompra(e)}>COMPRAR PRODUCTOS</button>*/}
           </div>
         ) : (
           <p></p>

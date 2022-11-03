@@ -21,11 +21,11 @@ const BuyPage = () => {
     dispatch(buyHistorial(user));
   }, [user, dispatch]);
 
-  /*const historial = useSelector((state) =>
+  const historial = useSelector((state) =>
     state?.historial.filter((el) => el.pagado === true)
-  );*/
+  );
 
-  const historial = useSelector((state) => state?.historial);
+  //const historial = useSelector((state) => state?.historial);
 
   console.log(historial);
 
