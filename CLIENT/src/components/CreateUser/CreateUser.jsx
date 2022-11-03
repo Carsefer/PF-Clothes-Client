@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { createUser } from "../../redux/actions";
 import { Formik } from "formik";
-import Toastify from 'toastify-js';
+import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
 import { useNavigate, Link } from "react-router-dom";
 import Styles from "./CreateUser.module.css";
@@ -9,17 +9,20 @@ import Styles from "./CreateUser.module.css";
 const CreateUser = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const toast = (text) => Toastify({
-    text: text,
-    duration: 2000,
-    position: "center",
-    className: Styles.toast,
-    backgroundColor: "#32CD32"
+  const toast = (text) =>
+    Toastify({
+      text: text,
+      duration: 2000,
+      position: "center",
+      className: Styles.toast,
+      backgroundColor: "#32CD32",
     }).showToast();
 
   return (
     <div className={Styles.container1}>
-      <button onClick={() => navigate("/home")}>Atrás</button>
+      <button className={Styles.BackButtons} onClick={() => navigate("/home")}>
+        Atrás
+      </button>
       <h1 className={Styles.subtitle}>Registrar usuario</h1>
       <Formik
         initialValues={{
@@ -39,24 +42,26 @@ const CreateUser = () => {
           let errors = {};
           if (!value.username.length) {
             errors.username = "Ingrese nombre de usuario";
-          } else if (value.username.length < 6 || value.username.length > 15){
-            errors.username = "Longitud valida desde 6 caracteres hasta 15 caracteres";
-          } else if (!/[A-Za-z0-9_]{6,15}$/.test(value.username)){
-            errors.username = `nombre de usuario invalido debe iniciar con caracteres
+          } else if (value.username.length < 6 || value.username.length > 15) {
+            errors.username =
+              "Longitud valida desde 6 caracteres hasta 15 caracteres";
+          } else if (!/[A-Za-z0-9_]{6,15}$/.test(value.username)) {
+            errors.username = `Nombre de usuario invalido debe iniciar con caracteres
             alfanumericos y solamente puede contener guiones bajos en le nombre de usuario`;
           } else if (!value.name.length) {
             errors.name = "Ingrese su nombre";
-          } else if(!/[A-Za-z]$/.test(value.name)){
-            errors.name = `nombre invalido solamente puede contener caracteres alfanumericos`
+          } else if (!/[A-Za-z]$/.test(value.name)) {
+            errors.name = `Nombre invalido solamente puede contener caracteres alfanumericos`;
           } else if (!value.lastname.length) {
             errors.lastname = "Ingrese su apellido";
-          } else if(!/[A-Za-z]$/.test(value.lastname)){
-            errors.lastname = `apellido invalido solamente puede contener caracteres alfanumericos`
+          } else if (!/[A-Za-z]$/.test(value.lastname)) {
+            errors.lastname = `Apellido invalido solamente puede contener caracteres alfanumericos`;
           } else if (!value.password.length) {
             errors.password = "Ingrese contraseña";
           } else if (value.password.length < 4 || value.password.length > 15) {
-            errors.password = "Contraseña debe tener minimo 4 caracteres y maximo 15 caracteres";
-          }else if (value.password !== value.passwords || !value.passwords) {
+            errors.password =
+              "Contraseña debe tener minimo 4 caracteres y maximo 15 caracteres";
+          } else if (value.password !== value.passwords || !value.passwords) {
             errors.passwords = "La contraseña no coincide, inténtalo de nuevo";
           } else if (!/^\d[0-9,$]*$/.test(value.phone) || !value.phone) {
             errors.phone = "Ingrese numero de telefono valido";
@@ -256,7 +261,7 @@ const CreateUser = () => {
                   </div>
                 )}
                 <div>
-                  {!/[A-Za-z0-9_]{6,15}$/.test(values.username) || 
+                  {!/[A-Za-z0-9_]{6,15}$/.test(values.username) ||
                   !/[A-Za-z]$/.test(values.name) ||
                   !/[A-Za-z]$/.test(values.lastname) ||
                   !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(

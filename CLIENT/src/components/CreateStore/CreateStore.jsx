@@ -16,6 +16,7 @@ const CreateStore = () => {
   const [user, setUser] = useState("");
   const [avatar, setAvatar] = useState("");
   const [profileBanner, setProfileBanner] = useState("");
+
   const toast = (text) =>
     Toastify({
       text: text,
@@ -40,6 +41,9 @@ const CreateStore = () => {
 
   return (
     <div className={Styles.container1}>
+      <button className={Styles.BackButtons} onClick={() => navigate(-1)}>
+        Atrás
+      </button>
       <h1 className={Styles.subtitle}>Crear una tienda</h1>
       <Formik
         initialValues={{
@@ -125,7 +129,6 @@ const CreateStore = () => {
                   required
                   autoComplete="off"
                 />
-
                 <input
                   type="text"
                   id="location"
@@ -138,12 +141,12 @@ const CreateStore = () => {
                   required
                   autoComplete="off"
                 />
-                <label>Foto de perfil</label>
+                c
                 <input
                   type="file"
                   id="profilePicture"
                   name="profilePictures"
-                  className={Styles.inputFile}
+                  className={`${Styles.formControl} form-control`}
                   value={values.profilePicture}
                   onChange={(e) => {
                     e.preventDefault();
@@ -167,14 +170,14 @@ const CreateStore = () => {
                     alt=""
                   />
                 </div>
-                <>
-                  <label>Banner</label>
-                </>
+                <label className={Styles.article_label} htmlFor="">
+                  Banner
+                </label>{" "}
                 <input
                   type="file"
                   id="banner"
                   name="banner"
-                  className={Styles.inputFile}
+                  className={`${Styles.formControl} form-control`}
                   value={values.banner}
                   onChange={(e) => {
                     e.preventDefault();

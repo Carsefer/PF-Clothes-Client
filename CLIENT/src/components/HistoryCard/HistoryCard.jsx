@@ -30,7 +30,7 @@ const HistoryCard = ({
   return (
     <div className={Styles.HistoryCardDiv}>
       <Link className={Styles.HistoryCard} to={`/Home/Product/${id}`}>
-        <div>
+        <div className={Styles.HistoryCardImgContainer}>
           <img
             className={Styles.HistoryCardImg}
             src={img}
@@ -41,10 +41,11 @@ const HistoryCard = ({
           <h3 className={Styles.HistoryCardName}>
             {name} {size} {color}
           </h3>
-          <p className={Styles.HistoryCardData}>
-            Precio: ${price} Demografia: {demographic} Cantidad: {amount} Fecha:{" "}
-            {date} Estado: {status}
-          </p>
+          <label className={Styles.HistoryCardData}>Precio: ${price}</label>
+          <label className={Styles.HistoryCardData}>Demografia: {demographic}</label>
+          <label className={Styles.HistoryCardData}>Cantidad: {amount}</label>
+          <label className={Styles.HistoryCardData}>Fecha: {date}</label>
+          <label className={Styles.HistoryCardData}>Estado: {status}</label>
         </div>
       </Link>
     </div>
