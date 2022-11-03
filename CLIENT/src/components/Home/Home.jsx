@@ -239,19 +239,21 @@ export default function Home() {
 
             <input
               className={Styles.FilterProductsHomeSelect}
-              id="text"
+              id={Styles.SearchBar}
               type="text"
               value={name}
               placeholder="Buscar productos..."
               onChange={(e) => filterByName(e)}
             />
             {/* <Orders setOrder={setOrder} /> */}
-            <b> ORDENAR POR:</b>
-            <select name="sort" value={sortBy} onChange={(e) => changeSort(e)}>
+            <label className={Styles.OrderBy}> ORDENAR POR:</label>
+            <select id={Styles.OrderBySelect} className={Styles.FilterProductsHomeSelect} name="sort" value={sortBy} onChange={(e) => changeSort(e)}>
               <option value="name">Nombre</option>
               <option value="price">Precio</option>
             </select>
             <select
+              id={Styles.OrderBySelect}
+              className={Styles.FilterProductsHomeSelect}
               name="order"
               value={orderBy}
               onChange={(e) => changeOrder(e)}
@@ -269,8 +271,9 @@ export default function Home() {
             </button>
           </div>
 
-          <div>
+          <div className={Styles.HomePaginado}>
             <button
+              className={Styles.PageButtons}
               onClick={(e) => {
                 start(e);
               }}
@@ -279,6 +282,7 @@ export default function Home() {
               {"Comienzo"}
             </button>
             <button
+              className={Styles.PageButtons}
               value={page}
               onClick={(e) => {
                 prev(e);
@@ -287,8 +291,9 @@ export default function Home() {
             >
               {"Anterior"}
             </button>
-            <button className="paginated_num">{page / 10}</button>
+            <button className={Styles.PageButtons}>{page / 10}</button>
             <button
+              className={Styles.PageButtons}
               onClick={(e) => {
                 next(e);
               }}

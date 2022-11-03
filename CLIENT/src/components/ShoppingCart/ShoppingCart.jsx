@@ -92,11 +92,13 @@ const ShoppingCart = () => {
           {cartList.length ? (
             <div>
               <h3>Productos</h3>
-              <article className="box">
-                <button onClick={() => dispatch(clearCart(user, token))}>
-                  Limpiar Carrito
-                </button>
-
+              <button
+                className={Style.CleanCartButtons}
+                onClick={() => dispatch(clearCart(user, token))}
+              >
+                Limpiar Carrito
+              </button>
+              <article className={Style.CartBox}>
                 {cartList
                   .reduce((arr, el) => {
                     if (!arr.find((d) => d.variantID === el.variantID)) {
@@ -124,9 +126,11 @@ const ShoppingCart = () => {
               </article>
             </div>
           ) : (
-            <p>
+            <p className={Style.NoCart}>
               Aun no tienes productos agregado al carrito.{" "}
-              <Link to="/home">Encontralos!</Link>
+              <Link className={Style.CartLink} to="/home">
+                Encontralos!
+              </Link>
             </p>
           )}
           {cartList.length ? (
@@ -138,13 +142,20 @@ const ShoppingCart = () => {
           )}
           {cartList.length ? (
             <div>
-              <button onClick={() => dispatch(buyProduct(user, cartList))}>
+              <button
+                className={Style.CleanCartButtons}
+                onClick={() => dispatch(buyProduct(user, cartList))}
+              >
                 CARGAR PRODUCTOS
               </button>
-              <button disabled={!compra} onClick={(e) => handleCompra(e)}>
+              <button
+                className={Style.CleanCartButtons}
+                disabled={!compra}
+                onClick={(e) => handleCompra(e)}
+              >
                 COMPRAR PRODUCTOS
               </button>
-              {/*             <button onClick={(e) => handleCompra(e)}>COMPRAR PRODUCTOS</button> */}
+              {/*<button className={Style.CleanCartButtons}  onClick={(e) => handleCompra(e)}>COMPRAR PRODUCTOS</button>*/}
             </div>
           ) : (
             <p></p>
@@ -156,3 +167,11 @@ const ShoppingCart = () => {
 };
 
 export default ShoppingCart;
+
+/*
+<button onClick={() => dispatch(buyProduct(user, cartList))}>
+              CARGAR PRODUCTOS
+            </button>
+            <button disabled={!compra} onClick={(e) => handleCompra(e)}>
+              COMPRAR PRODUCTOS
+            </button>*/
