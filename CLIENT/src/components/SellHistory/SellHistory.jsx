@@ -58,7 +58,7 @@ const SellHistory = () => {
             />
           ))
       ) : (
-        <label>Aun no tienes ventas.</label>
+        <label className={Styles.NoData}>Aun no tienes ventas.</label>
       )}
     </div>
   );

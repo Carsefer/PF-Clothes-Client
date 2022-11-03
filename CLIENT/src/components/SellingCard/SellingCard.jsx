@@ -50,9 +50,9 @@ const SellingCard = ({ img, name, price, id, size, color, demographic, isActive 
         </div>
       </Link>
       <Link to={`/home/editProduct/${id}`}>
-      <button>Modificar</button>
+      <button className={Styles.BackButtons}>Modificar</button>
       </Link>
-      {isAct ? (<button onClick={() => handleDesactivate()}>Desactivar</button>) : (<button onClick={() => handleActivate()}>Activar</button>)}
+      {isAct ? (<button className={Styles.BackButtons} onClick={() => handleDesactivate()}>Desactivar</button>) : (<button className={Styles.BackButtons} onClick={() => handleActivate()}>Activar</button>)}
     </div>
   );
 };
