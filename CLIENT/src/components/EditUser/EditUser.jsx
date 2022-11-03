@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { createStore, modifyUser } from "../../redux/actions";
+import { modifyUser } from "../../redux/actions";
 import { Formik } from "formik";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -40,21 +40,32 @@ const EditUser = () => {
         initialValues={{
           id: "",
           name: "",
+          lastname: "",
           mail: "",
           phone: "",
           username: "",
         }}
         validate={(value) => {
           let errors = {};
-
+          if (!value.name.length) {
+            errors.name = "Ingrese su nombre";
+          } else if (!/[A-Za-z]$/.test(value.name)) {
+            errors.name = `Nombre invalido solamente puede contener caracteres alfanumericos`;
+          } else if (!value.lastname.length) {
+            errors.lastname = "Ingrese su apellido";
+          } else if (!/[A-Za-z]$/.test(value.lastname)) {
+            errors.lastname = `Apellido invalido solamente puede contener caracteres alfanumericos`;
+          }
           return errors;
         }}
         onSubmit={(data, { resetForm }) => {
-          let { id, name, mail, phone, username } = data;
+          let { id, name, lastname, mail, phone, username } = data;
           id = user;
+          name = `${name} ${lastname}`;
           const a = {
             id,
             name,
+            lastname,
             mail,
             phone,
             username,
@@ -79,7 +90,7 @@ const EditUser = () => {
             toast("Exitoso");
             resetForm();
             navigate("/home/profile").then(window.location.reload());
-          }, 200);
+          }, 2000);
         }}
       >
         {({
@@ -95,6 +106,19 @@ const EditUser = () => {
               <div className={Styles.column1}>
                 <input
                   type="text"
+                  id="username"
+                  placeholder="Usuario"
+                  name="username"
+                  className={Styles.form11}
+                  value={values.username}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  onKeyUp={handleBlur}
+                  required
+                  autoComplete="off"
+                />
+                <input
+                  type="text"
                   id="name"
                   placeholder="Nombre"
                   name="name"
@@ -102,10 +126,35 @@ const EditUser = () => {
                   value={values.name}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  required
+                  autoComplete="off"
+                />
+                {touched.name && errors.name && (
+                  <div className={Styles.error}>
+                    {" "}
+                    <span>{errors.name}</span>{" "}
+                  </div>
+                )}
+
+                <input
+                  type="text"
+                  id="lastname"
+                  placeholder="Apellido"
+                  name="lastname"
+                  className={Styles.form11}
+                  value={values.lastname}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
                   onKeyUp={handleBlur}
                   required
                   autoComplete="off"
                 />
+                {touched.lastname && errors.lastname && (
+                  <div className={Styles.error}>
+                    {" "}
+                    <span>{errors.lastname}</span>{" "}
+                  </div>
+                )}
 
                 <input
                   type="text"
@@ -127,20 +176,6 @@ const EditUser = () => {
                   name="phone"
                   className={Styles.form11}
                   value={values.phone}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  onKeyUp={handleBlur}
-                  required
-                  autoComplete="off"
-                />
-                <></>
-                <input
-                  type="text"
-                  id="username"
-                  placeholder="Usurario"
-                  name="username"
-                  className={Styles.form11}
-                  value={values.username}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   onKeyUp={handleBlur}

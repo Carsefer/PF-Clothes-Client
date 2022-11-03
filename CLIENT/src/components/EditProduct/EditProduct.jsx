@@ -1,9 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import {
-  createProduct,
-  getProductDetail,
-  modifyProduct,
-} from "../../redux/actions";
+import { getProductDetail, modifyProduct } from "../../redux/actions";
 import { Formik } from "formik";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -48,8 +44,10 @@ const EditProduct = () => {
         }}
         validate={(value) => {
           let errors = {};
-
-          return errors;
+          if (!/[A-Za-z]$/.test(value.name)) {
+            errors.name = `Nombre invalido, puede contener numeros`;
+            return errors;
+          }
         }}
         onSubmit={(data, { resetForm }) => {
           let { name, demographic, price, stock } = data;
@@ -61,10 +59,11 @@ const EditProduct = () => {
               size: sizes,
             },
           ];
+          const image = detail.image;
           const a = {
             id: id,
             name,
-            image: detail?.image,
+            image: image,
             price,
             demographic,
             variants,
@@ -107,6 +106,13 @@ const EditProduct = () => {
                   required
                   autoComplete="off"
                 />
+                {touched.name && errors.name && (
+                  <div className={Styles.error}>
+                    {" "}
+                    <span>{errors.name}</span>{" "}
+                  </div>
+                )}
+
                 <p>Precio</p>
                 <input
                   type="range"
@@ -211,13 +217,13 @@ const EditProduct = () => {
                   {!values.name || !values.price ? (
                     <div>
                       <button className={Styles.btnDisabled2} disabled>
-                        Crear producto
+                        Editar producto
                       </button>
                     </div>
                   ) : (
                     <div>
                       <button type="submit" className={Styles.submit2}>
-                        Crear producto
+                        Editar producto
                       </button>
                     </div>
                   )}

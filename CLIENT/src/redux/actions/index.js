@@ -409,10 +409,10 @@ export const modifyProduct = (token, data) => {
 export const getSellsHistoryStadistics = (id) => {
   return async (dispatch) => {
     const historyStadiscic = await axios
-      .get(`/stores/sells/${id}`)
+      .get(`/store/sells/${id}`)
       .then((response) =>
         response.data.map((s) => {
-          const dateOfSell = s.created.split("T")[0];
+          const dateOfSell = s.created?.split("T")[0];
           return {
             size: s.size,
             price: s.price,
