@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { createProduct } from "../../redux/actions";
 import { Formik } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Styles from "./CreateProduct.module.css";
 import { validateUser } from "../../sessionUtils/jwtSession";
@@ -44,6 +44,16 @@ const CreateStore = () => {
     }
   };
 
+  const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/png"];
+
+  const imageRef = useRef(null);
+  console.log(productImage.split(";")[0]);
+  console.log(productImage.split(";")[0].split(":")[1]);
+  console.log(productImage.split(";")[0].split("/")[1]);
+
+  console.log(
+    SUPPORTED_FORMATS.includes(productImage.split(";")[0].split(":")[1])
+  );
   return (
     <div className={Styles.container1}>
       <button className={Styles.BackButtons} onClick={() => navigate(-1)}>
@@ -57,12 +67,27 @@ const CreateStore = () => {
           demographic: "",
           price: 0,
           stock: 0,
+          image: null,
+          size: "",
+          color: "",
         }}
         validate={(value) => {
+          console.log(value);
           let errors = {};
-
+          if (!value.name) {
+            errors.name = "Ingrese un nombre al producto";
+          } else if (!/^[\w][\S]{0,}$/.test(value.name)) {
+            errors.name = "nombre no puede iniciar con caracteres speciales";
+          } else if (
+            !SUPPORTED_FORMATS.includes(
+              productImage.split(";")[0].split(":")[1]
+            )
+          ) {
+            errors.image = "formatos soportados para imagen son jpg,jpeg y png";
+          }
           return errors;
         }}
+        //validationSchema={createSchema}
         onSubmit={(data, { resetForm }) => {
           let { id, name, demographic, price, stock } = data;
           id = user;
@@ -118,13 +143,19 @@ const CreateStore = () => {
                   required
                   autoComplete="off"
                 />
+                {touched.name && errors.name && (
+                  <div className={Styles.error}>
+                    {" "}
+                    <span>{errors.name}</span>{" "}
+                  </div>
+                )}
                 <label className={Styles.article_label} htmlFor="">
                   Imagen del producto
                 </label>
-
                 <input
                   type="file"
-                  id="formFile"
+                  ref={imageRef}
+                  id="image"
                   placeholder="Imagenes"
                   name="image"
                   accept="image/png, image/jpeg"
@@ -150,9 +181,16 @@ const CreateStore = () => {
                     alt=""
                   />
                 </div>
+                {touched.image && errors.image && (
+                  <div className={Styles.error}>
+                    {" "}
+                    <span>{errors.image}</span>{" "}
+                  </div>
+                )}
                 <label className={Styles.article_label} htmlFor="">
                   Precio
                 </label>
+
                 <input
                   type="range"
                   id="price"
@@ -285,7 +323,12 @@ const CreateStore = () => {
                   ))}
                 </div> */}
                 <div>
-                  {!values.name || !values.price ? (
+                  {!values.name ||
+                  !values.price ||
+                  !values.stock ||
+                  !values.demographic ||
+                  !sizes ||
+                  !colors ? (
                     <div>
                       <button className={Styles.btnDisabled2} disabled>
                         Crear producto

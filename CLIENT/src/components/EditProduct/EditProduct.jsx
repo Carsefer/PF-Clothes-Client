@@ -48,10 +48,12 @@ const EditProduct = () => {
         }}
         validate={(value) => {
           let errors = {};
-          if (!/[A-Za-z]$/.test(value.name)) {
-            errors.name = `Nombre invalido, puede contener numeros`;
-            return errors;
+          if (!value.name) {
+            errors.name = "Ingrese un nombre al producto";
+          } else if (!/^[\w][\S]{0,}$/.test(value.name)) {
+            errors.name = "No puede iniciar con caracteres especiales";
           }
+          return errors;
         }}
         onSubmit={(data, { resetForm }) => {
           let { name, demographic, price, stock } = data;
@@ -116,7 +118,6 @@ const EditProduct = () => {
                     <span>{errors.name}</span>{" "}
                   </div>
                 )}
-
                 <label className={Styles.article_label} htmlFor="">
                   Precio
                 </label>
@@ -251,7 +252,12 @@ const EditProduct = () => {
                 </div> */}
                 </div>
                 <div>
-                  {!values.name || !values.price ? (
+                  {!values.name ||
+                  !values.price ||
+                  !values.stock ||
+                  !values.demographic ||
+                  !sizes ||
+                  !colors ? (
                     <div>
                       <button className={Styles.btnDisabled2} disabled>
                         Editar producto
