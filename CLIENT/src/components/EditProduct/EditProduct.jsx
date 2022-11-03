@@ -49,7 +49,11 @@ const EditProduct = () => {
         }}
         validate={(value) => {
           let errors = {};
-
+          if(!value.name){
+            errors.name = 'Ingrese un nombre al producto';
+          }else if(!/^[\w][\S]{0,}$/.test(value.name)){
+            errors.name = 'nombre no puede iniciar con caracteres speciales';
+          }
           return errors;
         }}
         onSubmit={(data, { resetForm }) => {
@@ -108,6 +112,12 @@ const EditProduct = () => {
                   required
                   autoComplete="off"
                 />
+                {touched.name && errors.name && (
+                  <div className={Styles.error}>
+                    {" "}
+                    <span>{errors.name}</span>{" "}
+                  </div>
+                )}
                 <p>Precio</p>
                 <input
                   type="range"
@@ -209,7 +219,8 @@ const EditProduct = () => {
                   ))}
                 </div> */}
                 <div>
-                  {!values.name || !values.price ? (
+                  {!values.name || !values.price || !values.stock 
+                  || !values.demographic || !sizes || !colors? (
                     <div>
                       <button className={Styles.btnDisabled2} disabled>
                         Crear producto
