@@ -46,24 +46,32 @@ const EditUser = () => {
         }}
         validate={(value) => {
           let errors = {};
-          if (!value.username.length) {
-            errors.username = "Ingrese nombre de usuario";
-          } else if (value.username.length < 6 || value.username.length > 15){
-            errors.username = "Longitud valida desde 6 caracteres hasta 15 caracteres";
-          } else if (!/[A-Za-z0-9_]{6,15}$/.test(value.username)){
-            errors.username = `nombre de usuario invalido debe iniciar con caracteres
-            alfanumericos y solamente puede contener guiones bajos en le nombre de usuario`;
-          } else if (!value.name.length) {
-            errors.name = "Ingrese su nombre";
-          } else if(!/[A-Za-z]$/.test(value.name)){
-            errors.name = `nombre invalido solamente puede contener caracteres alfanumericos`
-          }  else if (!/^\d[0-9,$]*$/.test(value.phone) || !value.phone) {
-            errors.phone = "Ingrese numero de telefono valido";
-          } else if (
-            !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(value.mail)
-          ) {
-            errors.mail = "Ingrese un correo valido";
+          if(value.username){
+               if (value.username.length < 6 || value.username.length > 15){
+              errors.username = "Longitud valida desde 6 caracteres hasta 15 caracteres";
+            } else if (!/[A-Za-z0-9_]{6,15}$/.test(value.username)){
+              errors.username = `nombre de usuario invalido debe iniciar con caracteres
+              alfanumericos y solamente puede contener guiones bajos en le nombre de usuario`;
+            }
           }
+          if(value.name){
+            if(!/[A-Za-z]$/.test(value.name)){
+              errors.name = `nombre invalido solamente puede contener caracteres alfanumericos`
+            }
+          }
+          if(value.phone){
+             if (!/^\d[0-9,$]*$/.test(value.phone) || !value.phone) {
+              errors.phone = "Ingrese numero de telefono valido";
+            }
+          }
+          if(value.mail){
+            if (
+              !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(value.mail)
+            ) {
+              errors.mail = "Ingrese un correo valido";
+            }
+          }
+          
           return errors;
         }}
         onSubmit={(data, { resetForm }) => {
@@ -120,7 +128,6 @@ const EditUser = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   onKeyUp={handleBlur}
-                  required
                   autoComplete="off"
                 />
                 {touched.name && errors.name && (
@@ -138,7 +145,7 @@ const EditUser = () => {
                   value={values.mail}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  required
+                
                   autoComplete="off"
                 />
                 {touched.mail && errors.mail && (
@@ -157,7 +164,7 @@ const EditUser = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   onKeyUp={handleBlur}
-                  required
+                  
                   autoComplete="off"
                 />
                 {touched.phone && errors.phone && (
@@ -170,14 +177,14 @@ const EditUser = () => {
                 <input
                   type="text"
                   id="username"
-                  placeholder="Usurario"
+                  placeholder="Usuario"
                   name="username"
                   className={Styles.form11}
                   value={values.username}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   onKeyUp={handleBlur}
-                  required
+                  
                   autoComplete="off"
                 />
                 {touched.username && errors.username && (
