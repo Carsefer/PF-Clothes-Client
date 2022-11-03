@@ -420,7 +420,7 @@ export const getSellsHistoryStadistics = (id) => {
       .get(`/user/sells/${id}`)
       .then((response) =>
         response.data.map((s) => {
-          const dateOfSell = s.created.split("T")[0];
+          const dateOfSell = s.createdAt.split("T")[0];
           return {
             size: s.size,
             price: s.price,
