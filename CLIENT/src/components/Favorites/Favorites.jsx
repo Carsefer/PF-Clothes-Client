@@ -52,7 +52,7 @@ const Favorites = () => {
             {favorites?.length ? (
               favorites
                 ?.reduce((arr, el) => {
-                  if (!arr.find((d) => d?.productId === el?.productId)) {
+                  if (!arr.find((d) => d?.id === el?.id)) {
                     arr.push(el);
                   }
                   return arr;

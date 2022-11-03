@@ -44,20 +44,21 @@ const CreateStore = () => {
     }
   };
 
-  const SUPPORTED_FORMATS = [
-    "image/jpg",
-    "image/jpeg",
-    "image/png",
-  ]
+  const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/png"];
 
   const imageRef = useRef(null);
-  console.log(productImage.split(";")[0])
-  console.log(productImage.split(";")[0].split(":")[1])
+  console.log(productImage.split(";")[0]);
+  console.log(productImage.split(";")[0].split(":")[1]);
   console.log(productImage.split(";")[0].split("/")[1]);
 
-  console.log(SUPPORTED_FORMATS.includes(productImage.split(";")[0].split(":")[1]));
+  console.log(
+    SUPPORTED_FORMATS.includes(productImage.split(";")[0].split(":")[1])
+  );
   return (
     <div className={Styles.container1}>
+      <button className={Styles.BackButtons} onClick={() => navigate(-1)}>
+        Atrás
+      </button>
       <h1 className={Styles.subtitle}>Crear un Producto</h1>
       <Formik
         initialValues={{
@@ -66,20 +67,23 @@ const CreateStore = () => {
           demographic: "",
           price: 0,
           stock: 0,
-          image:null,
-          size:"",
-          color:"",
+          image: null,
+          size: "",
+          color: "",
         }}
         validate={(value) => {
           console.log(value);
           let errors = {};
-          if(!value.name){
-            errors.name = 'Ingrese un nombre al producto';
-          }else if(!/^[\w][\S]{0,}$/.test(value.name)){
-            errors.name = 'nombre no puede iniciar con caracteres speciales';
-          }else if(!SUPPORTED_FORMATS.includes(productImage.split(";")[0].split(":")[1]) 
-          ){
-            errors.image = 'formatos soportados para imagen son jpg,jpeg y png';
+          if (!value.name) {
+            errors.name = "Ingrese un nombre al producto";
+          } else if (!/^[\w][\S]{0,}$/.test(value.name)) {
+            errors.name = "nombre no puede iniciar con caracteres speciales";
+          } else if (
+            !SUPPORTED_FORMATS.includes(
+              productImage.split(";")[0].split(":")[1]
+            )
+          ) {
+            errors.image = "formatos soportados para imagen son jpg,jpeg y png";
           }
           return errors;
         }}
@@ -145,7 +149,9 @@ const CreateStore = () => {
                     <span>{errors.name}</span>{" "}
                   </div>
                 )}
-                <label>Imagen del producto</label>
+                <label className={Styles.article_label} htmlFor="">
+                  Imagen del producto
+                </label>
                 <input
                   type="file"
                   ref={imageRef}
@@ -153,7 +159,7 @@ const CreateStore = () => {
                   placeholder="Imagenes"
                   name="image"
                   accept="image/png, image/jpeg"
-                  className={Styles.form1}
+                  className={`${Styles.formControl} form-control`}
                   value={values.image}
                   onChange={(e) => {
                     e.preventDefault();
@@ -181,7 +187,10 @@ const CreateStore = () => {
                     <span>{errors.image}</span>{" "}
                   </div>
                 )}
-                <p>Precio</p>
+                <label className={Styles.article_label} htmlFor="">
+                  Precio
+                </label>
+
                 <input
                   type="range"
                   id="price"
@@ -197,7 +206,9 @@ const CreateStore = () => {
                   autoComplete="off"
                 />
                 <p className={Styles.output}>{values.price}$</p>
-                <p>Cantidad</p>
+                <label className={Styles.article_label} htmlFor="">
+                  Cantidad
+                </label>
 
                 <input
                   type="range"
@@ -214,36 +225,54 @@ const CreateStore = () => {
                   autoComplete="off"
                 />
                 <p className={Styles.output}>{values.stock}</p>
-
-                <select
-                  name="demographic"
-                  className="select"
-                  onChange={handleChange}
-                >
-                  <option className="option" value="*" disabled selected hidden>
-                    Demografia
-                  </option>
-                  {demographic?.map((demo) => (
+                <div className={Styles.SelectContainer}>
+                  <select
+                    id={Styles.FilterProductsSelectColor}
+                    className={Styles.FilterProductsSelect}
+                    name="demographic"
+                    onChange={handleChange}
+                  >
                     <option
                       className="option"
-                      value={demo}
-                      onChange={handleChange}
+                      value="*"
+                      disabled
+                      selected
+                      hidden
                     >
-                      {demo}
+                      Demografia
                     </option>
-                  ))}
-                </select>
-                <select name="size" onChange={handleSelect}>
-                  <option className="option" value="" disabled selected hidden>
-                    Talles
-                  </option>
-                  {sizesList.map((s) => (
-                    <option key={s} value={s} onChange={handleChange}>
-                      {s}
+                    {demographic?.map((demo) => (
+                      <option
+                        className="option"
+                        value={demo}
+                        onChange={handleChange}
+                      >
+                        {demo}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    name="size"
+                    id={Styles.FilterProductsSelectColor}
+                    className={Styles.FilterProductsSelect}
+                    onChange={handleSelect}
+                  >
+                    <option
+                      className="option"
+                      value=""
+                      disabled
+                      selected
+                      hidden
+                    >
+                      Talles
                     </option>
-                  ))}
-                </select>
-                {/*   <div className="select-option">
+                    {sizesList.map((s) => (
+                      <option key={s} value={s} onChange={handleChange}>
+                        {s}
+                      </option>
+                    ))}
+                  </select>
+                  {/*   <div className="select-option">
                   {sizes?.map((d) => (
                     <div key={d} className="div-delete">
                       <p>{d}</p>
@@ -257,16 +286,28 @@ const CreateStore = () => {
                     </div>
                   ))}
                 </div> */}
-                <select name="color" onChange={handleSelect}>
-                  <option className="option" value="" disabled selected hidden>
-                    Colores
-                  </option>
-                  {colorsList.map((c) => (
-                    <option key={c} value={c} onChange={handleChange}>
-                      {c}
+                  <select
+                    name="color"
+                    id={Styles.FilterProductsSelectColor}
+                    className={Styles.FilterProductsSelect}
+                    onChange={handleSelect}
+                  >
+                    <option
+                      className="option"
+                      value=""
+                      disabled
+                      selected
+                      hidden
+                    >
+                      Colores
                     </option>
-                  ))}
-                </select>
+                    {colorsList.map((c) => (
+                      <option key={c} value={c} onChange={handleChange}>
+                        {c}
+                      </option>
+                    ))}
+                  </select>
+                </div>
                 {/*  <div className="select-option">
                   {colors?.map((e) => (
                     <div key={e} className="div-delete">
@@ -282,9 +323,12 @@ const CreateStore = () => {
                   ))}
                 </div> */}
                 <div>
-                  {!values.name || !values.price 
-                  || !values.stock || !values.demographic 
-                  || !sizes || !colors ? (
+                  {!values.name ||
+                  !values.price ||
+                  !values.stock ||
+                  !values.demographic ||
+                  !sizes ||
+                  !colors ? (
                     <div>
                       <button className={Styles.btnDisabled2} disabled>
                         Crear producto

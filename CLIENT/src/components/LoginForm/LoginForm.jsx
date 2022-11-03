@@ -11,7 +11,7 @@ import "toastify-js/src/toastify.css";
 
 const LoginForm = () => {
   const search = useLocation().search;
-  const verified = new URLSearchParams(search).get('google');
+  const verified = new URLSearchParams(search).get("google");
   const [showPwd, setShowPwd] = useState(false);
   const navigate = useNavigate();
   const toast = (text) =>
@@ -43,10 +43,10 @@ const LoginForm = () => {
       .then(function (res) {
         console.log(res);
 
-        if(res.data && !res.data.token){
+        if (res.data && !res.data.token) {
           toast(res.data.message);
         }
-        
+
         if (res.data.token) {
           setSession(res.data.token);
           toastCorrect(res.data.message);
@@ -66,11 +66,11 @@ const LoginForm = () => {
 
   /* loging with google */
   const redirectToGoogleSSO = async () => {
-    if(verified === "not verified"){
+    if (verified === "not verified") {
       toast(`Por favor completa la verificación en el mail que te enviamos,
        en caso de ya haber completado la verificacion has caso omiso a esta notificación`);
     }
-    if(!verified){
+    if (!verified) {
       toastCorrect(`Se te enviara un mensaje de verificación a tu cuenta la primera vez que te loguées 
       con Google, 
     si ya hiciste el proceso de verificacion has caso omiso a esta notificacion`);
@@ -84,7 +84,12 @@ const LoginForm = () => {
   return (
     <>
       <div className={Styles.container}>
-        <button className={Styles.BackButtons} onClick={() => navigate("/home")}>Atrás</button>
+        <button
+          className={Styles.BackButtons}
+          onClick={() => navigate("/home")}
+        >
+          Atrás
+        </button>
         <div className={Styles.header}></div>
         <div className={Styles.subtitle}>
           <h2>Bienvenido devuelta.</h2>

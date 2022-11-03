@@ -15,7 +15,6 @@ const CreateStore = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState("");
   const [avatar, setAvatar] = useState("");
-  const [profileBanner, setProfileBanner] = useState("");
   const toast = (text) =>
     Toastify({
       text: text,
@@ -40,6 +39,9 @@ const CreateStore = () => {
 
   return (
     <div className={Styles.container1}>
+      <button className={Styles.BackButtons} onClick={() => navigate(-1)}>
+        Atrás
+      </button>
       <h1 className={Styles.subtitle}>Crear una tienda</h1>
       <Formik
         initialValues={{
@@ -69,7 +71,6 @@ const CreateStore = () => {
             createStore(token, {
               id: user,
               storeName,
-              banner: profileBanner,
               location,
               profilePicture: avatar,
             })
@@ -125,7 +126,6 @@ const CreateStore = () => {
                   required
                   autoComplete="off"
                 />
-
                 <input
                   type="text"
                   id="location"
@@ -138,12 +138,14 @@ const CreateStore = () => {
                   required
                   autoComplete="off"
                 />
-                <label>Foto de perfil</label>
+                <label className={Styles.article_label} htmlFor="">
+                  Foto de perfil
+                </label>{" "}
                 <input
                   type="file"
                   id="profilePicture"
                   name="profilePictures"
-                  className={Styles.inputFile}
+                  className={`${Styles.formControl} form-control`}
                   value={values.profilePicture}
                   onChange={(e) => {
                     e.preventDefault();
@@ -164,37 +166,6 @@ const CreateStore = () => {
                   <img
                     className={Styles.articleDetailsImage}
                     src={avatar}
-                    alt=""
-                  />
-                </div>
-                <>
-                  <label>Banner</label>
-                </>
-                <input
-                  type="file"
-                  id="banner"
-                  name="banner"
-                  className={Styles.inputFile}
-                  value={values.banner}
-                  onChange={(e) => {
-                    e.preventDefault();
-                    const reader = new FileReader();
-                    reader.readAsDataURL(e.target.files[0]);
-                    reader.onloadend = () => {
-                      let bannerData = reader.result;
-                      setProfileBanner(bannerData);
-                    };
-                    console.log(profileBanner);
-                  }}
-                  onBlur={handleBlur}
-                  onKeyUp={handleBlur}
-                  required
-                  autoComplete="off"
-                />
-                <div className={Styles.articleDetailsImageContainer}>
-                  <img
-                    className={Styles.articleDetailsImage}
-                    src={profileBanner}
                     alt=""
                   />
                 </div>

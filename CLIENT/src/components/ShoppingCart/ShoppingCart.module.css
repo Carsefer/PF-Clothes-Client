@@ -7,6 +7,27 @@
   text-align: center;
   min-height: 75vh;
 }
+.ProductContainer {
+  padding: 5%;
+  min-height: 100vh;
+  background-color: #ffe3b3;
+}
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #31b189;
+}
+.NavbarHomeLogo {
+  width: 60vh;
+  padding-top: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-left: 32%;
+}
 
 .NoCart {
   margin-top: 10%;
