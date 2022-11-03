@@ -93,3 +93,21 @@
   margin-top: 15px;
   cursor: pointer;
 }
+.BackButtons {
+  position: absolute;
+  font-size: large;
+  border-radius: 5px;
+  border: 5px solid #31b189;
+  background-color: #31b189;
+  color: white;
+  margin-left: 0.1%;
+  margin-right: 0.1%;
+  transition: 0.5s;
+  top: 5%;
+  left: 5%;
+}
+
+.BackButtons:hover {
+  background-color: #328a6e;
+  border: 5px solid #328a6e;
+}

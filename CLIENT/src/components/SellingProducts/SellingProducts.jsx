@@ -45,7 +45,7 @@ const SellingProducts = () => {
           />
         ))
       ) : (
-        <label>Aun no tienes productos en venta.</label>
+        <label className={Styles.NoData}>Aun no tienes productos en venta.</label>
       )}
     </div>
   );

@@ -32,7 +32,7 @@ const Favorites = () => {
   const profileId = user?.id;
   const token = validateUser();
   console.log(token);
-  
+
   return (
     <>
       <NavBar />
@@ -41,32 +41,45 @@ const Favorites = () => {
           {favorites?.length ? (
             <div>
               <button
+                className={Style.CleanButtons}
                 onClick={() => dispatch(clearFavorites(profileId, token))}
               >
                 Limpiar Favoritos
               </button>
             </div>
           ) : null}
-          ;
-          {favorites?.length ? (
-            favorites?.map((cloth) => (
-              <FavItem
-                key={cloth?.id}
-                id={cloth?.id}
-                img={cloth?.image}
-                title={cloth?.name[0].toUpperCase() + cloth?.name.substring(1)}
-                price={cloth?.price}
-                deleteFavorite={() => {
-                  dispatch(deleteFavorite(cloth?.id, profileId, token));
-                }}
-              />
-            ))
-          ) : (
-            <h1 className={Style.textFav}>
-              Aun no tienes productos favoritos.{" "}
-              <Link to="/home">Encontralos!</Link>
-            </h1>
-          )}
+          <div className={Style.FavCards}>
+            {favorites?.length ? (
+              favorites
+                ?.reduce((arr, el) => {
+                  if (!arr.find((d) => d?.id === el?.id)) {
+                    arr.push(el);
+                  }
+                  return arr;
+                }, [])
+                .map((cloth) => (
+                  <FavItem
+                    key={cloth?.id}
+                    id={cloth?.id}
+                    img={cloth?.image}
+                    title={
+                      cloth?.name[0].toUpperCase() + cloth?.name.substring(1)
+                    }
+                    price={cloth?.price}
+                    deleteFavorite={() => {
+                      dispatch(deleteFavorite(cloth?.id, profileId, token));
+                    }}
+                  />
+                ))
+            ) : (
+              <h1 className={Style.textFav}>
+                Aun no tienes productos favoritos.{" "}
+                <Link className={Style.FavLink} to="/home">
+                  Encontralos!
+                </Link>
+              </h1>
+            )}
+          </div>
         </div>
       </div>
     </>

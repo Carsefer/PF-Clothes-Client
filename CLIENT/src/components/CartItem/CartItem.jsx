@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "./CartItem.css";
+import Styles from "./CartItem.module.css";
 
 const CartItem = ({
   id,
@@ -20,18 +20,21 @@ const CartItem = ({
   }*/
 
   return (
-    <div className="cartItem">
-      <h4 className="NameCart">
-        {name} {size} {color} {demographic}
+    <div className={Styles.cartItem}>
+      <h4 className={Styles.NameCart}>
+        {name} {size} {color}
       </h4>
-      <Link to={`/home/product/${id}`}>
-        <img className="imageCart" src={image} alt="img not found"></img>
+      <h4 className={Styles.NameCart}>
+        {demographic}
+      </h4>
+      <Link className={Styles.imageCartContainer} to={`/home/product/${id}`}>
+        <img className={Styles.imageCart} src={image} alt="img not found"></img>
       </Link>
-      <h5 className="DetailCart">
+      <h5 className={Styles.DetailCart}>
         ${price}.00 x {quantity} = ${price * quantity}.00
       </h5>
-      <div className="ButtonsCart">
-        <button onClick={() => delProductCart(id)}>Eliminar producto</button>
+      <div className={Styles.ButtonsCart}>
+        <button className={Styles.ButtonCart} onClick={() => delProductCart(id)}>Eliminar producto</button>
         <br />
         {/* <button onClick={() => delAllFromCart(id, true)}>Eliminar Todos</button> */}
         <br />
