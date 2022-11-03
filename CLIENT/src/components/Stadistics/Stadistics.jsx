@@ -9,22 +9,22 @@ import { useDispatch, useSelector } from "react-redux";
 //import { useNavigate } from "react-router-dom";
 import NavBar from "../NavBar/NavBar.jsx";
 import SellsGraphic from "../SellsGraphic/SellsGraphic.jsx";
-import Styles from "./Stadistics.module.css"
+import Styles from "./Stadistics.module.css";
 
 const Stadistics = () => {
   const dispatch = useDispatch();
   // const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState("");
 
   useEffect(() => {
     (async () => {
       if (!user) {
         const data = await getUserData();
-        setUser(data);
+        setUser(data?.id);
       }
     })();
     const token = validateUser();
-    const id = user?.id;
+    const id = user;
     console.log(token);
     console.log(id);
     if (user !== null) {
@@ -46,7 +46,7 @@ const Stadistics = () => {
   };
 
   const daysMonth = () => {
-    const thisMonth = Date().split(" ")[1];
+    const thisMonth = Date()?.split(" ")[1];
     const thirtyDays = ["Abr", "Jun", "Sep", "Nov"];
     const thirtyOneDays = ["Jan", "Mar", "May", "Jul", "Aug", "Oct", "Dec"];
     let daysOfThisMonth = [];
@@ -134,19 +134,11 @@ const Stadistics = () => {
           </button> */}
       <h1>Panel de Control</h1>
       <div>
-        {
-          sellsHistory.length ? (
-            <SellsGraphic
-              days={days}
-              sells={sellsForDays()}
-            />
-          ) : (
-            <SellsGraphic
-              days={days}
-              sells={sellsInProcess()}
-            />
-          )
-        }
+        {sellsHistory.length ? (
+          <SellsGraphic days={days} sells={sellsForDays()} />
+        ) : (
+          <SellsGraphic days={days} sells={sellsInProcess()} />
+        )}
         {sellsHistory.length ? (
           sellsHistory.map((sell) => {
             const productInfo = products.find((p) => p.id === sell.productId);

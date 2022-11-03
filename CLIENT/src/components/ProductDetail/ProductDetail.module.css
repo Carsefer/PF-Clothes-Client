@@ -57,11 +57,18 @@
 
 .backButton {
   font-size: large;
+  border-radius: 5px;
   border: 5px solid #31b189;
   background-color: #31b189;
   color: white;
   margin-left: 2%;
   margin-right: 2%;
+  transition: 0.5s;
+}
+
+.backButton:hover {
+  background-color: #328a6e;
+  border: 5px solid #328a6e;
 }
 
 .buttonDeleteDetail {

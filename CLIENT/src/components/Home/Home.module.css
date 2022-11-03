@@ -1,5 +1,3 @@
-.Home{}
-
 .ProductsHomeContainer {
   display: flex;
   flex-direction: row;
@@ -22,10 +20,10 @@
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
-  overflow-y: scroll;
 }
 
 .FilterProductsHome {
+  justify-content: center;
   display: flex;
   flex-direction: row;
   margin-bottom: 0.5%;
@@ -35,7 +33,8 @@
 
 .FilterProductsHomeSelect {
   height: 100%;
-  margin-left: 2%;
+  margin-left: 0.25%;
+  margin-right: 0.25%;
   background-color: white;
   border: 1px solid #31b189;
   border-radius: 5px;
@@ -43,4 +42,43 @@
 
 .FilterProductsHomeSelect:hover {
   cursor: pointer;
+}
+
+#SearchBar {
+  width: 25%;
+}
+
+.OrderBy {
+  margin-top: 1vh;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+#OrderBySelect {
+  margin: 0%;
+  margin-left: 0.25%;
+  margin-right: 0.25%;
+}
+
+.HomePaginado {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.PageButtons {
+  font-size: small;
+  border-radius: 5px;
+  border: 5px solid #31b189;
+  background-color: #31b189;
+  color: white;
+  margin-left: 0.1%;
+  margin-right: 0.1%;
+  transition: 0.5s;
+}
+
+.PageButtons:hover {
+  background-color: #328a6e;
+  border: 5px solid #328a6e;
 }
