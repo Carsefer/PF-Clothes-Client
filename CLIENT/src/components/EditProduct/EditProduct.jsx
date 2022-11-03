@@ -50,7 +50,7 @@ const EditProduct = () => {
           let errors = {};
           if (!value.name) {
             errors.name = "Ingrese un nombre al producto";
-          } 
+          }
 
           return errors;
         }}
@@ -64,11 +64,10 @@ const EditProduct = () => {
               size: sizes,
             },
           ];
-          
+
           const a = {
             id: id,
             name,
-          
             price,
             demographic,
             variants,
