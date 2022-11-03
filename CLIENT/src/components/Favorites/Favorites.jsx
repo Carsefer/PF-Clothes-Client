@@ -32,7 +32,7 @@ const Favorites = () => {
   const profileId = user?.id;
   const token = validateUser();
   console.log(token);
-  
+
   return (
     <>
       <NavBar />
@@ -49,18 +49,27 @@ const Favorites = () => {
           ) : null}
           ;
           {favorites?.length ? (
-            favorites?.map((cloth) => (
-              <FavItem
-                key={cloth?.id}
-                id={cloth?.id}
-                img={cloth?.image}
-                title={cloth?.name[0].toUpperCase() + cloth?.name.substring(1)}
-                price={cloth?.price}
-                deleteFavorite={() => {
-                  dispatch(deleteFavorite(cloth?.id, profileId, token));
-                }}
-              />
-            ))
+            favorites
+              ?.reduce((arr, el) => {
+                if (!arr.find((d) => d?.productId === el?.productId)) {
+                  arr.push(el);
+                }
+                return arr;
+              }, [])
+              .map((cloth) => (
+                <FavItem
+                  key={cloth?.id}
+                  id={cloth?.id}
+                  img={cloth?.image}
+                  title={
+                    cloth?.name[0].toUpperCase() + cloth?.name.substring(1)
+                  }
+                  price={cloth?.price}
+                  deleteFavorite={() => {
+                    dispatch(deleteFavorite(cloth?.id, profileId, token));
+                  }}
+                />
+              ))
           ) : (
             <h1 className={Style.textFav}>
               Aun no tienes productos favoritos.{" "}
