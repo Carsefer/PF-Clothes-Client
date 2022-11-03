@@ -63,6 +63,9 @@
   text-align: center;
   font-size: 72px;
   margin-bottom: 5%;
+  word-wrap: break-word;
+  white-space: normal;
+  width: 100%;
 }
 
 .profileInformation {

@@ -239,7 +239,7 @@ export default function Home() {
 
             <input
               className={Styles.FilterProductsHomeSelect}
-              id="text"
+              id={Styles.SearchBar}
               type="text"
               value={name}
               placeholder="Buscar productos..."

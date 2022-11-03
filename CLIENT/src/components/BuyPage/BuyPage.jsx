@@ -60,7 +60,7 @@ const BuyPage = () => {
             />
           ))
       ) : (
-        <label>Aun no tienes compras.</label>
+        <label className={Styles.NoData}>Aun no tienes compras.</label>
       )}
     </div>
   );

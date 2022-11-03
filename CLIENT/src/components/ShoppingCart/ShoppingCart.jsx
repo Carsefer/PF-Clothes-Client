@@ -77,11 +77,10 @@ const ShoppingCart = () => {
         {cartList.length ? (
           <div>
             <h3>Productos</h3>
-            <article className="box">
-              <button onClick={() => dispatch(clearCart(user, token))}>
+            <button className={Style.CleanCartButtons} onClick={() => dispatch(clearCart(user, token))}>
                 Limpiar Carrito
               </button>
-
+            <article className={Style.CartBox}>
               {cartList
                 .reduce((arr, el) => {
                   if (!arr.find((d) => d.variantID === el.variantID)) {
@@ -123,7 +122,7 @@ const ShoppingCart = () => {
         )}
         {cartList.length ? (
           <div>
-            {<button onClick={(e) => handleCompra(e)}>COMPRAR PRODUCTOS</button>}
+            {<button className={Style.CleanCartButtons}  onClick={(e) => handleCompra(e)}>COMPRAR PRODUCTOS</button>}
           </div>
         ) : (
           <p></p>
