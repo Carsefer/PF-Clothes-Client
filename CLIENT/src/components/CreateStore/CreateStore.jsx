@@ -15,6 +15,8 @@ const CreateStore = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState("");
   const [avatar, setAvatar] = useState("");
+  const [profileBanner, setProfileBanner] = useState("");
+
   const toast = (text) =>
     Toastify({
       text: text,
@@ -71,6 +73,7 @@ const CreateStore = () => {
             createStore(token, {
               id: user,
               storeName,
+              banner: profileBanner,
               location,
               profilePicture: avatar,
             })
@@ -138,9 +141,7 @@ const CreateStore = () => {
                   required
                   autoComplete="off"
                 />
-                <label className={Styles.article_label} htmlFor="">
-                  Foto de perfil
-                </label>{" "}
+                c
                 <input
                   type="file"
                   id="profilePicture"
@@ -166,6 +167,37 @@ const CreateStore = () => {
                   <img
                     className={Styles.articleDetailsImage}
                     src={avatar}
+                    alt=""
+                  />
+                </div>
+                <label className={Styles.article_label} htmlFor="">
+                  Banner
+                </label>{" "}
+                <input
+                  type="file"
+                  id="banner"
+                  name="banner"
+                  className={`${Styles.formControl} form-control`}
+                  value={values.banner}
+                  onChange={(e) => {
+                    e.preventDefault();
+                    const reader = new FileReader();
+                    reader.readAsDataURL(e.target.files[0]);
+                    reader.onloadend = () => {
+                      let bannerData = reader.result;
+                      setProfileBanner(bannerData);
+                    };
+                    console.log(profileBanner);
+                  }}
+                  onBlur={handleBlur}
+                  onKeyUp={handleBlur}
+                  required
+                  autoComplete="off"
+                />
+                <div className={Styles.articleDetailsImageContainer}>
+                  <img
+                    className={Styles.articleDetailsImage}
+                    src={profileBanner}
                     alt=""
                   />
                 </div>
