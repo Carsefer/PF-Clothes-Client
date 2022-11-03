@@ -50,9 +50,8 @@ const EditProduct = () => {
           let errors = {};
           if (!value.name) {
             errors.name = "Ingrese un nombre al producto";
-          } else if (!/^[\w][\S]{0,}$/.test(value.name)) {
-            errors.name = "No puede iniciar con caracteres especiales";
-          }
+          } 
+
           return errors;
         }}
         onSubmit={(data, { resetForm }) => {
@@ -65,11 +64,11 @@ const EditProduct = () => {
               size: sizes,
             },
           ];
-          const image = detail.image;
+          
           const a = {
             id: id,
             name,
-            image: image,
+          
             price,
             demographic,
             variants,
