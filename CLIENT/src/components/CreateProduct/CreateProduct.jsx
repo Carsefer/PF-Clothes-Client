@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { createProduct } from "../../redux/actions";
 import { Formik } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Styles from "./CreateProduct.module.css";
 import { validateUser } from "../../sessionUtils/jwtSession";
@@ -9,7 +9,6 @@ import { getUserData } from "../../Utils/useLocalStorage";
 import { demographic, colorsList, sizesList } from "./index.js";
 import Toastify from "toastify-js";
 import "toastify-js/src/toastify.css";
-import * as Yup from 'yup';
 
 const CreateStore = () => {
   const dispatch = useDispatch();
@@ -51,17 +50,12 @@ const CreateStore = () => {
     "image/png",
   ]
 
-  const createSchema = Yup.object().shape({
-    name: Yup.string()
-    .min(2,'Ingrese un Nombre')
-    .max(15,'hasta 15 caracteres permitidos')
-    .required(),
-    image:Yup.mixed()
-    .required()
-    .test("FILE_FORMAT","formatos validos jpg, jpeg y png.",
-    value => value || (value && !SUPPORTED_FORMATS.includes(value.type))),
-  });
+  const imageRef = useRef(null);
+  console.log(productImage.split(";")[0])
+  console.log(productImage.split(";")[0].split(":")[1])
+  console.log(productImage.split(";")[0].split("/")[1]);
 
+  console.log(SUPPORTED_FORMATS.includes(productImage.split(";")[0].split(":")[1]));
   return (
     <div className={Styles.container1}>
       <h1 className={Styles.subtitle}>Crear un Producto</h1>
@@ -69,12 +63,27 @@ const CreateStore = () => {
         initialValues={{
           id: "",
           name: "",
-          image:null,
           demographic: "",
           price: 0,
           stock: 0,
+          image:null,
+          size:"",
+          color:"",
         }}
-        validationSchema={createSchema}
+        validate={(value) => {
+          console.log(value);
+          let errors = {};
+          if(!value.name){
+            errors.name = 'Ingrese un nombre al producto';
+          }else if(!/^[\w][\S]{0,}$/.test(value.name)){
+            errors.name = 'nombre no puede iniciar con caracteres speciales';
+          }else if(!SUPPORTED_FORMATS.includes(productImage.split(";")[0].split(":")[1]) 
+          ){
+            errors.image = 'formatos soportados para imagen son jpg,jpeg y png';
+          }
+          return errors;
+        }}
+        //validationSchema={createSchema}
         onSubmit={(data, { resetForm }) => {
           let { id, name, demographic, price, stock } = data;
           id = user;
@@ -139,6 +148,7 @@ const CreateStore = () => {
                 <label>Imagen del producto</label>
                 <input
                   type="file"
+                  ref={imageRef}
                   id="image"
                   placeholder="Imagenes"
                   name="image"
@@ -272,7 +282,9 @@ const CreateStore = () => {
                   ))}
                 </div> */}
                 <div>
-                  {!values.name || !values.price ? (
+                  {!values.name || !values.price 
+                  || !values.stock || !values.demographic 
+                  || !sizes || !colors ? (
                     <div>
                       <button className={Styles.btnDisabled2} disabled>
                         Crear producto
