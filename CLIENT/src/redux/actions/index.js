@@ -50,13 +50,16 @@ export const getProducts = () => {
 export const getProductDetail = (id) => {
   return async function (dispatch) {
     const detail = await axios.get(`/product/${id}`);
+    const profileData = await axios.get(
+      `/user/getProfile/${detail.data.profileId}`
+    );
+    console.log(profileData);
     dispatch({
       type: GET_PRODUCT_DETAIL,
-      payload: detail.data,
+      payload: { ...detail.data, storeName: profileData.data.storeName },
     });
   };
 };
-
 export const getProductDetailReviews = (id) => {
   return async function (dispatch) {
     const reviews = await axios.get(`/product/review/${id}`);
