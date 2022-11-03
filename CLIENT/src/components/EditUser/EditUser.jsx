@@ -21,12 +21,14 @@ const EditUser = () => {
     }).showToast();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [currentUserData, setCurrentUser] = useState("")
   const [user, setUser] = useState("");
   useEffect(() => {
     (async () => {
       if (!user) {
         const data = await getUserData();
         setUser(data?.id);
+        setCurrentUser(data?.name)
       }
     })();
   }, [user]);
@@ -50,39 +52,56 @@ const EditUser = () => {
         }}
         validate={(value) => {
           let errors = {};
-          if (!value.username.length) {
-            errors.username = "Ingrese nombre de usuario";
-          } else if (value.username.length < 6 || value.username.length > 15) {
-            errors.username =
-              "Longitud valida desde 6 caracteres hasta 15 caracteres";
-          } else if (!/[A-Za-z0-9_]{6,15}$/.test(value.username)) {
-            errors.username = `Nombre de usuario invalido debe iniciar con caracteres
-            alfanumericos y solamente puede contener guiones bajos en le nombre de usuario`;
-          } else if (!value.name.length) {
-            errors.name = "Ingrese su nombre";
-          } else if (!value.lastname.length) {
-            errors.lastname = "Ingrese su apellido";
-          } else if (!/[A-Za-z]$/.test(value.lastname)) {
-            errors.lastname = `Apellido invalido,no puede contener numeros`;
-          } else if (!/[A-Za-z]$/.test(value.name)) {
-            errors.name = `Nombre invalido,no puede contener numeros`;
-          } else if (!/^\d[0-9,$]*$/.test(value.phone) || !value.phone) {
-            errors.phone = "Ingrese numero de telefono valido";
-          } else if (
-            !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(value.mail)
-          ) {
-            errors.mail = "Ingrese un correo valido";
+          if(value.username){
+            if (value.username.length < 6 || value.username.length > 15) {
+              errors.username =
+                "Longitud valida desde 6 caracteres hasta 15 caracteres";
+            } else if (!/[A-Za-z0-9_]{6,15}$/.test(value.username)) {
+              errors.username = `Nombre de usuario invalido debe iniciar con caracteres
+              alfanumericos y solamente puede contener guiones bajos en le nombre de usuario`;
+            }
           }
+          if(value.name){
+            if (!/[A-Za-z]$/.test(value.name)) {
+              errors.name = `Nombre invalido,no puede contener numeros`;
+            }
+            else if(!value.lastname){
+              errors.lastname = "Necesitas un apellido"
+            } 
+          }
+          if(value.lastname){
+            if (!/[A-Za-z]$/.test(value.lastname)) {
+              errors.lastname = `Apellido invalido,no puede contener numeros`;
+            }
+            else if(!value.name){
+              errors.name = "Necesitas un nombre"
+            } 
+          }
+          if(value.phone){
+            if (!/^\d[0-9,$]*$/.test(value.phone)) {
+              errors.phone = "Ingrese numero de telefono valido";
+            } 
+          }
+          if(value.mail){
+            if (
+              !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(value.mail)
+            ) {
+              errors.mail = "Ingrese un correo valido";
+            }
+          }
+           
           return errors;
         }}
         onSubmit={(data, { resetForm }) => {
           let { id, name, lastname, mail, phone, username } = data;
           id = user;
-          name = `${name} ${lastname}`;
+          if(name && lastname) name = `${name} ${lastname}`;
+          else{
+            name = currentUserData
+          }
           const a = {
             id,
             name,
-            lastname,
             mail,
             phone,
             username,
@@ -131,7 +150,7 @@ const EditUser = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   onKeyUp={handleBlur}
-                  required
+                  
                   autoComplete="off"
                 />
                 {touched.username && errors.username && (
@@ -149,7 +168,7 @@ const EditUser = () => {
                   value={values.name}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  required
+                  
                   autoComplete="off"
                 />
                 {touched.name && errors.name && (
@@ -169,7 +188,7 @@ const EditUser = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   onKeyUp={handleBlur}
-                  required
+                  
                   autoComplete="off"
                 />
                 {touched.lastname && errors.lastname && (
@@ -187,7 +206,7 @@ const EditUser = () => {
                   value={values.mail}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  required
+                  
                   autoComplete="off"
                 />
                 {touched.mail && errors.mail && (
@@ -206,7 +225,7 @@ const EditUser = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   onKeyUp={handleBlur}
-                  required
+                  
                   autoComplete="off"
                 />
                 {touched.phone && errors.phone && (
@@ -216,23 +235,9 @@ const EditUser = () => {
                   </div>
                 )}
                 <div>
-                  {!values.name ||
-                  !values.lastname ||
-                  !values.username ||
-                  !values.phone ||
-                  !values.mail ? (
-                    <div>
-                      <button className={Styles.btnDisabled22} disabled>
+                <button type="submit" className={Styles.submit22}>
                         Editar usuario 
                       </button>
-                    </div>
-                  ) : (
-                    <div>
-                      <button type="submit" className={Styles.submit22}>
-                        Editar usuario 
-                      </button>
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
