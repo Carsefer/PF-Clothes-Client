@@ -20,7 +20,7 @@ const CreateUser = () => {
 
   return (
     <div className={Styles.container1}>
-      <button className={Styles.BackButtons} onClick={() => navigate("/home")}>
+      <button className={Styles.BackButtons} onClick={() => navigate(-1)}>
         Atrás
       </button>
       <h1 className={Styles.subtitle}>Registrar usuario</h1>
