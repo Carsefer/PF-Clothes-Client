@@ -60,7 +60,7 @@ const CreateUser = () => {
             errors.password = "Ingrese contraseña";
           } else if (value.password.length < 4 || value.password.length > 15) {
             errors.password =
-              "Contraseña debe tener minimo 4 caracteres y maximo 15 caracteres";
+              "Contraseña debe tener minimo 4 caracteres y solo puede contener números;
           } else if (value.password !== value.passwords || !value.passwords) {
             errors.passwords = "La contraseña no coincide, inténtalo de nuevo";
           } else if (!/^\d[0-9,$]*$/.test(value.phone) || !value.phone) {
