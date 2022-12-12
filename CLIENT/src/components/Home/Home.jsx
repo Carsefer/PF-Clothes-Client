@@ -14,7 +14,7 @@ import { useLocalStorage } from "../../Utils/useLocalStorage";
 export default function Home() {
   const dispatch = useDispatch();
   const search = useLocation().search;
-  const gtoken = new URLSearchParams(search).get('gtoken');
+  const gtoken = new URLSearchParams(search).get("gtoken");
 
   const [price, setPrice] = useLocalStorage("price", "");
   const [size, setSize] = useLocalStorage("size", "");
@@ -27,8 +27,8 @@ export default function Home() {
   const [user, setUser] = useState("");
 
   useEffect(() => {
-    if(gtoken){
-     setSession(gtoken); 
+    if (gtoken) {
+      setSession(gtoken);
     }
     dispatch(
       filterProducts(
@@ -236,7 +236,7 @@ export default function Home() {
               <option value="Rosado">Rosado</option>{" "}
               <option value="Verde">Verde</option>{" "}
             </select>
-
+            &nbsp;&nbsp;&nbsp;&nbsp;
             <input
               className={Styles.FilterProductsHomeSelect}
               id={Styles.SearchBar}
@@ -246,8 +246,17 @@ export default function Home() {
               onChange={(e) => filterByName(e)}
             />
             {/* <Orders setOrder={setOrder} /> */}
-            <label className={Styles.OrderBy}> ORDENAR POR:</label>
-            <select id={Styles.OrderBySelect} className={Styles.FilterProductsHomeSelect} name="sort" value={sortBy} onChange={(e) => changeSort(e)}>
+            <label className={Styles.OrderBy}>
+              {" "}
+              &nbsp;&nbsp;&nbsp;&nbsp;ORDENAR POR
+            </label>
+            <select
+              id={Styles.OrderBySelect}
+              className={Styles.FilterProductsHomeSelect}
+              name="sort"
+              value={sortBy}
+              onChange={(e) => changeSort(e)}
+            >
               <option value="name">Nombre</option>
               <option value="price">Precio</option>
             </select>
@@ -261,6 +270,7 @@ export default function Home() {
               <option value="ASC">Ascendente</option>
               <option value="DESC">Descendente</option>
             </select>
+            &nbsp;&nbsp;&nbsp;&nbsp;
             <button
               className={Styles.FilterProductsHomeSelect}
               onClick={(e) => {

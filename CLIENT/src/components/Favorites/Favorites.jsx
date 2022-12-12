@@ -36,21 +36,20 @@ const Favorites = () => {
   return (
     <>
       <NavBar />
-      <div className={Style.Container__Fav}>
-        <div className={Style.containerFavorites}>
-          {favorites?.length ? (
-            <div>
-              <button
-                className={Style.CleanButtons}
-                onClick={() => dispatch(clearFavorites(profileId, token))}
-              >
-                Limpiar Favoritos
-              </button>
-            </div>
-          ) : null}
-          <div className={Style.FavCards}>
-            {favorites?.length ? (
-              favorites
+      <div className={Style.containerFavorites}>
+        <h2>Favoritos</h2>
+
+        {favorites?.length ? (
+          <div>
+            <button
+              className={Style.CleanButtons}
+              onClick={() => dispatch(clearFavorites(profileId, token))}
+            >
+              Limpiar Favoritos
+            </button>
+
+            <article className={Style.FavCards}>
+              {favorites
                 ?.reduce((arr, el) => {
                   if (!arr.find((d) => d?.id === el?.id)) {
                     arr.push(el);
@@ -70,17 +69,17 @@ const Favorites = () => {
                       dispatch(deleteFavorite(cloth?.id, profileId, token));
                     }}
                   />
-                ))
-            ) : (
-              <h1 className={Style.textFav}>
-                Aun no tienes productos favoritos.{" "}
-                <Link className={Style.FavLink} to="/home">
-                  Encontralos!
-                </Link>
-              </h1>
-            )}
+                ))}
+            </article>
           </div>
-        </div>
+        ) : (
+          <p className={Style.textFav}>
+            Aun no tienes productos favoritos.{" "}
+            <Link className={Style.FavLink} to="/home">
+              Encontralos!
+            </Link>
+          </p>
+        )}
       </div>
     </>
   );

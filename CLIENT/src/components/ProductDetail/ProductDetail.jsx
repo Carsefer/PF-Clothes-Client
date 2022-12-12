@@ -42,11 +42,11 @@ const ProductDetail = () => {
   const detail = useSelector((state) => state.productDetail);
   const reviews = useSelector((state) => state.productReviews);
   const favorites = useSelector((state) => state.favorites);
-  const historial = useSelector((state) =>
-    state?.historial.filter((el) => el.pagado === true)
-  );
+  // const historial = useSelector((state) =>
+  //   state?.historial.filter((el) => el.pagado === true)
+  // );
   const [load, setLoading] = useState(false);
-  //const historial = useSelector((state) => state?.historial);
+  const historial = useSelector((state) => state?.historial);
   const results = useSelector((state) => state.Status);
 
   console.log(historial);
