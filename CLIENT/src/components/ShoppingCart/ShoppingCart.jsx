@@ -1,8 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../images/bitmap2.png";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 
 import {
   getCartProducts,
@@ -23,12 +25,23 @@ import { validateUser } from "../../sessionUtils/jwtSession";
 
 const ShoppingCart = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [user, setUser] = useState("");
   const [load, setLoading] = useState(false);
   const [email, setEmail] = useState("");
 
   const cartList = useSelector((state) => state?.cart);
   const compra = useSelector((state) => state.linkCompra);
+
+  const toast = (text, color = "#32CD32") =>
+    Toastify({
+      text: text,
+      duration: 1500,
+      position: "center",
+      className: Style.toast,
+      backgroundColor: color,
+    }).showToast();
 
   useEffect(() => {
     (async () => {
@@ -42,7 +55,7 @@ const ShoppingCart = () => {
     const id = user;
     const token = validateUser();
     dispatch(getCartProducts(id, token));
-    dispatch(deleteRegister(id));
+    //dispatch(deleteRegister(id));
   }, [user, dispatch]);
   const token = validateUser();
 
@@ -60,16 +73,27 @@ const ShoppingCart = () => {
 
   //COMPRAR
   const handleCompra = (e) => {
-    setTimeout(() => {
-      setLoading(true);
-    }, 300);
+    ////////CON MERCADOPAGO
+    //const handleCompra = (e) => {
+    // setTimeout(() => {
+    //   setLoading(true);
+    // }, 300);
+    // e.preventDefault();
+    // window.location.href = compra;
+    // dispatch(postHistorial(user, cartList));
+    // //dispatch(sendEmail(email, cartList));
+    // //dispatch(sendEmailSellers(email, cartList));
+    // dispatch(clearCart(user, token));
+    // dispatch(clearLink());
+
+    ////////SIN MERCADO PAGO
     e.preventDefault();
-    window.location.href = compra;
     dispatch(postHistorial(user, cartList));
-    //dispatch(sendEmail(email, cartList));
-    //dispatch(sendEmailSellers(email, cartList));
-    dispatch(clearCart(user, token));
-    dispatch(clearLink());
+    toast("Compra exitosa");
+    setTimeout(() => {
+      navigate("/home/profile/buys");
+      dispatch(clearCart(user, token));
+    }, 1500);
   };
 
   var repetidos = {};
@@ -91,7 +115,6 @@ const ShoppingCart = () => {
           <h2>Carrito de Compras</h2>
           {cartList.length ? (
             <div>
-              <h3>Productos</h3>
               <button
                 className={Style.CleanCartButtons}
                 onClick={() => dispatch(clearCart(user, token))}
@@ -142,15 +165,15 @@ const ShoppingCart = () => {
           )}
           {cartList.length ? (
             <div>
-              <button
+              {/* <button
                 className={Style.CleanCartButtons}
                 onClick={() => dispatch(buyProduct(user, cartList))}
               >
                 CARGAR PRODUCTOS
-              </button>
+              </button> */}
               <button
                 className={Style.CleanCartButtons}
-                disabled={!compra}
+                // disabled={!compra}
                 onClick={(e) => handleCompra(e)}
               >
                 COMPRAR PRODUCTOS

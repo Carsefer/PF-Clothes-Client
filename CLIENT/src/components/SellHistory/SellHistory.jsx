@@ -23,9 +23,11 @@ const SellHistory = () => {
     dispatch(getSellsHistory(user));
   }, [user, dispatch]);
 
-  const historial = useSelector((state) =>
-    state?.sellsHistory.filter((el) => el.pagado === true)
-  );
+  // const historial = useSelector((state) =>
+  //   state?.sellsHistory.filter((el) => el.pagado === true)
+  // );
+
+  const historial = useSelector((state) => state?.sellsHistory);
 
   var repetidos = {};
 
