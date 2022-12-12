@@ -58,9 +58,12 @@ const CreateUser = () => {
             errors.lastname = `Apellido invalido solamente puede contener caracteres alfanumericos`;
           } else if (!value.password.length) {
             errors.password = "Ingrese contraseña";
-          } else if (value.password.length < 4 || !/^\d[0-9,$]*$/.test(value.password)) {
+          } else if (
+            value.password.length < 4 ||
+            !/^\d[0-9,$]*$/.test(value.password)
+          ) {
             errors.password =
-              "Contraseña debe tener minimo 4 caracteres y solo puede contener números;
+              "Contraseña debe tener minimo 4 caracteres y solo puede contener números";
           } else if (value.password !== value.passwords || !value.passwords) {
             errors.passwords = "La contraseña no coincide, inténtalo de nuevo";
           } else if (!/^\d[0-9,$]*$/.test(value.phone) || !value.phone) {
@@ -268,7 +271,8 @@ const CreateUser = () => {
                     values.mail
                   ) ||
                   !values.password ||
-                  !(values.password.length < 4 || values.password > 15) || !/^\d[0-9,$]*$/.test(values.password) || 
+                  !(values.password.length < 4 || values.password > 15) ||
+                  !/^\d[0-9,$]*$/.test(values.password) ||
                   !/^\d[0-9,$]*$/.test(values.phone) ||
                   values.passwords !== values.password ? (
                     <div>
