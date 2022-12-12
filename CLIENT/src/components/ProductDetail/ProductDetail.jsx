@@ -41,11 +41,11 @@ const ProductDetail = () => {
   const detail = useSelector((state) => state.productDetail);
   const reviews = useSelector((state) => state.productReviews);
   const favorites = useSelector((state) => state.favorites);
-  const historial = useSelector((state) =>
-    state?.historial.filter((el) => el.pagado === true)
-  );
+  // const historial = useSelector((state) =>
+  //   state?.historial.filter((el) => el.pagado === true)
+  // );
   const [load, setLoading] = useState(false);
-  //const historial = useSelector((state) => state?.historial);
+  const historial = useSelector((state) => state?.historial);
   const results = useSelector((state) => state.Status);
 
   console.log(historial);
@@ -224,7 +224,14 @@ const ProductDetail = () => {
               <h1 className={Style.detailsTitle}>
                 {detail.name?.charAt(0).toUpperCase() + detail.name?.slice(1)}
               </h1>
-              <h2>Tienda: {user?.storeName}</h2>
+              {detail?.storeName ? (
+                <>
+                  <h2>Tienda: {detail?.storeName}</h2>
+                </>
+              ) : (
+                <h2>Tienda: Independiente</h2>
+              )}
+
               <label
                 id={Style.article_price}
                 className={Style.article_label}

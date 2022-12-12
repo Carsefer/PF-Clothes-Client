@@ -43,7 +43,7 @@
   border-radius: 5px;
   border: 5px solid #ffe3b3;
   background-color: #ffe3b3;
-  color: white;
+  color: rgb(0, 0, 0);
   transition: 0.5s;
   margin-top: 1%;
   text-decoration: none;
@@ -60,6 +60,7 @@
 .CartBox {
   display: flex;
   overflow-x: scroll;
+  justify-content: center;
 }
 
 .CleanCartButtons {
