@@ -41,7 +41,7 @@
 }
 
 .form1 {
-  width: 300px;
+  width: 360px;
   height: 50px;
   border: 1px solid #dfdfdf;
   border-radius: 6px;
@@ -58,8 +58,6 @@
 
 .error {
   color: red;
-  display: flex;
-  justify-content: flex-start;
   font-size: 14px;
 }
 
