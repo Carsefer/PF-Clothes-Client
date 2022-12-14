@@ -20,7 +20,7 @@ const CreateUser = () => {
 
   return (
     <div className={Styles.container1}>
-      <button className={Styles.BackButtons} onClick={() => navigate("/home")}>
+      <button className={Styles.BackButtons} onClick={() => navigate(-1)}>
         Atrás
       </button>
       <h1 className={Styles.subtitle}>Registrar usuario</h1>
@@ -43,32 +43,33 @@ const CreateUser = () => {
           if (!value.username.length) {
             errors.username = "Ingrese nombre de usuario";
           } else if (value.username.length < 6 || value.username.length > 15) {
-            errors.username =
-              "Longitud valida desde 6 caracteres hasta 15 caracteres";
-          } else if (!/[A-Za-z0-9_]{6,15}$/.test(value.username)) {
-            errors.username = `Nombre de usuario invalido debe iniciar con caracteres
-            alfanumericos y solamente puede contener guiones bajos en le nombre de usuario`;
+            errors.username = "Longitud valida desde 6 hasta 15 caracteres";
+          } else if (!/[A-Za-z]{6,15}$/.test(value.username)) {
+            errors.username = `No puede contener números ni caracteres especiales`;
           } else if (!value.name.length) {
             errors.name = "Ingrese su nombre";
           } else if (!/[A-Za-z]$/.test(value.name)) {
-            errors.name = `Nombre invalido solamente puede contener caracteres alfanumericos`;
+            errors.name = `No puede contener números ni caracteres especiales`;
           } else if (!value.lastname.length) {
             errors.lastname = "Ingrese su apellido";
           } else if (!/[A-Za-z]$/.test(value.lastname)) {
-            errors.lastname = `Apellido invalido solamente puede contener caracteres alfanumericos`;
-          } else if (!value.password.length) {
-            errors.password = "Ingrese contraseña";
-          } else if (value.password.length < 4 || value.password.length > 15) {
-            errors.password =
-              "Contraseña debe tener minimo 4 caracteres y maximo 15 caracteres";
-          } else if (value.password !== value.passwords || !value.passwords) {
-            errors.passwords = "La contraseña no coincide, inténtalo de nuevo";
-          } else if (!/^\d[0-9,$]*$/.test(value.phone) || !value.phone) {
-            errors.phone = "Ingrese numero de telefono valido";
+            errors.lastname = `No puede contener números ni caracteres especiales`;
           } else if (
             !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(value.mail)
           ) {
             errors.mail = "Ingrese un correo valido";
+          } else if (!value.password.length) {
+            errors.password =
+              "Ingrese contraseña con un minimo de 4 caracteres";
+          } else if (
+            value.password.length < 4 ||
+            !/^\d[0-9,$]*$/.test(value.password)
+          ) {
+            errors.password = "Solo puede contener números";
+          } else if (value.password !== value.passwords || !value.passwords) {
+            errors.passwords = "La contraseña no coincide";
+          } else if (!/^\d[0-9,$]*$/.test(value.phone) || !value.phone) {
+            errors.phone = "Solo puede contener números";
           }
           return errors;
         }}
@@ -140,10 +141,7 @@ const CreateUser = () => {
                   autoComplete="off"
                 />
                 {touched.username && errors.username && (
-                  <div className={Styles.error}>
-                    {" "}
-                    <span>{errors.username}</span>{" "}
-                  </div>
+                  <span className={Styles.error}>{errors.username}</span>
                 )}
                 <input
                   type="text"
@@ -225,7 +223,7 @@ const CreateUser = () => {
                 <input
                   type="password"
                   id="repassword"
-                  placeholder="Ingresar contraseña nuevamente"
+                  placeholder="Contraseña nuevamente"
                   name="passwords"
                   className={Styles.form1}
                   value={values.passwords}
@@ -244,7 +242,7 @@ const CreateUser = () => {
                 <input
                   type="text"
                   id="phone"
-                  placeholder="Ingrese un número de telefono"
+                  placeholder="Telefono"
                   name="phone"
                   className={Styles.form1}
                   value={values.phone}
@@ -269,6 +267,7 @@ const CreateUser = () => {
                   ) ||
                   !values.password ||
                   !(values.password.length < 4 || values.password > 15) ||
+                  !/^\d[0-9,$]*$/.test(values.password) ||
                   !/^\d[0-9,$]*$/.test(values.phone) ||
                   values.passwords !== values.password ? (
                     <div>

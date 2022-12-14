@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { getUserData } from "../../Utils/useLocalStorage";
 import Logo from "../images/bitmap2.png";
+import NavBar from "../NavBar/NavBar";
 import {
   getProductDetail,
   addToCart,
@@ -44,7 +45,6 @@ const ProductDetail = () => {
   // const historial = useSelector((state) =>
   //   state?.historial.filter((el) => el.pagado === true)
   // );
-  const [load, setLoading] = useState(false);
   const historial = useSelector((state) => state?.historial);
   const results = useSelector((state) => state.Status);
 
@@ -73,11 +73,7 @@ const ProductDetail = () => {
         setUser(data);
       }
     })();
-    setTimeout(() => {
-      setLoading(true);
-    }, 300);
     dispatch(getProductDetail(id));
-    setLoading(false);
     dispatch(clearActions());
     dispatch(getProductDetailReviews(id));
     dispatch(buyHistorial(user?.id));
@@ -147,16 +143,11 @@ const ProductDetail = () => {
   const handleColor = (e) => {
     e.preventDefault();
     setFilterByColor(e.target.value);
-  };
-  if (load === false) {
-    return (
-      <div className={Style.ProductContainer}>
-        <img className={Style.NavbarHomeLogo} src={Logo} alt="logo" />
-        <h1 className={Style.loading}>{results}</h1>;
-      </div>
-    );
-  } else {
-    return (
+  }; /*; */
+
+  return Object.entries(detail).length > 1 ? (
+    <>
+      <NavBar className={Style.NavBar} />
       <div className={Style.ProductContainer}>
         <div className={Style.sectionDetails}>
           <div className={Style.sectionDetailsButtons}>
@@ -370,7 +361,13 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
-    );
-  }
+    </>
+  ) : (
+    <div className={Style.ProductContainer}>
+      <img className={Style.NavbarHomeLogo} src={Logo} alt="logo" />
+      <h1 className={Style.loading}>{results}</h1>;
+    </div>
+  );
 };
+
 export default ProductDetail;
